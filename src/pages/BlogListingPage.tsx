@@ -1,0 +1,64 @@
+import React, { useState } from 'react';
+import { StoreService } from '../services/store';
+import { BlogCard } from '../components/BlogCard';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { SEOHead } from '../components/SEOHead';
+import { BookOpen, Search } from 'lucide-react';
+
+export const BlogListingPage: React.FC = () => {
+  const blogs = StoreService.getBlogPosts();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filtered = blogs.filter(
+    (b) =>
+      !searchTerm.trim() ||
+      b.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <SEOHead
+        title="Spiritual Blog & Vedic Guides | Aastha Sey Raasta Seva"
+        description="Read detailed articles on Rudrabhishek vidhi, Bhat Pooja significance at Mangalnath, Baglamukhi Havan Mahatmyam, and Ujjain pilgrimage tips."
+      />
+
+      <Breadcrumbs items={[{ label: 'Blog Guides' }]} />
+
+      <div className="bg-[#121212] text-[#F9F8F6] rounded-2xl p-8 sm:p-12 relative overflow-hidden border border-[#121212]/20">
+        <div className="relative z-10 max-w-2xl space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3F1ED]/10 text-amber-300 text-xs font-semibold uppercase tracking-widest border border-amber-500/30">
+            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+            <span>Vedic Knowledge Index</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-serif italic text-[#F9F8F6]">
+            Spiritual Guides & Articles
+          </h1>
+          <p className="text-stone-300 text-xs sm:text-sm leading-relaxed">
+            In-depth guides explaining scriptural significance, auspicious muhurats, and travel preparations for Ujjain pilgrims.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-[#F3F1ED] p-4 rounded-xl border border-[#121212]/10 flex items-center">
+        <div className="relative w-full">
+          <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search articles by keyword (e.g. Rudrabhishek, Mangalnath, Gotra)..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-[#121212]/10 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filtered.map((post) => (
+          <BlogCard key={post.id} post={post} />
+        ))}
+      </div>
+    </div>
+  );
+};

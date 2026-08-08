@@ -1,0 +1,6 @@
+{
+  "name": "Aastha Sey Raasta Seva",
+  "description": "Authentic Pooja Services & Spiritual Tours Platform in Ujjain and Pilgrimage Destinations",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
