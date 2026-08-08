@@ -9,11 +9,14 @@ import {
   ChevronRight,
   Sparkles,
   Lock,
+  Globe,
 } from 'lucide-react';
 import { StoreService } from '../services/store';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Footer: React.FC = () => {
   const settings = StoreService.getSettings();
+  const { language, setLanguage, t } = useLanguage();
 
   const poojaLinks = [
     { label: 'Rudrabhishek Pooja', href: '/pooja/rudrabhishek-pooja-ujjain' },
@@ -184,8 +187,23 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright and legal */}
         <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-          <div>
-            © {new Date().getFullYear()} {settings.businessName}. All rights reserved. &quot;{settings.tagline}&quot;
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <span>© {new Date().getFullYear()} {settings.businessName}. All rights reserved. &quot;{settings.tagline}&quot;</span>
+            <div className="inline-flex items-center gap-1 bg-stone-900 border border-stone-800 p-1 rounded-lg text-[11px]">
+              <Globe className="w-3.5 h-3.5 text-amber-500 ml-1" />
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-2 py-0.5 rounded ${language === 'en' ? 'bg-amber-800 text-amber-100 font-bold' : 'text-stone-400 hover:text-stone-200'}`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLanguage('hi')}
+                className={`px-2 py-0.5 rounded font-serif ${language === 'hi' ? 'bg-amber-800 text-amber-100 font-bold' : 'text-stone-400 hover:text-stone-200'}`}
+              >
+                हिंदी
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-4 text-xs">

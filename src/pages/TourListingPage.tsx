@@ -5,6 +5,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Compass, Search, MapPin } from 'lucide-react';
+import { FadeIn } from '../components/FadeIn';
 
 interface TourListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -66,41 +67,47 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
       <Breadcrumbs items={[{ label: 'Spiritual Tours' }]} />
 
       {/* Header Banner with Animated Background Slider */}
-      <div className="relative rounded-3xl min-h-[300px] sm:min-h-[340px] flex items-center p-8 sm:p-12 overflow-hidden text-white shadow-2xl border border-emerald-500/20">
-        <HeroBackgroundSlider slides={tourHeaderSlides} intervalMs={5000} />
+      <FadeIn direction="up">
+        <div className="relative rounded-3xl min-h-[300px] sm:min-h-[340px] flex items-center p-8 sm:p-12 overflow-hidden text-white shadow-2xl border border-emerald-500/20">
+          <HeroBackgroundSlider slides={tourHeaderSlides} intervalMs={5000} />
 
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider border border-emerald-500/40 backdrop-blur-md">
-            <Compass className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Sacred Circuits</span>
+          <div className="relative z-10 max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider border border-emerald-500/40 backdrop-blur-md">
+              <Compass className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Sacred Circuits</span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-serif font-bold text-amber-100 drop-shadow-md">
+              Spiritual Tours & Yatras
+            </h1>
+            <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed font-serif italic">
+              Tailored pilgrimage itineraries connecting Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-amber-100 drop-shadow-md">
-            Spiritual Tours & Yatras
-          </h1>
-          <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed font-serif italic">
-            Tailored pilgrimage itineraries connecting Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.
-          </p>
         </div>
-      </div>
+      </FadeIn>
 
       {/* Controls */}
-      <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm flex items-center">
-        <div className="relative w-full">
-          <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search tours (e.g. Ujjain Omkareshwar, Char Dham, Nalkheda)..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
-          />
+      <FadeIn delay={100} direction="up">
+        <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm flex items-center">
+          <div className="relative w-full">
+            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search tours (e.g. Ujjain Omkareshwar, Char Dham, Nalkheda)..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
         </div>
-      </div>
+      </FadeIn>
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((tour) => (
-          <TourCard key={tour.id} tour={tour} onBook={(name) => onOpenBooking('Tour', name)} />
+        {filtered.map((tour, index) => (
+          <FadeIn key={tour.id} delay={index * 100} direction="up">
+            <TourCard key={tour.id} tour={tour} onBook={(name) => onOpenBooking('Tour', name)} />
+          </FadeIn>
         ))}
       </div>
     </div>

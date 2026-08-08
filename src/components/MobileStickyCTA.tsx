@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, MessageSquare, Sparkles } from 'lucide-react';
 import { StoreService } from '../services/store';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MobileStickyCTAProps {
   onOpenBooking: () => void;
@@ -8,6 +9,7 @@ interface MobileStickyCTAProps {
 
 export const MobileStickyCTA: React.FC<MobileStickyCTAProps> = ({ onOpenBooking }) => {
   const settings = StoreService.getSettings();
+  const { t } = useLanguage();
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-stone-900/95 backdrop-blur-md border-t border-amber-900/40 p-2.5 px-3 shadow-2xl">
@@ -18,7 +20,7 @@ export const MobileStickyCTA: React.FC<MobileStickyCTAProps> = ({ onOpenBooking 
           className="py-2.5 px-3 rounded-xl bg-stone-800 text-stone-200 hover:bg-stone-700 font-medium text-xs flex items-center justify-center gap-1.5 transition-colors border border-stone-700"
         >
           <Phone className="w-3.5 h-3.5 text-amber-400" />
-          <span>Call</span>
+          <span>{t('action.call_us', 'Call')}</span>
         </a>
 
         {/* WhatsApp */}
@@ -40,7 +42,7 @@ export const MobileStickyCTA: React.FC<MobileStickyCTAProps> = ({ onOpenBooking 
           className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-800 to-amber-800 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-900/20"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-          <span>Book</span>
+          <span>{t('action.book_now', 'Book')}</span>
         </button>
       </div>
     </div>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { MobileStickyCTA } from './components/MobileStickyCTA';
@@ -142,40 +144,44 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] text-[#121212] flex flex-col font-sans selection:bg-amber-200 selection:text-stone-900">
-      
-      {/* Sticky Top Header Navigation */}
-      <Navbar
-        onOpenBooking={() => handleOpenBooking('General')}
-        onOpenSearch={() => setSearchModalOpen(true)}
-      />
+    <ThemeProvider>
+      <LanguageProvider>
+        <div className="min-h-screen bg-[#F9F8F6] dark:bg-[#121110] text-[#121212] dark:text-[#F4F1EA] flex flex-col font-sans selection:bg-amber-200 dark:selection:bg-amber-900/60 selection:text-stone-900 dark:selection:text-amber-100 transition-colors duration-300">
+          
+          {/* Sticky Top Header Navigation */}
+          <Navbar
+            onOpenBooking={() => handleOpenBooking('General')}
+            onOpenSearch={() => setSearchModalOpen(true)}
+          />
 
-      {/* Main Page Body */}
-      <main className="flex-1 pb-16 lg:pb-0">
-        {renderCurrentView()}
-      </main>
+          {/* Main Page Body */}
+          <main className="flex-1 pb-16 lg:pb-0">
+            {renderCurrentView()}
+          </main>
 
-      {/* Footer */}
-      <Footer />
+          {/* Footer */}
+          <Footer />
 
-      {/* Sticky Mobile Navigation CTA bar */}
-      <MobileStickyCTA onOpenBooking={() => handleOpenBooking('General')} />
+          {/* Sticky Mobile Navigation CTA bar */}
+          <MobileStickyCTA onOpenBooking={() => handleOpenBooking('General')} />
 
-      {/* Audio Atmosphere Player */}
-      <AmbientAudioPlayer />
+          {/* Audio Atmosphere Player */}
+          <AmbientAudioPlayer />
 
-      {/* Modals */}
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-        defaultServiceType={bookingDefaultType}
-        defaultServiceName={bookingDefaultName}
-      />
+          {/* Modals */}
+          <BookingModal
+            isOpen={bookingModalOpen}
+            onClose={() => setBookingModalOpen(false)}
+            defaultServiceType={bookingDefaultType}
+            defaultServiceName={bookingDefaultName}
+          />
 
-      <SearchModal
-        isOpen={searchModalOpen}
-        onClose={() => setSearchModalOpen(false)}
-      />
-    </div>
+          <SearchModal
+            isOpen={searchModalOpen}
+            onClose={() => setSearchModalOpen(false)}
+          />
+        </div>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
