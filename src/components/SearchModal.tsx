@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-import { X, Search, Sparkles, MapPin, Calendar, Compass, BookOpen, ChevronRight } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, Search, Sparkles, MapPin, Compass, BookOpen, ChevronRight, Mic, MicOff, AlertCircle } from 'lucide-react';
 import { StoreService } from '../services/store';
+
+declare global {
+  interface Window {
+    SpeechRecognition?: any;
+    webkitSpeechRecognition?: any;
+  }
+}
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -9,8 +16,86 @@ interface SearchModalProps {
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState('');
+  const [isListening, setIsListening] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
+  const recognitionRef = useRef<any>(null);
+
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch {
+          // ignore cleanup errors
+        }
+      }
+    };
+  }, []);
 
   if (!isOpen) return null;
+
+  const toggleVoiceSearch = () => {
+    const SpeechRecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognitionClass) {
+      setSpeechError('Voice search is not supported in this browser. Try Chrome, Edge, or Safari.');
+      return;
+    }
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch {
+          // ignore
+        }
+      }
+      setIsListening(false);
+      return;
+    }
+
+    try {
+      setSpeechError(null);
+      const recognition = new SpeechRecognitionClass();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-IN'; // Optimized for Indian English & Hindi terms
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        const transcript = Array.from(event.results)
+          .map((result: any) => result[0].transcript)
+          .join('');
+        setQuery(transcript);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.warn('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          setSpeechError('Microphone permission was denied. Please allow microphone access in browser settings.');
+        } else if (event.error === 'no-speech') {
+          setSpeechError('No speech detected. Please try speaking again.');
+        } else if (event.error !== 'aborted') {
+          setSpeechError(`Voice input error: ${event.error}`);
+        }
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (err: any) {
+      console.error('Failed to initialize Speech Recognition:', err);
+      setSpeechError('Could not start voice recognition.');
+      setIsListening(false);
+    }
+  };
 
   const poojas = StoreService.getPoojas().filter(
     (p) =>
@@ -53,36 +138,114 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search poojas (e.g. Rudrabhishek, Bhat Pooja), yatras, destinations..."
+            placeholder="Search poojas, yatras, or blog topics (e.g. Rudrabhishek, Mangalnath)..."
             className="w-full bg-transparent text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 text-base outline-none font-medium"
           />
+
+          {/* Voice Search Button */}
+          <button
+            type="button"
+            onClick={toggleVoiceSearch}
+            title={isListening ? 'Stop Voice Listening' : 'Search by Voice'}
+            className={`relative p-2 rounded-xl transition-all flex items-center justify-center shrink-0 ${
+              isListening
+                ? 'bg-red-600 text-white shadow-lg shadow-red-500/40 animate-pulse'
+                : 'bg-amber-100 dark:bg-stone-800 text-amber-900 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-stone-700'
+            }`}
+          >
+            {isListening ? (
+              <MicOff className="w-4 h-4 text-white" />
+            ) : (
+              <Mic className="w-4 h-4" />
+            )}
+            {isListening && (
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              </span>
+            )}
+          </button>
+
           {query && (
             <button
-              onClick={() => setQuery('')}
+              onClick={() => {
+                setQuery('');
+                setSpeechError(null);
+              }}
               className="text-stone-400 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-100 text-xs font-semibold px-2 py-1 rounded bg-stone-200 dark:bg-stone-800"
             >
               Clear
             </button>
           )}
+
           <button
-            onClick={onClose}
+            onClick={() => {
+              if (isListening && recognitionRef.current) {
+                try {
+                  recognitionRef.current.stop();
+                } catch {
+                  // ignore
+                }
+              }
+              onClose();
+            }}
             className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-500 dark:text-stone-400 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
+        {/* Voice Listening Banner */}
+        {isListening && (
+          <div className="bg-gradient-to-r from-red-500/10 via-amber-500/10 to-red-500/10 border-b border-red-200 dark:border-red-900/50 p-3 px-4 flex items-center justify-between text-xs font-medium text-stone-800 dark:text-stone-200">
+            <div className="flex items-center gap-2.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+              </span>
+              <span className="font-semibold text-red-700 dark:text-red-400">Listening...</span>
+              <span className="text-stone-600 dark:text-stone-400 hidden sm:inline">Say a service or topic like &quot;Rudrabhishek&quot; or &quot;Mangalnath&quot;</span>
+            </div>
+            {/* Audio wave pulse bars */}
+            <div className="flex items-center gap-1">
+              <div className="w-1 h-3 bg-red-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+              <div className="w-1 h-4 bg-amber-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+              <div className="w-1 h-2 bg-red-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="w-1 h-5 bg-amber-500 animate-bounce" style={{ animationDelay: '450ms' }} />
+            </div>
+          </div>
+        )}
+
+        {/* Speech Error Banner */}
+        {speechError && (
+          <div className="bg-amber-50 dark:bg-amber-950/60 border-b border-amber-200 dark:border-amber-900/50 p-3 px-4 flex items-center justify-between text-xs text-amber-900 dark:text-amber-200">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+              <span>{speechError}</span>
+            </div>
+            <button
+              onClick={() => setSpeechError(null)}
+              className="text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 font-bold ml-2"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
+
         {/* Search Results Container */}
         <div className="max-h-[70vh] overflow-y-auto p-4 space-y-6">
           {!query.trim() ? (
             <div className="py-8 text-center text-stone-500 dark:text-stone-400 space-y-3">
               <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto opacity-70" />
-              <p className="text-sm font-serif">Try searching for sacred rituals or pilgrimage circuits:</p>
+              <p className="text-sm font-serif">Try searching by text or clicking the microphone for voice search:</p>
               <div className="flex flex-wrap gap-2 justify-center max-w-md mx-auto pt-2">
                 {['Rudrabhishek', 'Bhat Pooja', 'Mahamrityunjaya', 'Baglamukhi Havan', 'Omkareshwar Yatra', 'Char Dham', 'Ujjain'].map((term) => (
                   <button
                     key={term}
-                    onClick={() => setQuery(term)}
+                    onClick={() => {
+                      setQuery(term);
+                      setSpeechError(null);
+                    }}
                     className="px-3 py-1 bg-amber-50 dark:bg-stone-800 text-amber-800 dark:text-amber-200 text-xs rounded-full border border-amber-200 dark:border-stone-700 hover:bg-amber-100 dark:hover:bg-stone-700 transition-colors"
                   >
                     {term}
@@ -230,3 +393,4 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     </div>
   );
 };
+

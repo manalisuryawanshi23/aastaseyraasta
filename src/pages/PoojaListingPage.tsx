@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StoreService } from '../services/store';
 import { PoojaCard } from '../components/PoojaCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
@@ -6,6 +6,7 @@ import { SEOHead } from '../components/SEOHead';
 import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Flame, Search, Filter, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
+import { SkeletonGrid } from '../components/Skeletons';
 
 interface PoojaListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -50,6 +51,14 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
 
   const [selectedCat, setSelectedCat] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 450);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filtered = allPoojas.filter((p) => {
     const matchCat = selectedCat === 'all' || p.categoryId === selectedCat;
@@ -135,7 +144,9 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
       </FadeIn>
 
       {/* Grid */}
-      {filtered.length === 0 ? (
+      {isLoading ? (
+        <SkeletonGrid type="pooja" count={6} />
+      ) : filtered.length === 0 ? (
         <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
           <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
           <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Poojas Found</h3>

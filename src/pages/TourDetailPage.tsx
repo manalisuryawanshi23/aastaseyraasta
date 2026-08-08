@@ -3,6 +3,7 @@ import { StoreService } from '../services/store';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { TourCard } from '../components/TourCard';
+import { FavoriteButton } from '../components/FavoriteButton';
 import {
   Compass,
   MapPin,
@@ -80,9 +81,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         <div className="lg:col-span-2 space-y-8">
           
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider">
-              <Compass className="w-3.5 h-3.5 text-emerald-700" />
-              <span>{tour.category || 'Pilgrimage Circuit'}</span>
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider">
+                <Compass className="w-3.5 h-3.5 text-emerald-700" />
+                <span>{tour.category || 'Pilgrimage Circuit'}</span>
+              </div>
+              <FavoriteButton id={tour.id} type="tour" variant="button" />
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">

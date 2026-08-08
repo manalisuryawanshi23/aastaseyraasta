@@ -1,6 +1,350 @@
-import React, { useState } from 'react';
-import { X, Calendar, Users, Send, MessageSquare, Phone, CheckCircle2, Flame, MapPin } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  X,
+  Calendar,
+  Users,
+  Send,
+  MessageSquare,
+  Phone,
+  CheckCircle2,
+  Flame,
+  MapPin,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Check,
+  Info
+} from 'lucide-react';
 import { StoreService } from '../services/store';
+
+interface BookingModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  defaultServiceType?: 'Pooja' | 'Tour' | 'Destination' | 'General';
+  defaultServiceName?: string;
+}
+
+// Helper Date Utilities
+const getTodayISO = (): string => {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+const getNextDayOfWeek = (targetDayOfWeek: number): string => {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  let currentDay = d.getDay();
+  let distance = (targetDayOfWeek + 7 - currentDay) % 7;
+  if (distance === 0) distance = 7; // Get next week's if today
+  d.setDate(d.getDate() + distance);
+
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+const formatDateDisplay = (dateStr: string): string => {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+  if (isNaN(d.getTime())) return dateStr;
+
+  const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+  const monthName = d.toLocaleDateString('en-US', { month: 'short' });
+  const dayNum = d.getDate();
+  const yearNum = d.getFullYear();
+
+  let tag = '';
+  if (d.getDay() === 2) tag = ' • 🚩 Mangal Pooja';
+  else if (d.getDay() === 1) tag = ' • 🔱 Somwar Special';
+
+  return `${dayName}, ${dayNum} ${monthName} ${yearNum}${tag}`;
+};
+
+// Interactive Date Picker Component
+const InteractiveDatePicker: React.FC<{
+  value: string;
+  onChange: (val: string) => void;
+}> = ({ value, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const initialViewDate = () => {
+    if (value) {
+      const parts = value.split('-');
+      if (parts.length === 3) {
+        return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
+      }
+    }
+    const d = new Date();
+    d.setDate(1);
+    return d;
+  };
+
+  const [viewDate, setViewDate] = useState<Date>(initialViewDate);
+
+  const todayStr = getTodayISO();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const handlePrevMonth = () => {
+    setViewDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setViewDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
+
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
+
+  const firstDayOfWeek = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const handleSelectDate = (dNum: number) => {
+    const selected = new Date(year, month, dNum);
+    const y = selected.getFullYear();
+    const m = String(selected.getMonth() + 1).padStart(2, '0');
+    const day = String(selected.getDate()).padStart(2, '0');
+    const iso = `${y}-${m}-${day}`;
+    onChange(iso);
+    setIsOpen(false);
+  };
+
+  const tomorrowStr = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  })();
+
+  const nextTuesdayStr = getNextDayOfWeek(2);
+  const nextMondayStr = getNextDayOfWeek(1);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs sm:text-sm font-medium flex items-center justify-between shadow-sm hover:border-amber-500 transition-all text-left"
+      >
+        <span className={value ? 'text-stone-900 dark:text-stone-100 font-semibold' : 'text-stone-400'}>
+          {value ? formatDateDisplay(value) : 'Select preferred booking date'}
+        </span>
+        <Calendar className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 ml-2" />
+      </button>
+
+      {/* Dropdown Calendar Modal */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 z-50 bg-white dark:bg-[#1C1917] rounded-2xl border border-amber-300/60 dark:border-stone-700 shadow-2xl p-4 animate-in fade-in zoom-in-95 duration-150">
+          
+          {/* Quick Shortcuts Bar */}
+          <div className="mb-3 space-y-1.5">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-500" />
+              <span>Auspicious Booking Shortcuts</span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  onChange(todayStr);
+                  setIsOpen(false);
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors ${
+                  value === todayStr
+                    ? 'bg-amber-800 text-white'
+                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-amber-100 dark:hover:bg-stone-700'
+                }`}
+              >
+                Today
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onChange(tomorrowStr);
+                  setIsOpen(false);
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors ${
+                  value === tomorrowStr
+                    ? 'bg-amber-800 text-white'
+                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-amber-100 dark:hover:bg-stone-700'
+                }`}
+              >
+                Tomorrow
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onChange(nextTuesdayStr);
+                  setIsOpen(false);
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-colors flex items-center gap-1 ${
+                  value === nextTuesdayStr
+                    ? 'bg-red-700 text-white'
+                    : 'bg-red-50 dark:bg-red-950/60 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-900 hover:bg-red-100'
+                }`}
+              >
+                <span>🚩 Next Tuesday</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onChange(nextMondayStr);
+                  setIsOpen(false);
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-colors flex items-center gap-1 ${
+                  value === nextMondayStr
+                    ? 'bg-amber-800 text-white'
+                    : 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-900 hover:bg-amber-100'
+                }`}
+              >
+                <span>🔱 Next Monday</span>
+              </button>
+            </div>
+          </div>
+
+          <hr className="border-stone-200 dark:border-stone-800 my-2" />
+
+          {/* Month Header Controls */}
+          <div className="flex items-center justify-between mb-3">
+            <button
+              type="button"
+              onClick={handlePrevMonth}
+              className="p-1 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="font-serif font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+              {monthNames[month]} {year}
+            </span>
+            <button
+              type="button"
+              onClick={handleNextMonth}
+              className="p-1 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Weekday Labels */}
+          <div className="grid grid-cols-7 text-center text-[10px] font-bold text-stone-400 mb-1">
+            <span>Su</span>
+            <span>Mo</span>
+            <span>Tu</span>
+            <span>We</span>
+            <span>Th</span>
+            <span>Fr</span>
+            <span>Sa</span>
+          </div>
+
+          {/* Calendar Day Grid */}
+          <div className="grid grid-cols-7 gap-1 text-center">
+            {/* Empty slots before first day */}
+            {Array.from({ length: firstDayOfWeek }).map((_, i) => (
+              <div key={`empty-${i}`} className="h-7 sm:h-8" />
+            ))}
+
+            {/* Day slots */}
+            {Array.from({ length: daysInMonth }).map((_, idx) => {
+              const dayNum = idx + 1;
+              const cellDate = new Date(year, month, dayNum);
+              cellDate.setHours(0, 0, 0, 0);
+
+              const cellDateISO = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+              const isPast = cellDate < today;
+              const isSelected = value === cellDateISO;
+              const isToday = cellDateISO === todayStr;
+
+              const isTuesday = cellDate.getDay() === 2; // Mangalnath Pooja
+              const isMonday = cellDate.getDay() === 1;  // Mahakal Abhishekam
+
+              return (
+                <button
+                  key={`day-${dayNum}`}
+                  type="button"
+                  disabled={isPast}
+                  onClick={() => handleSelectDate(dayNum)}
+                  className={`relative h-7 sm:h-8 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
+                    isPast
+                      ? 'text-stone-300 dark:text-stone-700 cursor-not-allowed opacity-40'
+                      : isSelected
+                      ? 'bg-amber-800 text-white shadow-md font-bold scale-105'
+                      : isToday
+                      ? 'bg-amber-100 dark:bg-stone-800 text-amber-900 dark:text-amber-300 border border-amber-400'
+                      : 'hover:bg-amber-50 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200'
+                  }`}
+                >
+                  <span>{dayNum}</span>
+
+                  {/* Special Tithi Indicator Dots */}
+                  {!isPast && (isTuesday || isMonday) && !isSelected && (
+                    <span
+                      className={`absolute bottom-0.5 w-1 h-1 rounded-full ${
+                        isTuesday ? 'bg-red-500' : 'bg-amber-500'
+                      }`}
+                      title={isTuesday ? 'Tuesday (Mangalnath Pooja Special)' : 'Monday (Mahakal Special)'}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Footer Legend */}
+          <div className="mt-3 pt-2 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between text-[10px] text-stone-500 dark:text-stone-400">
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 inline-block" />
+                <span>Tue (Bhat Pooja)</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
+                <span>Mon (Abhishekam)</span>
+              </span>
+            </div>
+            {value && (
+              <button
+                type="button"
+                onClick={() => {
+                  onChange('');
+                  setIsOpen(false);
+                }}
+                className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 underline font-medium"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -214,18 +558,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {/* Preferred Date */}
-                <div>
+                <div className="sm:col-span-1">
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     Preferred Date
                   </label>
-                  <div className="relative">
-                    <input
-                      type="date"
-                      value={preferredDate}
-                      onChange={(e) => setPreferredDate(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
-                    />
-                  </div>
+                  <InteractiveDatePicker
+                    value={preferredDate}
+                    onChange={setPreferredDate}
+                  />
                 </div>
 
                 {/* Number of People */}

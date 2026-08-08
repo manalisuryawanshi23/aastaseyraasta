@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Calendar, Clock, ArrowRight, Compass, ShieldCheck } from 'lucide-react';
 import { Tour } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { FavoriteButton } from './FavoriteButton';
 
 interface TourCardProps {
   tour: Tour;
@@ -30,6 +31,11 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook }) => {
         {/* Category Pill */}
         <div className="absolute top-3 left-3 bg-emerald-950/85 backdrop-blur-md text-emerald-200 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full border border-emerald-500/40 shadow-sm group-hover:-translate-y-0.5 group-hover:scale-105 transition-transform duration-300">
           {tour.category || 'Spiritual Yatra'}
+        </div>
+
+        {/* Favorite Button */}
+        <div className="absolute top-3 right-3 z-10">
+          <FavoriteButton id={tour.id} type="tour" />
         </div>
 
         {/* Duration badge */}

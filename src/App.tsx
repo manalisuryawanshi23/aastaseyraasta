@@ -7,6 +7,7 @@ import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { AmbientAudioPlayer } from './components/AmbientAudioPlayer';
 import { BookingModal } from './components/BookingModal';
 import { SearchModal } from './components/SearchModal';
+import { SupportChatWidget } from './components/SupportChatWidget';
 
 import { HomePage } from './pages/HomePage';
 import { PoojaListingPage } from './pages/PoojaListingPage';
@@ -20,6 +21,7 @@ import { BlogDetailPage } from './pages/BlogDetailPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
+import { SavedItemsPage } from './pages/SavedItemsPage';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState<string>(
@@ -130,6 +132,10 @@ export default function App() {
       return <ContactPage />;
     }
 
+    if (path === '/saved-items') {
+      return <SavedItemsPage onOpenBooking={handleOpenBooking} />;
+    }
+
     if (path === '/admin') {
       return <AdminPage />;
     }
@@ -180,6 +186,9 @@ export default function App() {
             isOpen={searchModalOpen}
             onClose={() => setSearchModalOpen(false)}
           />
+
+          {/* Floating Support Chat Widget */}
+          <SupportChatWidget onOpenBooking={handleOpenBooking} />
         </div>
       </LanguageProvider>
     </ThemeProvider>

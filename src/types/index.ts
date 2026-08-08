@@ -170,6 +170,11 @@ export interface Testimonial {
   photo?: string;
   service?: string;
   tour?: string;
+  category?: 'Pooja' | 'Tour' | 'Bhat Pooja' | 'General';
+  date?: string;
+  verified?: boolean;
+  helpfulCount?: number;
+  reviewImage?: string;
   isFeatured: boolean;
   isPublished: boolean;
   createdAt: string;

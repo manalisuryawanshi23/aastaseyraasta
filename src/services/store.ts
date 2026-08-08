@@ -63,6 +63,10 @@ export class StoreService {
     return getItem<SiteSettings>(KEYS.SETTINGS, initialSiteSettings);
   }
 
+  static getSiteSettings(): SiteSettings {
+    return this.getSettings();
+  }
+
   static updateSettings(settings: SiteSettings): SiteSettings {
     setItem(KEYS.SETTINGS, settings);
     return settings;
@@ -384,6 +388,18 @@ export class StoreService {
     list.unshift(newT);
     setItem(KEYS.TESTIMONIALS, list);
     return newT;
+  }
+
+  static incrementHelpfulCount(id: string): number {
+    const list = this.getTestimonials();
+    const idx = list.findIndex((t) => t.id === id);
+    if (idx !== -1) {
+      const current = list[idx].helpfulCount || 0;
+      list[idx].helpfulCount = current + 1;
+      setItem(KEYS.TESTIMONIALS, list);
+      return list[idx].helpfulCount;
+    }
+    return 0;
   }
 
   static deleteTestimonial(id: string): void {

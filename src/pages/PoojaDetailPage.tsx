@@ -4,6 +4,8 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { FAQAccordion } from '../components/FAQAccordion';
 import { PoojaCard } from '../components/PoojaCard';
+import { FavoriteButton } from '../components/FavoriteButton';
+import { ShareWhatsAppButton } from '../components/ShareWhatsAppButton';
 import {
   Flame,
   MapPin,
@@ -87,9 +89,12 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         <div className="lg:col-span-2 space-y-8">
           
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider">
-              <Flame className="w-3.5 h-3.5 text-amber-700" />
-              <span>{pooja.categoryName || 'Temple Pooja'}</span>
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider">
+                <Flame className="w-3.5 h-3.5 text-amber-700" />
+                <span>{pooja.categoryName || 'Temple Pooja'}</span>
+              </div>
+              <FavoriteButton id={pooja.id} type="pooja" variant="button" />
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">

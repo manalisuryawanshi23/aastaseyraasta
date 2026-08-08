@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StoreService } from '../services/store';
 import { DestinationCard } from '../components/DestinationCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { MapPin } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
+import { SkeletonGrid } from '../components/Skeletons';
 
 export const DestinationListingPage: React.FC = () => {
   const destinations = StoreService.getDestinations();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 450);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
@@ -41,13 +50,17 @@ export const DestinationListingPage: React.FC = () => {
         </div>
       </FadeIn>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {destinations.map((dest, index) => (
-          <FadeIn key={dest.id} delay={index * 100} direction="up">
-            <DestinationCard destination={dest} />
-          </FadeIn>
-        ))}
-      </div>
+      {isLoading ? (
+        <SkeletonGrid type="destination" count={6} />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {destinations.map((dest, index) => (
+            <FadeIn key={dest.id} delay={index * 100} direction="up">
+              <DestinationCard destination={dest} />
+            </FadeIn>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

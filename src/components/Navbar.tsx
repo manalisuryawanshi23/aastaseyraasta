@@ -13,8 +13,10 @@ import {
   Languages,
   Sun,
   Moon,
+  Heart,
 } from 'lucide-react';
 import { StoreService } from '../services/store';
+import { FavoritesService } from '../services/favorites';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
@@ -26,6 +28,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [favCount, setFavCount] = useState(() => FavoritesService.getFavorites().length);
   const settings = StoreService.getSettings();
   const { language, setLanguage, toggleLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -36,6 +39,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateCount = () => {
+      setFavCount(FavoritesService.getFavorites().length);
+    };
+    window.addEventListener('favorites-updated', updateCount);
+    return () => window.removeEventListener('favorites-updated', updateCount);
   }, []);
 
   const navLinks = [
@@ -202,6 +213,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
               <span className="hidden xl:inline">{t('nav.search', 'Search')}</span>
             </button>
 
+            {/* Saved Items Link */}
+            <a
+              href="/saved-items"
+              className="relative p-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 transition-colors flex items-center gap-1.5 text-xs font-medium"
+              title="View Saved Rituals & Tours"
+            >
+              <Heart className={`w-4 h-4 ${favCount > 0 ? 'text-red-500 fill-red-500' : 'text-amber-800 dark:text-amber-400'}`} />
+              <span className="hidden xl:inline">Saved</span>
+              {favCount > 0 && (
+                <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">
+                  {favCount}
+                </span>
+              )}
+            </a>
+
             {/* Book / Enquire Button */}
             <button
               onClick={() => onOpenBooking()}
@@ -268,6 +294,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 {link.label}
               </a>
             ))}
+            <a
+              href="/saved-items"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 px-3 rounded-lg hover:bg-amber-900/40 text-stone-200 hover:text-amber-200 transition-colors flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <Heart className={`w-4 h-4 ${favCount > 0 ? 'text-red-400 fill-red-400' : 'text-amber-400'}`} />
+                <span>My Saved Items</span>
+              </span>
+              {favCount > 0 && (
+                <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                  {favCount}
+                </span>
+              )}
+            </a>
           </nav>
 
           <div className="pt-4 border-t border-stone-800 flex flex-col gap-2">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Sparkles, MapPin, Clock, ArrowRight, ShieldCheck, Flame } from 'lucide-react';
 import { PoojaService } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { FavoriteButton } from './FavoriteButton';
 
 interface PoojaCardProps {
   pooja: PoojaService;
@@ -30,6 +31,11 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook }) => {
         {/* Category Pill */}
         <div className="absolute top-3 left-3 bg-red-950/85 backdrop-blur-md text-amber-200 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full border border-amber-500/40 shadow-sm group-hover:-translate-y-0.5 group-hover:scale-105 transition-transform duration-300">
           {pooja.categoryName || 'Temple Pooja'}
+        </div>
+
+        {/* Favorite Button */}
+        <div className="absolute top-3 right-3 z-10">
+          <FavoriteButton id={pooja.id} type="pooja" />
         </div>
 
         {/* Location Badge */}
