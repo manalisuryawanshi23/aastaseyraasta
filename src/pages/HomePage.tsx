@@ -174,21 +174,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         <FadeIn direction="up">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-2">
-                <Flame className="w-3.5 h-3.5 text-amber-700" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-amber-200 dark:border-amber-800/50">
+                <Flame className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                 <span>Devotional Offerings</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
                 Authentic Pooja Services in Ujjain
               </h2>
-              <p className="text-stone-600 text-xs sm:text-sm mt-1 max-w-2xl">
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
                 Conducted strictly according to Vedic scriptures by experienced Brahmins with pure satvik samagri and gotra sankalp.
               </p>
             </div>
 
             <a
               href="/pooja-services"
-              className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 hover:text-amber-950 group"
+              className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-200 group"
             >
               <span>View All 15+ Poojas</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -204,7 +204,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               className={`px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                 selectedCatId === 'all'
                   ? 'bg-amber-800 text-white shadow-md'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
               All Featured
@@ -216,7 +216,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                 className={`px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                   selectedCatId === cat.id
                     ? 'bg-amber-800 text-white shadow-md'
-                    : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
                 }`}
               >
                 {cat.name}
@@ -239,27 +239,27 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       </section>
 
       {/* Featured Yatras & Spiritual Tours Section */}
-      <section className="bg-gradient-to-b from-stone-100 to-amber-50/50 py-16 border-y border-stone-200/80">
+      <section className="bg-gradient-to-b from-stone-100 to-amber-50/50 dark:from-stone-900/90 dark:to-[#1C1917] py-16 border-y border-stone-200/80 dark:border-stone-800">
         <div className="max-w-7xl mx-auto px-4 space-y-8">
           
           <FadeIn direction="up">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider mb-2">
-                  <Compass className="w-3.5 h-3.5 text-emerald-700" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-emerald-200 dark:border-emerald-800/50">
+                  <Compass className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
                   <span>Sacred Pilgrimages</span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+                <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
                   Spiritual Tours & Yatra Packages
                 </h2>
-                <p className="text-stone-600 text-xs sm:text-sm mt-1 max-w-2xl">
+                <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
                   Thoughtfully organized private circuit tours across Ujjain, Omkareshwar, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.
                 </p>
               </div>
 
               <a
                 href="/spiritual-tours"
-                className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-950 group"
+                className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-200 group"
               >
                 <span>Explore All Yatras</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -285,14 +285,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       <section className="max-w-7xl mx-auto px-4 space-y-8">
         <FadeIn direction="up">
           <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-900 text-xs font-semibold uppercase tracking-wider mb-2">
-              <MapPin className="w-3.5 h-3.5 text-sky-700" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 text-sky-900 dark:text-sky-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-sky-200 dark:border-sky-800/50">
+              <MapPin className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
               <span>Sacred Holy Cities</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
               Explore Sacred Pilgrimage Shrines
             </h2>
-            <p className="text-stone-600 text-xs sm:text-sm mt-1">
+            <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1">
               Discover temples, darshan guidelines, and local spiritual significance.
             </p>
           </div>
@@ -393,11 +393,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         <section className="max-w-7xl mx-auto px-4 space-y-8">
           <FadeIn direction="up">
             <div className="text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider mb-2">
-                <Users className="w-3.5 h-3.5 text-amber-700" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-amber-200 dark:border-amber-800/50">
+                <Users className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                 <span>Devotee Experiences</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
                 Words of Faith & Gratitude
               </h2>
             </div>
@@ -406,25 +406,25 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((test, index) => (
               <FadeIn key={test.id} delay={index * 120} direction="up">
-                <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-3 flex flex-col justify-between h-full">
+                <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-3 flex flex-col justify-between h-full">
                   <div className="space-y-3">
                     <div className="flex items-center gap-1 text-amber-500">
                       {[...Array(test.rating)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <p className="text-stone-700 text-xs leading-relaxed italic">
+                    <p className="text-stone-700 dark:text-stone-300 text-xs leading-relaxed italic">
                       &quot;{test.testimonial}&quot;
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
+                  <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs">
                     <div>
-                      <div className="font-bold text-stone-900">{test.name}</div>
-                      <div className="text-stone-500">{test.location}</div>
+                      <div className="font-bold text-stone-900 dark:text-stone-100">{test.name}</div>
+                      <div className="text-stone-500 dark:text-stone-400">{test.location}</div>
                     </div>
                     {(test.service || test.tour) && (
-                      <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                      <span className="text-[10px] font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-stone-800 px-2 py-0.5 rounded border border-amber-200 dark:border-stone-700">
                         {test.service || test.tour}
                       </span>
                     )}

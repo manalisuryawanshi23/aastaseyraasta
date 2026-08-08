@@ -43,30 +43,30 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-stone-900/70 backdrop-blur-sm p-4 pt-16 overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         
         {/* Search Bar */}
-        <div className="relative border-b border-stone-200 p-4 bg-stone-50 flex items-center gap-3">
-          <Search className="w-5 h-5 text-amber-700 shrink-0" />
+        <div className="relative border-b border-stone-200 dark:border-stone-800 p-4 bg-stone-50 dark:bg-stone-900 flex items-center gap-3">
+          <Search className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0" />
           <input
             type="text"
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search poojas (e.g. Rudrabhishek, Bhat Pooja), yatras, destinations..."
-            className="w-full bg-transparent text-stone-900 placeholder-stone-400 text-base outline-none font-medium"
+            className="w-full bg-transparent text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 text-base outline-none font-medium"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-stone-400 hover:text-stone-600 text-xs font-semibold px-2 py-1 rounded bg-stone-200"
+              className="text-stone-400 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-100 text-xs font-semibold px-2 py-1 rounded bg-stone-200 dark:bg-stone-800"
             >
               Clear
             </button>
           )}
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-stone-200 text-stone-500 transition-colors"
+            className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-500 dark:text-stone-400 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -75,15 +75,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         {/* Search Results Container */}
         <div className="max-h-[70vh] overflow-y-auto p-4 space-y-6">
           {!query.trim() ? (
-            <div className="py-8 text-center text-stone-500 space-y-3">
-              <Sparkles className="w-8 h-8 text-amber-600 mx-auto opacity-70" />
+            <div className="py-8 text-center text-stone-500 dark:text-stone-400 space-y-3">
+              <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto opacity-70" />
               <p className="text-sm font-serif">Try searching for sacred rituals or pilgrimage circuits:</p>
               <div className="flex flex-wrap gap-2 justify-center max-w-md mx-auto pt-2">
                 {['Rudrabhishek', 'Bhat Pooja', 'Mahamrityunjaya', 'Baglamukhi Havan', 'Omkareshwar Yatra', 'Char Dham', 'Ujjain'].map((term) => (
                   <button
                     key={term}
                     onClick={() => setQuery(term)}
-                    className="px-3 py-1 bg-amber-50 text-amber-800 text-xs rounded-full border border-amber-200 hover:bg-amber-100 transition-colors"
+                    className="px-3 py-1 bg-amber-50 dark:bg-stone-800 text-amber-800 dark:text-amber-200 text-xs rounded-full border border-amber-200 dark:border-stone-700 hover:bg-amber-100 dark:hover:bg-stone-700 transition-colors"
                   >
                     {term}
                   </button>
@@ -91,9 +91,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               </div>
             </div>
           ) : totalResults === 0 ? (
-            <div className="py-12 text-center text-stone-500">
+            <div className="py-12 text-center text-stone-500 dark:text-stone-400">
               <p className="text-base font-serif">No spiritual services found for &quot;{query}&quot;</p>
-              <p className="text-xs text-stone-400 mt-1">
+              <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">
                 You can submit a custom enquiry or call our Acharya team directly at +91 9111099799.
               </p>
             </div>
@@ -102,32 +102,32 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               {/* Poojas */}
               {poojas.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800 mb-2.5 flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-2.5 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Pooja Services ({poojas.length})</span>
                   </h4>
-                  <div className="divide-y divide-stone-100">
+                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {poojas.map((p) => (
                       <a
                         key={p.id}
                         href={`/pooja/${p.slug}`}
                         onClick={onClose}
-                        className="group py-2.5 px-3 rounded-xl hover:bg-amber-50/60 transition-colors flex items-center justify-between gap-3"
+                        className="group py-2.5 px-3 rounded-xl hover:bg-amber-50/60 dark:hover:bg-stone-800/60 transition-colors flex items-center justify-between gap-3"
                       >
                         <div>
-                          <div className="font-semibold text-stone-900 group-hover:text-amber-900 text-sm flex items-center gap-2">
+                          <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-amber-900 dark:group-hover:text-amber-300 text-sm flex items-center gap-2">
                             <span>{p.name}</span>
                             {p.hindiName && (
-                              <span className="text-xs font-normal text-stone-500">
+                              <span className="text-xs font-normal text-stone-500 dark:text-stone-400">
                                 ({p.hindiName})
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+                          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
                             {p.shortDescription}
                           </p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-amber-700 shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 shrink-0" />
                       </a>
                     ))}
                   </div>
@@ -137,27 +137,27 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               {/* Tours */}
               {tours.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-2.5 flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 mb-2.5 flex items-center gap-1.5">
                     <Compass className="w-3.5 h-3.5" />
                     <span>Spiritual Yatras ({tours.length})</span>
                   </h4>
-                  <div className="divide-y divide-stone-100">
+                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {tours.map((t) => (
                       <a
                         key={t.id}
                         href={`/spiritual-tours/${t.slug}`}
                         onClick={onClose}
-                        className="group py-2.5 px-3 rounded-xl hover:bg-emerald-50/60 transition-colors flex items-center justify-between gap-3"
+                        className="group py-2.5 px-3 rounded-xl hover:bg-emerald-50/60 dark:hover:bg-stone-800/60 transition-colors flex items-center justify-between gap-3"
                       >
                         <div>
-                          <div className="font-semibold text-stone-900 group-hover:text-emerald-900 text-sm">
+                          <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-emerald-900 dark:group-hover:text-emerald-300 text-sm">
                             {t.name}
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+                          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
                             {t.shortDescription}
                           </p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-emerald-700 shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 shrink-0" />
                       </a>
                     ))}
                   </div>
@@ -167,27 +167,27 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               {/* Destinations */}
               {destinations.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-sky-800 mb-2.5 flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-sky-800 dark:text-sky-400 mb-2.5 flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5" />
                     <span>Sacred Destinations ({destinations.length})</span>
                   </h4>
-                  <div className="divide-y divide-stone-100">
+                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {destinations.map((d) => (
                       <a
                         key={d.id}
                         href={`/destinations/${d.slug}`}
                         onClick={onClose}
-                        className="group py-2.5 px-3 rounded-xl hover:bg-sky-50/60 transition-colors flex items-center justify-between gap-3"
+                        className="group py-2.5 px-3 rounded-xl hover:bg-sky-50/60 dark:hover:bg-stone-800/60 transition-colors flex items-center justify-between gap-3"
                       >
                         <div>
-                          <div className="font-semibold text-stone-900 group-hover:text-sky-900 text-sm">
+                          <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-sky-900 dark:group-hover:text-sky-300 text-sm">
                             {d.name} {d.hindiName && `(${d.hindiName})`}
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+                          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
                             {d.shortDescription}
                           </p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-sky-700 shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-sky-700 dark:group-hover:text-sky-400 shrink-0" />
                       </a>
                     ))}
                   </div>
@@ -197,27 +197,27 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               {/* Blogs */}
               {blogs.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2.5 flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-800 dark:text-purple-400 mb-2.5 flex items-center gap-1.5">
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Blog Guides ({blogs.length})</span>
                   </h4>
-                  <div className="divide-y divide-stone-100">
+                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {blogs.map((b) => (
                       <a
                         key={b.id}
                         href={`/blog/${b.slug}`}
                         onClick={onClose}
-                        className="group py-2.5 px-3 rounded-xl hover:bg-purple-50/60 transition-colors flex items-center justify-between gap-3"
+                        className="group py-2.5 px-3 rounded-xl hover:bg-purple-50/60 dark:hover:bg-stone-800/60 transition-colors flex items-center justify-between gap-3"
                       >
                         <div>
-                          <div className="font-semibold text-stone-900 group-hover:text-purple-900 text-sm">
+                          <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-purple-900 dark:group-hover:text-purple-300 text-sm">
                             {b.title}
                           </div>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+                          <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
                             {b.excerpt}
                           </p>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-purple-700 shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-purple-700 dark:group-hover:text-purple-400 shrink-0" />
                       </a>
                     ))}
                   </div>

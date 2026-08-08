@@ -55,45 +55,45 @@ export const ContactPage: React.FC = () => {
         
         {/* Contact Info Cards */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#121212]/10 shadow-sm space-y-4">
-            <h3 className="font-serif font-bold text-lg text-stone-900 border-b border-[#121212]/10 pb-2">
+          <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm space-y-4">
+            <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100 border-b border-[#121212]/10 dark:border-stone-800 pb-2">
               Direct Contact Details
             </h3>
 
-            <div className="space-y-3 text-xs sm:text-sm text-stone-700">
+            <div className="space-y-3 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-amber-800 shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-amber-800 dark:text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-semibold text-stone-900">{settings.businessName}</div>
+                  <div className="font-semibold text-stone-900 dark:text-stone-100">{settings.businessName}</div>
                   <div>{settings.address}, {settings.city}, {settings.state} - {settings.pincode}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-amber-800 shrink-0" />
+                <Phone className="w-5 h-5 text-amber-800 dark:text-amber-400 shrink-0" />
                 <div>
-                  <div className="font-semibold text-stone-900">Phone Lines:</div>
-                  <div className="font-mono text-stone-800">{settings.phone1} / {settings.phone2}</div>
+                  <div className="font-semibold text-stone-900 dark:text-stone-100">Phone Lines:</div>
+                  <div className="font-mono text-stone-800 dark:text-stone-200">{settings.phone1} / {settings.phone2}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-amber-800 shrink-0" />
+                <Mail className="w-5 h-5 text-amber-800 dark:text-amber-400 shrink-0" />
                 <div>
-                  <div className="font-semibold text-stone-900">Email:</div>
+                  <div className="font-semibold text-stone-900 dark:text-stone-100">Email:</div>
                   <div>{settings.email}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <MessageSquare className="w-5 h-5 text-emerald-700 shrink-0" />
+                <MessageSquare className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
                 <div>
-                  <div className="font-semibold text-stone-900">WhatsApp Support:</div>
+                  <div className="font-semibold text-stone-900 dark:text-stone-100">WhatsApp Support:</div>
                   <a
                     href={`https://wa.me/${settings.whatsappNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-emerald-800 font-medium hover:underline"
+                    className="text-emerald-800 dark:text-emerald-400 font-medium hover:underline"
                   >
                     +91 {settings.whatsappNumber} (Instant Response)
                   </a>
@@ -104,70 +104,70 @@ export const ContactPage: React.FC = () => {
         </div>
 
         {/* Form */}
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#121212]/10 shadow-sm">
+        <div className="bg-white dark:bg-[#1C1917] p-6 sm:p-8 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm">
           {submitted ? (
             <div className="text-center py-8 space-y-3">
-              <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-              <h3 className="font-serif font-bold text-xl text-stone-900">Message Received</h3>
-              <p className="text-stone-600 text-xs sm:text-sm">
+              <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
+              <h3 className="font-serif font-bold text-xl text-stone-900 dark:text-amber-100">Message Received</h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm">
                 Thank you for contacting us. Our coordinator will get back to you shortly.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <h3 className="font-serif font-bold text-lg text-stone-900 border-b border-[#121212]/10 pb-2">
+              <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100 border-b border-[#121212]/10 dark:border-stone-800 pb-2">
                 Send Direct Inquiry
               </h3>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Your Name *</label>
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">Your Name *</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter full name"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-800"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Mobile / WhatsApp *</label>
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">Mobile / WhatsApp *</label>
                 <input
                   type="tel"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 9876543210"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-800"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Email Address</label>
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">Email Address</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-800"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">Your Query / Requirements</label>
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">Your Query / Requirements</label>
                 <textarea
                   rows={3}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Specify pooja type, preferred dates, or yatra requirements..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-800 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 px-6 rounded-xl bg-[#121212] text-white font-medium text-sm hover:bg-stone-800 shadow-sm transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 px-6 rounded-xl bg-[#121212] dark:bg-amber-700 text-white font-medium text-sm hover:bg-stone-800 dark:hover:bg-amber-800 shadow-sm transition-colors flex items-center justify-center gap-2"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Inquiry</span>

@@ -88,15 +88,15 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
 
       {/* Controls */}
       <FadeIn delay={100} direction="up">
-        <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm flex items-center">
+        <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm flex items-center">
           <div className="relative w-full">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search tours (e.g. Ujjain Omkareshwar, Char Dham, Nalkheda)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
         </div>

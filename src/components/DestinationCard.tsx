@@ -10,9 +10,9 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
   return (
     <a
       href={`/destinations/${destination.slug}`}
-      className="group bg-white rounded-2xl border border-stone-200/80 shadow-sm hover:shadow-2xl hover:shadow-sky-950/15 hover:border-sky-500/80 hover:-translate-y-2.5 transition-all duration-500 ease-out overflow-hidden flex flex-col h-full relative"
+      className="group bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200/80 dark:border-stone-800/80 shadow-sm hover:shadow-2xl hover:shadow-sky-950/15 hover:border-sky-500/80 dark:hover:border-sky-500/80 hover:-translate-y-2.5 transition-all duration-500 ease-out overflow-hidden flex flex-col h-full relative"
     >
-      <div className="relative h-48 w-full overflow-hidden bg-stone-100">
+      <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={destination.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}
           alt={destination.name}
@@ -37,18 +37,18 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
       </div>
 
       <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-        <p className="text-stone-600 text-xs leading-relaxed line-clamp-3">
+        <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-3">
           {destination.shortDescription}
         </p>
 
-        <div className="pt-2 flex items-center justify-between text-xs font-semibold text-sky-800 border-t border-stone-100">
+        <div className="pt-2 flex items-center justify-between text-xs font-semibold text-sky-800 dark:text-sky-400 border-t border-stone-100 dark:border-stone-800">
           <span className="flex items-center gap-1">
-            <Landmark className="w-3.5 h-3.5 text-sky-600" />
+            <Landmark className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
             <span>{destination.placesToVisit.length} Major Shrines</span>
           </span>
-          <span className="flex items-center gap-1.5 text-stone-700 group-hover:text-sky-900 transition-colors">
+          <span className="flex items-center gap-1.5 text-stone-700 dark:text-stone-300 group-hover:text-sky-900 dark:group-hover:text-sky-300 transition-colors">
             <span>Explore Guide</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300 text-sky-700" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300 text-sky-700 dark:text-sky-400" />
           </span>
         </div>
       </div>

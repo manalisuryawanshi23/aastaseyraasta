@@ -92,16 +92,16 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
 
       {/* Controls: Search & Category Filter */}
       <FadeIn delay={100} direction="up">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm">
           {/* Search */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search pooja by name or temple (e.g. Rudrabhishek, Mangalnath)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
 
@@ -112,7 +112,7 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
               className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                 selectedCat === 'all'
                   ? 'bg-amber-800 text-white'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
               All Poojas ({allPoojas.length})
@@ -124,7 +124,7 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
                 className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                   selectedCat === cat.id
                     ? 'bg-amber-800 text-white'
-                    : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
                 }`}
               >
                 {cat.name}
@@ -136,10 +136,10 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-2xl border border-stone-200 space-y-3">
-          <Sparkles className="w-8 h-8 text-amber-600 mx-auto" />
-          <h3 className="font-serif font-bold text-lg text-stone-800">No Poojas Found</h3>
-          <p className="text-stone-500 text-xs">Try adjusting your category filter or search term.</p>
+        <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
+          <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
+          <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Poojas Found</h3>
+          <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your category filter or search term.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

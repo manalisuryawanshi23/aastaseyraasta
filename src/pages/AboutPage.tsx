@@ -38,56 +38,56 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenBooking }) => {
 
       {/* Core Values / Pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-[#121212]/10 shadow-sm space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] text-amber-800 flex items-center justify-center font-serif font-bold">
+        <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] dark:bg-stone-800 text-amber-800 dark:text-amber-400 flex items-center justify-center font-serif font-bold">
             <Award className="w-5 h-5" />
           </div>
-          <h3 className="font-serif font-bold text-lg text-stone-900">Vedic Authenticity</h3>
-          <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+          <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100">Vedic Authenticity</h3>
+          <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
             Conducted strictly according to Vedic scriptures by qualified Gurukul-trained Brahmins with authentic mantras and satvik samagri.
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-[#121212]/10 shadow-sm space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] text-amber-800 flex items-center justify-center font-serif font-bold">
+        <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] dark:bg-stone-800 text-amber-800 dark:text-amber-400 flex items-center justify-center font-serif font-bold">
             <ShieldCheck className="w-5 h-5" />
           </div>
-          <h3 className="font-serif font-bold text-lg text-stone-900">Transparent & Ethical</h3>
-          <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+          <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100">Transparent & Ethical</h3>
+          <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
             Clear guidelines on dakshina, samagri, temple timings, and venue arrangements with zero hidden promises or false claims.
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-[#121212]/10 shadow-sm space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] text-amber-800 flex items-center justify-center font-serif font-bold">
+        <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-[#F3F1ED] dark:bg-stone-800 text-amber-800 dark:text-amber-400 flex items-center justify-center font-serif font-bold">
             <Users className="w-5 h-5" />
           </div>
-          <h3 className="font-serif font-bold text-lg text-stone-900">Devotee Care</h3>
-          <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+          <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100">Devotee Care</h3>
+          <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
             Personalized gotra sankalp, temple queuing guidance, private AC transport, and comfortable lodging assistance.
           </p>
         </div>
       </div>
 
       {/* Detailed Narrative */}
-      <div className="bg-[#F3F1ED] p-8 sm:p-12 rounded-2xl border border-[#121212]/10 space-y-4">
-        <h2 className="text-2xl font-serif italic font-bold text-stone-900">
+      <div className="bg-[#F3F1ED] dark:bg-stone-900 p-8 sm:p-12 rounded-2xl border border-[#121212]/10 dark:border-stone-800 space-y-4">
+        <h2 className="text-2xl font-serif italic font-bold text-stone-900 dark:text-amber-100">
           Serving Devotees at Mahakal Nagari Ujjain
         </h2>
-        <p className="text-stone-700 text-sm leading-relaxed">
+        <p className="text-stone-700 dark:text-stone-300 text-sm leading-relaxed">
           {settings.footerDescription}
         </p>
-        <div className="pt-4 flex flex-wrap gap-4 text-xs font-semibold text-stone-800">
+        <div className="pt-4 flex flex-wrap gap-4 text-xs font-semibold text-stone-800 dark:text-stone-200">
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>Rudrabhishek at Ramghat & Shrines</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>Bhat Pooja at Angareshwar & Mangalnath</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>Baglamukhi Havan at Nalkheda</span>
           </span>
         </div>

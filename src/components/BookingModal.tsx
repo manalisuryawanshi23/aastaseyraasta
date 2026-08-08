@@ -62,7 +62,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-amber-200/50 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-xl bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-amber-200/50 dark:border-stone-800 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}
         <div className="bg-gradient-to-r from-red-900 via-amber-950 to-red-950 text-white p-6 relative">
@@ -90,15 +90,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         <div className="p-6">
           {submitted ? (
             <div className="text-center py-6 space-y-4">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+              <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/80 rounded-full flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
               <div>
-                <h4 className="text-xl font-serif font-bold text-stone-900">
+                <h4 className="text-xl font-serif font-bold text-stone-900 dark:text-stone-100">
                   Pranam, {name}!
                 </h4>
-                <p className="text-stone-600 text-sm mt-1 max-w-md mx-auto">
-                  Your enquiry for <span className="font-semibold text-amber-800">{serviceName || serviceType}</span> has been received successfully. Our Acharya team will contact you shortly on <span className="font-mono text-stone-800">{phone}</span>.
+                <p className="text-stone-600 dark:text-stone-300 text-sm mt-1 max-w-md mx-auto">
+                  Your enquiry for <span className="font-semibold text-amber-800 dark:text-amber-400">{serviceName || serviceType}</span> has been received successfully. Our Acharya team will contact you shortly on <span className="font-mono text-stone-800 dark:text-stone-200">{phone}</span>.
                 </p>
               </div>
 
@@ -114,9 +114,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </a>
                 <a
                   href={`tel:${settings.phone1}`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-stone-100 text-stone-800 font-medium text-sm hover:bg-stone-200 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 font-medium text-sm hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
                 >
-                  <Phone className="w-4 h-4 text-amber-700" />
+                  <Phone className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                   <span>Call {settings.phone1}</span>
                 </a>
               </div>
@@ -127,7 +127,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     setSubmitted(false);
                     onClose();
                   }}
-                  className="text-xs text-stone-500 hover:text-stone-700 underline"
+                  className="text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 underline"
                 >
                   Close window
                 </button>
@@ -136,12 +136,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Type toggle */}
-              <div className="grid grid-cols-3 gap-2 p-1 bg-stone-100 rounded-xl text-xs font-medium text-stone-600">
+              <div className="grid grid-cols-3 gap-2 p-1 bg-stone-100 dark:bg-stone-800/80 rounded-xl text-xs font-medium text-stone-600 dark:text-stone-300">
                 <button
                   type="button"
                   onClick={() => setServiceType('Pooja')}
                   className={`py-2 rounded-lg transition-all ${
-                    serviceType === 'Pooja' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200'
+                    serviceType === 'Pooja' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
                   Pooja Service
@@ -150,7 +150,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   type="button"
                   onClick={() => setServiceType('Tour')}
                   className={`py-2 rounded-lg transition-all ${
-                    serviceType === 'Tour' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200'
+                    serviceType === 'Tour' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
                   Spiritual Tour
@@ -159,7 +159,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   type="button"
                   onClick={() => setServiceType('General')}
                   className={`py-2 rounded-lg transition-all ${
-                    serviceType === 'General' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200'
+                    serviceType === 'General' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
                   General Query
@@ -168,7 +168,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               {/* Specific Service Input */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                   Selected Service / Package
                 </label>
                 <input
@@ -176,14 +176,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   value={serviceName}
                   onChange={(e) => setServiceName(e.target.value)}
                   placeholder="e.g. Rudrabhishek / Bhat Pooja / Ujjain Tour"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     Devotee Full Name *
                   </label>
                   <input
@@ -192,13 +192,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter full name"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
 
                 {/* Mobile Phone */}
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     Mobile / WhatsApp Number *
                   </label>
                   <input
@@ -207,7 +207,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 9876543210"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -215,7 +215,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {/* Preferred Date */}
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     Preferred Date
                   </label>
                   <div className="relative">
@@ -223,14 +223,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                       type="date"
                       value={preferredDate}
                       onChange={(e) => setPreferredDate(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Number of People */}
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     No. of Devotees
                   </label>
                   <input
@@ -239,13 +239,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     max="100"
                     value={numberOfPeople}
                     onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
 
                 {/* Gotra */}
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     Gotra (Optional)
                   </label>
                   <input
@@ -253,14 +253,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     value={gotra}
                     onChange={(e) => setGotra(e.target.value)}
                     placeholder="e.g. Kashyap"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
               </div>
 
               {/* Special Message */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1">
+                <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                   Special Intentions / Notes
                 </label>
                 <textarea
@@ -268,7 +268,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Mention preferred temple, lodging requirement or health prayer..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-stone-900 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none"
                 />
               </div>
 

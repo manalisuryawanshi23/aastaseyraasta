@@ -41,15 +41,15 @@ export const BlogListingPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-[#F3F1ED] p-4 rounded-xl border border-[#121212]/10 flex items-center">
+      <div className="bg-[#F3F1ED] dark:bg-stone-800 p-4 rounded-xl border border-[#121212]/10 dark:border-stone-700 flex items-center">
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-stone-500 dark:text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search articles by keyword (e.g. Rudrabhishek, Mangalnath, Gotra)..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-[#121212]/10 text-stone-900 text-sm outline-none focus:ring-2 focus:ring-amber-800"
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white dark:bg-stone-900 border border-[#121212]/10 dark:border-stone-700 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 text-sm outline-none focus:ring-2 focus:ring-amber-800"
           />
         </div>
       </div>

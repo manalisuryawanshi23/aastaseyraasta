@@ -10,9 +10,9 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <a
       href={`/blog/${post.slug}`}
-      className="group bg-white rounded-2xl border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-amber-300 transition-all duration-300 overflow-hidden flex flex-col h-full"
+      className="group bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200/80 dark:border-stone-800/80 shadow-sm hover:shadow-xl hover:border-amber-300 dark:hover:border-amber-500/50 transition-all duration-300 overflow-hidden flex flex-col h-full"
     >
-      <div className="relative h-44 w-full overflow-hidden bg-stone-100">
+      <div className="relative h-44 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={post.featuredImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
           alt={post.title}
@@ -26,28 +26,28 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 
       <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
         <div>
-          <div className="flex items-center gap-3 text-[11px] text-stone-500 mb-2">
+          <div className="flex items-center gap-3 text-[11px] text-stone-500 dark:text-stone-400 mb-2">
             <span className="flex items-center gap-1">
-              <User className="w-3 h-3 text-amber-700" />
+              <User className="w-3 h-3 text-amber-700 dark:text-amber-400" />
               <span>{post.author}</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3 text-stone-400" />
+              <Clock className="w-3 h-3 text-stone-400 dark:text-stone-500" />
               <span>{post.readingTime || '5 min read'}</span>
             </span>
           </div>
 
-          <h3 className="font-serif font-bold text-base text-stone-900 group-hover:text-amber-800 transition-colors leading-snug line-clamp-2 mb-2">
+          <h3 className="font-serif font-bold text-base text-stone-900 dark:text-amber-100 group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors leading-snug line-clamp-2 mb-2">
             {post.title}
           </h3>
 
-          <p className="text-stone-600 text-xs leading-relaxed line-clamp-2">
+          <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-2">
             {post.excerpt}
           </p>
         </div>
 
-        <div className="pt-2 flex items-center justify-between text-xs font-medium text-amber-800 group-hover:text-amber-900">
+        <div className="pt-2 flex items-center justify-between text-xs font-medium text-amber-800 dark:text-amber-400 group-hover:text-amber-900 dark:group-hover:text-amber-300">
           <span>Read Spiritual Guide</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </div>
