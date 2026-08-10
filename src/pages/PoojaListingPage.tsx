@@ -7,6 +7,7 @@ import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Flame, Search, Filter, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
+import { ContentFade } from '../components/PageTransition';
 
 interface PoojaListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -144,26 +145,28 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
       </FadeIn>
 
       {/* Grid */}
-      {isLoading ? (
-        <SkeletonGrid type="pooja" count={6} />
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
-          <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
-          <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Poojas Found</h3>
-          <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your category filter or search term.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((pooja, index) => (
-            <FadeIn key={pooja.id} delay={index * 100} direction="up">
+      <ContentFade contentKey={`${selectedCat}-${searchTerm}`}>
+        {isLoading ? (
+          <SkeletonGrid type="pooja" count={6} />
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
+            <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
+            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Poojas Found</h3>
+            <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your category filter or search term.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((pooja, index) => (
               <PoojaCard
+                key={pooja.id}
                 pooja={pooja}
+                index={index}
                 onBook={(name) => onOpenBooking('Pooja', name)}
               />
-            </FadeIn>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </ContentFade>
     </div>
   );
 };

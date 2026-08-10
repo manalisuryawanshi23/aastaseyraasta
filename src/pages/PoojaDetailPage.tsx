@@ -6,6 +6,8 @@ import { FAQAccordion } from '../components/FAQAccordion';
 import { PoojaCard } from '../components/PoojaCard';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { ShareWhatsAppButton } from '../components/ShareWhatsAppButton';
+import { SocialShareButtons } from '../components/SocialShareButtons';
+import { AuspiciousCountdownTimer } from '../components/AuspiciousCountdownTimer';
 import {
   Flame,
   MapPin,
@@ -146,6 +148,21 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               {pooja.description || pooja.shortDescription}
             </div>
           </div>
+
+          {/* Social Media Sharing */}
+          <SocialShareButtons
+            title={pooja.name}
+            description={pooja.shortDescription}
+            category={pooja.categoryName}
+          />
+
+          {/* Upcoming Auspicious Muhurat Countdown Timer */}
+          <AuspiciousCountdownTimer
+            poojaName={pooja.name}
+            categoryName={pooja.categoryName}
+            poojaSlug={pooja.slug}
+            onOpenBooking={onOpenBooking}
+          />
 
           {/* What We Offer */}
           {pooja.whatWeOffer && pooja.whatWeOffer.length > 0 && (

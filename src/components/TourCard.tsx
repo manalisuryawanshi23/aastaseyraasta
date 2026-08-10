@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { MapPin, Calendar, Clock, ArrowRight, Compass, ShieldCheck } from 'lucide-react';
 import { Tour } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,13 +8,24 @@ import { FavoriteButton } from './FavoriteButton';
 interface TourCardProps {
   tour: Tour;
   onBook: (name: string) => void;
+  index?: number;
 }
 
-export const TourCard: React.FC<TourCardProps> = ({ tour, onBook }) => {
+export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) => {
   const { t } = useLanguage();
 
   return (
-    <div className="group bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200/80 dark:border-stone-800/80 shadow-sm hover:shadow-2xl hover:shadow-emerald-950/15 hover:border-emerald-500/80 dark:hover:border-emerald-500/80 hover:-translate-y-2.5 transition-all duration-500 ease-out overflow-hidden flex flex-col h-full relative">
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: '-20px' }}
+      transition={{
+        duration: 0.45,
+        delay: Math.min((index % 6) * 0.07, 0.35),
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="group bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200/80 dark:border-stone-800/80 shadow-sm hover:shadow-2xl hover:shadow-emerald-950/15 hover:border-emerald-500/80 dark:hover:border-emerald-500/80 hover:-translate-y-2.5 transition-all duration-500 ease-out overflow-hidden flex flex-col h-full relative"
+    >
       
       {/* Thumbnail */}
       <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
@@ -87,6 +99,6 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook }) => {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -191,18 +191,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
               )}
             </button>
 
-            {/* Main Header Language Selector Toggle */}
-            <button
-              onClick={toggleLanguage}
-              className="px-2.5 py-1.5 rounded-xl bg-amber-50 dark:bg-stone-800 hover:bg-amber-100/90 dark:hover:bg-stone-700 text-amber-950 dark:text-amber-100 border border-amber-300/80 dark:border-amber-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold shadow-xs hover:shadow-sm"
-              title={language === 'en' ? 'Switch to Hindi (हिंदी में पढ़ें)' : 'Switch to English'}
-            >
-              <Globe className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
-              <span className="font-serif font-bold text-amber-900 dark:text-amber-200">
-                {language === 'en' ? 'हिंदी' : 'English'}
-              </span>
-            </button>
-
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}

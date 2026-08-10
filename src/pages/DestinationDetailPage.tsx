@@ -4,6 +4,8 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { PoojaCard } from '../components/PoojaCard';
 import { TourCard } from '../components/TourCard';
+import { DestinationMapVisualizer } from '../components/DestinationMapVisualizer';
+import { SocialShareButtons } from '../components/SocialShareButtons';
 import { MapPin, Landmark, Car, Sparkles, Compass } from 'lucide-react';
 
 interface DestinationDetailPageProps {
@@ -89,6 +91,11 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
             </p>
           </div>
 
+          <SocialShareButtons
+            title={`Spiritual Guide to ${dest.name}`}
+            description={dest.shortDescription}
+          />
+
           {/* Temples List */}
           {dest.placesToVisit && dest.placesToVisit.length > 0 && (
             <div className="bg-amber-50/60 p-6 sm:p-8 rounded-2xl border border-amber-200/80 space-y-4">
@@ -140,6 +147,15 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
         </div>
 
       </div>
+
+      {/* Interactive Sacred Map Visualizer */}
+      <section className="pt-2">
+        <DestinationMapVisualizer
+          destinationSlug={dest.slug}
+          destinationName={dest.name}
+          onOpenBooking={onOpenBooking}
+        />
+      </section>
 
       {/* Related Poojas in this destination */}
       {relatedPoojas.length > 0 && (

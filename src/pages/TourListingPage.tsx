@@ -7,6 +7,7 @@ import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Compass, Search, MapPin, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
+import { ContentFade } from '../components/PageTransition';
 
 interface TourListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -112,23 +113,28 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
       </FadeIn>
 
       {/* Grid */}
-      {isLoading ? (
-        <SkeletonGrid type="tour" count={6} />
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
-          <Sparkles className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
-          <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Tour Circuits Found</h3>
-          <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your search term.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((tour, index) => (
-            <FadeIn key={tour.id} delay={index * 100} direction="up">
-              <TourCard key={tour.id} tour={tour} onBook={(name) => onOpenBooking('Tour', name)} />
-            </FadeIn>
-          ))}
-        </div>
-      )}
+      <ContentFade contentKey={searchTerm}>
+        {isLoading ? (
+          <SkeletonGrid type="tour" count={6} />
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
+            <Sparkles className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
+            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Tour Circuits Found</h3>
+            <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your search term.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((tour, index) => (
+              <TourCard
+                key={tour.id}
+                tour={tour}
+                index={index}
+                onBook={(name) => onOpenBooking('Tour', name)}
+              />
+            ))}
+          </div>
+        )}
+      </ContentFade>
     </div>
   );
 };

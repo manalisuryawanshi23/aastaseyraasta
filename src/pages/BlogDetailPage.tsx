@@ -4,6 +4,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { BlogCard } from '../components/BlogCard';
 import { ReadingProgressBar } from '../components/ReadingProgressBar';
+import { SocialShareButtons } from '../components/SocialShareButtons';
 import { FadeIn } from '../components/FadeIn';
 import { Clock, User, Calendar, Tag, ArrowLeft } from 'lucide-react';
 
@@ -107,6 +108,15 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
         <div className="bg-white dark:bg-[#1C1917] p-6 sm:p-10 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200 text-sm sm:text-base whitespace-pre-line space-y-4 font-serif">
           {post.content}
         </div>
+      </FadeIn>
+
+      {/* Social Media Sharing */}
+      <FadeIn delay={200} direction="up">
+        <SocialShareButtons
+          title={post.title}
+          description={post.excerpt}
+          category={post.category}
+        />
       </FadeIn>
 
       {/* Related Posts */}

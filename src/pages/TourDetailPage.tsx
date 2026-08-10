@@ -4,6 +4,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { TourCard } from '../components/TourCard';
 import { FavoriteButton } from '../components/FavoriteButton';
+import { SocialShareButtons } from '../components/SocialShareButtons';
 import {
   Compass,
   MapPin,
@@ -140,6 +141,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
             </div>
           )}
+
+          {/* Social Media Sharing */}
+          <SocialShareButtons
+            title={tour.name}
+            description={tour.shortDescription}
+            category={tour.category}
+          />
 
           {/* Day-Wise Itinerary */}
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-6">

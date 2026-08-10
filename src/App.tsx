@@ -8,6 +8,7 @@ import { AmbientAudioPlayer } from './components/AmbientAudioPlayer';
 import { BookingModal } from './components/BookingModal';
 import { SearchModal } from './components/SearchModal';
 import { SupportChatWidget } from './components/SupportChatWidget';
+import { PageTransition } from './components/PageTransition';
 
 import { HomePage } from './pages/HomePage';
 import { PoojaListingPage } from './pages/PoojaListingPage';
@@ -161,8 +162,10 @@ export default function App() {
           />
 
           {/* Main Page Body */}
-          <main className="flex-1 pb-16 lg:pb-0">
-            {renderCurrentView()}
+          <main className="flex-1 pb-16 lg:pb-0 overflow-x-hidden">
+            <PageTransition routeKey={currentPath}>
+              {renderCurrentView()}
+            </PageTransition>
           </main>
 
           {/* Footer */}

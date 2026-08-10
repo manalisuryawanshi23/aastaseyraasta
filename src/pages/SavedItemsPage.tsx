@@ -15,6 +15,7 @@ import {
   Bookmark,
   CheckCircle2,
 } from 'lucide-react';
+import { ContentFade } from '../components/PageTransition';
 
 interface SavedItemsPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -171,7 +172,7 @@ export const SavedItemsPage: React.FC<SavedItemsPageProps> = ({ onOpenBooking })
         </div>
       ) : (
         /* Saved Items Grid */
-        <div className="space-y-10">
+        <ContentFade contentKey={activeTab} className="space-y-10">
           
           {/* Poojas Section */}
           {(activeTab === 'all' || activeTab === 'poojas') && poojas.length > 0 && (
@@ -221,7 +222,7 @@ export const SavedItemsPage: React.FC<SavedItemsPageProps> = ({ onOpenBooking })
             </div>
           )}
 
-        </div>
+        </ContentFade>
       )}
 
       {/* Confirmation Modal for Clear All */}

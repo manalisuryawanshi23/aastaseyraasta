@@ -1,15 +1,25 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { MapPin, ArrowRight, Landmark } from 'lucide-react';
 import { Destination } from '../types';
 
 interface DestinationCardProps {
   destination: Destination;
+  index?: number;
 }
 
-export const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
+export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, index = 0 }) => {
   return (
-    <a
+    <motion.a
       href={`/destinations/${destination.slug}`}
+      initial={{ opacity: 0, y: 24, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: '-20px' }}
+      transition={{
+        duration: 0.45,
+        delay: Math.min((index % 6) * 0.07, 0.35),
+        ease: [0.22, 1, 0.36, 1],
+      }}
       className="group bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200/80 dark:border-stone-800/80 shadow-sm hover:shadow-2xl hover:shadow-sky-950/15 hover:border-sky-500/80 dark:hover:border-sky-500/80 hover:-translate-y-2.5 transition-all duration-500 ease-out overflow-hidden flex flex-col h-full relative"
     >
       <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
@@ -52,6 +62,6 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination })
           </span>
         </div>
       </div>
-    </a>
+    </motion.a>
   );
 };

@@ -229,12 +229,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         {/* Pooja Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPoojas.map((pooja, index) => (
-            <FadeIn key={pooja.id} delay={index * 120} direction="up">
-              <PoojaCard
-                pooja={pooja}
-                onBook={(name) => onOpenBooking('Pooja', name)}
-              />
-            </FadeIn>
+            <PoojaCard
+              key={pooja.id}
+              pooja={pooja}
+              index={index}
+              onBook={(name) => onOpenBooking('Pooja', name)}
+            />
           ))}
         </div>
       </section>
@@ -270,15 +270,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tours.map((tour, index) => (
-              <FadeIn key={tour.id} delay={index * 120} direction="up">
-                <TourCard
-                  tour={tour}
-                  onBook={(name) => onOpenBooking('Tour', name)}
-                />
-              </FadeIn>
+              <TourCard
+                key={tour.id}
+                tour={tour}
+                index={index}
+                onBook={(name) => onOpenBooking('Tour', name)}
+              />
             ))}
           </div>
-
         </div>
       </section>
 
@@ -301,9 +300,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {destinations.map((dest, index) => (
-            <FadeIn key={dest.id} delay={index * 100} direction="up">
-              <DestinationCard destination={dest} />
-            </FadeIn>
+            <DestinationCard key={dest.id} destination={dest} index={index} />
           ))}
         </div>
       </section>

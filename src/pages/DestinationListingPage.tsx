@@ -55,9 +55,7 @@ export const DestinationListingPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {destinations.map((dest, index) => (
-            <FadeIn key={dest.id} delay={index * 100} direction="up">
-              <DestinationCard destination={dest} />
-            </FadeIn>
+            <DestinationCard key={dest.id} destination={dest} index={index} />
           ))}
         </div>
       )}
