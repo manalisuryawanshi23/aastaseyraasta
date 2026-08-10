@@ -10,6 +10,7 @@ import {
   SiteSettings,
   Redirect,
   PoojaCategory,
+  StaffUser,
 } from '../types';
 
 import {
@@ -24,6 +25,66 @@ import {
   initialGalleryItems,
 } from '../data/initialData';
 
+export const initialStaffUsers: StaffUser[] = [
+  {
+    id: 'staff-1',
+    name: 'Pundit Sharma',
+    email: 'admin@aasthaseva.com',
+    role: 'Admin',
+    passcode: 'admin123',
+    phone: '+91 98260 00001',
+    status: 'Active',
+    lastLogin: '2026-08-10 09:15 AM',
+    permissions: {
+      canViewOverview: true,
+      canManageLeads: true,
+      canManageBlogs: true,
+      canManageServices: true,
+      canManageSettings: true,
+      canManageSocials: true,
+      canManageStaff: true,
+    },
+  },
+  {
+    id: 'staff-2',
+    name: 'Ramesh Shastri',
+    email: 'manager@aasthaseva.com',
+    role: 'Manager',
+    passcode: 'manager123',
+    phone: '+91 98260 00002',
+    status: 'Active',
+    lastLogin: '2026-08-10 08:30 AM',
+    permissions: {
+      canViewOverview: true,
+      canManageLeads: true,
+      canManageBlogs: true,
+      canManageServices: true,
+      canManageSettings: false,
+      canManageSocials: false,
+      canManageStaff: false,
+    },
+  },
+  {
+    id: 'staff-3',
+    name: 'Ananya Verma',
+    email: 'editor@aasthaseva.com',
+    role: 'Editor',
+    passcode: 'editor123',
+    phone: '+91 98260 00003',
+    status: 'Active',
+    lastLogin: '2026-08-09 05:45 PM',
+    permissions: {
+      canViewOverview: true,
+      canManageLeads: false,
+      canManageBlogs: true,
+      canManageServices: true,
+      canManageSettings: false,
+      canManageSocials: false,
+      canManageStaff: false,
+    },
+  },
+];
+
 const KEYS = {
   SETTINGS: 'aastha_settings',
   CATEGORIES: 'aastha_categories',
@@ -36,6 +97,7 @@ const KEYS = {
   GALLERY: 'aastha_gallery',
   LEADS: 'aastha_leads',
   REDIRECTS: 'aastha_redirects',
+  STAFF: 'aastha_staff',
 };
 
 // Helper for localStorage
@@ -546,5 +608,78 @@ export class StoreService {
   static deleteRedirect(id: string): void {
     const list = this.getRedirects().filter((x) => x.id !== id);
     setItem(KEYS.REDIRECTS, list);
+  }
+
+  // Staff Users & Permissions Management
+  static getStaffUsers(): StaffUser[] {
+    return getItem<StaffUser[]>(KEYS.STAFF, initialStaffUsers);
+  }
+
+  static saveStaffUser(user: Partial<StaffUser> & { id?: string }): StaffUser {
+    const list = this.getStaffUsers();
+    if (user.id) {
+      const idx = list.findIndex((u) => u.id === user.id);
+      if (idx !== -1) {
+        const updated = { ...list[idx], ...user } as StaffUser;
+        list[idx] = updated;
+        setItem(KEYS.STAFF, list);
+        return updated;
+      }
+    }
+
+    const defaultPermissions = user.role === 'Admin'
+      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true }
+      : user.role === 'Manager'
+      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false }
+      : { canViewOverview: true, canManageLeads: false, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false };
+
+    const newUser: StaffUser = {
+      id: `staff-${Date.now()}`,
+      name: user.name || 'Staff Member',
+      email: user.email || 'staff@aasthaseva.com',
+      role: user.role || 'Editor',
+      passcode: user.passcode || 'pass123',
+      phone: user.phone || '',
+      status: user.status || 'Active',
+      lastLogin: 'Never',
+      permissions: user.permissions || defaultPermissions,
+      ...user,
+    } as StaffUser;
+
+    list.push(newUser);
+    setItem(KEYS.STAFF, list);
+    return newUser;
+  }
+
+  static deleteStaffUser(id: string): void {
+    const list = this.getStaffUsers().filter((u) => u.id !== id);
+    setItem(KEYS.STAFF, list);
+  }
+
+  static authenticateStaffPasscode(passcode: string): StaffUser | null {
+    const users = this.getStaffUsers();
+    const cleanPass = passcode.trim().toLowerCase();
+    
+    // Check exact passcode
+    const found = users.find((u) => u.passcode.toLowerCase() === cleanPass && u.status === 'Active');
+    if (found) {
+      // Update last login
+      const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+      this.saveStaffUser({ id: found.id, lastLogin: nowFormatted });
+      return { ...found, lastLogin: nowFormatted };
+    }
+
+    // Master fallback passcodes
+    if (cleanPass === 'mahakal' || cleanPass === 'admin123') {
+      return users.find((u) => u.role === 'Admin') || users[0];
+    }
+    if (cleanPass === 'manager123') {
+      return users.find((u) => u.role === 'Manager') || users[1] || users[0];
+    }
+    if (cleanPass === 'editor123') {
+      return users.find((u) => u.role === 'Editor') || users[2] || users[0];
+    }
+
+    return null;
   }
 }

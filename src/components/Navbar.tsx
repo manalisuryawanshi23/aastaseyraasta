@@ -61,6 +61,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
 
   return (
     <header className="sticky top-0 z-40 w-full transition-all duration-300">
+      {/* Announcement Banner if active in Admin CMS */}
+      {settings.announcementBanner?.isActive && settings.announcementBanner?.text && (
+        <div className="bg-amber-600 dark:bg-amber-700 text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-medium shadow-inner flex items-center justify-center gap-2">
+          <span>{settings.announcementBanner.text}</span>
+          {settings.announcementBanner.link && (
+            <a
+              href={settings.announcementBanner.link}
+              className="underline font-bold hover:text-stone-100 transition-colors ml-1"
+            >
+              {settings.announcementBanner.buttonText || 'Book Now'}
+            </a>
+          )}
+        </div>
+      )}
+
       {/* Top Banner Bar */}
       <div className="bg-gradient-to-r from-red-950 via-amber-950 to-red-950 text-amber-100/90 text-xs py-2 px-4 border-b border-amber-900/40">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">

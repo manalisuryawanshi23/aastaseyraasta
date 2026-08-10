@@ -100,6 +100,29 @@ export const ContactPage: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* Social Channels List */}
+            {settings.socialHandles && settings.socialHandles.filter((h) => h.isActive).length > 0 && (
+              <div className="pt-4 border-t border-stone-200 dark:border-stone-800 space-y-2">
+                <div className="text-xs font-bold font-serif text-stone-900 dark:text-amber-100">Official Social Channels:</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {settings.socialHandles
+                    .filter((h) => h.isActive)
+                    .map((h) => (
+                      <a
+                        key={h.id}
+                        href={h.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-xl bg-stone-50 dark:bg-stone-900 hover:bg-amber-50 dark:hover:bg-stone-800 border border-stone-200 dark:border-stone-800 text-xs font-medium text-stone-800 dark:text-stone-200 transition-colors flex items-center justify-between"
+                      >
+                        <span>{h.platform}</span>
+                        <span className="text-[10px] text-amber-700 dark:text-amber-400 font-mono">{h.handle}</span>
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

@@ -44,6 +44,11 @@ export interface PoojaService {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  aeoQuestions?: { question: string; answer: string }[];
+  keyTakeaways?: string[];
+  geoCity?: string;
+  geoRegion?: string;
+  geoEntities?: string[];
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
@@ -98,6 +103,11 @@ export interface Tour {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
+  aeoQuestions?: { question: string; answer: string }[];
+  keyTakeaways?: string[];
+  geoCity?: string;
+  geoRegion?: string;
+  geoEntities?: string[];
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
@@ -143,6 +153,11 @@ export interface BlogPost {
   seoTitle?: string;
   metaDescription?: string;
   canonicalUrl?: string;
+  aeoQuestions?: { question: string; answer: string }[];
+  keyTakeaways?: string[];
+  geoCity?: string;
+  geoRegion?: string;
+  geoEntities?: string[];
   publishedAt?: string;
   createdAt: string;
   updatedAt: string;
@@ -225,6 +240,15 @@ export interface Redirect {
   createdAt: string;
 }
 
+export interface SocialHandle {
+  id: string;
+  platform: 'Facebook' | 'Instagram' | 'YouTube' | 'X (Twitter)' | 'WhatsApp Channel' | 'Telegram' | 'LinkedIn' | 'Pinterest' | 'Google Business' | string;
+  handle: string;
+  url: string;
+  icon?: string;
+  isActive: boolean;
+}
+
 export interface SiteSettings {
   businessName: string;
   hindiBusinessName: string;
@@ -232,6 +256,7 @@ export interface SiteSettings {
   phone1: string;
   phone2: string;
   whatsappNumber: string;
+  emergencyHelpline?: string;
   email: string;
   address: string;
   city: string;
@@ -243,6 +268,7 @@ export interface SiteSettings {
   socialInstagram?: string;
   socialYoutube?: string;
   googleBusinessProfile?: string;
+  socialHandles?: SocialHandle[];
   defaultSeoTitle: string;
   defaultMetaDescription: string;
   defaultOgImage: string;
@@ -250,6 +276,19 @@ export interface SiteSettings {
   googleTagManagerId?: string;
   businessHours: string;
   footerDescription: string;
+  announcementBanner?: {
+    text: string;
+    link?: string;
+    buttonText?: string;
+    isActive: boolean;
+  };
+  trustStats?: {
+    devoteesCount: string;
+    panditCount: string;
+    templesCount: string;
+    satisfactionRate: string;
+  };
+  aboutMissionText?: string;
 }
 
 export interface User {
@@ -258,4 +297,29 @@ export interface User {
   name: string;
   role: 'Super Admin' | 'Content Manager' | 'Lead Manager' | 'SEO Manager';
   email: string;
+}
+
+export type AdminRole = 'Admin' | 'Manager' | 'Editor';
+
+export interface AdminPermission {
+  canViewOverview: boolean;
+  canManageLeads: boolean;
+  canManageBlogs: boolean;
+  canManageServices: boolean;
+  canManageSettings: boolean;
+  canManageSocials: boolean;
+  canManageStaff: boolean;
+}
+
+export interface StaffUser {
+  id: string;
+  name: string;
+  email: string;
+  role: AdminRole;
+  passcode: string;
+  phone?: string;
+  avatar?: string;
+  status: 'Active' | 'Inactive';
+  lastLogin?: string;
+  permissions: AdminPermission;
 }

@@ -74,6 +74,28 @@ export const Footer: React.FC = () => {
               {settings.footerDescription}
             </p>
 
+            {/* Active Social Handles */}
+            {settings.socialHandles && settings.socialHandles.filter((h) => h.isActive).length > 0 && (
+              <div className="pt-2 space-y-1.5">
+                <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider font-serif">Connect With Us:</div>
+                <div className="flex flex-wrap gap-2">
+                  {settings.socialHandles
+                    .filter((h) => h.isActive)
+                    .map((h) => (
+                      <a
+                        key={h.id}
+                        href={h.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-amber-300 text-[11px] font-medium border border-stone-800 transition-colors flex items-center gap-1.5"
+                      >
+                        <span>{h.platform}</span>
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )}
+
             {/* Direct Contact info */}
             <div className="space-y-2 pt-2 text-xs">
               <div className="flex items-start gap-2.5 text-stone-300">
