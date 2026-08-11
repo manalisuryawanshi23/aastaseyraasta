@@ -249,6 +249,17 @@ export interface SocialHandle {
   isActive: boolean;
 }
 
+export interface BrandColorPalette {
+  primary: string;
+  primaryHover: string;
+  secondary: string;
+  accent: string;
+  headerBg: string;
+  heroGradientStart: string;
+  heroGradientEnd: string;
+  presetName?: string;
+}
+
 export interface SiteSettings {
   businessName: string;
   hindiBusinessName: string;
@@ -289,6 +300,7 @@ export interface SiteSettings {
     satisfactionRate: string;
   };
   aboutMissionText?: string;
+  brandPalette?: BrandColorPalette;
 }
 
 export interface User {

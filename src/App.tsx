@@ -23,6 +23,8 @@ import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
+import { StoreService } from './services/store';
+import { applyBrandColorPalette } from './utils/brandTheme';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState<string>(
@@ -33,6 +35,14 @@ export default function App() {
   const [bookingDefaultType, setBookingDefaultType] = useState<'Pooja' | 'Tour' | 'Destination' | 'General'>('Pooja');
   const [bookingDefaultName, setBookingDefaultName] = useState('');
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Apply persisted brand color palette on mount
+    const settings = StoreService.getSettings();
+    if (settings && settings.brandPalette) {
+      applyBrandColorPalette(settings.brandPalette);
+    }
+  }, []);
 
   useEffect(() => {
     const handleLocationChange = () => {

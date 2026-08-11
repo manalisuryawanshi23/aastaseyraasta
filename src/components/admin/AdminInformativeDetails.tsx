@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SiteSettings } from '../../types';
 import { StoreService } from '../../services/store';
+import { AdminBrandColorPicker } from './AdminBrandColorPicker';
 import {
   Save,
   CheckCircle2,
@@ -12,6 +13,7 @@ import {
   Megaphone,
   Award,
   BookOpen,
+  Palette,
 } from 'lucide-react';
 
 export const AdminInformativeDetails: React.FC = () => {
@@ -53,7 +55,12 @@ export const AdminInformativeDetails: React.FC = () => {
         </div>
       )}
 
-      {/* SECTION 1: Business Identity */}
+      {/* SECTION 1: GLOBAL BRAND COLOR PALETTE PICKER */}
+      <div className="space-y-4">
+        <AdminBrandColorPicker />
+      </div>
+
+      {/* SECTION 2: Business Identity */}
       <div className="space-y-4">
         <h3 className="font-serif font-bold text-sm text-stone-900 dark:text-amber-100 flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 pb-2">
           <Building2 className="w-4 h-4 text-amber-700" />

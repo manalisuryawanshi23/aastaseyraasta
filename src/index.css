@@ -5,6 +5,13 @@
 @layer base {
   :root {
     color-scheme: light;
+    --brand-primary: #b45309;
+    --brand-primary-hover: #92400e;
+    --brand-secondary: #78350f;
+    --brand-accent: #d97706;
+    --brand-header-bg: #451a03;
+    --brand-gradient-start: #451a03;
+    --brand-gradient-end: #1c1917;
   }
 
   html.dark {
@@ -23,6 +30,38 @@
     background-color: #121110;
     color: #F4F1EA;
   }
+}
+
+/* Global Brand Utility Classes Driven by Administrator Color Picker Settings */
+.bg-brand-primary { background-color: var(--brand-primary) !important; }
+.hover\:bg-brand-primary-hover:hover { background-color: var(--brand-primary-hover) !important; }
+.text-brand-primary { color: var(--brand-primary) !important; }
+.border-brand-primary { border-color: var(--brand-primary) !important; }
+
+.bg-brand-secondary { background-color: var(--brand-secondary) !important; }
+.text-brand-secondary { color: var(--brand-secondary) !important; }
+.border-brand-secondary { border-color: var(--brand-secondary) !important; }
+
+.bg-brand-accent { background-color: var(--brand-accent) !important; }
+.text-brand-accent { color: var(--brand-accent) !important; }
+.border-brand-accent { border-color: var(--brand-accent) !important; }
+
+.bg-brand-header { background-color: var(--brand-header-bg) !important; }
+
+/* Custom Action Button & Badge Styling using Brand CSS variables */
+.accent-brand-btn {
+  background-color: var(--brand-primary);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+.accent-brand-btn:hover {
+  background-color: var(--brand-primary-hover);
+}
+
+.accent-brand-badge {
+  background-color: color-mix(in srgb, var(--brand-primary) 12%, transparent);
+  color: var(--brand-primary);
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 28%, transparent);
 }
 
 /* Custom scrollbar styling for editorial feel */

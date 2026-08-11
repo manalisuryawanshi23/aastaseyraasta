@@ -24,6 +24,7 @@ import {
   initialTestimonials,
   initialGalleryItems,
 } from '../data/initialData';
+import { applyBrandColorPalette } from '../utils/brandTheme';
 
 export const initialStaffUsers: StaffUser[] = [
   {
@@ -122,7 +123,11 @@ function setItem<T>(key: string, val: T): void {
 export class StoreService {
   // Settings
   static getSettings(): SiteSettings {
-    return getItem<SiteSettings>(KEYS.SETTINGS, initialSiteSettings);
+    const settings = getItem<SiteSettings>(KEYS.SETTINGS, initialSiteSettings);
+    if (settings && settings.brandPalette) {
+      applyBrandColorPalette(settings.brandPalette);
+    }
+    return settings;
   }
 
   static getSiteSettings(): SiteSettings {
@@ -131,6 +136,9 @@ export class StoreService {
 
   static updateSettings(settings: SiteSettings): SiteSettings {
     setItem(KEYS.SETTINGS, settings);
+    if (settings.brandPalette) {
+      applyBrandColorPalette(settings.brandPalette);
+    }
     return settings;
   }
 

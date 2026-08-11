@@ -7,6 +7,8 @@ import { AdminInformativeDetails } from '../components/admin/AdminInformativeDet
 import { AdminSocialHandles } from '../components/admin/AdminSocialHandles';
 import { AdminDashboardOverview } from '../components/admin/AdminDashboardOverview';
 import { AdminStaffManager } from '../components/admin/AdminStaffManager';
+import { AdminBrandColorPicker } from '../components/admin/AdminBrandColorPicker';
+import { AdminDataExportManager } from '../components/admin/AdminDataExportManager';
 import { Lead, StaffUser, AdminRole } from '../types';
 import {
   Lock,
@@ -37,6 +39,7 @@ import {
   UserCheck,
   ShieldAlert,
   UserPlus,
+  Palette,
 } from 'lucide-react';
 
 const initialSampleLeads: Lead[] = [
@@ -93,7 +96,7 @@ const initialSampleLeads: Lead[] = [
   },
 ];
 
-type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'Informative' | 'Socials' | 'Staff';
+type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff';
 
 export const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -120,6 +123,9 @@ export const AdminPage: React.FC = () => {
   // Lead filtering
   const [leadSearch, setLeadSearch] = useState('');
   const [leadStatusFilter, setLeadStatusFilter] = useState<string>('ALL');
+  const [leadCategoryFilter, setLeadCategoryFilter] = useState<string>('ALL');
+
+  const poojaCategories = useMemo(() => StoreService.getCategories(), []);
 
   const handleLogin = (e?: React.FormEvent, customPass?: string) => {
     if (e) e.preventDefault();
@@ -163,40 +169,63 @@ export const AdminPage: React.FC = () => {
   };
 
   const exportLeadsToCSV = () => {
-    if (leads.length === 0) return;
-    const headers = ['Date', 'Name', 'Phone', 'Email', 'Service', 'Preferred Date', 'People', 'Status', 'Message'];
-    const rows = leads.map((l) => [
-      new Date(l.createdAt).toLocaleDateString(),
-      `"${l.name.replace(/"/g, '""')}"`,
-      `"${l.phone}"`,
-      `"${l.email || ''}"`,
-      `"${(l.serviceName || l.serviceType).replace(/"/g, '""')}"`,
-      `"${l.preferredDate || ''}"`,
+    const listToExport = filteredLeads.length > 0 ? filteredLeads : leads;
+    if (listToExport.length === 0) return;
+
+    const headers = ['Booking ID', 'Date', 'Name', 'Phone', 'Email', 'Service', 'Preferred Date', 'People', 'Status', 'Message'];
+    const rows = listToExport.map((l) => [
+      `"${l.id}"`,
+      `"${new Date(l.createdAt).toLocaleDateString('en-IN')}"`,
+      `"${(l.name || '').replace(/"/g, '""')}"`,
+      `"${(l.phone || '').replace(/"/g, '""')}"`,
+      `"${(l.email || '').replace(/"/g, '""')}"`,
+      `"${(l.serviceName || l.serviceType || '').replace(/"/g, '""')}"`,
+      `"${(l.preferredDate || '').replace(/"/g, '""')}"`,
       l.numberOfPeople || 1,
-      l.status,
-      `"${(l.message || '').replace(/"/g, '""')}"`,
+      `"${(l.status || 'New').replace(/"/g, '""')}"`,
+      `"${(l.message || '').replace(/"/g, '""').replace(/[\r\n]+/g, ' ')}"`,
     ]);
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
+    const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\r\n');
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Aastha_Devotee_Leads_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `Aastha_Devotee_Bookings_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const filteredLeads = useMemo(() => {
     return leads.filter((l) => {
+      const q = leadSearch.toLowerCase().trim();
       const matchesSearch =
-        l.name.toLowerCase().includes(leadSearch.toLowerCase()) ||
-        l.phone.includes(leadSearch) ||
-        (l.serviceName || l.serviceType).toLowerCase().includes(leadSearch.toLowerCase());
+        !q ||
+        l.name.toLowerCase().includes(q) ||
+        l.phone.includes(q) ||
+        (l.email && l.email.toLowerCase().includes(q)) ||
+        (l.serviceName || l.serviceType).toLowerCase().includes(q) ||
+        (l.message && l.message.toLowerCase().includes(q)) ||
+        (l.preferredDate && l.preferredDate.toLowerCase().includes(q)) ||
+        l.status.toLowerCase().includes(q);
+
       const matchesStatus = leadStatusFilter === 'ALL' || l.status === leadStatusFilter;
-      return matchesSearch && matchesStatus;
+
+      let matchesCategory = true;
+      if (leadCategoryFilter !== 'ALL') {
+        const catLower = leadCategoryFilter.toLowerCase();
+        matchesCategory =
+          l.serviceType.toLowerCase() === catLower ||
+          (l.serviceName && l.serviceName.toLowerCase().includes(catLower)) ||
+          (l.poojaId && l.poojaId.toLowerCase().includes(catLower));
+      }
+
+      return matchesSearch && matchesStatus && matchesCategory;
     });
-  }, [leads, leadSearch, leadStatusFilter]);
+  }, [leads, leadSearch, leadStatusFilter, leadCategoryFilter]);
 
   // LOGIN SCREEN WITH QUICK ROLE BUTTONS
   if (!isAuthenticated) {
@@ -405,6 +434,23 @@ export const AdminPage: React.FC = () => {
                     {leads.length}
                   </span>
                 </button>
+
+                <button
+                  onClick={() => {
+                    setActiveTab('DataExport');
+                    setSidebarOpen(false);
+                  }}
+                  className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                    activeTab === 'DataExport'
+                      ? 'bg-amber-600 text-white shadow-md'
+                      : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Download className="w-4 h-4 text-amber-400" />
+                    <span>Data Export & CSV Reports</span>
+                  </div>
+                </button>
               </div>
             )}
 
@@ -462,22 +508,41 @@ export const AdminPage: React.FC = () => {
                 <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Site Management</div>
                 <div className="space-y-1">
                   {userPerms?.canManageSettings && (
-                    <button
-                      onClick={() => {
-                        setActiveTab('Informative');
-                        setSidebarOpen(false);
-                      }}
-                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                        activeTab === 'Informative'
-                          ? 'bg-amber-600 text-white shadow-md'
-                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Info className="w-4 h-4" />
-                        <span>Banner & Details</span>
-                      </div>
-                    </button>
+                    <>
+                      <button
+                        onClick={() => {
+                          setActiveTab('BrandColors');
+                          setSidebarOpen(false);
+                        }}
+                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                          activeTab === 'BrandColors'
+                            ? 'bg-amber-600 text-white shadow-md'
+                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <Palette className="w-4 h-4" />
+                          <span>Brand Color Palette</span>
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setActiveTab('Informative');
+                          setSidebarOpen(false);
+                        }}
+                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                          activeTab === 'Informative'
+                            ? 'bg-amber-600 text-white shadow-md'
+                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <Info className="w-4 h-4" />
+                          <span>Banner & Details</span>
+                        </div>
+                      </button>
+                    </>
                   )}
 
                   {userPerms?.canManageSocials && (
@@ -647,34 +712,113 @@ export const AdminPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Filters & Search */}
-                <div className="flex flex-col md:flex-row items-center gap-3 pt-2">
-                  <div className="relative flex-1 w-full">
-                    <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
-                    <input
-                      type="text"
-                      value={leadSearch}
-                      onChange={(e) => setLeadSearch(e.target.value)}
-                      placeholder="Search by devotee name, phone, or service..."
-                      className="w-full pl-10 pr-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-xs font-medium outline-none focus:ring-2 focus:ring-amber-600"
-                    />
+                {/* Filters, Category Dropdown & Search Toolbar */}
+                <div className="space-y-3 pt-2">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+                    {/* Search Input Box */}
+                    <div className="relative md:col-span-6 w-full">
+                      <Search className="w-4 h-4 text-amber-600 dark:text-amber-400 absolute left-3.5 top-3" />
+                      <input
+                        type="text"
+                        value={leadSearch}
+                        onChange={(e) => setLeadSearch(e.target.value)}
+                        placeholder="Search by devotee name, phone, gotra, service, preferred date..."
+                        className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-medium outline-none focus:ring-2 focus:ring-amber-600 transition-all shadow-inner"
+                      />
+                      {leadSearch && (
+                        <button
+                          onClick={() => setLeadSearch('')}
+                          className="absolute right-3 top-3 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                          title="Clear search"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Service Category Filter Dropdown */}
+                    <div className="relative md:col-span-3 w-full">
+                      <select
+                        value={leadCategoryFilter}
+                        onChange={(e) => setLeadCategoryFilter(e.target.value)}
+                        className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-bold outline-none focus:ring-2 focus:ring-amber-600 transition-all appearance-none cursor-pointer"
+                      >
+                        <option value="ALL">All Categories & Types</option>
+                        <optgroup label="Core Service Types">
+                          <option value="Pooja">🪔 Pooja & Rituals</option>
+                          <option value="Tour">🚩 Yatra & Tours</option>
+                          <option value="Destination">🛕 Holy Destinations</option>
+                          <option value="General">💬 General Enquiries</option>
+                        </optgroup>
+                        {poojaCategories.length > 0 && (
+                          <optgroup label="Pooja Specific Categories">
+                            {poojaCategories.map((c) => (
+                              <option key={c.id} value={c.name}>
+                                {c.name}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
+                      </select>
+                      <Filter className="w-3.5 h-3.5 text-stone-400 absolute right-3 top-3.5 pointer-events-none" />
+                    </div>
+
+                    {/* Status Filter Dropdown */}
+                    <div className="relative md:col-span-3 w-full">
+                      <select
+                        value={leadStatusFilter}
+                        onChange={(e) => setLeadStatusFilter(e.target.value)}
+                        className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-bold outline-none focus:ring-2 focus:ring-amber-600 transition-all appearance-none cursor-pointer"
+                      >
+                        <option value="ALL">All Statuses ({leads.length})</option>
+                        <option value="New">🔴 New Inquiries</option>
+                        <option value="Contacted">🟡 Contacted</option>
+                        <option value="Booked">🔵 Booked</option>
+                        <option value="Completed">🟢 Completed</option>
+                        <option value="Archived">⚪ Archived</option>
+                      </select>
+                      <Filter className="w-3.5 h-3.5 text-stone-400 absolute right-3 top-3.5 pointer-events-none" />
+                    </div>
                   </div>
 
-                  {/* Status Pills Filter */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-                    {['ALL', 'New', 'Contacted', 'Booked', 'Completed'].map((st) => (
-                      <button
-                        key={st}
-                        onClick={() => setLeadStatusFilter(st)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all ${
-                          leadStatusFilter === st
-                            ? 'bg-amber-600 text-white shadow-sm'
-                            : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200'
-                        }`}
-                      >
-                        {st === 'ALL' ? `All (${leads.length})` : st}
-                      </button>
-                    ))}
+                  {/* Active Filters & Counter Row */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-stone-200/80 dark:border-stone-800/80 mt-1">
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="font-bold text-stone-700 dark:text-stone-300">
+                        Showing {filteredLeads.length} of {leads.length} booking entries
+                      </span>
+
+                      {(leadSearch || leadCategoryFilter !== 'ALL' || leadStatusFilter !== 'ALL') && (
+                        <button
+                          onClick={() => {
+                            setLeadSearch('');
+                            setLeadCategoryFilter('ALL');
+                            setLeadStatusFilter('ALL');
+                          }}
+                          className="px-2.5 py-1 rounded-lg bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 text-[11px] font-bold transition-colors flex items-center gap-1"
+                        >
+                          <X className="w-3 h-3 text-red-500" />
+                          <span>Reset Filters</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Quick Status Shortcut Pills */}
+                    <div className="hidden lg:flex items-center gap-1">
+                      {['ALL', 'New', 'Contacted', 'Booked', 'Completed'].map((st) => (
+                        <button
+                          key={st}
+                          onClick={() => setLeadStatusFilter(st)}
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                            leadStatusFilter === st
+                              ? 'bg-amber-600 text-white shadow-sm'
+                              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
+                          }`}
+                        >
+                          {st}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -777,10 +921,18 @@ export const AdminPage: React.FC = () => {
           {/* TAB 4: SERVICE PAGES MANAGER */}
           {activeTab === 'Services' && userPerms?.canManageServices && <AdminServicesManager />}
 
-          {/* TAB 5: INFORMATIVE DETAILS */}
+          {/* TAB 5: DATA EXPORT & CSV REPORTS */}
+          {activeTab === 'DataExport' && (userPerms?.canManageLeads || userPerms?.canManageSettings) && (
+            <AdminDataExportManager />
+          )}
+
+          {/* TAB 6: BRAND COLOR PALETTE & THEME CONTROL */}
+          {activeTab === 'BrandColors' && userPerms?.canManageSettings && <AdminBrandColorPicker />}
+
+          {/* TAB 6: INFORMATIVE DETAILS */}
           {activeTab === 'Informative' && userPerms?.canManageSettings && <AdminInformativeDetails />}
 
-          {/* TAB 6: SOCIAL MEDIA HANDLES */}
+          {/* TAB 7: SOCIAL MEDIA HANDLES */}
           {activeTab === 'Socials' && userPerms?.canManageSocials && <AdminSocialHandles />}
 
           {/* TAB 7: STAFF ROLES & RBAC */}
@@ -802,6 +954,7 @@ export const AdminPage: React.FC = () => {
           {((activeTab === 'Leads' && !userPerms?.canManageLeads) ||
             (activeTab === 'Blog' && !userPerms?.canManageBlogs) ||
             (activeTab === 'Services' && !userPerms?.canManageServices) ||
+            (activeTab === 'DataExport' && !userPerms?.canManageLeads && !userPerms?.canManageSettings) ||
             (activeTab === 'Informative' && !userPerms?.canManageSettings) ||
             (activeTab === 'Socials' && !userPerms?.canManageSocials) ||
             (activeTab === 'Staff' && !userPerms?.canManageStaff)) && (

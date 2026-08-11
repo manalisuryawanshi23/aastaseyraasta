@@ -92,6 +92,16 @@ export const initialSiteSettings: SiteSettings = {
     satisfactionRate: '99.8%',
   },
   aboutMissionText: 'Our sacred mission is to guide devotees with complete authenticity, Vedic purity, and transparent arrangements across Ujjain Mahakal sanctum and holy shrines.',
+  brandPalette: {
+    primary: '#b45309',
+    primaryHover: '#92400e',
+    secondary: '#78350f',
+    accent: '#d97706',
+    headerBg: '#451a03',
+    heroGradientStart: '#451a03',
+    heroGradientEnd: '#1c1917',
+    presetName: 'Sacred Saffron (Default)',
+  },
 };
 
 export const initialPoojaCategories: PoojaCategory[] = [
