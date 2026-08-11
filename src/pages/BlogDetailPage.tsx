@@ -8,6 +8,11 @@ import { SocialShareButtons } from '../components/SocialShareButtons';
 import { FadeIn } from '../components/FadeIn';
 import { Clock, User, Calendar, Tag, ArrowLeft } from 'lucide-react';
 
+import {
+  buildBlogSchema,
+  buildBreadcrumbSchema,
+} from '../utils/seoSchemas';
+
 interface BlogDetailPageProps {
   slug: string;
 }
@@ -29,28 +34,25 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
   const allPosts = StoreService.getBlogPosts();
   const relatedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
-  const schemaJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.seoTitle || post.title,
-    description: post.metaDescription || post.excerpt,
-    author: {
-      '@type': 'Person',
-      name: post.author,
-    },
-    datePublished: post.publishedAt,
-  };
+  const articleSchema = buildBlogSchema(post);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8 relative">
       <ReadingProgressBar />
 
       <SEOHead
-        title={post.seoTitle || `${post.title} | Aastha Sey Raasta Seva`}
+        title={post.seoTitle || `${post.title} | Spiritual Guide`}
         description={post.metaDescription || post.excerpt}
-        focusKeyword={post.focusKeyword}
-        canonicalUrl={post.canonicalUrl}
-        jsonLd={schemaJsonLd}
+        keywords={post.focusKeyword ? `${post.focusKeyword}, ${post.title}, Ujjain Spiritual Blog` : `${post.title}, Ujjain Poojas, Vedic Rituals Guide`}
+        canonicalUrl={post.canonicalUrl || `https://aasthaserasta.com/blog/${post.slug}`}
+        ogImage={post.featuredImage}
+        ogType="article"
+        jsonLd={[articleSchema, breadcrumbSchema]}
       />
 
       <Breadcrumbs
@@ -97,6 +99,9 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
           <img
             src={post.featuredImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
             alt={post.title}
+            loading="eager"
+            decoding="async"
+            {...({ fetchPriority: 'high' } as any)}
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
           />

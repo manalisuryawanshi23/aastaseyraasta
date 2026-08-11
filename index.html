@@ -2,12 +2,100 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    <title>Aastha Sey Raasta Seva | Official Ujjain Pooja Booking & Spiritual Yatras</title>
+    <meta name="description" content="Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja, Kaal Sarp Dosh Shanti & Baglamukhi Havan in Ujjain Mahakaleshwar & Omkareshwar. Certified Pandits, Live Video Pooja & Pilgrimage Packages." />
+    <meta name="keywords" content="Ujjain Pooja Booking, Mahakaleshwar Rudrabhishek, Kaal Sarp Dosh Pooja Ujjain, Mangalnath Bhat Pooja, Baglamukhi Havan Nalkheda, 84 Mahadev Yatra, Char Dham Yatra, Ujjain Pilgrimage, Aastha Sey Raasta Seva" />
+    <meta name="author" content="Aastha Sey Raasta Seva Foundation" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- Geo Location Meta Tags for Google Local & GEO -->
+    <meta name="geo.region" content="IN-MP" />
+    <meta name="geo.placename" content="Ujjain, Madhya Pradesh, India" />
+    <meta name="geo.position" content="23.1765;75.7885" />
+    <meta name="ICBM" content="23.1765, 75.7885" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aastha Sey Raasta Seva" />
+    <meta property="og:title" content="Aastha Sey Raasta Seva | Official Ujjain Pooja Booking & Spiritual Yatras" />
+    <meta property="og:description" content="Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja, Kaal Sarp Dosh Shanti & Baglamukhi Havan with certified Ujjain Pandits." />
+    <meta property="og:image" content="/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aastha Sey Raasta Seva | Official Ujjain Pooja Booking & Spiritual Yatras" />
+    <meta name="twitter:description" content="Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja & Baglamukhi Havan in Ujjain with certified Pandits." />
+    <meta name="twitter:image" content="/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg" />
+
+    <!-- Favicon & Preconnect fonts -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛕</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Preload Critical LCP Hero Background Image -->
+    <link rel="preload" as="image" href="/src/assets/images/header_bg_spiritual_1786196057015.jpg" fetchpriority="high" />
+
+    <!-- Critical Path CSS for immediate baseline rendering & CLS elimination -->
+    <style>
+      :root {
+        --bg-light: #FAF7F2;
+        --bg-dark: #12100E;
+        --text-light: #292524;
+        --text-dark: #F5F5F4;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      html {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-light);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
+      }
+      html.dark {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Prevent Cumulative Layout Shift for Hero Section */
+      .hero-slider-fallback {
+        min-height: 80vh;
+        background-color: #1c1917;
+        position: relative;
+        aspect-ratio: 16 / 9;
+      }
+      @media (max-width: 640px) {
+        .hero-slider-fallback {
+          min-height: 70vh;
+        }
+      }
+      /* Smooth image decoding transitions */
+      img {
+        content-visibility: auto;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
 

@@ -21,6 +21,12 @@ import {
   ChevronDown,
 } from 'lucide-react';
 
+import {
+  buildTourSchema,
+  buildBreadcrumbSchema,
+  buildFAQSchema,
+} from '../utils/seoSchemas';
+
 interface TourDetailPageProps {
   slug: string;
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -44,28 +50,26 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
   const allTours = StoreService.getTours();
   const relatedTours = allTours.filter((t) => t.id !== tour.id).slice(0, 3);
+  const faqs = StoreService.getFAQs().filter((f) => f.category === 'Tour' || f.category === 'General');
 
-  const schemaJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'TouristTrip',
-    name: tour.seoTitle || tour.name,
-    description: tour.metaDescription || tour.shortDescription,
-    touristType: ['Pilgrim', 'Spiritual Traveler', 'Family'],
-    itinerary: tour.itinerary.map((day) => ({
-      '@type': 'City',
-      name: day.title,
-      description: day.description,
-    })),
-  };
+  // Build JSON-LD Schemas for search engines & AI assistants
+  const tourSchema = buildTourSchema(tour);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Spiritual Tours', url: '/spiritual-tours' },
+    { name: tour.name, url: `/spiritual-tours/${tour.slug}` },
+  ]);
+  const faqSchema = buildFAQSchema(faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={tour.seoTitle || `${tour.name} | ${settings.businessName}`}
+        title={tour.seoTitle || `${tour.name} Tour Package | Itinerary & Price`}
         description={tour.metaDescription || tour.shortDescription}
-        focusKeyword={tour.focusKeyword}
-        canonicalUrl={tour.canonicalUrl}
-        jsonLd={schemaJsonLd}
+        keywords={tour.focusKeyword ? `${tour.focusKeyword}, ${tour.name}, ${tour.startingPoint} Tour` : `${tour.name}, Spiritual Yatra, Ujjain Pilgrimage Package`}
+        canonicalUrl={tour.canonicalUrl || `https://aasthaserasta.com/spiritual-tours/${tour.slug}`}
+        ogImage={tour.featuredImage}
+        jsonLd={[tourSchema, breadcrumbSchema, faqSchema]}
       />
 
       <Breadcrumbs
@@ -117,6 +121,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <img
               src={tour.featuredImage || '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg'}
               alt={tour.name}
+              loading="eager"
+              decoding="async"
+              {...({ fetchPriority: 'high' } as any)}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
             />

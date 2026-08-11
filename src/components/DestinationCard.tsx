@@ -26,6 +26,8 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, i
         <img
           src={destination.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}
           alt={destination.name}
+          loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

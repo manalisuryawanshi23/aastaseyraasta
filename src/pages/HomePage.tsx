@@ -24,6 +24,7 @@ import { FAQAccordion } from '../components/FAQAccordion';
 import { Testimonials } from '../components/Testimonials';
 import { SEOHead } from '../components/SEOHead';
 import { FadeIn } from '../components/FadeIn';
+import { buildFAQSchema } from '../utils/seoSchemas';
 
 interface HomePageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -48,28 +49,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       ? poojas
       : poojas.filter((p) => p.categoryId === selectedCatId);
 
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: settings.businessName,
-    alternateName: settings.hindiBusinessName,
-    description: settings.defaultMetaDescription,
-    telephone: settings.phone1,
-    email: settings.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: settings.address,
-      addressLocality: settings.city,
-      addressRegion: settings.state,
-      postalCode: settings.pincode,
-      addressCountry: settings.country,
-    },
-    url: typeof window !== 'undefined' ? window.location.origin : 'https://aasthaserasta.com',
-  };
+  const faqSchema = buildFAQSchema(faqs.map((f) => ({ question: f.question, answer: f.answer })));
 
   return (
     <div className="space-y-16 pb-12">
-      <SEOHead jsonLd={organizationSchema} />
+      <SEOHead jsonLd={[faqSchema]} />
 
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-stone-950 text-white pt-8 pb-16">
@@ -392,6 +376,63 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           testimonials={testimonials}
           onOpenBooking={onOpenBooking}
         />
+      </section>
+
+      {/* AEO / GEO Direct Answer Knowledge Base Section */}
+      <section className="max-w-7xl mx-auto px-4">
+        <FadeIn direction="up">
+          <div className="bg-amber-500/10 dark:bg-amber-950/30 border border-amber-300/40 dark:border-amber-800/40 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="space-y-2 text-center max-w-3xl mx-auto">
+              <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-200 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
+                Search Engine & AI Direct Answer Knowledge Base
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
+                Ujjain Temple Rituals & Pilgrimage Authority Guide
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300">
+                Direct answers to frequently searched questions about Ujjain Poojas, Mahakaleshwar Bhasma Aarti, Mangalnath Bhat Pooja, Kaal Sarp Dosh, and Himalayan Char Dham Yatras.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm leading-relaxed">
+              <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+                <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                  <span>🛕 What is the significance of Ujjain for Vedic Poojas?</span>
+                </h3>
+                <p className="text-stone-600 dark:text-stone-300">
+                  Ujjain (Avantika Puri) is located on the Tropic of Cancer and is recognized as the earth’s central meridian in ancient Vedic astrology (Surya Siddhanta). It houses Mahakaleshwar (one of 12 Jyotirlingas), Mangalnath (birthplace of Mars/Mangal), Angareshwar, and Siddhvat, making it the most potent site in India for Rudrabhishek, Bhat Pooja, and Dosh Shanti rituals.
+                </p>
+              </div>
+
+              <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+                <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                  <span>🔥 Where is Kaal Sarp Dosh & Bhat Pooja performed?</span>
+                </h3>
+                <p className="text-stone-600 dark:text-stone-300">
+                  Manglik Dosh & Bhat Pooja is performed exclusively at Mangalnath Temple or Angareshwar Temple in Ujjain. Kaal Sarp Dosh and Rahu-Ketu Shanti are performed at Ramghat on the banks of Shipra River or at Mahakaleshwar Kshetra by certified Vedic Karmakandi Pandits with individual Gotra Sankalp.
+                </p>
+              </div>
+
+              <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+                <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                  <span>🛡️ How to book authentic online/offline Poojas in Ujjain?</span>
+                </h3>
+                <p className="text-stone-600 dark:text-stone-300">
+                  Through Aastha Sey Raasta Seva, devotees can book in-person rituals or Live HD Video Stream Poojas. Our team arranges all authentic samagri, temple permissions, pandit booking, and delivers sanctified Mahakal Prasadam with Bhasma directly to your doorstep.
+                </p>
+              </div>
+
+              <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+                <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                  <span>🏔️ What pilgrimage packages are offered by Aastha Sey Raasta?</span>
+                </h3>
+                <p className="text-stone-600 dark:text-stone-300">
+                  We organize custom circuits including Ujjain 11-Shrine Spiritual Tour, Omkareshwar Jyotirlinga, Baglamukhi Temple Nalkheda, Pashupatinath Mandsaur, 84 Mahadev Yatra, Char Dham Yatra (Kedarnath, Badrinath, Gangotri, Yamunotri), and Himalayan treks like Kedarkantha and Kuari Pass.
+                </p>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
       </section>
 
       {/* FAQs */}

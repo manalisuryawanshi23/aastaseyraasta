@@ -32,6 +32,8 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
         <img
           src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
           alt={tour.name}
+          loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

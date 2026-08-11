@@ -11,6 +11,7 @@ import {
   initialBlogPosts,
   initialFAQs,
 } from './src/data/initialData';
+import { generateSitemapXml } from './scripts/generateSitemap';
 
 async function startServer() {
   const app = express();
@@ -80,91 +81,7 @@ async function startServer() {
 
   // Dynamic XML Sitemap for SEO
   app.get('/sitemap.xml', (req, res) => {
-    const baseUrl = process.env.APP_URL || 'https://aasthaserasta.com';
-    const today = new Date().toISOString().split('T')[0];
-
-    const staticRoutes = [
-      '',
-      '/pooja-services',
-      '/spiritual-tours',
-      '/destinations',
-      '/blog',
-      '/about-us',
-      '/why-choose-us',
-      '/how-it-works',
-      '/testimonials',
-      '/gallery',
-      '/faq',
-      '/contact',
-      '/privacy-policy',
-      '/terms-and-conditions',
-      '/disclaimer',
-      '/refund-cancellation-policy',
-    ];
-
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
-    // Static pages
-    staticRoutes.forEach((route) => {
-      xml += `  <url>\n`;
-      xml += `    <loc>${baseUrl}${route}</loc>\n`;
-      xml += `    <lastmod>${today}</lastmod>\n`;
-      xml += `    <changefreq>${route === '' ? 'daily' : 'weekly'}</changefreq>\n`;
-      xml += `    <priority>${route === '' ? '1.0' : '0.8'}</priority>\n`;
-      xml += `  </url>\n`;
-    });
-
-    // Poojas
-    initialPoojas.forEach((p) => {
-      if (p.isPublished) {
-        xml += `  <url>\n`;
-        xml += `    <loc>${baseUrl}/pooja/${p.slug}</loc>\n`;
-        xml += `    <lastmod>${p.updatedAt ? p.updatedAt.split('T')[0] : today}</lastmod>\n`;
-        xml += `    <changefreq>weekly</changefreq>\n`;
-        xml += `    <priority>0.9</priority>\n`;
-        xml += `  </url>\n`;
-      }
-    });
-
-    // Tours
-    initialTours.forEach((t) => {
-      if (t.isPublished) {
-        xml += `  <url>\n`;
-        xml += `    <loc>${baseUrl}/spiritual-tours/${t.slug}</loc>\n`;
-        xml += `    <lastmod>${t.updatedAt ? t.updatedAt.split('T')[0] : today}</lastmod>\n`;
-        xml += `    <changefreq>weekly</changefreq>\n`;
-        xml += `    <priority>0.9</priority>\n`;
-        xml += `  </url>\n`;
-      }
-    });
-
-    // Destinations
-    initialDestinations.forEach((d) => {
-      if (d.isPublished) {
-        xml += `  <url>\n`;
-        xml += `    <loc>${baseUrl}/destinations/${d.slug}</loc>\n`;
-        xml += `    <lastmod>${d.updatedAt ? d.updatedAt.split('T')[0] : today}</lastmod>\n`;
-        xml += `    <changefreq>monthly</changefreq>\n`;
-        xml += `    <priority>0.8</priority>\n`;
-        xml += `  </url>\n`;
-      }
-    });
-
-    // Blogs
-    initialBlogPosts.forEach((b) => {
-      if (b.isPublished) {
-        xml += `  <url>\n`;
-        xml += `    <loc>${baseUrl}/blog/${b.slug}</loc>\n`;
-        xml += `    <lastmod>${b.updatedAt ? b.updatedAt.split('T')[0] : today}</lastmod>\n`;
-        xml += `    <changefreq>weekly</changefreq>\n`;
-        xml += `    <priority>0.7</priority>\n`;
-        xml += `  </url>\n`;
-      }
-    });
-
-    xml += `</urlset>`;
-
+    const xml = generateSitemapXml();
     res.header('Content-Type', 'application/xml');
     res.send(xml);
   });

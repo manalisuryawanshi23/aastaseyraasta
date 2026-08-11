@@ -229,6 +229,9 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap gap-4 text-xs">
+            <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">🗺️ Site Map</a>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">XML Sitemap</a>
+            <a href="/robots.txt" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">Robots.txt</a>
             <a href="/privacy-policy" className="hover:text-stone-300 transition-colors">Privacy Policy</a>
             <a href="/terms-and-conditions" className="hover:text-stone-300 transition-colors">Terms & Conditions</a>
             <a href="/disclaimer" className="hover:text-stone-300 transition-colors">Disclaimer</a>

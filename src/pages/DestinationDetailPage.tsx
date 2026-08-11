@@ -57,6 +57,9 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
         <img
           src={dest.heroImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
           alt={dest.name}
+          loading="eager"
+          decoding="async"
+          {...({ fetchPriority: 'high' } as any)}
           referrerPolicy="no-referrer"
           className="absolute inset-0 w-full h-full object-cover filter brightness-75"
         />

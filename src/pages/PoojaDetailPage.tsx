@@ -23,6 +23,12 @@ import {
   HelpCircle,
 } from 'lucide-react';
 
+import {
+  buildPoojaServiceSchema,
+  buildBreadcrumbSchema,
+  buildFAQSchema,
+} from '../utils/seoSchemas';
+
 interface PoojaDetailPageProps {
   slug: string;
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -46,35 +52,26 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
 
   const allPoojas = StoreService.getPoojas();
   const relatedPoojas = allPoojas.filter((p) => p.id !== pooja.id && p.categoryId === pooja.categoryId).slice(0, 3);
-  const faqs = StoreService.getFAQs().filter((f) => f.category === 'Pooja');
+  const faqs = StoreService.getFAQs().filter((f) => f.category === 'Pooja' || f.category === 'General');
 
-  const schemaJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: pooja.seoTitle || pooja.name,
-    description: pooja.metaDescription || pooja.shortDescription,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: settings.businessName,
-      telephone: settings.phone1,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: pooja.city,
-        addressRegion: pooja.state,
-        addressCountry: pooja.country,
-      },
-    },
-    areaServed: pooja.city,
-  };
+  // Build Rich JSON-LD Schemas for AEO / SEO / Google Search
+  const poojaSchema = buildPoojaServiceSchema(pooja);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Pooja Services', url: '/pooja-services' },
+    { name: pooja.name, url: `/pooja/${pooja.slug}` },
+  ]);
+  const faqSchema = buildFAQSchema(faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={pooja.seoTitle || `${pooja.name} in ${pooja.city} | ${settings.businessName}`}
+        title={pooja.seoTitle || `${pooja.name} in ${pooja.city} | Official Booking & Pandit Seva`}
         description={pooja.metaDescription || pooja.shortDescription}
-        focusKeyword={pooja.focusKeyword}
-        canonicalUrl={pooja.canonicalUrl}
-        jsonLd={schemaJsonLd}
+        keywords={pooja.focusKeyword ? `${pooja.focusKeyword}, ${pooja.name}, ${pooja.templeName}, ${pooja.city} Pooja` : `${pooja.name}, ${pooja.templeName}, Ujjain Pooja Booking`}
+        canonicalUrl={pooja.canonicalUrl || `https://aasthaserasta.com/pooja/${pooja.slug}`}
+        ogImage={pooja.featuredImage}
+        jsonLd={[poojaSchema, breadcrumbSchema, faqSchema]}
       />
 
       <Breadcrumbs
@@ -134,6 +131,9 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
             <img
               src={pooja.featuredImage || 'https://images.unsplash.com/photo-1609800078028-c124e4d6cdd1?auto=format&fit=crop&w=1200&q=80'}
               alt={pooja.name}
+              loading="eager"
+              decoding="async"
+              {...({ fetchPriority: 'high' } as any)}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
             />

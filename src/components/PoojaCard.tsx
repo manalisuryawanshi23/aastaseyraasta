@@ -32,6 +32,8 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
         <img
           src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
           alt={pooja.name}
+          loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

@@ -92,6 +92,9 @@ export const HeroBackgroundSlider: React.FC<HeroBackgroundSliderProps> = ({
               src={slide.url}
               alt={slide.title}
               referrerPolicy="no-referrer"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              {...(index === 0 ? { fetchPriority: 'high' } : {})}
               className={`w-full h-full object-cover object-center transform transition-transform duration-[7000ms] ease-out ${
                 isActive ? 'scale-110' : 'scale-100'
               }`}

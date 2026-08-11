@@ -605,6 +605,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
               <img
                 src={item.photo}
                 alt={item.name}
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 onError={() => setImgError(true)}
                 className="w-11 h-11 rounded-full object-cover border-2 border-amber-500/30 shrink-0"
@@ -694,6 +696,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
             <img
               src={item.reviewImage}
               alt="Devotee Temple Visit"
+              loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               className="w-full h-32 object-cover group-hover/img:scale-105 transition-transform duration-300"
             />

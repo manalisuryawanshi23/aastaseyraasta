@@ -372,6 +372,8 @@ export const DestinationMapVisualizer: React.FC<DestinationMapVisualizerProps> =
                   <img
                     src={activePoi.image}
                     alt={activePoi.name}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />

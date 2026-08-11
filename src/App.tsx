@@ -23,6 +23,7 @@ import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
+import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
 
@@ -145,6 +146,10 @@ export default function App() {
 
     if (path === '/saved-items') {
       return <SavedItemsPage onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/site-map' || path === '/sitemap') {
+      return <HTMLSitemapPage />;
     }
 
     if (path === '/admin') {

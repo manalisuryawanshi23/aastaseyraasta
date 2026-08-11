@@ -16,6 +16,8 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         <img
           src={post.featuredImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
           alt={post.title}
+          loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
