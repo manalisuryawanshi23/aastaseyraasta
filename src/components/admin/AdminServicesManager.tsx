@@ -9,6 +9,9 @@ import {
   Trash2,
   Save,
   CheckCircle2,
+  AlertCircle,
+  AlertTriangle,
+  ShieldCheck,
   X,
   Search,
   Image as ImageIcon,
@@ -18,11 +21,147 @@ import {
   IndianRupee,
   HelpCircle,
   Sparkles,
+  Filter,
 } from 'lucide-react';
+
+export interface ServiceAudit {
+  status: 'Verified' | 'Incomplete' | 'Missing';
+  score: number;
+  issues: string[];
+}
+
+export function auditPoojaService(p: PoojaService): ServiceAudit {
+  const issues: string[] = [];
+  let score = 100;
+
+  if (!p.name || p.name.trim().length === 0) {
+    issues.push('Missing service name');
+    score -= 35;
+  }
+  if (!p.shortDescription || p.shortDescription.trim().length < 15) {
+    issues.push('Missing or too brief short description');
+    score -= 20;
+  }
+  if (!p.description || p.description.trim().length < 40) {
+    issues.push('Missing or incomplete detailed description');
+    score -= 15;
+  }
+  if (!p.featuredImage || p.featuredImage.trim().length === 0) {
+    issues.push('Missing featured image');
+    score -= 15;
+  }
+  if (!p.templeName || p.templeName.trim().length === 0) {
+    issues.push('Missing temple or sanctum name');
+    score -= 10;
+  }
+  if (!p.duration) {
+    issues.push('Missing duration info');
+    score -= 5;
+  }
+  if (!p.seoTitle && !p.metaDescription) {
+    issues.push('Missing SEO title / meta tags');
+    score -= 5;
+  }
+
+  score = Math.max(0, score);
+  let status: 'Verified' | 'Incomplete' | 'Missing';
+  if (score >= 85 && issues.length === 0) {
+    status = 'Verified';
+  } else if (score < 50 || !p.name || (!p.shortDescription && !p.description)) {
+    status = 'Missing';
+  } else {
+    status = 'Incomplete';
+  }
+
+  return { status, score, issues };
+}
+
+export function auditTourService(t: Tour): ServiceAudit {
+  const issues: string[] = [];
+  let score = 100;
+
+  if (!t.name || t.name.trim().length === 0) {
+    issues.push('Missing tour name');
+    score -= 35;
+  }
+  if (!t.shortDescription || t.shortDescription.trim().length < 15) {
+    issues.push('Missing or too brief summary');
+    score -= 20;
+  }
+  if (!t.featuredImage || t.featuredImage.trim().length === 0) {
+    issues.push('Missing featured image');
+    score -= 15;
+  }
+  if (!t.destinations || t.destinations.length === 0) {
+    issues.push('Missing destinations tags');
+    score -= 10;
+  }
+  if (!t.placesCovered || t.placesCovered.length === 0) {
+    issues.push('Missing places covered list');
+    score -= 10;
+  }
+  if (!t.itinerary || t.itinerary.length === 0) {
+    issues.push('Missing itinerary breakdown');
+    score -= 10;
+  }
+  if (!t.seoTitle && !t.metaDescription) {
+    issues.push('Missing SEO title / meta tags');
+    score -= 5;
+  }
+
+  score = Math.max(0, score);
+  let status: 'Verified' | 'Incomplete' | 'Missing';
+  if (score >= 85 && issues.length === 0) {
+    status = 'Verified';
+  } else if (score < 50 || !t.name || (!t.shortDescription && !t.description)) {
+    status = 'Missing';
+  } else {
+    status = 'Incomplete';
+  }
+
+  return { status, score, issues };
+}
+
+const AuditBadge: React.FC<{ audit: ServiceAudit; onClick: () => void }> = ({ audit, onClick }) => {
+  let badgeStyle = '';
+  let IconComponent = CheckCircle2;
+
+  if (audit.status === 'Verified') {
+    badgeStyle = 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 hover:bg-emerald-200 dark:hover:bg-emerald-900';
+    IconComponent = CheckCircle2;
+  } else if (audit.status === 'Incomplete') {
+    badgeStyle = 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800 hover:bg-amber-200 dark:hover:bg-amber-900';
+    IconComponent = AlertCircle;
+  } else {
+    badgeStyle = 'bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300 border-red-300 dark:border-red-800 hover:bg-red-200 dark:hover:bg-red-900';
+    IconComponent = AlertTriangle;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      title="Click to audit & edit this service immediately"
+      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border flex items-center gap-1.5 transition-all shadow-xs cursor-pointer ${badgeStyle}`}
+    >
+      <IconComponent className="w-3.5 h-3.5" />
+      <span>{audit.status}</span>
+      {audit.issues.length > 0 && (
+        <span className="text-[10px] opacity-85 bg-black/10 dark:bg-white/10 px-1.5 py-0.2 rounded-full font-mono">
+          {audit.issues.length} {audit.issues.length === 1 ? 'issue' : 'issues'}
+        </span>
+      )}
+    </button>
+  );
+};
 
 export const AdminServicesManager: React.FC = () => {
   const [serviceType, setServiceType] = useState<'pooja' | 'tour'>('pooja');
   const [searchQuery, setSearchQuery] = useState('');
+  const [auditFilter, setAuditFilter] = useState<'ALL' | 'Verified' | 'Incomplete' | 'Missing'>('ALL');
   const [poojas, setPoojas] = useState<PoojaService[]>(StoreService.getPoojas(false));
   const [tours, setTours] = useState<Tour[]>(StoreService.getTours(false));
 
@@ -139,17 +278,45 @@ export const AdminServicesManager: React.FC = () => {
     showToast('Spiritual tour saved successfully!');
   };
 
-  const filteredPoojas = poojas.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.city.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Audited Poojas & Tours
+  const poojasWithAudit = poojas.map((p) => ({
+    item: p,
+    audit: auditPoojaService(p),
+  }));
 
-  const filteredTours = tours.filter(
-    (t) =>
+  const toursWithAudit = tours.map((t) => ({
+    item: t,
+    audit: auditTourService(t),
+  }));
+
+  const currentAuditedItems = serviceType === 'pooja' ? poojasWithAudit : toursWithAudit;
+
+  // Counts for audit filters
+  const verifiedCount = currentAuditedItems.filter((i) => i.audit.status === 'Verified').length;
+  const incompleteCount = currentAuditedItems.filter((i) => i.audit.status === 'Incomplete').length;
+  const missingCount = currentAuditedItems.filter((i) => i.audit.status === 'Missing').length;
+
+  const filteredPoojasWithAudit = poojasWithAudit.filter(({ item: p, audit }) => {
+    const matchesSearch =
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.city.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesAudit = auditFilter === 'ALL' || audit.status === auditFilter;
+    return matchesSearch && matchesAudit;
+  });
+
+  const filteredToursWithAudit = toursWithAudit.filter(({ item: t, audit }) => {
+    const matchesSearch =
       t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.startingPoint.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      t.startingPoint.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesAudit = auditFilter === 'ALL' || audit.status === auditFilter;
+    return matchesSearch && matchesAudit;
+  });
+
+  const activeAudit = editingPooja
+    ? auditPoojaService(editingPooja)
+    : editingTour
+    ? auditTourService(editingTour)
+    : null;
 
   return (
     <div className="space-y-6">
@@ -160,17 +327,19 @@ export const AdminServicesManager: React.FC = () => {
           <h2 className="text-xl font-serif font-bold text-stone-900 dark:text-amber-100 flex items-center gap-2">
             <span>Service Pages Management (Pooja & Tours)</span>
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800">
-              SEO/AEO/GEO Enabled
+              Audit & SEO Enabled
             </span>
           </h2>
-          <p className="text-xs text-stone-500 dark:text-stone-400">Add, edit, or remove Pooja rituals and Tour circuits with image and SEO controls.</p>
+          <p className="text-xs text-stone-500 dark:text-stone-400">
+            Monitor catalog completeness with audit status badges. Click any badge to immediately edit & fix missing details.
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
           {serviceType === 'pooja' ? (
             <button
               onClick={openNewPoojaModal}
-              className="px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors"
+              className="px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add New Pooja</span>
@@ -178,7 +347,7 @@ export const AdminServicesManager: React.FC = () => {
           ) : (
             <button
               onClick={openNewTourModal}
-              className="px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors"
+              className="px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add New Spiritual Tour</span>
@@ -194,58 +363,136 @@ export const AdminServicesManager: React.FC = () => {
         </div>
       )}
 
-      {/* Tabs & Search */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-3">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setServiceType('pooja')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              serviceType === 'pooja'
-                ? 'bg-[#121212] dark:bg-amber-700 text-white'
-                : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
-            }`}
-          >
-            <Flame className="w-4 h-4 text-amber-500" />
-            <span>Pooja Services ({poojas.length})</span>
-          </button>
+      {/* Audit Summary & Filter Toolbar */}
+      <div className="p-4 rounded-2xl bg-white dark:bg-[#1C1917] border border-stone-200 dark:border-stone-800 shadow-xs space-y-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-100 dark:border-stone-800/60 pb-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                setServiceType('pooja');
+                setAuditFilter('ALL');
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                serviceType === 'pooja'
+                  ? 'bg-[#121212] dark:bg-amber-700 text-white'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+              }`}
+            >
+              <Flame className="w-4 h-4 text-amber-500" />
+              <span>Pooja Services ({poojas.length})</span>
+            </button>
 
-          <button
-            onClick={() => setServiceType('tour')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              serviceType === 'tour'
-                ? 'bg-[#121212] dark:bg-amber-700 text-white'
-                : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
-            }`}
-          >
-            <Compass className="w-4 h-4 text-amber-500" />
-            <span>Spiritual Tours & Yatras ({tours.length})</span>
-          </button>
+            <button
+              onClick={() => {
+                setServiceType('tour');
+                setAuditFilter('ALL');
+              }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                serviceType === 'tour'
+                  ? 'bg-[#121212] dark:bg-amber-700 text-white'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+              }`}
+            >
+              <Compass className="w-4 h-4 text-amber-500" />
+              <span>Spiritual Tours & Yatras ({tours.length})</span>
+            </button>
+          </div>
+
+          <div className="relative w-full md:w-64">
+            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Search ${serviceType === 'pooja' ? 'Poojas' : 'Tours'}...`}
+              className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs outline-none focus:ring-2 focus:ring-amber-500"
+            />
+          </div>
         </div>
 
-        <div className="relative w-full sm:w-64">
-          <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search ${serviceType === 'pooja' ? 'Poojas' : 'Tours'}...`}
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs"
-          />
+        {/* Filter Badges */}
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400 flex items-center gap-1 mr-1">
+              <Filter className="w-3.5 h-3.5" /> Audit Status:
+            </span>
+
+            <button
+              onClick={() => setAuditFilter('ALL')}
+              className={`px-3 py-1 rounded-lg font-semibold text-[11px] transition-all cursor-pointer ${
+                auditFilter === 'ALL'
+                  ? 'bg-stone-900 text-white dark:bg-amber-600'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200'
+              }`}
+            >
+              All ({currentAuditedItems.length})
+            </button>
+
+            <button
+              onClick={() => setAuditFilter('Verified')}
+              className={`px-3 py-1 rounded-lg font-semibold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer ${
+                auditFilter === 'Verified'
+                  ? 'bg-emerald-700 text-white'
+                  : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50 hover:bg-emerald-100'
+              }`}
+            >
+              <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+              Verified ({verifiedCount})
+            </button>
+
+            <button
+              onClick={() => setAuditFilter('Incomplete')}
+              className={`px-3 py-1 rounded-lg font-semibold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer ${
+                auditFilter === 'Incomplete'
+                  ? 'bg-amber-600 text-white'
+                  : 'bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/50 hover:bg-amber-100'
+              }`}
+            >
+              <AlertCircle className="w-3 h-3 text-amber-500" />
+              Incomplete ({incompleteCount})
+            </button>
+
+            <button
+              onClick={() => setAuditFilter('Missing')}
+              className={`px-3 py-1 rounded-lg font-semibold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer ${
+                auditFilter === 'Missing'
+                  ? 'bg-red-700 text-white'
+                  : 'bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/50 hover:bg-red-100'
+              }`}
+            >
+              <AlertTriangle className="w-3 h-3 text-red-500" />
+              Missing Data ({missingCount})
+            </button>
+          </div>
+
+          <div className="text-[11px] text-stone-500 dark:text-stone-400 font-mono">
+            Showing {serviceType === 'pooja' ? filteredPoojasWithAudit.length : filteredToursWithAudit.length} of {currentAuditedItems.length}
+          </div>
         </div>
       </div>
 
       {/* Grid: Pooja Services */}
       {serviceType === 'pooja' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredPoojas.map((p) => (
+          {filteredPoojasWithAudit.map(({ item: p, audit }) => (
             <div
               key={p.id}
-              className="bg-white dark:bg-[#1C1917] rounded-2xl border border-[#121212]/10 dark:border-stone-800 p-4 space-y-3 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="bg-white dark:bg-[#1C1917] rounded-2xl border border-[#121212]/10 dark:border-stone-800 p-4 space-y-3 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div className="space-y-2">
                 {p.featuredImage && (
-                  <div className="h-32 rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800">
-                    <img src={p.featuredImage} alt={p.name} className="w-full h-full object-cover" />
+                  <div className="h-32 rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800 relative">
+                    <img src={p.featuredImage} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute top-2 right-2">
+                      <AuditBadge
+                        audit={audit}
+                        onClick={() => {
+                          setEditingPooja(p);
+                          setEditingTour(null);
+                          setIsModalOpen(true);
+                        }}
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -254,9 +501,23 @@ export const AdminServicesManager: React.FC = () => {
                     <h3 className="font-serif font-bold text-sm text-stone-900 dark:text-stone-100">{p.name}</h3>
                     {p.hindiName && <div className="text-xs text-amber-700 dark:text-amber-400 font-serif">{p.hindiName}</div>}
                   </div>
+                  {!p.featuredImage && (
+                    <AuditBadge
+                      audit={audit}
+                      onClick={() => {
+                        setEditingPooja(p);
+                        setEditingTour(null);
+                        setIsModalOpen(true);
+                      }}
+                    />
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${p.isPublished ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-stone-200 text-stone-700'}`}>
                     {p.isPublished ? 'Published' : 'Draft'}
                   </span>
+                  <span className="text-[10px] font-mono text-stone-400">ID: {p.id}</span>
                 </div>
 
                 <div className="text-xs text-stone-500 dark:text-stone-400 flex items-center gap-1 font-mono">
@@ -265,7 +526,7 @@ export const AdminServicesManager: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-stone-600 dark:text-stone-300 line-clamp-2 leading-relaxed">
-                  {p.shortDescription}
+                  {p.shortDescription || <span className="italic text-red-500">Short description missing</span>}
                 </p>
               </div>
 
@@ -281,13 +542,15 @@ export const AdminServicesManager: React.FC = () => {
                       setEditingTour(null);
                       setIsModalOpen(true);
                     }}
-                    className="p-1.5 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200"
+                    className="px-2.5 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[11px] flex items-center gap-1 border border-amber-200 dark:border-amber-800 cursor-pointer"
                   >
-                    <Edit3 className="w-3.5 h-3.5" />
+                    <Edit3 className="w-3 h-3" />
+                    <span>Audit & Edit</span>
                   </button>
                   <button
                     onClick={() => handleDeletePooja(p.id, p.name)}
-                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400"
+                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer"
+                    title="Delete Pooja Service"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -301,23 +564,47 @@ export const AdminServicesManager: React.FC = () => {
       {/* Grid: Tour Services */}
       {serviceType === 'tour' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTours.map((t) => (
+          {filteredToursWithAudit.map(({ item: t, audit }) => (
             <div
               key={t.id}
-              className="bg-white dark:bg-[#1C1917] rounded-2xl border border-[#121212]/10 dark:border-stone-800 p-4 space-y-3 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="bg-white dark:bg-[#1C1917] rounded-2xl border border-[#121212]/10 dark:border-stone-800 p-4 space-y-3 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div className="space-y-2">
                 {t.featuredImage && (
-                  <div className="h-32 rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800">
-                    <img src={t.featuredImage} alt={t.name} className="w-full h-full object-cover" />
+                  <div className="h-32 rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800 relative">
+                    <img src={t.featuredImage} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute top-2 right-2">
+                      <AuditBadge
+                        audit={audit}
+                        onClick={() => {
+                          setEditingTour(t);
+                          setEditingPooja(null);
+                          setIsModalOpen(true);
+                        }}
+                      />
+                    </div>
                   </div>
                 )}
 
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-serif font-bold text-sm text-stone-900 dark:text-stone-100">{t.name}</h3>
+                  {!t.featuredImage && (
+                    <AuditBadge
+                      audit={audit}
+                      onClick={() => {
+                        setEditingTour(t);
+                        setEditingPooja(null);
+                        setIsModalOpen(true);
+                      }}
+                    />
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${t.isPublished ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-stone-200 text-stone-700'}`}>
                     {t.isPublished ? 'Published' : 'Draft'}
                   </span>
+                  <span className="text-[10px] font-mono text-stone-400">{t.category || 'Tour'}</span>
                 </div>
 
                 <div className="text-xs text-stone-500 dark:text-stone-400 flex items-center gap-1 font-mono">
@@ -326,7 +613,7 @@ export const AdminServicesManager: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-stone-600 dark:text-stone-300 line-clamp-2 leading-relaxed">
-                  {t.shortDescription}
+                  {t.shortDescription || <span className="italic text-red-500">Summary description missing</span>}
                 </p>
               </div>
 
@@ -342,13 +629,15 @@ export const AdminServicesManager: React.FC = () => {
                       setEditingPooja(null);
                       setIsModalOpen(true);
                     }}
-                    className="p-1.5 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200"
+                    className="px-2.5 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[11px] flex items-center gap-1 border border-amber-200 dark:border-amber-800 cursor-pointer"
                   >
-                    <Edit3 className="w-3.5 h-3.5" />
+                    <Edit3 className="w-3 h-3" />
+                    <span>Audit & Edit</span>
                   </button>
                   <button
                     onClick={() => handleDeleteTour(t.id, t.name)}
-                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400"
+                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer"
+                    title="Delete Tour Service"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -365,15 +654,64 @@ export const AdminServicesManager: React.FC = () => {
           <div className="bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6 my-8">
             
             <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">
-              <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100">
-                {editingPooja
-                  ? editingPooja.id ? 'Edit Pooja Service' : 'Add New Pooja Service'
-                  : editingTour?.id ? 'Edit Spiritual Tour' : 'Add New Spiritual Tour'}
-              </h3>
-              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-stone-400 hover:text-stone-600">
+              <div className="flex items-center gap-2">
+                <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100">
+                  {editingPooja
+                    ? editingPooja.id ? 'Edit Pooja Service' : 'Add New Pooja Service'
+                    : editingTour?.id ? 'Edit Spiritual Tour' : 'Add New Spiritual Tour'}
+                </h3>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-stone-400 hover:text-stone-600 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
+
+            {/* Audit Findings Panel inside Modal */}
+            {activeAudit && (
+              <div
+                className={`p-4 rounded-xl border space-y-2 ${
+                  activeAudit.status === 'Verified'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-100'
+                    : activeAudit.status === 'Incomplete'
+                    ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-100'
+                    : 'bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800 text-red-900 dark:text-red-100'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wide">
+                    {activeAudit.status === 'Verified' ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    ) : activeAudit.status === 'Incomplete' ? (
+                      <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    ) : (
+                      <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                    )}
+                    <span>Audit Status: {activeAudit.status} ({activeAudit.score}% completeness)</span>
+                  </div>
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 font-bold">
+                    {activeAudit.issues.length} {activeAudit.issues.length === 1 ? 'Finding' : 'Findings'}
+                  </span>
+                </div>
+
+                {activeAudit.issues.length > 0 ? (
+                  <div className="space-y-1 pt-1">
+                    <p className="text-xs font-semibold">The following items require attention to reach Verified status:</p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs opacity-90 pl-2">
+                      {activeAudit.issues.map((issue, idx) => (
+                        <li key={idx} className="flex items-center gap-1.5">
+                          <span className="text-amber-600 dark:text-amber-400 font-bold">•</span>
+                          <span>{issue}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p className="text-xs text-emerald-800 dark:text-emerald-300 font-medium">
+                    ✨ Perfect! All essential details, images, and SEO configuration passed audit.
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Modal Form for Pooja */}
             {editingPooja && (
@@ -527,7 +865,7 @@ export const AdminServicesManager: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-2"
+                    className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-2 cursor-pointer"
                   >
                     <Save className="w-4 h-4" />
                     <span>Save Service</span>
@@ -624,7 +962,7 @@ export const AdminServicesManager: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-2"
+                    className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs flex items-center gap-2 cursor-pointer"
                   >
                     <Save className="w-4 h-4" />
                     <span>Save Tour</span>

@@ -49,6 +49,7 @@ const tourHeaderSlides = [
 export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking }) => {
   const allTours = StoreService.getTours();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -58,13 +59,22 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
     return () => clearTimeout(timer);
   }, []);
 
+  const categories = [
+    { id: 'all', label: 'All Circuits' },
+    { id: 'Ujjain & Central India', label: 'Ujjain & Central India' },
+    { id: 'Himalayan Yatra', label: 'Himalayan Yatra' },
+    { id: 'Named Yatra', label: 'Named Yatras' },
+    { id: 'Trekking & High Altitude', label: 'Trekking & High Altitude' },
+  ];
+
   const filtered = allTours.filter((t) => {
-    return (
+    const matchesCat = selectedCategory === 'all' || t.category === selectedCategory;
+    const matchesSearch =
       !searchTerm.trim() ||
       t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       t.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.destinations.some((d) => d.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+      t.destinations.some((d) => d.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesCat && matchesSearch;
   });
 
   return (
@@ -98,16 +108,35 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
 
       {/* Controls */}
       <FadeIn delay={100} direction="up">
-        <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm flex items-center">
+        <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
           <div className="relative w-full">
             <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search tours (e.g. Ujjain Omkareshwar, Char Dham, Nalkheda)..."
+              placeholder="Search tours & treks (e.g. Ujjain, Char Dham, Kedarkantha, 84 Mahadev)..."
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             />
+          </div>
+
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {categories.map((cat) => {
+              const active = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
+                    active
+                      ? 'bg-emerald-600 text-white shadow-sm'
+                      : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </FadeIn>

@@ -144,16 +144,48 @@ export class StoreService {
 
   // Categories
   static getCategories(): PoojaCategory[] {
-    return getItem<PoojaCategory[]>(KEYS.CATEGORIES, initialPoojaCategories);
+    const saved = getItem<PoojaCategory[]>(KEYS.CATEGORIES, initialPoojaCategories);
+    const savedIds = new Set(saved.map((c) => c.id));
+    const missing = initialPoojaCategories.filter((c) => !savedIds.has(c.id));
+    if (missing.length > 0) {
+      const merged = [...saved, ...missing];
+      setItem(KEYS.CATEGORIES, merged);
+      return merged;
+    }
+    return saved;
   }
 
   // Poojas
   static getPoojas(publishedOnly = true): PoojaService[] {
-    const poojas = getItem<PoojaService[]>(KEYS.POOJAS, initialPoojas);
-    if (publishedOnly) {
-      return poojas.filter((p) => p.isPublished);
+    const saved = getItem<PoojaService[]>(KEYS.POOJAS, initialPoojas);
+    const savedIds = new Set(saved.map((p) => p.id));
+    const missing = initialPoojas.filter((p) => !savedIds.has(p.id));
+
+    let list = saved.map((p) => {
+      const init = initialPoojas.find((ip) => ip.id === p.id);
+      if (init) {
+        return {
+          ...p,
+          categoryId: init.categoryId,
+          categoryName: init.categoryName,
+          name: init.name,
+          hindiName: init.hindiName,
+          templeName: init.templeName,
+          location: init.location,
+        };
+      }
+      return p;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.POOJAS, list);
     }
-    return poojas;
+
+    if (publishedOnly) {
+      return list.filter((p) => p.isPublished);
+    }
+    return list;
   }
 
   static getPoojaBySlug(slug: string): PoojaService | undefined {
@@ -209,11 +241,34 @@ export class StoreService {
 
   // Tours
   static getTours(publishedOnly = true): Tour[] {
-    const tours = getItem<Tour[]>(KEYS.TOURS, initialTours);
-    if (publishedOnly) {
-      return tours.filter((t) => t.isPublished);
+    const saved = getItem<Tour[]>(KEYS.TOURS, initialTours);
+    const savedIds = new Set(saved.map((t) => t.id));
+    const missing = initialTours.filter((t) => !savedIds.has(t.id));
+
+    let list = saved.map((t) => {
+      const init = initialTours.find((it) => it.id === t.id);
+      if (init) {
+        return {
+          ...t,
+          name: init.name,
+          category: init.category,
+          placesCovered: init.placesCovered,
+          templesCovered: init.templesCovered,
+          duration: init.duration,
+        };
+      }
+      return t;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.TOURS, list);
     }
-    return tours;
+
+    if (publishedOnly) {
+      return list.filter((t) => t.isPublished);
+    }
+    return list;
   }
 
   static getTourBySlug(slug: string): Tour | undefined {
