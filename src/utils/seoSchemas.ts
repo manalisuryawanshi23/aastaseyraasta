@@ -22,28 +22,47 @@ export function getBaseUrl(): string {
 /**
  * Organization & LocalBusiness JSON-LD Schema
  */
-export function buildOrganizationSchema() {
+export function buildLocalBusinessSchema(customSettings?: any) {
   const baseUrl = getBaseUrl();
+  const phone = customSettings?.phone1 || '+91 98765 43210';
+  const altPhone = customSettings?.phone2 || '+91 91111 22233';
+  const email = customSettings?.email || 'contact@aasthaserasta.com';
+  const businessName = customSettings?.businessName || ORGANIZATION_NAME;
+  const addressStr = customSettings?.address || 'Mahakal Marg, Near Ramghat & Mahakaleshwar Temple';
+  const city = customSettings?.city || 'Ujjain';
+  const state = customSettings?.state || 'Madhya Pradesh';
+  const pincode = customSettings?.pincode || '456001';
+
   return {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'LocalBusiness', 'TravelAgency'],
-    '@id': `${baseUrl}/#organization`,
-    name: ORGANIZATION_NAME,
-    alternateName: 'Aastha Sey Raasta - Ujjain Temple Pooja & Yatra Seva',
+    '@type': ['LocalBusiness', 'ReligiousOrganization', 'TravelAgency', 'ProfessionalService'],
+    '@id': `${baseUrl}/#localbusiness-ujjain`,
+    name: businessName,
+    alternateName: [
+      'Aastha Sey Raasta - Ujjain Temple Pooja & Yatra Seva Kendra',
+      'Ujjain Mahakaleshwar Pandit Booking Kendra',
+      'Aastha Sey Raasta Seva Foundation Ujjain',
+    ],
     url: baseUrl,
     logo: LOGO_URL,
-    image: LOGO_URL,
+    image: [
+      LOGO_URL,
+      `${baseUrl}/assets/images/header_bg_spiritual_1786196057015.jpg`,
+      `${baseUrl}/assets/images/pooja_rudrabhishek_1786196070818.jpg`,
+    ],
     description:
-      "Aastha Sey Raasta Seva is India's premier spiritual pilgrimage organization providing certified Vedic Pandits for temple rituals in Ujjain Mahakaleshwar, Omkareshwar, Baglamukhi Nalkheda, Char Dham Yatra, and Himalayan Treks.",
-    telephone: '+91 98765 43210',
-    email: 'contact@aasthaserasta.com',
+      'Certified Gurukul Brahmins & Vedic Acharyas in Ujjain providing authentic Mahakaleshwar Rudrabhishek, Mangalnath Bhat Pooja, Kaal Sarp Dosh Shanti, Pitru Dosh Narayan Bali, Baglamukhi Havan at Nalkheda, and spiritual pilgrimage yatra packages across Madhya Pradesh.',
+    telephone: phone,
+    email: email,
     priceRange: '₹500 - ₹51000',
+    currenciesAccepted: 'INR',
+    paymentAccepted: 'Cash, UPI, Credit Card, Debit Card, Net Banking',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Mahakal Marg, Near Ramghat',
-      addressLocality: 'Ujjain',
-      addressRegion: 'Madhya Pradesh',
-      postalCode: '456001',
+      streetAddress: addressStr,
+      addressLocality: city,
+      addressRegion: state,
+      postalCode: pincode,
       addressCountry: 'IN',
     },
     geo: {
@@ -51,6 +70,7 @@ export function buildOrganizationSchema() {
       latitude: 23.1765,
       longitude: 75.7885,
     },
+    hasMap: 'https://maps.google.com/?q=23.1765,75.7885',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -65,36 +85,59 @@ export function buildOrganizationSchema() {
         ],
         opens: '00:00',
         closes: '23:59',
+        description: '24/7 Helpline & Sankalp Booking Center for Ujjain Temple Poojas & Yatras',
       },
+    ],
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: phone,
+        contactType: 'customer service',
+        contactOption: 'TollFree',
+        areaServed: 'IN',
+        availableLanguage: ['Hindi', 'English', 'Sanskrit'],
+      },
+      {
+        '@type': 'ContactPoint',
+        telephone: altPhone,
+        contactType: 'reservations',
+        areaServed: 'IN',
+        availableLanguage: ['Hindi', 'English'],
+      },
+    ],
+    areaServed: [
+      { '@type': 'City', name: 'Ujjain' },
+      { '@type': 'City', name: 'Omkareshwar' },
+      { '@type': 'City', name: 'Nalkheda' },
+      { '@type': 'City', name: 'Indore' },
+      { '@type': 'City', name: 'Agar Malwa' },
+      { '@type': 'City', name: 'Dewas' },
+      { '@type': 'City', name: 'Ratlam' },
+      { '@type': 'State', name: 'Madhya Pradesh' },
+      { '@type': 'Country', name: 'India' },
+    ],
+    knowsAbout: [
+      'Ujjain Mahakaleshwar Temple',
+      'Rudrabhishek Pooja Vidhi & Samagri',
+      'Mangalnath & Angareshwar Bhat Pooja for Mangal Dosh Shanti',
+      'Kaal Sarp Dosh Shanti Pooja Ujjain',
+      'Pitru Dosh & Narayan Bali Pooja at Ramghat Ujjain',
+      'Maa Baglamukhi Havan at Nalkheda',
+      'Mahamrityunjaya Jaap & Chandi Path',
+      '84 Mahadev Yatra Ujjain',
+      'Ujjain Omkareshwar Tour Packages',
+      'Char Dham Yatra Uttarakhand',
     ],
     sameAs: [
       'https://www.facebook.com/aasthaserasta',
       'https://www.instagram.com/aasthaserasta',
       'https://www.youtube.com/@aasthaserasta',
     ],
-    areaServed: [
-      {
-        '@type': 'City',
-        name: 'Ujjain',
-      },
-      {
-        '@type': 'City',
-        name: 'Omkareshwar',
-      },
-      {
-        '@type': 'City',
-        name: 'Nalkheda',
-      },
-      {
-        '@type': 'State',
-        name: 'Madhya Pradesh',
-      },
-      {
-        '@type': 'Country',
-        name: 'India',
-      },
-    ],
   };
+}
+
+export function buildOrganizationSchema() {
+  return buildLocalBusinessSchema();
 }
 
 /**

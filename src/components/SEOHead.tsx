@@ -3,6 +3,7 @@ import {
   buildOrganizationSchema,
   buildWebSiteSchema,
 } from '../utils/seoSchemas';
+import { formatTitleWithBrand } from '../utils/seoTitles';
 
 interface SEOHeadProps {
   title?: string;
@@ -10,26 +11,30 @@ interface SEOHeadProps {
   keywords?: string;
   canonicalUrl?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
   noindex?: boolean;
   jsonLd?: object | object[];
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
-  title = 'Aastha Sey Raasta Seva | Official Pooja Services & Spiritual Tours Ujjain',
+  title = 'Official Pooja Services & Spiritual Tours Ujjain',
   description = 'Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja, Kaal Sarp Dosh Shanti, Baglamukhi Havan & Spiritual Pilgrimage Yatras in Ujjain Mahakaleshwar, Omkareshwar, Nalkheda & Char Dham.',
   keywords = 'Ujjain Pooja Booking, Mahakaleshwar Rudrabhishek, Kaal Sarp Dosh Pooja Ujjain, Mangalnath Bhat Pooja, Baglamukhi Havan Nalkheda, 84 Mahadev Yatra, Char Dham Yatra Package, Aastha Sey Raasta Seva',
   canonicalUrl,
-  ogImage = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
+  ogImage,
+  ogImageAlt,
   ogType = 'website',
   noindex = false,
   jsonLd,
 }) => {
-  useEffect(() => {
-    // Set title
-    document.title = title;
+  const formattedTitle = formatTitleWithBrand(title);
 
-    // Helper to set or update meta tag
+  useEffect(() => {
+    // Set document title
+    document.title = formattedTitle;
+
+    // Helper to set or update meta tag safely
     const setMeta = (nameAttr: string, attrVal: string, content: string) => {
       let el = document.querySelector(`meta[${nameAttr}="${attrVal}"]`);
       if (!el) {
@@ -40,6 +45,35 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       el.setAttribute('content', content);
     };
 
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://aasthaserasta.com';
+    const currentUrl = canonicalUrl || (typeof window !== 'undefined' ? window.location.href.split('?')[0] : origin);
+
+    // Resolve absolute image URL for Social Media previews (WhatsApp, Facebook, Twitter, LinkedIn, iMessage)
+    const resolveImageUrl = (img?: string): string => {
+      if (!img) {
+        return `${origin}/src/assets/images/header_bg_spiritual_1786196057015.jpg`;
+      }
+      if (img.startsWith('http://') || img.startsWith('https://')) {
+        return img;
+      }
+      const cleanPath = img.startsWith('/') ? img : `/${img}`;
+      return `${origin}${cleanPath}`;
+    };
+
+    const getImageMimeType = (url: string): string => {
+      const lower = url.toLowerCase();
+      if (lower.endsWith('.png')) return 'image/png';
+      if (lower.endsWith('.webp')) return 'image/webp';
+      if (lower.endsWith('.gif')) return 'image/gif';
+      if (lower.endsWith('.svg')) return 'image/svg+xml';
+      return 'image/jpeg';
+    };
+
+    const resolvedOgImage = resolveImageUrl(ogImage);
+    const resolvedOgImageAlt = ogImageAlt || formattedTitle;
+    const mimeType = getImageMimeType(resolvedOgImage);
+
+    // Baseline Meta Tags
     setMeta('name', 'description', description);
     setMeta('name', 'keywords', keywords);
     setMeta('name', 'author', 'Aastha Sey Raasta Seva Foundation');
@@ -51,22 +85,36 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     setMeta('name', 'geo.position', '23.1765;75.7885');
     setMeta('name', 'ICBM', '23.1765, 75.7885');
 
-    // OpenGraph
-    setMeta('property', 'og:title', title);
-    setMeta('property', 'og:description', description);
-    setMeta('property', 'og:image', ogImage.startsWith('http') ? ogImage : `${window.location.origin}${ogImage}`);
-    setMeta('property', 'og:type', ogType);
+    // Schema / Itemprop Meta
+    setMeta('itemprop', 'name', formattedTitle);
+    setMeta('itemprop', 'description', description);
+    setMeta('itemprop', 'image', resolvedOgImage);
+
+    // OpenGraph (Facebook, WhatsApp, LinkedIn, Pinterest)
     setMeta('property', 'og:site_name', 'Aastha Sey Raasta Seva');
+    setMeta('property', 'og:title', formattedTitle);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:type', ogType);
+    setMeta('property', 'og:url', currentUrl);
     setMeta('property', 'og:locale', 'en_IN');
+    setMeta('property', 'og:image', resolvedOgImage);
+    setMeta('property', 'og:image:secure_url', resolvedOgImage.replace(/^http:/, 'https:'));
+    setMeta('property', 'og:image:type', mimeType);
+    setMeta('property', 'og:image:width', '1200');
+    setMeta('property', 'og:image:height', '630');
+    setMeta('property', 'og:image:alt', resolvedOgImageAlt);
 
-    // Twitter Card
+    // Twitter Card (X, Discord, Slack)
     setMeta('name', 'twitter:card', 'summary_large_image');
-    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:site', '@AasthaSeyRaasta');
+    setMeta('name', 'twitter:creator', '@AasthaSeyRaasta');
+    setMeta('name', 'twitter:title', formattedTitle);
     setMeta('name', 'twitter:description', description);
-    setMeta('name', 'twitter:image', ogImage.startsWith('http') ? ogImage : `${window.location.origin}${ogImage}`);
+    setMeta('name', 'twitter:image', resolvedOgImage);
+    setMeta('name', 'twitter:image:alt', resolvedOgImageAlt);
+    setMeta('name', 'twitter:url', currentUrl);
 
-    // Canonical Link
-    const currentUrl = canonicalUrl || (typeof window !== 'undefined' ? window.location.href.split('?')[0] : '');
+    // Canonical Link Tag
     let linkCanonical = document.querySelector('link[rel="canonical"]');
     if (!linkCanonical) {
       linkCanonical = document.createElement('link');
@@ -102,7 +150,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       document.head.appendChild(scriptJsonLd);
     }
     scriptJsonLd.textContent = JSON.stringify(fullGraphSchema, null, 2);
-  }, [title, description, keywords, canonicalUrl, ogImage, ogType, noindex, jsonLd]);
+  }, [title, description, keywords, canonicalUrl, ogImage, ogImageAlt, ogType, noindex, jsonLd]);
 
   return null;
 };

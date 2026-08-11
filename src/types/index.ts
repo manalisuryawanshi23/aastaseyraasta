@@ -289,9 +289,15 @@ export interface SiteSettings {
   footerDescription: string;
   announcementBanner?: {
     text: string;
+    secondaryText?: string;
     link?: string;
     buttonText?: string;
+    badgeText?: string;
     isActive: boolean;
+    isMarquee?: boolean;
+    speed?: 'slow' | 'medium' | 'fast';
+    themeColor?: 'amber' | 'red' | 'emerald' | 'purple' | 'dark';
+    pauseOnHover?: boolean;
   };
   trustStats?: {
     devoteesCount: string;

@@ -3,6 +3,7 @@ import { StoreService } from '../services/store';
 import { DestinationCard } from '../components/DestinationCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateDestinationListingTitle } from '../utils/seoTitles';
 import { MapPin } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
@@ -21,8 +22,12 @@ export const DestinationListingPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <SEOHead
-        title="Sacred Destinations & Pilgrimage Hubs | Aastha Sey Raasta Seva"
+        title={generateDestinationListingTitle()}
         description="Explore spiritual destinations including Ujjain Mahakal, Omkareshwar Jyotirlinga, Maa Baglamukhi Nalkheda, Indore, and Uttarakhand."
+        keywords="Sacred Shrines Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, Pilgrimage Destinations Madhya Pradesh"
+        canonicalUrl="https://aasthaserasta.com/destinations"
+        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImageAlt="Sacred Pilgrimage Destinations and Shrines"
       />
 
       <Breadcrumbs items={[{ label: 'Destinations' }]} />

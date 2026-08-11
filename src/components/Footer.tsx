@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { StoreService } from '../services/store';
 import { useLanguage } from '../context/LanguageContext';
+import { LocalBusinessSchema } from './LocalBusinessSchema';
 
 export const Footer: React.FC = () => {
   const settings = StoreService.getSettings();
@@ -45,6 +46,8 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-stone-950 text-stone-300 pt-16 pb-12 border-t border-amber-950/60 relative overflow-hidden">
+      {/* Local Business JSON-LD Schema for GEO & Local SEO */}
+      <LocalBusinessSchema />
       
       {/* Background Subtle Mandala Effect */}
       <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#D97706_1px,transparent_1px)] [background-size:24px_24px]" />

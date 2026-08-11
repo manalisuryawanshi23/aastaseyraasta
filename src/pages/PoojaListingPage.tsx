@@ -3,6 +3,7 @@ import { StoreService } from '../services/store';
 import { PoojaCard } from '../components/PoojaCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generatePoojaListingTitle } from '../utils/seoTitles';
 import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Flame, Search, Filter, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
@@ -71,11 +72,17 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
     return matchCat && matchSearch;
   });
 
+  const activeCategoryName = categories.find((c) => c.id === selectedCat)?.name;
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <SEOHead
-        title="Authentic Vedic Pooja Services in Ujjain | Aastha Sey Raasta Seva"
+        title={generatePoojaListingTitle(activeCategoryName, searchTerm)}
         description="Book authentic Vedic Poojas in Ujjain including Rudrabhishek, Bhat Pooja at Angareshwar & Mangalnath, Mahamrityunjaya Jaap, Baglamukhi Havan, and Pitru Dosh Shanti."
+        keywords="Ujjain Pooja Services, Mahakaleshwar Rudrabhishek, Bhat Pooja Mangalnath, Baglamukhi Havan Nalkheda, Pitru Dosh Shanti"
+        canonicalUrl="https://aasthaserasta.com/pooja-services"
+        ogImage="/src/assets/images/pooja_rudrabhishek_1786196070818.jpg"
+        ogImageAlt="Vedic Pooja Services in Ujjain Mahakaleshwar"
       />
 
       <Breadcrumbs items={[{ label: 'Pooja Services' }]} />

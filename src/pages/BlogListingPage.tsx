@@ -3,6 +3,7 @@ import { StoreService } from '../services/store';
 import { BlogCard } from '../components/BlogCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateBlogListingTitle } from '../utils/seoTitles';
 import { BookOpen, Search, Sparkles } from 'lucide-react';
 import { SkeletonGrid } from '../components/Skeletons';
 import { ContentFade } from '../components/PageTransition';
@@ -30,8 +31,12 @@ export const BlogListingPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <SEOHead
-        title="Spiritual Blog & Vedic Guides | Aastha Sey Raasta Seva"
+        title={generateBlogListingTitle()}
         description="Read detailed articles on Rudrabhishek vidhi, Bhat Pooja significance at Mangalnath, Baglamukhi Havan Mahatmyam, and Ujjain pilgrimage tips."
+        keywords="Spiritual Blog Ujjain, Vedic Rituals Guide, Rudrabhishek Vidhi, Bhat Pooja Mahatmyam, Baglamukhi Havan Secrets"
+        canonicalUrl="https://aasthaserasta.com/blog"
+        ogImage="/src/assets/images/pooja_rudrabhishek_1786196070818.jpg"
+        ogImageAlt="Spiritual Articles and Vedic Guides"
       />
 
       <Breadcrumbs items={[{ label: 'Blog Guides' }]} />

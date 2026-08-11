@@ -3,6 +3,7 @@ import { StoreService } from '../services/store';
 import { TourCard } from '../components/TourCard';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateTourListingTitle } from '../utils/seoTitles';
 import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { Compass, Search, MapPin, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
@@ -80,8 +81,12 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <SEOHead
-        title="Spiritual Tours & Yatra Packages | Aastha Sey Raasta Seva"
+        title={generateTourListingTitle(selectedCategory, searchTerm)}
         description="Book customized spiritual pilgrimage tours in Ujjain, Omkareshwar, Baglamukhi Nalkheda, Indore, and Char Dham Uttarakhand with private AC transport and hotel stays."
+        keywords="Spiritual Tours Ujjain, Omkareshwar Yatra, Char Dham Yatra Package, 84 Mahadev Yatra, Ujjain Pilgrimage Tour"
+        canonicalUrl="https://aasthaserasta.com/spiritual-tours"
+        ogImage="/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg"
+        ogImageAlt="Spiritual Tours & Yatra Packages in Ujjain & Central India"
       />
 
       <Breadcrumbs items={[{ label: 'Spiritual Tours' }]} />

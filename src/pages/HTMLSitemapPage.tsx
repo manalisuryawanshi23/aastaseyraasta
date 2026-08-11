@@ -60,10 +60,12 @@ export const HTMLSitemapPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title="HTML Site Map & Complete Index | Aastha Sey Raasta Seva Ujjain"
+        title="Complete Service & Yatra Directory Index"
         description="Comprehensive Site Map of all Ujjain Pooja services, Spiritual Yatra packages, Temple destination guides, and Vedic blog articles."
         keywords="Ujjain Sitemap, Aastha Sey Raasta Site Map, All Ujjain Poojas, All Spiritual Tours"
         canonicalUrl="https://aasthaserasta.com/site-map"
+        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImageAlt="Aastha Sey Raasta Seva Site Map & Index"
         jsonLd={[breadcrumbSchema]}
       />
 

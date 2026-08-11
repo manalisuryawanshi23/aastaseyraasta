@@ -53,7 +53,7 @@ export const SavedItemsPage: React.FC<SavedItemsPageProps> = ({ onOpenBooking })
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 min-h-[70vh]">
       <SEOHead
-        title="My Saved Items | Aastha Sey Raasta Seva"
+        title="My Saved Rituals & Pilgrimage Wishlist"
         description="View your saved Pooja services and spiritual tour packages for Ujjain and pilgrimage circuits."
       />
 

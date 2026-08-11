@@ -2,6 +2,7 @@ import React from 'react';
 import { StoreService } from '../services/store';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generatePoojaTitle } from '../utils/seoTitles';
 import { FAQAccordion } from '../components/FAQAccordion';
 import { PoojaCard } from '../components/PoojaCard';
 import { FavoriteButton } from '../components/FavoriteButton';
@@ -66,11 +67,12 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={pooja.seoTitle || `${pooja.name} in ${pooja.city} | Official Booking & Pandit Seva`}
+        title={generatePoojaTitle(pooja)}
         description={pooja.metaDescription || pooja.shortDescription}
         keywords={pooja.focusKeyword ? `${pooja.focusKeyword}, ${pooja.name}, ${pooja.templeName}, ${pooja.city} Pooja` : `${pooja.name}, ${pooja.templeName}, Ujjain Pooja Booking`}
         canonicalUrl={pooja.canonicalUrl || `https://aasthaserasta.com/pooja/${pooja.slug}`}
         ogImage={pooja.featuredImage}
+        ogImageAlt={`${pooja.name} - ${pooja.templeName}, ${pooja.city}`}
         jsonLd={[poojaSchema, breadcrumbSchema, faqSchema]}
       />
 

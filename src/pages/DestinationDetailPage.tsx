@@ -2,6 +2,7 @@ import React from 'react';
 import { StoreService } from '../services/store';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateDestinationTitle } from '../utils/seoTitles';
 import { PoojaCard } from '../components/PoojaCard';
 import { TourCard } from '../components/TourCard';
 import { DestinationMapVisualizer } from '../components/DestinationMapVisualizer';
@@ -39,10 +40,12 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={dest.seoTitle || `${dest.name} Spiritual Travel Guide | ${settings.businessName}`}
+        title={generateDestinationTitle(dest)}
         description={dest.metaDescription || dest.shortDescription}
-        focusKeyword={dest.focusKeyword}
-        canonicalUrl={dest.canonicalUrl}
+        keywords={dest.focusKeyword ? `${dest.focusKeyword}, ${dest.name} Temple, Ujjain Pilgrimage` : `${dest.name}, Ujjain Sacred Shrines, Spiritual Travel`}
+        canonicalUrl={dest.canonicalUrl || `https://aasthaserasta.com/destinations/${dest.slug}`}
+        ogImage={dest.heroImage}
+        ogImageAlt={`${dest.name} Sacred Temple & Shrine`}
       />
 
       <Breadcrumbs

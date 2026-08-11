@@ -2,6 +2,7 @@ import React from 'react';
 import { StoreService } from '../services/store';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateBlogTitle } from '../utils/seoTitles';
 import { BlogCard } from '../components/BlogCard';
 import { ReadingProgressBar } from '../components/ReadingProgressBar';
 import { SocialShareButtons } from '../components/SocialShareButtons';
@@ -46,11 +47,12 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
       <ReadingProgressBar />
 
       <SEOHead
-        title={post.seoTitle || `${post.title} | Spiritual Guide`}
+        title={generateBlogTitle(post)}
         description={post.metaDescription || post.excerpt}
         keywords={post.focusKeyword ? `${post.focusKeyword}, ${post.title}, Ujjain Spiritual Blog` : `${post.title}, Ujjain Poojas, Vedic Rituals Guide`}
         canonicalUrl={post.canonicalUrl || `https://aasthaserasta.com/blog/${post.slug}`}
         ogImage={post.featuredImage}
+        ogImageAlt={post.title}
         ogType="article"
         jsonLd={[articleSchema, breadcrumbSchema]}
       />

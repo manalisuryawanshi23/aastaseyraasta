@@ -96,3 +96,44 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(244, 241, 234, 0.4);
 }
 
+/* Continuous Marquee Scrolling Keyframes */
+@keyframes marquee-horizontal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-horizontal 28s linear infinite;
+}
+
+.marquee-content-slow {
+  animation-duration: 40s;
+}
+
+.marquee-content-medium {
+  animation-duration: 25s;
+}
+
+.marquee-content-fast {
+  animation-duration: 15s;
+}
+
+.marquee-container:hover .marquee-content.pause-on-hover {
+  animation-play-state: paused;
+}
+

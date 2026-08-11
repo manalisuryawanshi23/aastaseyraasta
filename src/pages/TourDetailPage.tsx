@@ -2,6 +2,7 @@ import React from 'react';
 import { StoreService } from '../services/store';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
+import { generateTourTitle } from '../utils/seoTitles';
 import { TourCard } from '../components/TourCard';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { SocialShareButtons } from '../components/SocialShareButtons';
@@ -64,11 +65,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={tour.seoTitle || `${tour.name} Tour Package | Itinerary & Price`}
+        title={generateTourTitle(tour)}
         description={tour.metaDescription || tour.shortDescription}
         keywords={tour.focusKeyword ? `${tour.focusKeyword}, ${tour.name}, ${tour.startingPoint} Tour` : `${tour.name}, Spiritual Yatra, Ujjain Pilgrimage Package`}
         canonicalUrl={tour.canonicalUrl || `https://aasthaserasta.com/spiritual-tours/${tour.slug}`}
         ogImage={tour.featuredImage}
+        ogImageAlt={`${tour.name} - ${tour.startingPoint}`}
         jsonLd={[tourSchema, breadcrumbSchema, faqSchema]}
       />
 

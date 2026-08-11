@@ -34,8 +34,12 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
       <SEOHead
-        title={`Contact Us | ${settings.businessName} Ujjain`}
+        title="Contact Ujjain Seva Kendra & Pandit Helpline"
         description={`Reach out to ${settings.businessName} at Mahakal Marg Ujjain for pooja reservations, gotra sankalp, and yatra guidance.`}
+        keywords="Contact Ujjain Pandits, Mahakaleshwar Pooja Enquiry, Seva Kendra Ujjain Phone Number"
+        canonicalUrl="https://aasthaserasta.com/contact"
+        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImageAlt={`Contact ${settings.businessName} Seva Kendra Ujjain`}
       />
 
       <Breadcrumbs items={[{ label: 'Contact Us' }]} />

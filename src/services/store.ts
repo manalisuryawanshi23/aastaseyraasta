@@ -139,6 +139,7 @@ export class StoreService {
     if (settings.brandPalette) {
       applyBrandColorPalette(settings.brandPalette);
     }
+    window.dispatchEvent(new CustomEvent('settings-updated', { detail: settings }));
     return settings;
   }
 

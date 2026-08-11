@@ -14,8 +14,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenBooking }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
       <SEOHead
-        title={`About ${settings.businessName} | Vedic Acharyas in Ujjain`}
+        title="Vedic Brahmins & Pandit Seva Lineage in Ujjain"
         description="Learn about our lineage of Vedic Brahmins in Ujjain, authentic gotra sankalp pooja management, and dedicated pilgrimage arrangements."
+        keywords="Vedic Pandits Ujjain, Gurukul Acharyas Mahakaleshwar, Aastha Sey Raasta Seva Foundation, Sanatan Dharma Seva"
+        canonicalUrl="https://aasthaserasta.com/about-us"
+        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImageAlt={`About ${settings.businessName} - Vedic Acharyas in Ujjain`}
       />
 
       <Breadcrumbs items={[{ label: 'About Us' }]} />
