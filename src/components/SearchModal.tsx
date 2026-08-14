@@ -127,19 +127,19 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   const totalResults = poojas.length + tours.length + destinations.length + blogs.length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-stone-900/70 backdrop-blur-sm p-4 pt-16 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-stone-900/70 backdrop-blur-sm p-2 sm:p-4 pt-10 sm:pt-16 overflow-y-auto">
       <div className="relative w-full max-w-2xl bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         
         {/* Search Bar */}
-        <div className="relative border-b border-stone-200 dark:border-stone-800 p-4 bg-stone-50 dark:bg-stone-900 flex items-center gap-3">
-          <Search className="w-5 h-5 text-amber-700 dark:text-amber-400 shrink-0" />
+        <div className="relative border-b border-stone-200 dark:border-stone-800 p-3 sm:p-4 bg-stone-50 dark:bg-stone-900 flex items-center gap-2 sm:gap-3">
+          <Search className="w-4 h-4 sm:w-5 sm:h-5 text-amber-700 dark:text-amber-400 shrink-0" />
           <input
             type="text"
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search poojas, yatras, or blog topics (e.g. Rudrabhishek, Mangalnath)..."
-            className="w-full bg-transparent text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 text-base outline-none font-medium"
+            placeholder="Search poojas, yatras, or topics (e.g. Rudrabhishek)..."
+            className="w-full bg-transparent text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 text-sm sm:text-base outline-none font-medium min-w-0"
           />
 
           {/* Voice Search Button */}
@@ -147,7 +147,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             type="button"
             onClick={toggleVoiceSearch}
             title={isListening ? 'Stop Voice Listening' : 'Search by Voice'}
-            className={`relative p-2 rounded-xl transition-all flex items-center justify-center shrink-0 ${
+            className={`relative p-2 rounded-xl transition-all flex items-center justify-center shrink-0 min-w-[36px] min-h-[36px] ${
               isListening
                 ? 'bg-red-600 text-white shadow-lg shadow-red-500/40 animate-pulse'
                 : 'bg-amber-100 dark:bg-stone-800 text-amber-900 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-stone-700'
@@ -172,7 +172,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 setQuery('');
                 setSpeechError(null);
               }}
-              className="text-stone-400 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-100 text-xs font-semibold px-2 py-1 rounded bg-stone-200 dark:bg-stone-800"
+              className="text-stone-400 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-100 text-xs font-semibold px-2 py-1 rounded bg-stone-200 dark:bg-stone-800 shrink-0"
             >
               Clear
             </button>
@@ -189,7 +189,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               }
               onClose();
             }}
-            className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-500 dark:text-stone-400 transition-colors"
+            className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-500 dark:text-stone-400 transition-colors shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
           >
             <X className="w-5 h-5" />
           </button>

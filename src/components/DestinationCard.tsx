@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { MapPin, ArrowRight, Landmark } from 'lucide-react';
 import { Destination } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DestinationCardProps {
   destination: Destination;
@@ -9,6 +10,11 @@ interface DestinationCardProps {
 }
 
 export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, index = 0 }) => {
+  const { language, t, localize } = useLanguage();
+
+  const destName = localize(destination, 'name', 'hindiName');
+  const destShortDesc = localize(destination, 'shortDescription', 'hindiShortDescription');
+
   return (
     <motion.a
       href={`/destinations/${destination.slug}`}
@@ -25,7 +31,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, i
       <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={destination.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}
-          alt={destination.name}
+          alt={destName}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
@@ -38,11 +44,11 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, i
 
         <div className="absolute bottom-3 left-3 right-3 text-white">
           <h3 className="font-serif font-bold text-xl leading-tight group-hover:text-amber-300 transition-colors duration-300">
-            {destination.name}
+            {destName}
           </h3>
-          {destination.hindiName && (
+          {(destination.hindiName || destination.name) && (
             <p className="text-xs text-amber-200/90 font-serif font-medium mt-0.5">
-              {destination.hindiName}
+              {language === 'hi' ? destination.name : destination.hindiName}
             </p>
           )}
         </div>
@@ -50,16 +56,16 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, i
 
       <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
         <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-3">
-          {destination.shortDescription}
+          {destShortDesc}
         </p>
 
         <div className="pt-2 flex items-center justify-between text-xs font-semibold text-sky-800 dark:text-sky-400 border-t border-stone-100 dark:border-stone-800">
           <span className="flex items-center gap-1">
             <Landmark className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-            <span>{destination.placesToVisit.length} Major Shrines</span>
+            <span>{destination.placesToVisit.length} {language === 'hi' ? 'प्रमुख तीर्थ' : 'Major Shrines'}</span>
           </span>
           <span className="flex items-center gap-1.5 text-stone-700 dark:text-stone-300 group-hover:text-sky-900 dark:group-hover:text-sky-300 transition-colors">
-            <span>Explore Guide</span>
+            <span>{t('action.explore', 'Explore Guide')}</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300 text-sky-700 dark:text-sky-400" />
           </span>
         </div>

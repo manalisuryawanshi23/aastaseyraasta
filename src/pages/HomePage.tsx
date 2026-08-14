@@ -127,10 +127,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             >
               <span className="flex items-center gap-2 text-stone-400">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Search Rudrabhishek, Bhat Pooja, Char Dham Yatra...</span>
+                <span>{language === 'hi' ? 'रुद्राभिषेक, भात पूजा, चार धाम यात्रा खोजें...' : 'Search Rudrabhishek, Bhat Pooja, Char Dham Yatra...'}</span>
               </span>
               <span className="px-2.5 py-1 rounded bg-amber-900/60 text-amber-200 text-xs font-semibold">
-                Search
+                {t('nav.search', 'Search')}
               </span>
             </button>
           </div>
@@ -139,19 +139,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-amber-200/80 text-xs font-medium max-w-3xl mx-auto border-t border-amber-900/40">
             <div className="flex items-center justify-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>Vedic Qualified Pandits</span>
+              <span>{language === 'hi' ? 'वेदपाठी विद्वान ब्राह्मण' : 'Vedic Qualified Pandits'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>Complete Samagri Vidhi</span>
+              <span>{language === 'hi' ? 'संपूर्ण सात्विक सामग्री' : 'Complete Samagri Vidhi'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>Gotra & Name Sankalp</span>
+              <span>{language === 'hi' ? 'नाम व गोत्र संकल्प' : 'Gotra & Name Sankalp'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>100% Transparent Services</span>
+              <span>{language === 'hi' ? '100% पारदर्शी सेवा' : '100% Transparent Services'}</span>
             </div>
           </div>
 
@@ -167,13 +167,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-amber-200 dark:border-amber-800/50">
                 <Flame className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-                <span>Devotional Offerings</span>
+                <span>{language === 'hi' ? 'वैदिक अनुष्ठान सेवा' : 'Devotional Offerings'}</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
-                Authentic Pooja Services in Ujjain
+                {t('home.featured_poojas', 'Authentic Pooja Services in Ujjain')}
               </h2>
               <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
-                Conducted strictly according to Vedic scriptures by experienced Brahmins with pure satvik samagri and gotra sankalp.
+                {t('home.featured_poojas_desc', 'Conducted strictly according to Vedic scriptures by experienced Brahmins with pure satvik samagri and gotra sankalp.')}
               </p>
             </div>
 
@@ -181,7 +181,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               href="/pooja-services"
               className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-200 group"
             >
-              <span>View All 15+ Poojas</span>
+              <span>{t('action.view_all_poojas', 'View All 15+ Poojas')}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
@@ -198,7 +198,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
-              All Featured
+              {t('action.all_featured', 'All Featured')}
             </button>
             {categories.map((cat) => (
               <button
@@ -210,7 +210,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                     : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
                 }`}
               >
-                {cat.name}
+                {language === 'hi' && cat.hindiName ? cat.hindiName : cat.name}
               </button>
             ))}
           </div>
@@ -238,13 +238,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               <div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-emerald-200 dark:border-emerald-800/50">
                   <Compass className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-                  <span>Sacred Pilgrimages</span>
+                  <span>{language === 'hi' ? 'तीर्थ यात्रा पैकेज' : 'Sacred Pilgrimages'}</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
-                  Spiritual Tours & Yatra Packages
+                  {t('home.featured_tours', 'Spiritual Tours & Yatra Packages')}
                 </h2>
                 <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
-                  Thoughtfully organized private circuit tours across Ujjain, Omkareshwar, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.
+                  {t('home.featured_tours_desc', 'Thoughtfully organized private circuit tours across Ujjain, Omkareshwar, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.')}
                 </p>
               </div>
 
@@ -252,7 +252,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                 href="/spiritual-tours"
                 className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-200 group"
               >
-                <span>Explore All Yatras</span>
+                <span>{t('action.view_all_tours', 'Explore All Yatras')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
@@ -277,13 +277,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <div className="text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 text-sky-900 dark:text-sky-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-sky-200 dark:border-sky-800/50">
               <MapPin className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
-              <span>Sacred Holy Cities</span>
+              <span>{language === 'hi' ? 'पवित्र तीर्थ क्षेत्र' : 'Sacred Holy Cities'}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
-              Explore Sacred Pilgrimage Shrines
+              {t('home.featured_destinations', 'Explore Sacred Pilgrimage Shrines')}
             </h2>
             <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1">
-              Discover temples, darshan guidelines, and local spiritual significance.
+              {t('home.featured_destinations_desc', 'Discover temples, darshan guidelines, and local spiritual significance.')}
             </p>
           </div>
         </FadeIn>
@@ -302,13 +302,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <FadeIn direction="up">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-amber-400 text-xs font-bold uppercase tracking-wider font-serif">
-                Simple & Transparent Process
+                {t('home.how_it_works_badge', 'Simple & Transparent Process')}
               </span>
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white">
-                How Your Booking Works
+                {t('home.how_it_works_title', 'How Your Booking Works')}
               </h2>
               <p className="text-stone-400 text-xs sm:text-sm">
-                From gotra sankalp to divine prasad distribution, we manage every step with devotion.
+                {t('home.how_it_works_desc', 'From gotra sankalp to divine prasad distribution, we manage every step with devotion.')}
               </p>
             </div>
           </FadeIn>
@@ -321,10 +321,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   1
                 </div>
                 <h3 className="font-serif font-bold text-base text-amber-200">
-                  Explore & Select Service
+                  {t('step.1_title', 'Explore & Select Service')}
                 </h3>
                 <p className="text-stone-400 text-xs leading-relaxed">
-                  Browse our detailed catalog of Poojas, Dosh Remedies, and Yatra circuits.
+                  {t('step.1_desc', 'Browse our detailed catalog of Poojas, Dosh Remedies, and Yatra circuits.')}
                 </p>
               </div>
             </FadeIn>
@@ -335,10 +335,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   2
                 </div>
                 <h3 className="font-serif font-bold text-base text-amber-200">
-                  Provide Gotra & Date
+                  {t('step.2_title', 'Provide Gotra & Date')}
                 </h3>
                 <p className="text-stone-400 text-xs leading-relaxed">
-                  Submit your preferred date, devotee names, and gotra details via website form or WhatsApp.
+                  {t('step.2_desc', 'Submit your preferred date, devotee names, and gotra details via website form or WhatsApp.')}
                 </p>
               </div>
             </FadeIn>
@@ -349,10 +349,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   3
                 </div>
                 <h3 className="font-serif font-bold text-base text-amber-200">
-                  Receive Confirmation
+                  {t('step.3_title', 'Receive Confirmation')}
                 </h3>
                 <p className="text-stone-400 text-xs leading-relaxed">
-                  Our Acharya coordinator confirms temple timing, priest allocation, and venue directions.
+                  {t('step.3_desc', 'Our Acharya coordinator confirms temple timing, priest allocation, and venue directions.')}
                 </p>
               </div>
             </FadeIn>
@@ -363,10 +363,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   4
                 </div>
                 <h3 className="font-serif font-bold text-base text-amber-200">
-                  Experience Divine Ritual
+                  {t('step.4_title', 'Experience Divine Ritual')}
                 </h3>
                 <p className="text-stone-400 text-xs leading-relaxed">
-                  Participate in the ceremony with peace of mind. Complete samagri and prasad distribution provided.
+                  {t('step.4_desc', 'Participate in the ceremony with peace of mind. Complete samagri and prasad distribution provided.')}
                 </p>
               </div>
             </FadeIn>
@@ -390,50 +390,50 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <div className="bg-amber-500/10 dark:bg-amber-950/30 border border-amber-300/40 dark:border-amber-800/40 rounded-3xl p-6 sm:p-8 space-y-6">
             <div className="space-y-2 text-center max-w-3xl mx-auto">
               <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-200 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
-                Search Engine & AI Direct Answer Knowledge Base
+                {t('home.aeo_badge', 'Search Engine & AI Direct Answer Knowledge Base')}
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
-                Ujjain Temple Rituals & Pilgrimage Authority Guide
+                {t('home.aeo_title', 'Ujjain Temple Rituals & Pilgrimage Authority Guide')}
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300">
-                Direct answers to frequently searched questions about Ujjain Poojas, Mahakaleshwar Bhasma Aarti, Mangalnath Bhat Pooja, Kaal Sarp Dosh, and Himalayan Char Dham Yatras.
+                {t('home.aeo_desc', 'Direct answers to frequently searched questions about Ujjain Poojas, Mahakaleshwar Bhasma Aarti, Mangalnath Bhat Pooja, Kaal Sarp Dosh, and Himalayan Char Dham Yatras.')}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm leading-relaxed">
               <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
                 <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
-                  <span>🛕 What is the significance of Ujjain for Vedic Poojas?</span>
+                  <span>🛕 {t('aeo.q1', 'What is the significance of Ujjain for Vedic Poojas?')}</span>
                 </h3>
                 <p className="text-stone-600 dark:text-stone-300">
-                  Ujjain (Avantika Puri) is located on the Tropic of Cancer and is recognized as the earth’s central meridian in ancient Vedic astrology (Surya Siddhanta). It houses Mahakaleshwar (one of 12 Jyotirlingas), Mangalnath (birthplace of Mars/Mangal), Angareshwar, and Siddhvat, making it the most potent site in India for Rudrabhishek, Bhat Pooja, and Dosh Shanti rituals.
+                  {t('aeo.a1', 'Ujjain (Avantika Puri) is located on the Tropic of Cancer and is recognized as the earth’s central meridian in ancient Vedic astrology (Surya Siddhanta). It houses Mahakaleshwar (one of 12 Jyotirlingas), Mangalnath (birthplace of Mars/Mangal), Angareshwar, and Siddhvat, making it the most potent site in India for Rudrabhishek, Bhat Pooja, and Dosh Shanti rituals.')}
                 </p>
               </div>
 
               <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
                 <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
-                  <span>🔥 Where is Kaal Sarp Dosh & Bhat Pooja performed?</span>
+                  <span>🔥 {t('aeo.q2', 'Where is Kaal Sarp Dosh & Bhat Pooja performed?')}</span>
                 </h3>
                 <p className="text-stone-600 dark:text-stone-300">
-                  Manglik Dosh & Bhat Pooja is performed exclusively at Mangalnath Temple or Angareshwar Temple in Ujjain. Kaal Sarp Dosh and Rahu-Ketu Shanti are performed at Ramghat on the banks of Shipra River or at Mahakaleshwar Kshetra by certified Vedic Karmakandi Pandits with individual Gotra Sankalp.
+                  {t('aeo.a2', 'Manglik Dosh & Bhat Pooja is performed exclusively at Mangalnath Temple or Angareshwar Temple in Ujjain. Kaal Sarp Dosh and Rahu-Ketu Shanti are performed at Ramghat on the banks of Shipra River or at Mahakaleshwar Kshetra by certified Vedic Karmakandi Pandits with individual Gotra Sankalp.')}
                 </p>
               </div>
 
               <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
                 <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
-                  <span>🛡️ How to book authentic online/offline Poojas in Ujjain?</span>
+                  <span>🛡️ {t('aeo.q3', 'How to book authentic online/offline Poojas in Ujjain?')}</span>
                 </h3>
                 <p className="text-stone-600 dark:text-stone-300">
-                  Through Aastha Sey Raasta Seva, devotees can book in-person rituals or Live HD Video Stream Poojas. Our team arranges all authentic samagri, temple permissions, pandit booking, and delivers sanctified Mahakal Prasadam with Bhasma directly to your doorstep.
+                  {t('aeo.a3', 'Through Aastha Sey Raasta Seva, devotees can book in-person rituals or Live HD Video Stream Poojas. Our team arranges all authentic samagri, temple permissions, pandit booking, and delivers sanctified Mahakal Prasadam with Bhasma directly to your doorstep.')}
                 </p>
               </div>
 
               <div className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
                 <h3 className="font-serif font-bold text-base text-amber-800 dark:text-amber-300 flex items-center gap-2">
-                  <span>🏔️ What pilgrimage packages are offered by Aastha Sey Raasta?</span>
+                  <span>🏔️ {t('aeo.q4', 'What pilgrimage packages are offered by Aastha Sey Raasta?')}</span>
                 </h3>
                 <p className="text-stone-600 dark:text-stone-300">
-                  We organize custom circuits including Ujjain 11-Shrine Spiritual Tour, Omkareshwar Jyotirlinga, Baglamukhi Temple Nalkheda, Pashupatinath Mandsaur, 84 Mahadev Yatra, Char Dham Yatra (Kedarnath, Badrinath, Gangotri, Yamunotri), and Himalayan treks like Kedarkantha and Kuari Pass.
+                  {t('aeo.a4', 'We organize custom circuits including Ujjain 11-Shrine Spiritual Tour, Omkareshwar Jyotirlinga, Baglamukhi Temple Nalkheda, Pashupatinath Mandsaur, 84 Mahadev Yatra, Char Dham Yatra (Kedarnath, Badrinath, Gangotri, Yamunotri), and Himalayan treks like Kedarkantha and Kuari Pass.')}
                 </p>
               </div>
             </div>
@@ -454,18 +454,18 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <div className="bg-gradient-to-r from-red-950 via-amber-950 to-red-950 text-white rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl relative overflow-hidden">
             <div className="relative z-10 space-y-4 max-w-2xl mx-auto">
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100">
-                Ready to Arrange Your Pooja or Pilgrimage?
+                {t('home.cta_title', 'Ready to Arrange Your Pooja or Pilgrimage?')}
               </h2>
               <p className="text-amber-200/80 text-xs sm:text-sm">
-                Reach out to our Ujjain team for authentic guidance, gotra sankalp reservations, and customized spiritual tour itineraries.
+                {t('home.cta_desc', 'Reach out to our Ujjain team for authentic guidance, gotra sankalp reservations, and customized spiritual tour itineraries.')}
               </p>
 
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
-                  onClick={() => onOpenBooking('General')}
+                  onClick={() => onOpenBooking('Pooja')}
                   className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-amber-500 text-stone-950 font-bold text-sm hover:bg-amber-400 transition-all shadow-lg"
                 >
-                  Book / Enquire Now
+                  {t('action.book_now', 'Book / Enquire Now')}
                 </button>
                 <a
                   href={`https://wa.me/${settings.whatsappNumber}`}
@@ -474,7 +474,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                   className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="w-4 h-4 fill-current" />
-                  <span>Connect on WhatsApp</span>
+                  <span>{t('action.whatsapp', 'Connect on WhatsApp')}</span>
                 </a>
               </div>
             </div>

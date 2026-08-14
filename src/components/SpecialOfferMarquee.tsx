@@ -135,13 +135,13 @@ export const SpecialOfferMarquee: React.FC<SpecialOfferMarqueeProps> = ({
       )}
 
       {isMarquee ? (
-        <div className="marquee-container py-2 group cursor-pointer">
+        <div className="marquee-container py-1.5 sm:py-2 pr-8 sm:pr-0 group cursor-pointer">
           <div className={`marquee-content ${speedClass} ${pauseOnHover ? 'pause-on-hover' : ''}`}>
             {[...Array(4)].map((_, idx) => renderOfferItem(`marquee-item-${idx}`))}
           </div>
         </div>
       ) : (
-        <div className="max-w-7xl mx-auto py-2 px-4 flex items-center justify-center text-center gap-3">
+        <div className="max-w-7xl mx-auto py-1.5 sm:py-2 px-8 sm:px-4 flex flex-wrap items-center justify-center text-center gap-2">
           {renderOfferItem('static-item')}
         </div>
       )}
@@ -149,7 +149,7 @@ export const SpecialOfferMarquee: React.FC<SpecialOfferMarqueeProps> = ({
       <button
         onClick={handleDismiss}
         title="Dismiss Banner"
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-stone-900/70 hover:text-stone-950 dark:text-white/70 dark:hover:text-white rounded-full hover:bg-black/10 transition-colors z-30"
+        className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 p-1.5 text-stone-900/70 hover:text-stone-950 dark:text-white/70 dark:hover:text-white rounded-full hover:bg-black/10 transition-colors z-30 min-w-[28px] min-h-[28px] flex items-center justify-center"
       >
         <X className="w-3.5 h-3.5" />
       </button>

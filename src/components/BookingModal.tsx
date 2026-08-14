@@ -405,14 +405,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-amber-200/50 dark:border-stone-800 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-stone-900/70 backdrop-blur-sm p-2 sm:p-4 overflow-y-auto">
+      <div className="relative w-full max-w-xl bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-amber-200/50 dark:border-stone-800 overflow-hidden my-3 sm:my-8 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-red-900 via-amber-950 to-red-950 text-white p-6 relative">
+        <div className="bg-gradient-to-r from-red-900 via-amber-950 to-red-950 text-white p-4 sm:p-6 relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-stone-200 hover:text-white transition-colors"
+            className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-stone-200 hover:text-white transition-colors"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -422,7 +422,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
             <span>Spiritual Enquiry & Booking</span>
           </div>
-          <h3 className="text-2xl font-serif font-bold text-amber-100">
+          <h3 className="text-xl sm:text-2xl font-serif font-bold text-amber-100">
             {submitted ? 'Enquiry Submitted' : 'Book Pooja or Yatra'}
           </h3>
           <p className="text-amber-200/80 text-xs mt-1">
@@ -431,7 +431,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {submitted ? (
             <div className="text-center py-6 space-y-4">
               <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/80 rounded-full flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">

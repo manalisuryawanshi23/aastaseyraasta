@@ -206,17 +206,17 @@ export const SupportChatWidget: React.FC<SupportChatWidgetProps> = ({ onOpenBook
   return (
     <>
       {/* Floating Action Button */}
-      <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end">
+      <div className="fixed bottom-16 sm:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end pointer-events-auto">
         {!isOpen && (
-          <div className="mb-2 bg-stone-900 dark:bg-amber-950 text-white dark:text-amber-100 text-xs py-1.5 px-3 rounded-full shadow-lg border border-amber-500/30 flex items-center gap-2 animate-bounce">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium">Have questions? Ask Pandit Ji</span>
+          <div className="hidden xs:flex mb-2 bg-stone-900 dark:bg-amber-950 text-white dark:text-amber-100 text-xs py-1.5 px-3 rounded-full shadow-lg border border-amber-500/30 items-center gap-2 animate-bounce max-w-[220px]">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="font-medium truncate">Ask Pandit Ji</span>
           </div>
         )}
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative p-3.5 sm:p-4 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center border ${
+          className={`relative p-3 sm:p-4 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center border ${
             isOpen
               ? 'bg-stone-900 text-amber-300 border-amber-500/40 rotate-90 scale-95'
               : 'bg-gradient-to-r from-amber-800 to-amber-900 text-white border-amber-400/50 hover:scale-105 active:scale-95'
@@ -224,10 +224,10 @@ export const SupportChatWidget: React.FC<SupportChatWidgetProps> = ({ onOpenBook
           aria-label="Open support chat"
         >
           {isOpen ? (
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
             <div className="relative">
-              <MessageCircle className="w-6 h-6" />
+              <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
               {unreadCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-stone-900 shadow">
                   {unreadCount}
@@ -240,7 +240,7 @@ export const SupportChatWidget: React.FC<SupportChatWidgetProps> = ({ onOpenBook
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-28 sm:bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 h-[500px] max-h-[80vh] bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-300 dark:border-stone-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
+        <div className="fixed bottom-[72px] sm:bottom-24 right-2 left-2 sm:left-auto sm:right-6 z-50 sm:w-96 h-[480px] max-h-[75vh] bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-300 dark:border-stone-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
           
           {/* Header */}
           <div className="bg-stone-900 dark:bg-[#121110] text-white p-3.5 px-4 flex items-center justify-between border-b border-amber-800/40">

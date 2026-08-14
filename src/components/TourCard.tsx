@@ -12,7 +12,15 @@ interface TourCardProps {
 }
 
 export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) => {
-  const { t } = useLanguage();
+  const { language, t, localize } = useLanguage();
+
+  const tourName = localize(tour, 'name', 'hindiName');
+  const tourShortDesc = localize(tour, 'shortDescription', 'hindiShortDescription');
+  const tourCategory = localize(tour, 'category', 'hindiCategory') || (language === 'hi' ? 'आध्यात्मिक यात्रा' : 'Spiritual Yatra');
+  const tourDuration = localize(tour, 'duration', 'hindiDuration');
+  const destinations = language === 'hi' && tour.hindiDestinations && tour.hindiDestinations.length > 0
+    ? tour.hindiDestinations
+    : tour.destinations;
 
   return (
     <motion.div
@@ -31,7 +39,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
       <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
-          alt={tour.name}
+          alt={tourName}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
@@ -44,7 +52,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
 
         {/* Category Pill */}
         <div className="absolute top-3 left-3 bg-emerald-950/85 backdrop-blur-md text-emerald-200 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full border border-emerald-500/40 shadow-sm group-hover:-translate-y-0.5 group-hover:scale-105 transition-transform duration-300">
-          {tour.category || 'Spiritual Yatra'}
+          {tourCategory}
         </div>
 
         {/* Favorite Button */}
@@ -53,10 +61,10 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
         </div>
 
         {/* Duration badge */}
-        {tour.duration && (
+        {tourDuration && (
           <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-white text-xs font-semibold bg-stone-950/60 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-amber-500/20 group-hover:translate-x-1 transition-transform duration-300">
             <Clock className="w-3.5 h-3.5 text-amber-400" />
-            <span>{tour.duration}</span>
+            <span>{tourDuration}</span>
           </div>
         )}
       </div>
@@ -65,16 +73,16 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
           <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100 group-hover:text-emerald-900 dark:group-hover:text-emerald-300 transition-colors duration-300 leading-snug mb-1">
-            {tour.name}
+            {tourName}
           </h3>
 
           <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-2 mb-3">
-            {tour.shortDescription}
+            {tourShortDesc}
           </p>
 
           {/* Destinations covered */}
           <div className="flex flex-wrap gap-1.5 mb-2">
-            {tour.destinations.map((d, i) => (
+            {destinations.map((d, i) => (
               <span key={i} className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200/80 dark:border-emerald-800/80 group-hover:border-emerald-300 transition-colors">
                 <MapPin className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                 <span>{d}</span>
