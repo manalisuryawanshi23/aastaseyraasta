@@ -10,6 +10,11 @@ import {
   Sparkles,
   Lock,
   Globe,
+  BookOpen,
+  Info,
+  Compass,
+  Clock,
+  HelpCircle,
 } from 'lucide-react';
 import { StoreService } from '../services/store';
 import { useLanguage } from '../context/LanguageContext';
@@ -30,38 +35,47 @@ export const Footer: React.FC = () => {
   ];
 
   const yatraLinks = [
-    { label: 'Ujjain Spiritual Tour', href: '/spiritual-tours/ujjain-spiritual-tour' },
-    { label: 'Ujjain + Omkareshwar Tour', href: '/spiritual-tours/ujjain-omkareshwar-tour' },
-    { label: 'Ujjain + Omkareshwar + Indore', href: '/spiritual-tours/ujjain-omkareshwar-indore-tour' },
+    { label: 'Ujjain Spiritual Tour (1 Day)', href: '/spiritual-tours/ujjain-spiritual-tour' },
+    { label: 'Ujjain + Omkareshwar Tour (2D)', href: '/spiritual-tours/ujjain-omkareshwar-tour' },
+    { label: 'Ujjain + Omkareshwar + Indore (3D)', href: '/spiritual-tours/ujjain-omkareshwar-indore-tour' },
     { label: 'Ujjain + Baglamukhi Nalkheda', href: '/spiritual-tours/ujjain-baglamukhi-nalkheda-tour' },
-    { label: 'Char Dham Yatra', href: '/spiritual-tours/char-dham-yatra-uttarakhand' },
+    { label: 'Char Dham Yatra Circuit', href: '/spiritual-tours/char-dham-yatra-uttarakhand' },
   ];
 
-  const destLinks = [
-    { label: 'Ujjain Pilgrimage', href: '/destinations/ujjain' },
-    { label: 'Omkareshwar Jyotirlinga', href: '/destinations/omkareshwar' },
-    { label: 'Baglamukhi Nalkheda', href: '/destinations/nalkheda' },
-    { label: 'Indore Gateways', href: '/destinations/indore' },
+  const aboutAndCompanyLinks = [
+    { label: 'About Our Gurukul Lineage', href: '/about-us', icon: Info },
+    { label: 'Why Choose Our Pandits', href: '/why-choose-us', icon: ShieldCheck },
+    { label: 'Vedic Pooja FAQ & Rules', href: '/faq', icon: HelpCircle },
+    { label: 'Ujjain Darshan Destinations', href: '/destinations', icon: MapPin },
+    { label: 'Direct Helpline & Location', href: '/contact', icon: Phone },
+  ];
+
+  const blogAndGuideLinks = [
+    { label: 'All Articles & Spiritual Guides', href: '/blog' },
+    { label: 'Mahakaleshwar Bhasma Aarti Timings', href: '/blog/mahakal-bhasma-aarti-booking-guide' },
+    { label: 'Mangalnath Bhat Pooja Vidhi', href: '/blog/mangalnath-bhat-pooja-ujjain-guide' },
+    { label: 'Kaal Sarp Dosh Nivaran Significance', href: '/blog/kaal-sarp-dosh-ujjain-complete-guide' },
+    { label: 'Omkareshwar Yatra Travel Guide', href: '/blog/omkareshwar-jyotirlinga-yatra-guide' },
   ];
 
   return (
-    <footer className="bg-stone-950 text-stone-300 pt-16 pb-12 border-t border-amber-950/60 relative overflow-hidden">
+    <footer className="bg-stone-950 text-stone-300 pt-12 sm:pt-16 pb-24 lg:pb-12 border-t border-amber-950/60 relative overflow-hidden">
       {/* Local Business JSON-LD Schema for GEO & Local SEO */}
       <LocalBusinessSchema />
       
-      {/* Background Subtle Mandala Effect */}
+      {/* Background Subtle Mandala Pattern Effect */}
       <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#D97706_1px,transparent_1px)] [background-size:24px_24px]" />
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-10 sm:space-y-12">
         
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+        {/* Top 5-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
           
-          {/* Col 1: Brand & Bio */}
+          {/* Col 1: Brand & Direct Pandit Contact Bio */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-800 to-amber-800 text-amber-300 flex items-center justify-center shadow-lg shadow-amber-900/30">
-                <Flame className="w-6 h-6 fill-amber-300" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-800 via-amber-700 to-amber-900 text-amber-200 flex items-center justify-center shadow-lg shadow-amber-950/50 border border-amber-500/30">
+                <Flame className="w-6 h-6 fill-amber-300 text-amber-300" />
               </div>
               <div>
                 <div className="font-serif font-bold text-xl text-amber-100 tracking-tight">
@@ -76,6 +90,42 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-stone-400 leading-relaxed max-w-sm">
               {settings.footerDescription}
             </p>
+
+            {/* Direct Contact Info Card */}
+            <div className="p-3.5 rounded-xl bg-stone-900/90 border border-amber-900/40 space-y-2 text-xs">
+              <div className="flex items-start gap-2.5 text-stone-300">
+                <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <span>{settings.address}, {settings.city}, {settings.state} - {settings.pincode}</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-stone-300">
+                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="font-mono">{settings.phone1} / {settings.phone2}</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-stone-300">
+                <Mail className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>{settings.email}</span>
+              </div>
+            </div>
+
+            {/* Quick Action Contact Buttons */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              <a
+                href={`https://wa.me/${settings.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-emerald-600/90 hover:bg-emerald-600 text-white text-xs font-medium flex items-center gap-1.5 transition-colors shadow-xs"
+              >
+                <MessageSquare className="w-3.5 h-3.5 fill-current" />
+                <span>WhatsApp Pandit Ji</span>
+              </a>
+              <a
+                href="/contact"
+                className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-200 text-xs font-medium border border-stone-700 transition-colors flex items-center gap-1.5"
+              >
+                <Phone className="w-3.5 h-3.5 text-amber-400" />
+                <span>Contact & Enquiries</span>
+              </a>
+            </div>
 
             {/* Active Social Handles */}
             {settings.socialHandles && settings.socialHandles.filter((h) => h.isActive).length > 0 && (
@@ -98,28 +148,13 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
             )}
-
-            {/* Direct Contact info */}
-            <div className="space-y-2 pt-2 text-xs">
-              <div className="flex items-start gap-2.5 text-stone-300">
-                <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <span>{settings.address}, {settings.city}, {settings.state} - {settings.pincode}</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-stone-300">
-                <Phone className="w-4 h-4 text-amber-500 shrink-0" />
-                <span className="font-mono">{settings.phone1} / {settings.phone2}</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-stone-300">
-                <Mail className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>{settings.email}</span>
-              </div>
-            </div>
           </div>
 
-          {/* Col 2: Top Poojas */}
+          {/* Col 2: Sacred Vedic Poojas */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-4 font-serif">
-              Sacred Pooja Services
+            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
+              <Flame className="w-3.5 h-3.5 text-amber-500" />
+              <span>Vedic Poojas</span>
             </h4>
             <ul className="space-y-2 text-xs">
               {poojaLinks.map((link) => (
@@ -128,18 +163,24 @@ export const Footer: React.FC = () => {
                     href={link.href}
                     className="hover:text-amber-200 transition-colors inline-flex items-center gap-1 group"
                   >
-                    <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform shrink-0" />
                     <span>{link.label}</span>
                   </a>
                 </li>
               ))}
+              <li className="pt-1">
+                <a href="/pooja-services" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                  View All 15+ Poojas →
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Col 3: Spiritual Yatras */}
+          {/* Col 3: Spiritual Tours & Circuits */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-4 font-serif">
-              Spiritual Tours & Yatras
+            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
+              <Compass className="w-3.5 h-3.5 text-amber-500" />
+              <span>Spiritual Tours</span>
             </h4>
             <ul className="space-y-2 text-xs">
               {yatraLinks.map((link) => (
@@ -148,44 +189,64 @@ export const Footer: React.FC = () => {
                     href={link.href}
                     className="hover:text-amber-200 transition-colors inline-flex items-center gap-1 group"
                   >
-                    <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform shrink-0" />
                     <span>{link.label}</span>
                   </a>
                 </li>
               ))}
+              <li className="pt-1">
+                <a href="/spiritual-tours" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                  View All Tour Packages →
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Col 4: Destinations & Info */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-4 font-serif">
-              Destinations & Info
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {destLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="hover:text-amber-200 transition-colors inline-flex items-center gap-1 group"
-                  >
-                    <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
-                    <span>{link.label}</span>
+          {/* Col 4: About, Blog & Contact Links */}
+          <div className="space-y-6">
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
+                <Info className="w-3.5 h-3.5 text-amber-500" />
+                <span>About & Guidance</span>
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {aboutAndCompanyLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="hover:text-amber-200 transition-colors inline-flex items-center gap-1 group"
+                    >
+                      <ChevronRight className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform shrink-0" />
+                      <span>{link.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-2 font-serif flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+                <span>Spiritual Blog</span>
+              </h4>
+              <ul className="space-y-1.5 text-xs">
+                {blogAndGuideLinks.slice(0, 3).map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="hover:text-amber-200 transition-colors block text-[11px] text-stone-400 hover:text-stone-200 truncate"
+                    >
+                      • {link.label}
+                    </a>
+                  </li>
+                ))}
+                <li className="pt-0.5">
+                  <a href="/blog" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
+                    Read Spiritual Articles →
                   </a>
                 </li>
-              ))}
-              <li className="pt-2 border-t border-stone-800">
-                <a href="/about-us" className="hover:text-amber-200">About Our Acharyas</a>
-              </li>
-              <li>
-                <a href="/why-choose-us" className="hover:text-amber-200">Why Choose Us</a>
-              </li>
-              <li>
-                <a href="/faq" className="hover:text-amber-200">Frequently Asked Questions</a>
-              </li>
-              <li>
-                <a href="/contact" className="hover:text-amber-200">Contact Us</a>
-              </li>
-            </ul>
+              </ul>
+            </div>
           </div>
 
         </div>
@@ -232,9 +293,11 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap gap-4 text-xs">
+            <a href="/about-us" className="hover:text-stone-300 transition-colors">About Us</a>
+            <a href="/blog" className="hover:text-stone-300 transition-colors">Blog</a>
+            <a href="/contact" className="hover:text-stone-300 transition-colors">Contact</a>
             <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">🗺️ Site Map</a>
             <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">XML Sitemap</a>
-            <a href="/robots.txt" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">Robots.txt</a>
             <a href="/privacy-policy" className="hover:text-stone-300 transition-colors">Privacy Policy</a>
             <a href="/terms-and-conditions" className="hover:text-stone-300 transition-colors">Terms & Conditions</a>
             <a href="/disclaimer" className="hover:text-stone-300 transition-colors">Disclaimer</a>
