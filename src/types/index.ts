@@ -6,6 +6,7 @@ export interface PoojaCategory {
   hindiName?: string;
   slug: string;
   description?: string;
+  hindiDescription?: string;
   icon?: string;
 }
 
@@ -17,19 +18,28 @@ export interface PoojaService {
   categoryId: string;
   categoryName?: string;
   shortDescription: string;
+  hindiShortDescription?: string;
   description?: string;
   hindiDescription?: string;
   templeName?: string;
+  hindiTempleName?: string;
   location?: string;
+  hindiLocation?: string;
   city: string;
   state: string;
   country: string;
   whatWeOffer?: string[];
+  hindiWhatWeOffer?: string[];
   benefits?: string[];
+  hindiBenefits?: string[];
   preparation?: string[];
+  hindiPreparation?: string[];
   whoIsItFor?: string[];
+  hindiWhoIsItFor?: string[];
   ritualDetails?: string;
+  hindiRitualDetails?: string;
   duration?: string | null;
+  hindiDuration?: string | null;
   price?: number | null;
   priceType?: 'Fixed' | 'Starting From' | 'Custom / On Request';
   featuredImage?: string;
@@ -57,8 +67,11 @@ export interface PoojaService {
 export interface TourDay {
   dayNumber: number;
   title: string;
+  hindiTitle?: string;
   description: string;
+  hindiDescription?: string;
   places?: string[];
+  hindiPlaces?: string[];
   meals?: string[];
   accommodation?: string;
   notes?: string;
@@ -67,28 +80,44 @@ export interface TourDay {
 export interface TourCategory {
   id: string;
   name: string;
+  hindiName?: string;
   slug: string;
 }
 
 export interface Tour {
   id: string;
   name: string;
+  hindiName?: string;
   slug: string;
   category?: string;
+  hindiCategory?: string;
   shortDescription: string;
+  hindiShortDescription?: string;
   description?: string;
+  hindiDescription?: string;
   startingPoint: string;
+  hindiStartingPoint?: string;
   endingPoint: string;
+  hindiEndingPoint?: string;
   duration?: string | null;
+  hindiDuration?: string | null;
   destinations: string[];
+  hindiDestinations?: string[];
   placesCovered: string[];
+  hindiPlacesCovered?: string[];
   templesCovered: string[];
+  hindiTemplesCovered?: string[];
   itinerary: TourDay[];
   included?: string[];
+  hindiIncluded?: string[];
   excluded?: string[];
+  hindiExcluded?: string[];
   travelDetails?: string;
+  hindiTravelDetails?: string;
   stayDetails?: string;
+  hindiStayDetails?: string;
   foodDetails?: string;
+  hindiFoodDetails?: string;
   price?: number | null;
   priceType?: 'Fixed' | 'Starting From' | 'On Request';
   featuredImage?: string;
@@ -119,12 +148,17 @@ export interface Destination {
   hindiName?: string;
   slug: string;
   shortDescription: string;
+  hindiShortDescription?: string;
   description: string;
+  hindiDescription?: string;
   heroImage?: string;
   gallery?: string[];
   placesToVisit: string[];
+  hindiPlacesToVisit?: string[];
   temples: string[];
+  hindiTemples?: string[];
   travelInformation?: string;
+  hindiTravelInformation?: string;
   isFeatured: boolean;
   isPublished: boolean;
   seoTitle?: string;
@@ -138,12 +172,16 @@ export interface Destination {
 export interface BlogPost {
   id: string;
   title: string;
+  hindiTitle?: string;
   slug: string;
   excerpt: string;
+  hindiExcerpt?: string;
   content: string;
+  hindiContent?: string;
   featuredImage?: string;
   author: string;
   category: string;
+  hindiCategory?: string;
   tags: string[];
   focusKeyword?: string;
   secondaryKeywords?: string[];
@@ -166,7 +204,9 @@ export interface BlogPost {
 export interface FAQ {
   id: string;
   question: string;
+  hindiQuestion?: string;
   answer: string;
+  hindiAnswer?: string;
   category: string; // 'General' | 'Pooja' | 'Tour' | 'Destination'
   relatedPoojaId?: string;
   relatedTourId?: string;
@@ -179,11 +219,15 @@ export interface FAQ {
 export interface Testimonial {
   id: string;
   name: string;
+  hindiName?: string;
   location: string;
+  hindiLocation?: string;
   rating: number; // 1 to 5
   testimonial: string;
+  hindiTestimonial?: string;
   photo?: string;
   service?: string;
+  hindiService?: string;
   tour?: string;
   category?: 'Pooja' | 'Tour' | 'Bhat Pooja' | 'General';
   date?: string;

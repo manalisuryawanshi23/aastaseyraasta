@@ -9,6 +9,7 @@ import { FavoriteButton } from '../components/FavoriteButton';
 import { ShareWhatsAppButton } from '../components/ShareWhatsAppButton';
 import { SocialShareButtons } from '../components/SocialShareButtons';
 import { AuspiciousCountdownTimer } from '../components/AuspiciousCountdownTimer';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Flame,
   MapPin,
@@ -36,16 +37,21 @@ interface PoojaDetailPageProps {
 }
 
 export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBooking }) => {
+  const { language, t, localize } = useLanguage();
   const settings = StoreService.getSettings();
   const pooja = StoreService.getPoojaBySlug(slug);
 
   if (!pooja) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <h1 className="text-3xl font-serif font-bold text-stone-900">Pooja Service Not Found</h1>
-        <p className="text-stone-600 text-sm">The requested ritual page does not exist or may have been updated.</p>
+        <h1 className="text-3xl font-serif font-bold text-stone-900">
+          {language === 'hi' ? 'पूजा सेवा नहीं मिली' : 'Pooja Service Not Found'}
+        </h1>
+        <p className="text-stone-600 text-sm">
+          {language === 'hi' ? 'अनुरोधित पूजा पृष्ठ मौजूद नहीं है।' : 'The requested ritual page does not exist or may have been updated.'}
+        </p>
         <a href="/pooja-services" className="inline-block px-6 py-2.5 rounded-xl bg-amber-800 text-white font-medium text-xs">
-          Back to Pooja Directory
+          {t('action.view_all_poojas', 'Back to Pooja Directory')}
         </a>
       </div>
     );
@@ -54,6 +60,20 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
   const allPoojas = StoreService.getPoojas();
   const relatedPoojas = allPoojas.filter((p) => p.id !== pooja.id && p.categoryId === pooja.categoryId).slice(0, 3);
   const faqs = StoreService.getFAQs().filter((f) => f.category === 'Pooja' || f.category === 'General');
+
+  const poojaName = localize(pooja, 'name', 'hindiName');
+  const poojaDesc = localize(pooja, 'description', 'hindiDescription') || pooja.shortDescription;
+  const poojaCategory = localize(pooja, 'categoryName', 'hindiCategoryName') || (language === 'hi' ? 'मंदिर पूजा' : 'Temple Pooja');
+  const duration = localize(pooja, 'duration', 'hindiDuration');
+  const offers = language === 'hi' && pooja.hindiWhatWeOffer && pooja.hindiWhatWeOffer.length > 0
+    ? pooja.hindiWhatWeOffer
+    : pooja.whatWeOffer;
+  const benefits = language === 'hi' && pooja.hindiBenefits && pooja.hindiBenefits.length > 0
+    ? pooja.hindiBenefits
+    : pooja.benefits;
+  const preparation = language === 'hi' && pooja.hindiPreparation && pooja.hindiPreparation.length > 0
+    ? pooja.hindiPreparation
+    : pooja.preparation;
 
   // Build Rich JSON-LD Schemas for AEO / SEO / Google Search
   const poojaSchema = buildPoojaServiceSchema(pooja);
@@ -78,8 +98,8 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
 
       <Breadcrumbs
         items={[
-          { label: 'Pooja Services', href: '/pooja-services' },
-          { label: pooja.name },
+          { label: t('nav.pooja', 'Pooja Services'), href: '/pooja-services' },
+          { label: poojaName },
         ]}
       />
 
@@ -93,18 +113,18 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider">
                 <Flame className="w-3.5 h-3.5 text-amber-700" />
-                <span>{pooja.categoryName || 'Temple Pooja'}</span>
+                <span>{poojaCategory}</span>
               </div>
               <FavoriteButton id={pooja.id} type="pooja" variant="button" />
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">
-              {pooja.name}
+              {poojaName}
             </h1>
 
-            {pooja.hindiName && (
+            {(pooja.hindiName || pooja.name) && (
               <p className="text-base font-serif text-amber-800 font-medium">
-                {pooja.hindiName}
+                {language === 'hi' ? pooja.name : pooja.hindiName}
               </p>
             )}
 
@@ -115,15 +135,15 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   <span>{pooja.templeName}, {pooja.city}</span>
                 </div>
               )}
-              {pooja.duration && (
+              {duration && (
                 <div className="flex items-center gap-1 bg-stone-100 px-3 py-1 rounded-lg">
                   <Clock className="w-3.5 h-3.5 text-stone-500" />
-                  <span>Duration: {pooja.duration}</span>
+                  <span>{language === 'hi' ? 'अवधि' : 'Duration'}: {duration}</span>
                 </div>
               )}
               <div className="flex items-center gap-1 text-emerald-800 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Complete Samagri Included</span>
+                <span>{language === 'hi' ? 'संपूर्ण सात्विक सामग्री शामिल' : 'Complete Samagri Included'}</span>
               </div>
             </div>
           </div>
@@ -131,8 +151,8 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           {/* Featured Image */}
           <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md h-80 bg-stone-100">
             <img
-              src={pooja.featuredImage || 'https://images.unsplash.com/photo-1609800078028-c124e4d6cdd1?auto=format&fit=crop&w=1200&q=80'}
-              alt={pooja.name}
+              src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
+              alt={poojaName}
               loading="eager"
               decoding="async"
               {...({ fetchPriority: 'high' } as any)}
@@ -144,16 +164,16 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           {/* Detailed Description */}
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-4">
             <h2 className="text-xl font-serif font-bold text-stone-900 border-b border-stone-100 pb-2">
-              Spiritual Significance & Overview
+              {language === 'hi' ? 'आध्यात्मिक महत्व एवं विधि परिचय' : 'Spiritual Significance & Overview'}
             </h2>
             <div className="text-stone-700 text-sm leading-relaxed whitespace-pre-line space-y-3">
-              {pooja.description || pooja.shortDescription}
+              {poojaDesc}
             </div>
           </div>
 
           {/* Social Media Sharing */}
           <SocialShareButtons
-            title={pooja.name}
+            title={poojaName}
             description={pooja.shortDescription}
             category={pooja.categoryName}
           />
@@ -167,14 +187,14 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           />
 
           {/* What We Offer */}
-          {pooja.whatWeOffer && pooja.whatWeOffer.length > 0 && (
+          {offers && offers.length > 0 && (
             <div className="bg-amber-50/60 p-6 sm:p-8 rounded-2xl border border-amber-200/80 space-y-4">
               <h2 className="text-xl font-serif font-bold text-amber-950 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-700" />
-                <span>What We Provide in This Service</span>
+                <span>{language === 'hi' ? 'इस पूजा सेवा में क्या शामिल है' : 'What We Provide in This Service'}</span>
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-stone-800">
-                {pooja.whatWeOffer.map((offer, idx) => (
+                {offers.map((offer, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <span>{offer}</span>
@@ -185,13 +205,13 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           )}
 
           {/* Traditional Benefits */}
-          {pooja.benefits && pooja.benefits.length > 0 && (
+          {benefits && benefits.length > 0 && (
             <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-4">
               <h2 className="text-xl font-serif font-bold text-stone-900">
-                Traditional Astrological & Scriptural Benefits
+                {language === 'hi' ? 'पारंपरिक ज्योतिषीय एवं शास्त्रोक्त लाभ' : 'Traditional Astrological & Scriptural Benefits'}
               </h2>
               <ul className="space-y-2.5 text-xs sm:text-sm text-stone-700">
-                {pooja.benefits.map((benefit, idx) => (
+                {benefits.map((benefit, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
                     <Flame className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                     <span>{benefit}</span>
@@ -202,14 +222,14 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           )}
 
           {/* Preparation & Vidhi */}
-          {pooja.preparation && pooja.preparation.length > 0 && (
+          {preparation && preparation.length > 0 && (
             <div className="bg-stone-50 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-3">
               <h3 className="font-serif font-bold text-base text-stone-900 flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-amber-700" />
-                <span>Preparation for Devotees</span>
+                <span>{language === 'hi' ? 'भक्तों के लिए पूर्व तैयारी एवं नियम' : 'Preparation for Devotees'}</span>
               </h3>
               <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-stone-600">
-                {pooja.preparation.map((prep, idx) => (
+                {preparation.map((prep, idx) => (
                   <li key={idx}>{prep}</li>
                 ))}
               </ul>
@@ -223,28 +243,28 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           <div className="bg-white p-6 rounded-2xl border-2 border-amber-300 shadow-xl space-y-5">
             <div>
               <div className="text-xs uppercase tracking-wider font-bold text-amber-800">
-                Vedic Booking Assistance
+                {language === 'hi' ? 'वैदिक पूजा बुकिंग सहायता' : 'Vedic Booking Assistance'}
               </div>
               <h3 className="text-2xl font-serif font-bold text-stone-900 mt-0.5">
-                Reserve Your Vidhi
+                {language === 'hi' ? 'अपनी पूजा आरक्षित करें' : 'Reserve Your Vidhi'}
               </h3>
               <p className="text-xs text-stone-500 mt-1">
-                Gotra sankalp reservation with authentic Ujjain Pandits.
+                {language === 'hi' ? 'उज्जैन के अधिकृत पंडितों द्वारा नाम व गोत्र संकल्प।' : 'Gotra sankalp reservation with authentic Ujjain Pandits.'}
               </p>
             </div>
 
             <div className="space-y-3 text-xs text-stone-700 bg-amber-50/50 p-4 rounded-xl border border-amber-200/60">
               <div className="flex items-center justify-between">
-                <span>Temple Location:</span>
+                <span>{language === 'hi' ? 'मंदिर स्थान:' : 'Temple Location:'}</span>
                 <span className="font-semibold text-stone-900">{pooja.templeName || pooja.city}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Pandit Dakshina & Samagri:</span>
-                <span className="font-semibold text-emerald-800">Included</span>
+                <span>{language === 'hi' ? 'पंडित दक्षिणा व सामग्री:' : 'Pandit Dakshina & Samagri:'}</span>
+                <span className="font-semibold text-emerald-800">{language === 'hi' ? 'शामिल' : 'Included'}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Customization:</span>
-                <span className="font-semibold text-stone-900">Available</span>
+                <span>{language === 'hi' ? 'कस्टमाइजेशन:' : 'Customization:'}</span>
+                <span className="font-semibold text-stone-900">{language === 'hi' ? 'उपलब्ध' : 'Available'}</span>
               </div>
             </div>
 
@@ -253,7 +273,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-red-800 via-amber-800 to-amber-900 text-white font-medium text-sm hover:from-red-900 hover:to-amber-950 shadow-md shadow-amber-900/20 transition-all flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>Book / Enquire for {pooja.name}</span>
+              <span>{t('action.book_now', 'Book')} - {poojaName}</span>
             </button>
 
             <a
@@ -265,13 +285,13 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               className="w-full py-3 px-6 rounded-xl bg-emerald-600 text-white font-medium text-xs hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4 fill-current" />
-              <span>WhatsApp Direct Enquiry</span>
+              <span>{t('action.whatsapp', 'WhatsApp Direct Enquiry')}</span>
             </a>
 
             <div className="pt-2 text-center text-xs text-stone-500 space-y-1">
-              <div>Need immediate assistance?</div>
+              <div>{language === 'hi' ? 'तत्काल सहायता चाहिए?' : 'Need immediate assistance?'}</div>
               <a href={`tel:${settings.phone1}`} className="font-mono font-bold text-amber-800 hover:underline">
-                Call {settings.phone1}
+                {t('action.call_us', 'Call')} {settings.phone1}
               </a>
             </div>
           </div>
@@ -282,7 +302,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
       {/* FAQs */}
       {faqs.length > 0 && (
         <section className="pt-8 border-t border-stone-200">
-          <FAQAccordion faqs={faqs} title={`Frequently Asked Questions about Pooja Services`} />
+          <FAQAccordion faqs={faqs} title={language === 'hi' ? 'पूजा सेवाओं से जुड़े प्रश्नोत्तरी' : `Frequently Asked Questions about Pooja Services`} />
         </section>
       )}
 
@@ -290,7 +310,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
       {relatedPoojas.length > 0 && (
         <section className="pt-8 space-y-6">
           <h2 className="text-2xl font-serif font-bold text-stone-900">
-            Related Vedic Rituals
+            {language === 'hi' ? 'संबंधित वैदिक अनुष्ठान' : 'Related Vedic Rituals'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPoojas.map((p) => (
