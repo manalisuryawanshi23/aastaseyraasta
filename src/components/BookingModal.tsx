@@ -16,6 +16,7 @@ import {
   Info
 } from 'lucide-react';
 import { StoreService } from '../services/store';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -359,6 +360,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   defaultServiceType = 'Pooja',
   defaultServiceName = '',
 }) => {
+  const { language, t, translateText } = useLanguage();
   const settings = StoreService.getSettings();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -400,7 +402,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   const getWhatsAppUrl = () => {
-    const text = `Jai Shree Mahakal 🙏\n*Aastha Sey Raasta Seva Booking Enquiry*\n\n*Name:* ${name || 'Devotee'}\n*Phone:* ${phone}\n*Service:* ${serviceType} - ${serviceName || 'General'}\n*Preferred Date:* ${preferredDate || 'To be decided'}\n*No. of Devotees:* ${numberOfPeople}${gotra ? '\n*Gotra:* ' + gotra : ''}${message ? '\n*Note:* ' + message : ''}\n\nPlease share booking procedure and vidhi details.`;
+    const text = language === 'hi'
+      ? `जय श्री महाकाल 🙏\n*आस्था से रास्ता सेवा बुकिंग एवं पूछताछ*\n\n*नाम:* ${name || 'भक्त'}\n*फोन:* ${phone}\n*सेवा प्रकार:* ${serviceType} - ${serviceName || 'सामान्य'}\n*इच्छित तिथि:* ${preferredDate || 'विचारणीय'}\n*भक्तों की संख्या:* ${numberOfPeople}${gotra ? '\n*गोत्र:* ' + gotra : ''}${message ? '\n*नोट:* ' + message : ''}\n\nकृपया बुकिंग प्रक्रिया एवं विधि विवरण साझा करें।`
+      : `Jai Shree Mahakal 🙏\n*Aastha Sey Raasta Seva Booking Enquiry*\n\n*Name:* ${name || 'Devotee'}\n*Phone:* ${phone}\n*Service:* ${serviceType} - ${serviceName || 'General'}\n*Preferred Date:* ${preferredDate || 'To be decided'}\n*No. of Devotees:* ${numberOfPeople}${gotra ? '\n*Gotra:* ' + gotra : ''}${message ? '\n*Note:* ' + message : ''}\n\nPlease share booking procedure and vidhi details.`;
     return `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -420,13 +424,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           
           <div className="flex items-center gap-2 text-amber-300 text-xs font-medium tracking-wide uppercase mb-1">
             <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
-            <span>Spiritual Enquiry & Booking</span>
+            <span>{language === 'hi' ? 'धार्मिक सेवा पूछताछ एवं बुकिंग' : 'Spiritual Enquiry & Booking'}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-serif font-bold text-amber-100">
-            {submitted ? 'Enquiry Submitted' : 'Book Pooja or Yatra'}
+            {submitted
+              ? (language === 'hi' ? 'पूछताछ दर्ज हो चुकी है' : 'Enquiry Submitted')
+              : (language === 'hi' ? 'पूजा या यात्रा बुक करें' : 'Book Pooja or Yatra')}
           </h3>
           <p className="text-amber-200/80 text-xs mt-1">
-            Faith Leads the Way • {settings.businessName}
+            {language === 'hi' ? 'आस्था से बनता है रास्ता • ' + settings.businessName : 'Faith Leads the Way • ' + settings.businessName}
           </p>
         </div>
 
@@ -439,10 +445,18 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
               <div>
                 <h4 className="text-xl font-serif font-bold text-stone-900 dark:text-stone-100">
-                  Pranam, {name}!
+                  {language === 'hi' ? `प्रणाम, ${name} जी!` : `Pranam, ${name}!`}
                 </h4>
                 <p className="text-stone-600 dark:text-stone-300 text-sm mt-1 max-w-md mx-auto">
-                  Your enquiry for <span className="font-semibold text-amber-800 dark:text-amber-400">{serviceName || serviceType}</span> has been received successfully. Our Acharya team will contact you shortly on <span className="font-mono text-stone-800 dark:text-stone-200">{phone}</span>.
+                  {language === 'hi' ? (
+                    <>
+                      <span className="font-semibold text-amber-800 dark:text-amber-400">{serviceName || serviceType}</span> हेतु आपका अनुरोध सफलतापूर्वक प्राप्त हो गया है। हमारी आचार्य टीम शीघ्र ही आपसे <span className="font-mono text-stone-800 dark:text-stone-200">{phone}</span> पर संपर्क करेगी।
+                    </>
+                  ) : (
+                    <>
+                      Your enquiry for <span className="font-semibold text-amber-800 dark:text-amber-400">{serviceName || serviceType}</span> has been received successfully. Our Acharya team will contact you shortly on <span className="font-mono text-stone-800 dark:text-stone-200">{phone}</span>.
+                    </>
+                  )}
                 </p>
               </div>
 
@@ -454,14 +468,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 shadow-md shadow-emerald-600/20 transition-all"
                 >
                   <MessageSquare className="w-4 h-4 fill-current" />
-                  <span>Connect on WhatsApp Now</span>
+                  <span>{language === 'hi' ? 'व्हाट्सएप पर तुरंत बात करें' : 'Connect on WhatsApp Now'}</span>
                 </a>
                 <a
                   href={`tel:${settings.phone1}`}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 font-medium text-sm hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                  <span>Call {settings.phone1}</span>
+                  <span>{language === 'hi' ? 'कॉल करें' : 'Call'} {settings.phone1}</span>
                 </a>
               </div>
 
@@ -473,7 +487,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   }}
                   className="text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 underline"
                 >
-                  Close window
+                  {language === 'hi' ? 'विंडो बंद करें' : 'Close window'}
                 </button>
               </div>
             </div>
@@ -488,7 +502,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     serviceType === 'Pooja' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
-                  Pooja Service
+                  {language === 'hi' ? 'पूजा सेवा' : 'Pooja Service'}
                 </button>
                 <button
                   type="button"
@@ -497,7 +511,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     serviceType === 'Tour' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
-                  Spiritual Tour
+                  {language === 'hi' ? 'तीर्थ यात्रा' : 'Spiritual Tour'}
                 </button>
                 <button
                   type="button"
@@ -506,20 +520,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     serviceType === 'General' ? 'bg-amber-700 text-white shadow-sm' : 'hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
-                  General Query
+                  {language === 'hi' ? 'सामान्य प्रश्न' : 'General Query'}
                 </button>
               </div>
 
               {/* Specific Service Input */}
               <div>
                 <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                  Selected Service / Package
+                  {language === 'hi' ? 'चयनित सेवा / पैकेज' : 'Selected Service / Package'}
                 </label>
                 <input
                   type="text"
                   value={serviceName}
                   onChange={(e) => setServiceName(e.target.value)}
-                  placeholder="e.g. Rudrabhishek / Bhat Pooja / Ujjain Tour"
+                  placeholder={language === 'hi' ? 'उदा. रुद्राभिषेक / भात पूजा / उज्जैन यात्रा' : 'e.g. Rudrabhishek / Bhat Pooja / Ujjain Tour'}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                 />
               </div>
@@ -528,14 +542,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {/* Full Name */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Devotee Full Name *
+                    {language === 'hi' ? 'यजमान / भक्त का पूरा नाम *' : 'Devotee Full Name *'}
                   </label>
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter full name"
+                    placeholder={language === 'hi' ? 'पूरा नाम दर्ज करें' : 'Enter full name'}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
@@ -543,7 +557,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {/* Mobile Phone */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Mobile / WhatsApp Number *
+                    {language === 'hi' ? 'मोबाइल / व्हाट्सएप नंबर *' : 'Mobile / WhatsApp Number *'}
                   </label>
                   <input
                     type="tel"
@@ -560,7 +574,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {/* Preferred Date */}
                 <div className="sm:col-span-1">
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Preferred Date
+                    {language === 'hi' ? 'इच्छित तिथि' : 'Preferred Date'}
                   </label>
                   <InteractiveDatePicker
                     value={preferredDate}
@@ -571,7 +585,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {/* Number of People */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    No. of Devotees
+                    {language === 'hi' ? 'भक्तों की संख्या' : 'No. of Devotees'}
                   </label>
                   <input
                     type="number"
@@ -586,13 +600,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {/* Gotra */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Gotra (Optional)
+                    {language === 'hi' ? 'गोत्र (वैकल्पिक)' : 'Gotra (Optional)'}
                   </label>
                   <input
                     type="text"
                     value={gotra}
                     onChange={(e) => setGotra(e.target.value)}
-                    placeholder="e.g. Kashyap"
+                    placeholder={language === 'hi' ? 'उदा. कश्यप / भारद्वाज' : 'e.g. Kashyap'}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                   />
                 </div>
@@ -601,13 +615,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               {/* Special Message */}
               <div>
                 <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                  Special Intentions / Notes
+                  {language === 'hi' ? 'विशेष संकल्प / टिप्पणी' : 'Special Intentions / Notes'}
                 </label>
                 <textarea
                   rows={2}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Mention preferred temple, lodging requirement or health prayer..."
+                  placeholder={language === 'hi' ? 'मनपसंद मंदिर, विश्राम आवश्यकता या स्वास्थ्य संकल्प का विवरण दें...' : 'Mention preferred temple, lodging requirement or health prayer...'}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none"
                 />
               </div>
@@ -619,7 +633,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   className="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-red-800 to-amber-800 text-white font-medium text-sm hover:from-red-900 hover:to-amber-900 shadow-md shadow-amber-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Submit Booking Request</span>
+                  <span>{language === 'hi' ? 'बुकिंग अनुरोध भेजें' : 'Submit Booking Request'}</span>
                 </button>
 
                 <a
@@ -629,12 +643,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   className="py-3 px-5 rounded-xl bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageSquare className="w-4 h-4 fill-current" />
-                  <span>WhatsApp Instantly</span>
+                  <span>{language === 'hi' ? 'व्हाट्सएप करें' : 'WhatsApp Instantly'}</span>
                 </a>
               </div>
 
               <p className="text-[11px] text-stone-500 text-center">
-                🔒 Your privacy is sacred. We never share devotee contact details.
+                {language === 'hi'
+                  ? '🔒 आपकी गोपनीयता हमारे लिए सर्वोपरि है। हम कभी भी भक्तों का संपर्क विवरण साझा नहीं करते।'
+                  : '🔒 Your privacy is sacred. We never share devotee contact details.'}
               </p>
             </form>
           )}

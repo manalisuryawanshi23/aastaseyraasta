@@ -1,12 +1,21 @@
 import React from 'react';
 import { Calendar, Clock, User, ArrowRight, BookOpen } from 'lucide-react';
 import { BlogPost } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BlogCardProps {
   post: BlogPost;
 }
 
 export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+  const { language, t, localize } = useLanguage();
+
+  const postTitle = localize(post, 'title', 'hindiTitle');
+  const postExcerpt = localize(post, 'excerpt', 'hindiExcerpt');
+  const postCategory = localize(post, 'category', 'hindiCategory') || (language === 'hi' ? 'वैदिक ज्ञान' : 'Spiritual Guide');
+  const postAuthor = localize(post, 'author', 'hindiAuthor') || post.author;
+  const postReadingTime = localize(post, 'readingTime', 'hindiReadingTime') || (language === 'hi' ? '5 मिनट पठन' : '5 min read');
+
   return (
     <a
       href={`/blog/${post.slug}`}
@@ -15,14 +24,14 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       <div className="relative h-44 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={post.featuredImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
-          alt={post.title}
+          alt={postTitle}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3 bg-amber-950/80 backdrop-blur-md text-amber-200 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border border-amber-500/30">
-          {post.category}
+          {postCategory}
         </div>
       </div>
 
@@ -31,29 +40,30 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           <div className="flex items-center gap-3 text-[11px] text-stone-500 dark:text-stone-400 mb-2">
             <span className="flex items-center gap-1">
               <User className="w-3 h-3 text-amber-700 dark:text-amber-400" />
-              <span>{post.author}</span>
+              <span>{postAuthor}</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3 text-stone-400 dark:text-stone-500" />
-              <span>{post.readingTime || '5 min read'}</span>
+              <span>{postReadingTime}</span>
             </span>
           </div>
 
           <h3 className="font-serif font-bold text-base text-stone-900 dark:text-amber-100 group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors leading-snug line-clamp-2 mb-2">
-            {post.title}
+            {postTitle}
           </h3>
 
           <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-2">
-            {post.excerpt}
+            {postExcerpt}
           </p>
         </div>
 
         <div className="pt-2 flex items-center justify-between text-xs font-medium text-amber-800 dark:text-amber-400 group-hover:text-amber-900 dark:group-hover:text-amber-300">
-          <span>Read Spiritual Guide</span>
+          <span>{t('blog.read_guide', 'Read Spiritual Guide')}</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </a>
   );
 };
+

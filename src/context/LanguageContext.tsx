@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { translateTextToHindi } from '../utils/translationDictionary';
+import { POOJA_CONTENT_CATALOG, TOUR_CONTENT_CATALOG, DESTINATION_CONTENT_CATALOG, FAQ_CONTENT_CATALOG } from '../services/contentService';
 
 export type Language = 'en' | 'hi';
 
@@ -12,6 +14,7 @@ interface LanguageContextType {
     field: keyof T,
     hindiField?: keyof T
   ) => any;
+  translateText: (text: string | null | undefined) => string;
 }
 
 const translations: Record<Language, Record<string, string>> = {
@@ -96,6 +99,19 @@ const translations: Record<Language, Record<string, string>> = {
     'section.faq_badge': 'Answers & Information',
     'section.faq_title': 'Frequently Asked Questions',
     'section.faq_sub': 'Common queries regarding temple timings, gotra sankalp, samagri, and yatra itineraries.',
+
+    // FAQ Section Component
+    'faq.badge': 'Spiritual Guidance & FAQs',
+    'faq.title': 'Frequently Asked Questions',
+    'faq.subtitle': 'Find direct answers regarding Vedic Vidhi, booking procedures, gotra sankalp, and tour arrangements.',
+    'faq.all': 'All Questions',
+    'faq.pooja': 'Pooja & Rituals',
+    'faq.tour': 'Tours & Yatra',
+    'faq.general': 'General & Booking',
+    'faq.no_results': 'No questions found in this category.',
+    'faq.ask_more': 'Have a specific query about your Gotra, Muhurat, or Travel?',
+    'faq.ask_more_sub': 'Our Vedic Acharyas and pilgrimage coordinators are available 24/7 on WhatsApp.',
+    'faq.whatsapp_btn': 'Ask on WhatsApp',
 
     // How It Works Steps
     'how.step1_title': 'Explore & Select Service',
@@ -294,6 +310,19 @@ const translations: Record<Language, Record<string, string>> = {
     'section.faq_title': 'अक्सर पूछे जाने वाले प्रश्न',
     'section.faq_sub': 'मंदिर दर्शन समय, गोत्र संकल्प, पूजन सामग्री और यात्रा कार्यक्रम से जुड़े आवश्यक उत्तर।',
 
+    // FAQ Section Component
+    'faq.badge': 'आध्यात्मिक मार्गदर्शन एवं प्रश्नोत्तरी',
+    'faq.title': 'अक्सर पूछे जाने वाले प्रश्न एवं उत्तर',
+    'faq.subtitle': 'वैदिक विधि, पूजा एवं यात्रा बुकिंग प्रक्रिया, गोत्र संकल्प और मंदिर व्यवस्थाओं से जुड़े आवश्यक समाधान।',
+    'faq.all': 'सभी प्रश्न',
+    'faq.pooja': 'पूजा एवं अनुष्ठान',
+    'faq.tour': 'यात्रा एवं दर्शन',
+    'faq.general': 'सामान्य एवं बुकिंग',
+    'faq.no_results': 'इस श्रेणी में कोई प्रश्न उपलब्ध नहीं है।',
+    'faq.ask_more': 'क्या आपका गोत्र, मुहूर्त या यात्रा से जुड़ा कोई विशिष्ट प्रश्न है?',
+    'faq.ask_more_sub': 'हमारे वेदपाठी आचार्य और यात्रा समन्वयक व्हाट्सएप पर 24/7 आपकी सेवा में उपलब्ध हैं।',
+    'faq.whatsapp_btn': 'व्हाट्सएप पर पूछें',
+
     // How It Works Steps
     'how.step1_title': 'पूजा या यात्रा का चयन करें',
     'how.step1_desc': 'हमारी विस्तृत सूची में से अपनी इच्छित पूजा, दोष निवारण या तीर्थ यात्रा का चयन करें।',
@@ -444,10 +473,18 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return translations[language]?.[key] || defaultText || translations['en']?.[key] || key;
   };
 
+  const translateText = (text: string | null | undefined): string => {
+    if (!text) return '';
+    if (language === 'hi') {
+      return translateTextToHindi(text);
+    }
+    return text;
+  };
+
   /**
    * Universal Localizer:
    * Returns the Hindi version of a field if language === 'hi' and it exists,
-   * otherwise cleanly falls back to English.
+   * otherwise translates content dynamically or cleanly falls back to English.
    */
   const localize = <T extends Record<string, any>>(
     item: T | null | undefined,
@@ -457,16 +494,67 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (!item) return '';
 
     if (language === 'hi') {
-      // If explicit hindiField is provided
+      // 1. If explicit hindiField is provided and has value
       if (hindiField && item[hindiField] !== undefined && item[hindiField] !== null && item[hindiField] !== '') {
         return item[hindiField];
       }
 
-      // Auto-check capitalized hindiFieldName e.g. hindiName, hindiDescription
+      // 2. Auto-check capitalized hindiFieldName e.g. hindiName, hindiDescription, hindiShortDescription
       const fieldStr = String(field);
       const autoHindiKey = ('hindi' + fieldStr.charAt(0).toUpperCase() + fieldStr.slice(1)) as keyof T;
       if (item[autoHindiKey] !== undefined && item[autoHindiKey] !== null && item[autoHindiKey] !== '') {
         return item[autoHindiKey];
+      }
+
+      // 2.5. Check Content Catalog if item has an ID or Slug (e.g. Poojas, Tours, Destinations)
+      const itemId = (item as any)?.id || (item as any)?.slug;
+      if (itemId) {
+        const poojaEntry = POOJA_CONTENT_CATALOG[itemId] || Object.values(POOJA_CONTENT_CATALOG).find(p => p.slug === itemId || p.id === itemId);
+        if (poojaEntry && (poojaEntry as any)[fieldStr]?.hi) {
+          return (poojaEntry as any)[fieldStr].hi;
+        }
+        const tourEntry = TOUR_CONTENT_CATALOG[itemId] || Object.values(TOUR_CONTENT_CATALOG).find(t => t.slug === itemId || t.id === itemId);
+        if (tourEntry && (tourEntry as any)[fieldStr]?.hi) {
+          return (tourEntry as any)[fieldStr].hi;
+        }
+        const destEntry = DESTINATION_CONTENT_CATALOG[itemId] || Object.values(DESTINATION_CONTENT_CATALOG).find(d => d.slug === itemId || d.id === itemId);
+        if (destEntry && (destEntry as any)[fieldStr]?.hi) {
+          return (destEntry as any)[fieldStr].hi;
+        }
+        const faqEntry = FAQ_CONTENT_CATALOG[itemId] || Object.values(FAQ_CONTENT_CATALOG).find(f => f.id === itemId);
+        if (faqEntry && (faqEntry as any)[fieldStr]?.hi) {
+          return (faqEntry as any)[fieldStr].hi;
+        }
+      }
+
+      // 3. Handle arrays of strings or objects
+      const originalValue = item[field];
+      if (Array.isArray(originalValue)) {
+        if (originalValue.length === 0) return [];
+        if (typeof originalValue[0] === 'string') {
+          return originalValue.map((str) => translateTextToHindi(str));
+        }
+        if (typeof originalValue[0] === 'object' && originalValue[0] !== null) {
+          return originalValue.map((subItem) => {
+            const localizedSubItem = { ...subItem };
+            for (const k in subItem) {
+              const capK = 'hindi' + k.charAt(0).toUpperCase() + k.slice(1);
+              if (subItem[capK]) {
+                localizedSubItem[k] = subItem[capK];
+              } else if (typeof subItem[k] === 'string') {
+                localizedSubItem[k] = translateTextToHindi(subItem[k]);
+              } else if (Array.isArray(subItem[k]) && typeof subItem[k][0] === 'string') {
+                localizedSubItem[k] = subItem[k].map((s: string) => translateTextToHindi(s));
+              }
+            }
+            return localizedSubItem;
+          });
+        }
+      }
+
+      // 4. If string, pass through dictionary translator
+      if (typeof originalValue === 'string') {
+        return translateTextToHindi(originalValue);
       }
     }
 
@@ -474,7 +562,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t, localize }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t, localize, translateText }}>
       {children}
     </LanguageContext.Provider>
   );

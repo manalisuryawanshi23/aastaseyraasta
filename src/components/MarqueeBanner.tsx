@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sparkles, ArrowRight, X, Megaphone, Flame, ShieldCheck } from 'lucide-react';
 import { SiteSettings } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MarqueeBannerProps {
   banner?: SiteSettings['announcementBanner'];
@@ -13,16 +14,27 @@ export const MarqueeBanner: React.FC<MarqueeBannerProps> = ({
   onClose,
   isAdminPreview = false,
 }) => {
+  const { language } = useLanguage();
+
   if (!banner || (!banner.isActive && !isAdminPreview)) {
     return null;
   }
 
+  const defaultText = language === 'hi'
+    ? '🚩 उज्जैन में पावन पूजा सेवाओं एवं तीर्थ यात्रा पैकेजों पर विशेष छूट!'
+    : '🚩 Special Offers on Pooja Services & Spiritual Tours in Ujjain!';
+  const defaultSecondary = language === 'hi'
+    ? '🕉️ निःशुल्क गोत्र संकल्प एवं सात्विक प्रसाद घर पहुंच सेवा सम्मिलित'
+    : '🕉️ Free Gotra Sankalp & Prasad Home Delivery Included';
+  const defaultBadge = language === 'hi' ? 'विशेष ऑफर' : 'SPECIAL OFFER';
+  const defaultButton = language === 'hi' ? 'ऑफर देखें' : 'Claim Offer';
+
   const {
-    text = '🚩 Special Offers on Pooja Services & Spiritual Tours in Ujjain!',
-    secondaryText = '🕉️ Free Gotra Sankalp & Prasad Home Delivery Included',
+    text = defaultText,
+    secondaryText = defaultSecondary,
     link = '/pooja-services',
-    buttonText = 'Claim Offer',
-    badgeText = 'SPECIAL OFFER',
+    buttonText = defaultButton,
+    badgeText = defaultBadge,
     isMarquee = true,
     speed = 'medium',
     themeColor = 'amber',

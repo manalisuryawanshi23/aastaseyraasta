@@ -17,6 +17,7 @@ export interface PoojaService {
   slug: string;
   categoryId: string;
   categoryName?: string;
+  hindiCategoryName?: string;
   shortDescription: string;
   hindiShortDescription?: string;
   description?: string;
@@ -26,7 +27,9 @@ export interface PoojaService {
   location?: string;
   hindiLocation?: string;
   city: string;
+  hindiCity?: string;
   state: string;
+  hindiState?: string;
   country: string;
   whatWeOffer?: string[];
   hindiWhatWeOffer?: string[];
@@ -74,6 +77,7 @@ export interface TourDay {
   hindiPlaces?: string[];
   meals?: string[];
   accommodation?: string;
+  hindiAccommodation?: string;
   notes?: string;
 }
 
@@ -108,6 +112,7 @@ export interface Tour {
   templesCovered: string[];
   hindiTemplesCovered?: string[];
   itinerary: TourDay[];
+  hindiItinerary?: TourDay[];
   included?: string[];
   hindiIncluded?: string[];
   excluded?: string[];
@@ -180,12 +185,14 @@ export interface BlogPost {
   hindiContent?: string;
   featuredImage?: string;
   author: string;
+  hindiAuthor?: string;
   category: string;
   hindiCategory?: string;
   tags: string[];
   focusKeyword?: string;
   secondaryKeywords?: string[];
   readingTime?: string;
+  hindiReadingTime?: string;
   isFeatured: boolean;
   isPublished: boolean;
   seoTitle?: string;
@@ -308,12 +315,14 @@ export interface SiteSettings {
   businessName: string;
   hindiBusinessName: string;
   tagline: string;
+  hindiTagline?: string;
   phone1: string;
   phone2: string;
   whatsappNumber: string;
   emergencyHelpline?: string;
   email: string;
   address: string;
+  hindiAddress?: string;
   city: string;
   state: string;
   country: string;
@@ -331,6 +340,7 @@ export interface SiteSettings {
   googleTagManagerId?: string;
   businessHours: string;
   footerDescription: string;
+  hindiFooterDescription?: string;
   announcementBanner?: {
     text: string;
     secondaryText?: string;

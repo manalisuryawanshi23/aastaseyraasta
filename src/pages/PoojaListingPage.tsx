@@ -9,6 +9,7 @@ import { Flame, Search, Filter, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
 import { ContentFade } from '../components/PageTransition';
+import { useLanguage } from '../context/LanguageContext';
 
 interface PoojaListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -48,6 +49,7 @@ const poojaHeaderSlides = [
 ];
 
 export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBooking }) => {
+  const { language, t, localize } = useLanguage();
   const categories = StoreService.getCategories();
   const allPoojas = StoreService.getPoojas();
 
@@ -68,11 +70,13 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
       !searchTerm.trim() ||
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (p.hindiName && p.hindiName.includes(searchTerm)) ||
-      p.shortDescription.toLowerCase().includes(searchTerm.toLowerCase());
+      p.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.hindiShortDescription && p.hindiShortDescription.includes(searchTerm));
     return matchCat && matchSearch;
   });
 
-  const activeCategoryName = categories.find((c) => c.id === selectedCat)?.name;
+  const activeCategory = categories.find((c) => c.id === selectedCat);
+  const activeCategoryName = activeCategory ? localize(activeCategory, 'name', 'hindiName') : undefined;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
@@ -85,7 +89,7 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
         ogImageAlt="Vedic Pooja Services in Ujjain Mahakaleshwar"
       />
 
-      <Breadcrumbs items={[{ label: 'Pooja Services' }]} />
+      <Breadcrumbs items={[{ label: t('nav.pooja', 'Pooja Services') }]} />
 
       {/* Hero Title Header with Animated Slider */}
       <FadeIn direction="up">
@@ -95,13 +99,15 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
           <div className="relative z-10 max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-wider border border-amber-500/40 backdrop-blur-md">
               <Flame className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <span>Sacred Vedic Vidhi</span>
+              <span>{language === 'hi' ? 'शास्त्रोक्त वैदिक विधि' : 'Sacred Vedic Vidhi'}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-serif font-bold text-amber-100 drop-shadow-md">
-              Pooja Services in Ujjain
+              {language === 'hi' ? 'उज्जैन में पावन पूजा सेवाएं' : 'Pooja Services in Ujjain'}
             </h1>
             <p className="text-amber-100/90 text-xs sm:text-sm leading-relaxed font-serif italic">
-              Every ritual is performed at consecrated shrines by qualified Brahmins with complete satvik samagri, gotra sankalp, and authentic Vedic chanting.
+              {language === 'hi'
+                ? 'प्रत्येक अनुष्ठान प्रतिष्ठित तीर्थों में वेदपाठी ब्राह्मणों द्वारा शुद्ध सात्विक सामग्री, व्यक्तिगत गोत्र संकल्प एवं वैदिक मंत्रोच्चार के साथ संपन्न किया जाता है।'
+                : 'Every ritual is performed at consecrated shrines by qualified Brahmins with complete satvik samagri, gotra sankalp, and authentic Vedic chanting.'}
             </p>
           </div>
         </div>
@@ -117,7 +123,11 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search pooja by name or temple (e.g. Rudrabhishek, Mangalnath)..."
+              placeholder={
+                language === 'hi'
+                  ? 'पूजा का नाम या मंदिर खोजें (जैसे रुद्राभिषेक, मंगलनाथ, भात पूजा)...'
+                  : 'Search pooja by name or temple (e.g. Rudrabhishek, Mangalnath)...'
+              }
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
@@ -132,21 +142,24 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
                   : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
-              All Poojas ({allPoojas.length})
+              {language === 'hi' ? `सभी पूजाएं (${allPoojas.length})` : `All Poojas (${allPoojas.length})`}
             </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCat(cat.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-                  selectedCat === cat.id
-                    ? 'bg-amber-800 text-white'
-                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const catName = localize(cat, 'name', 'hindiName');
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCat(cat.id)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+                    selectedCat === cat.id
+                      ? 'bg-amber-800 text-white'
+                      : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
+                  }`}
+                >
+                  {catName}
+                </button>
+              );
+            })}
           </div>
         </div>
       </FadeIn>
@@ -158,8 +171,14 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
             <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
-            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Poojas Found</h3>
-            <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your category filter or search term.</p>
+            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">
+              {language === 'hi' ? 'कोई पूजा नहीं मिली' : 'No Poojas Found'}
+            </h3>
+            <p className="text-stone-500 dark:text-stone-400 text-xs">
+              {language === 'hi'
+                ? 'कृपया श्रेणी फ़िल्टर या खोज शब्द बदलकर पुनः प्रयास करें।'
+                : 'Try adjusting your category filter or search term.'}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

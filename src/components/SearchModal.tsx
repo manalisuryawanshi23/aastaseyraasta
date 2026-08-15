@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Search, Sparkles, MapPin, Compass, BookOpen, ChevronRight, Mic, MicOff, AlertCircle } from 'lucide-react';
 import { StoreService } from '../services/store';
+import { useLanguage } from '../context/LanguageContext';
 
 declare global {
   interface Window {
@@ -15,6 +16,7 @@ interface SearchModalProps {
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  const { language, localize } = useLanguage();
   const [query, setQuery] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [speechError, setSpeechError] = useState<string | null>(null);
@@ -38,7 +40,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     const SpeechRecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognitionClass) {
-      setSpeechError('Voice search is not supported in this browser. Try Chrome, Edge, or Safari.');
+      setSpeechError(
+        language === 'hi'
+          ? 'इस ब्राउज़र में वॉयस सर्च समर्थित नहीं है।'
+          : 'Voice search is not supported in this browser. Try Chrome, Edge, or Safari.'
+      );
       return;
     }
 
@@ -59,7 +65,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
       const recognition = new SpeechRecognitionClass();
       recognition.continuous = false;
       recognition.interimResults = true;
-      recognition.lang = 'en-IN'; // Optimized for Indian English & Hindi terms
+      recognition.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
 
       recognition.onstart = () => {
         setIsListening(true);
@@ -75,9 +81,17 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
       recognition.onerror = (event: any) => {
         console.warn('Speech recognition error:', event.error);
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          setSpeechError('Microphone permission was denied. Please allow microphone access in browser settings.');
+          setSpeechError(
+            language === 'hi'
+              ? 'माइक्रोफ़ोन की अनुमति अस्वीकृत है। कृपया ब्राउज़र सेटिंग्स में अनुमति दें।'
+              : 'Microphone permission was denied. Please allow microphone access in browser settings.'
+          );
         } else if (event.error === 'no-speech') {
-          setSpeechError('No speech detected. Please try speaking again.');
+          setSpeechError(
+            language === 'hi'
+              ? 'कोई आवाज़ सुनाई नहीं दी। कृपया पुनः बोलें।'
+              : 'No speech detected. Please try speaking again.'
+          );
         } else if (event.error !== 'aborted') {
           setSpeechError(`Voice input error: ${event.error}`);
         }
@@ -92,7 +106,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
       recognition.start();
     } catch (err: any) {
       console.error('Failed to initialize Speech Recognition:', err);
-      setSpeechError('Could not start voice recognition.');
+      setSpeechError(
+        language === 'hi' ? 'वॉयस सर्च शुरू नहीं हो सका।' : 'Could not start voice recognition.'
+      );
       setIsListening(false);
     }
   };
@@ -115,16 +131,22 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   const destinations = StoreService.getDestinations().filter(
     (d) =>
       d.name.toLowerCase().includes(query.toLowerCase()) ||
+      (d.hindiName && d.hindiName.includes(query)) ||
       d.shortDescription.toLowerCase().includes(query.toLowerCase())
   );
 
   const blogs = StoreService.getBlogPosts().filter(
     (b) =>
       b.title.toLowerCase().includes(query.toLowerCase()) ||
+      (b.hindiTitle && b.hindiTitle.includes(query)) ||
       b.excerpt.toLowerCase().includes(query.toLowerCase())
   );
 
   const totalResults = poojas.length + tours.length + destinations.length + blogs.length;
+
+  const quickSearchSuggestions = language === 'hi'
+    ? ['रुद्राभिषेक', 'भात पूजा', 'महामृत्युंजय', 'बगलामुखी हवन', 'ओंकारेश्वर यात्रा', 'चार धाम', 'उज्जैन']
+    : ['Rudrabhishek', 'Bhat Pooja', 'Mahamrityunjaya', 'Baglamukhi Havan', 'Omkareshwar Yatra', 'Char Dham', 'Ujjain'];
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-stone-900/70 backdrop-blur-sm p-2 sm:p-4 pt-10 sm:pt-16 overflow-y-auto">
@@ -138,7 +160,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search poojas, yatras, or topics (e.g. Rudrabhishek)..."
+            placeholder={
+              language === 'hi'
+                ? 'पूजा, तीर्थ यात्रा या विषय खोजें (उदा. रुद्राभिषेक)...'
+                : 'Search poojas, yatras, or topics (e.g. Rudrabhishek)...'
+            }
             className="w-full bg-transparent text-stone-900 dark:text-stone-100 placeholder-stone-400 dark:placeholder-stone-500 text-sm sm:text-base outline-none font-medium min-w-0"
           />
 
@@ -146,7 +172,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           <button
             type="button"
             onClick={toggleVoiceSearch}
-            title={isListening ? 'Stop Voice Listening' : 'Search by Voice'}
+            title={isListening ? (language === 'hi' ? 'वॉयस सर्च रोकें' : 'Stop Voice Listening') : (language === 'hi' ? 'बोलकर खोजें' : 'Search by Voice')}
             className={`relative p-2 rounded-xl transition-all flex items-center justify-center shrink-0 min-w-[36px] min-h-[36px] ${
               isListening
                 ? 'bg-red-600 text-white shadow-lg shadow-red-500/40 animate-pulse'
@@ -174,7 +200,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               }}
               className="text-stone-400 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-100 text-xs font-semibold px-2 py-1 rounded bg-stone-200 dark:bg-stone-800 shrink-0"
             >
-              Clear
+              {language === 'hi' ? 'हटाएं' : 'Clear'}
             </button>
           )}
 
@@ -203,8 +229,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
               </span>
-              <span className="font-semibold text-red-700 dark:text-red-400">Listening...</span>
-              <span className="text-stone-600 dark:text-stone-400 hidden sm:inline">Say a service or topic like &quot;Rudrabhishek&quot; or &quot;Mangalnath&quot;</span>
+              <span className="font-semibold text-red-700 dark:text-red-400">
+                {language === 'hi' ? 'सुन रहे हैं...' : 'Listening...'}
+              </span>
+              <span className="text-stone-600 dark:text-stone-400 hidden sm:inline">
+                {language === 'hi'
+                  ? 'बोलें जैसे "रुद्राभिषेक" या "मंगलनाथ"'
+                  : 'Say a service or topic like "Rudrabhishek" or "Mangalnath"'}
+              </span>
             </div>
             {/* Audio wave pulse bars */}
             <div className="flex items-center gap-1">
@@ -227,7 +259,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               onClick={() => setSpeechError(null)}
               className="text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 font-bold ml-2"
             >
-              Dismiss
+              {language === 'hi' ? 'बंद करें' : 'Dismiss'}
             </button>
           </div>
         )}
@@ -237,9 +269,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           {!query.trim() ? (
             <div className="py-8 text-center text-stone-500 dark:text-stone-400 space-y-3">
               <Sparkles className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto opacity-70" />
-              <p className="text-sm font-serif">Try searching by text or clicking the microphone for voice search:</p>
+              <p className="text-sm font-serif">
+                {language === 'hi'
+                  ? 'टाइप करके खोजें या वॉयस सर्च के लिए माइक पर क्लिक करें:'
+                  : 'Try searching by text or clicking the microphone for voice search:'}
+              </p>
               <div className="flex flex-wrap gap-2 justify-center max-w-md mx-auto pt-2">
-                {['Rudrabhishek', 'Bhat Pooja', 'Mahamrityunjaya', 'Baglamukhi Havan', 'Omkareshwar Yatra', 'Char Dham', 'Ujjain'].map((term) => (
+                {quickSearchSuggestions.map((term) => (
                   <button
                     key={term}
                     onClick={() => {
@@ -255,9 +291,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             </div>
           ) : totalResults === 0 ? (
             <div className="py-12 text-center text-stone-500 dark:text-stone-400">
-              <p className="text-base font-serif">No spiritual services found for &quot;{query}&quot;</p>
+              <p className="text-base font-serif">
+                {language === 'hi'
+                  ? `"${query}" के लिए कोई परिणाम नहीं मिला`
+                  : `No spiritual services found for "${query}"`}
+              </p>
               <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">
-                You can submit a custom enquiry or call our Acharya team directly at +91 9111099799.
+                {language === 'hi'
+                  ? 'आप कस्टम संकल्प पूछताछ दर्ज कर सकते हैं या हमारे आचार्य दल को +91 9111099799 पर कॉल कर सकते हैं।'
+                  : 'You can submit a custom enquiry or call our Acharya team directly at +91 9111099799.'}
               </p>
             </div>
           ) : (
@@ -267,7 +309,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-2.5 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Pooja Services ({poojas.length})</span>
+                    <span>
+                      {language === 'hi' ? 'पूजा अनुष्ठान' : 'Pooja Services'} ({poojas.length})
+                    </span>
                   </h4>
                   <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {poojas.map((p) => (
@@ -279,15 +323,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       >
                         <div>
                           <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-amber-900 dark:group-hover:text-amber-300 text-sm flex items-center gap-2">
-                            <span>{p.name}</span>
-                            {p.hindiName && (
+                            <span>{localize(p, 'name', 'hindiName')}</span>
+                            {language === 'en' && p.hindiName && (
                               <span className="text-xs font-normal text-stone-500 dark:text-stone-400">
                                 ({p.hindiName})
                               </span>
                             )}
                           </div>
                           <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
-                            {p.shortDescription}
+                            {localize(p, 'shortDescription', 'hindiShortDescription')}
                           </p>
                         </div>
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-amber-700 dark:group-hover:text-amber-400 shrink-0" />
@@ -302,7 +346,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 mb-2.5 flex items-center gap-1.5">
                     <Compass className="w-3.5 h-3.5" />
-                    <span>Spiritual Yatras ({tours.length})</span>
+                    <span>
+                      {language === 'hi' ? 'तीर्थ यात्रा पैकेज' : 'Spiritual Yatras'} ({tours.length})
+                    </span>
                   </h4>
                   <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {tours.map((t) => (
@@ -314,10 +360,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       >
                         <div>
                           <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-emerald-900 dark:group-hover:text-emerald-300 text-sm">
-                            {t.name}
+                            {localize(t, 'name', 'hindiName')}
                           </div>
                           <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
-                            {t.shortDescription}
+                            {localize(t, 'shortDescription', 'hindiShortDescription')}
                           </p>
                         </div>
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 shrink-0" />
@@ -332,7 +378,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-sky-800 dark:text-sky-400 mb-2.5 flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5" />
-                    <span>Sacred Destinations ({destinations.length})</span>
+                    <span>
+                      {language === 'hi' ? 'पवित्र तीर्थ स्थल' : 'Sacred Destinations'} ({destinations.length})
+                    </span>
                   </h4>
                   <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {destinations.map((d) => (
@@ -344,10 +392,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       >
                         <div>
                           <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-sky-900 dark:group-hover:text-sky-300 text-sm">
-                            {d.name} {d.hindiName && `(${d.hindiName})`}
+                            {localize(d, 'name', 'hindiName')}{' '}
+                            {language === 'en' && d.hindiName && `(${d.hindiName})`}
                           </div>
                           <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
-                            {d.shortDescription}
+                            {localize(d, 'shortDescription', 'hindiShortDescription')}
                           </p>
                         </div>
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-sky-700 dark:group-hover:text-sky-400 shrink-0" />
@@ -362,7 +411,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-purple-800 dark:text-purple-400 mb-2.5 flex items-center gap-1.5">
                     <BookOpen className="w-3.5 h-3.5" />
-                    <span>Blog Guides ({blogs.length})</span>
+                    <span>
+                      {language === 'hi' ? 'आध्यात्मिक लेख व गाइड' : 'Blog Guides'} ({blogs.length})
+                    </span>
                   </h4>
                   <div className="divide-y divide-stone-100 dark:divide-stone-800">
                     {blogs.map((b) => (
@@ -374,10 +425,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       >
                         <div>
                           <div className="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-purple-900 dark:group-hover:text-purple-300 text-sm">
-                            {b.title}
+                            {localize(b, 'title', 'hindiTitle')}
                           </div>
                           <p className="text-xs text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
-                            {b.excerpt}
+                            {localize(b, 'excerpt', 'hindiExcerpt')}
                           </p>
                         </div>
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-purple-700 dark:group-hover:text-purple-400 shrink-0" />

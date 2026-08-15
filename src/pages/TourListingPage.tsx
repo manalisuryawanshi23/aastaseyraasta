@@ -9,6 +9,7 @@ import { Compass, Search, MapPin, Sparkles } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
 import { ContentFade } from '../components/PageTransition';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TourListingPageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -48,6 +49,7 @@ const tourHeaderSlides = [
 ];
 
 export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking }) => {
+  const { language, t, localize } = useLanguage();
   const allTours = StoreService.getTours();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -61,11 +63,11 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
   }, []);
 
   const categories = [
-    { id: 'all', label: 'All Circuits' },
-    { id: 'Ujjain & Central India', label: 'Ujjain & Central India' },
-    { id: 'Himalayan Yatra', label: 'Himalayan Yatra' },
-    { id: 'Named Yatra', label: 'Named Yatras' },
-    { id: 'Trekking & High Altitude', label: 'Trekking & High Altitude' },
+    { id: 'all', label: language === 'hi' ? 'सभी तीर्थ यात्राएं' : 'All Circuits' },
+    { id: 'Ujjain & Central India', label: language === 'hi' ? 'उज्जैन व मध्य भारत' : 'Ujjain & Central India' },
+    { id: 'Himalayan Yatra', label: language === 'hi' ? 'हिमालयन यात्राएं' : 'Himalayan Yatra' },
+    { id: 'Named Yatra', label: language === 'hi' ? 'प्रमुख यात्रा परिपथ' : 'Named Yatras' },
+    { id: 'Trekking & High Altitude', label: language === 'hi' ? 'ट्रेकिंग व उच्च हिमालय' : 'Trekking & High Altitude' },
   ];
 
   const filtered = allTours.filter((t) => {
@@ -73,7 +75,9 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
     const matchesSearch =
       !searchTerm.trim() ||
       t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (t.hindiName && t.hindiName.includes(searchTerm)) ||
       t.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (t.hindiShortDescription && t.hindiShortDescription.includes(searchTerm)) ||
       t.destinations.some((d) => d.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCat && matchesSearch;
   });
@@ -89,7 +93,7 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
         ogImageAlt="Spiritual Tours & Yatra Packages in Ujjain & Central India"
       />
 
-      <Breadcrumbs items={[{ label: 'Spiritual Tours' }]} />
+      <Breadcrumbs items={[{ label: t('nav.tours', 'Spiritual Tours') }]} />
 
       {/* Header Banner with Animated Background Slider */}
       <FadeIn direction="up">
@@ -99,13 +103,15 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
           <div className="relative z-10 max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider border border-emerald-500/40 backdrop-blur-md">
               <Compass className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Sacred Circuits</span>
+              <span>{language === 'hi' ? 'पावन तीर्थ परिपथ' : 'Sacred Circuits'}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-serif font-bold text-amber-100 drop-shadow-md">
-              Spiritual Tours & Yatras
+              {language === 'hi' ? 'आध्यात्मिक यात्रा एवं दर्शन पैकेज' : 'Spiritual Tours & Yatras'}
             </h1>
             <p className="text-emerald-100/90 text-xs sm:text-sm leading-relaxed font-serif italic">
-              Tailored pilgrimage itineraries connecting Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.
+              {language === 'hi'
+                ? 'उज्जैन महाकाल, ओंकारेश्वर ज्योतिर्लिंग, मां बगलामुखी नलखेड़ा और चार धाम उत्तराखंड हेतु सुव्यवस्थित व आरामदायक यात्रा पैकेज।'
+                : 'Tailored pilgrimage itineraries connecting Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.'}
             </p>
           </div>
         </div>
@@ -120,7 +126,11 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search tours & treks (e.g. Ujjain, Char Dham, Kedarkantha, 84 Mahadev)..."
+              placeholder={
+                language === 'hi'
+                  ? 'तीर्थ यात्रा या स्थान खोजें (उदा. उज्जैन, चार धाम, ओंकारेश्वर, 84 महादेव)...'
+                  : 'Search tours & treks (e.g. Ujjain, Char Dham, Kedarkantha, 84 Mahadev)...'
+              }
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
@@ -153,8 +163,14 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
             <Sparkles className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
-            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">No Tour Circuits Found</h3>
-            <p className="text-stone-500 dark:text-stone-400 text-xs">Try adjusting your search term.</p>
+            <h3 className="font-serif font-bold text-lg text-stone-800 dark:text-stone-100">
+              {language === 'hi' ? 'कोई यात्रा पैकेज नहीं मिला' : 'No Tour Circuits Found'}
+            </h3>
+            <p className="text-stone-500 dark:text-stone-400 text-xs">
+              {language === 'hi'
+                ? 'कृपया दूसरा खोज शब्द दर्ज करें या अन्य श्रेणी चुनें।'
+                : 'Try adjusting your search term.'}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

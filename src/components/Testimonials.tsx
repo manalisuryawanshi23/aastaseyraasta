@@ -23,6 +23,7 @@ import {
 import { Testimonial } from '../types';
 import { StoreService } from '../services/store';
 import { FadeIn } from './FadeIn';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TestimonialsProps {
   testimonials?: Testimonial[];
@@ -33,6 +34,8 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
   testimonials: propTestimonials,
   onOpenBooking,
 }) => {
+  const { language, t, translateText } = useLanguage();
+
   const [allTestimonials, setAllTestimonials] = useState<Testimonial[]>(() => {
     return propTestimonials || StoreService.getTestimonials();
   });
@@ -67,10 +70,10 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
   });
 
   const categories = [
-    { id: 'All', label: 'All Reviews', icon: Users },
-    { id: 'Pooja', label: 'Pooja Rituals', icon: Flame },
-    { id: 'Bhat Pooja', label: 'Bhat & Mangal Pooja', icon: Sparkles },
-    { id: 'Tour', label: 'Yatra & Tours', icon: Compass },
+    { id: 'All', label: language === 'hi' ? 'सभी समीक्षाएं' : 'All Reviews', icon: Users },
+    { id: 'Pooja', label: language === 'hi' ? 'पूजा अनुष्ठान' : 'Pooja Rituals', icon: Flame },
+    { id: 'Bhat Pooja', label: language === 'hi' ? 'भात व मंगल पूजा' : 'Bhat & Mangal Pooja', icon: Sparkles },
+    { id: 'Tour', label: language === 'hi' ? 'तीर्थ यात्राएं' : 'Yatra & Tours', icon: Compass },
   ];
 
   const handleNext = () => {
@@ -97,13 +100,13 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
 
     const newTestimonial = StoreService.saveTestimonial({
       name: name.trim(),
-      location: location.trim() || 'Ujjain Devotee',
+      location: location.trim() || (language === 'hi' ? 'उज्जैन श्रद्धालु' : 'Ujjain Devotee'),
       rating,
       testimonial: testimonialText.trim(),
       category: serviceType,
       service: serviceType === 'Pooja' || serviceType === 'Bhat Pooja' ? serviceName : undefined,
       tour: serviceType === 'Tour' ? serviceName : undefined,
-      date: 'Recent Visit',
+      date: language === 'hi' ? 'हाल ही का दर्शन' : 'Recent Visit',
       verified: true,
       helpfulCount: 1,
       reviewImage: reviewPhotoUrl.trim() || undefined,
@@ -142,25 +145,27 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
           <div className="space-y-4 max-w-2xl text-center lg:text-left relative z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span>100% Genuine Devotee Experiences</span>
+              <span>{language === 'hi' ? '100% प्रामाणिक श्रद्धालु अनुभव' : '100% Genuine Devotee Experiences'}</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100 leading-tight">
-              Words of Devotion & Trust
+              {language === 'hi' ? 'श्रद्धा एवं विश्वास के पावन शब्द' : 'Words of Devotion & Trust'}
             </h2>
 
             <p className="text-stone-300 text-xs sm:text-sm leading-relaxed">
-              Read real feedback from pilgrims and families across India who performed Rudrabhishek, Bhat Pooja, and Spiritual Yatras with Aastha Sey Raasta Seva.
+              {language === 'hi'
+                ? 'देशभर से आए उन तीर्थयात्रियों और परिवारों के वास्तविक अनुभव जिन्होंने आस्था से रास्ता सेवा के साथ रुद्राभिषेक, भात पूजा एवं तीर्थ यात्राएं संपन्न कीं।'
+                : 'Read real feedback from pilgrims and families across India who performed Rudrabhishek, Bhat Pooja, and Spiritual Yatras with Aastha Sey Raasta Seva.'}
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1">
               <div className="flex items-center gap-2 bg-stone-900/80 px-3.5 py-1.5 rounded-xl border border-stone-800 text-xs text-stone-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Verified Vedic Priests</span>
+                <span>{language === 'hi' ? 'वेदपाठी प्रामाणिक ब्राह्मण' : 'Verified Vedic Priests'}</span>
               </div>
               <div className="flex items-center gap-2 bg-stone-900/80 px-3.5 py-1.5 rounded-xl border border-stone-800 text-xs text-stone-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Transparent Samagri & Dakshina</span>
+                <span>{language === 'hi' ? 'पारदर्शी सात्विक सामग्री व दक्षिणा' : 'Transparent Samagri & Dakshina'}</span>
               </div>
             </div>
           </div>
@@ -179,7 +184,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
             </div>
 
             <p className="text-stone-300 text-xs font-medium">
-              Based on 500+ Devotee Reviews
+              {language === 'hi' ? '500+ श्रद्धालु समीक्षाओं पर आधारित' : 'Based on 500+ Devotee Reviews'}
             </p>
 
             <button
@@ -187,7 +192,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
               className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs font-semibold transition-all shadow-md flex items-center justify-center gap-2"
             >
               <Plus className="w-4 h-4" />
-              <span>Share Your Experience</span>
+              <span>{language === 'hi' ? 'अपना अनुभव साझा करें' : 'Share Your Experience'}</span>
             </button>
           </div>
 
@@ -224,7 +229,9 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
 
         {/* Display Mode Switches */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-stone-400 text-xs font-medium hidden md:inline">View Mode:</span>
+          <span className="text-stone-400 text-xs font-medium hidden md:inline">
+            {language === 'hi' ? 'दृश्य प्रकार:' : 'View Mode:'}
+          </span>
           <div className="bg-stone-100 dark:bg-stone-800 p-1 rounded-xl flex items-center gap-1 border border-stone-200 dark:border-stone-700">
             <button
               onClick={() => setViewMode('carousel')}
@@ -233,10 +240,10 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   ? 'bg-white dark:bg-stone-900 text-amber-800 dark:text-amber-300 shadow-sm font-semibold'
                   : 'text-stone-500 hover:text-stone-800 dark:hover:text-stone-200'
               }`}
-              title="Carousel Mode"
+              title={language === 'hi' ? 'कंडोला मोड' : 'Carousel Mode'}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              <span className="text-[11px] hidden sm:inline">Carousel</span>
+              <span className="text-[11px] hidden sm:inline">{language === 'hi' ? 'स्लाइडर' : 'Carousel'}</span>
             </button>
 
             <button
@@ -246,10 +253,10 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   ? 'bg-white dark:bg-stone-900 text-amber-800 dark:text-amber-300 shadow-sm font-semibold'
                   : 'text-stone-500 hover:text-stone-800 dark:hover:text-stone-200'
               }`}
-              title="Grid Mode"
+              title={language === 'hi' ? 'ग्रिड मोड' : 'Grid Mode'}
             >
               <Grid className="w-4 h-4" />
-              <span className="text-[11px] hidden sm:inline">Grid</span>
+              <span className="text-[11px] hidden sm:inline">{language === 'hi' ? 'ग्रिड' : 'Grid'}</span>
             </button>
           </div>
         </div>
@@ -261,14 +268,16 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
         <div className="py-12 px-4 text-center bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-200 dark:border-stone-800 space-y-3">
           <MessageSquare className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto opacity-50" />
           <p className="text-stone-600 dark:text-stone-400 text-xs sm:text-sm">
-            No testimonials found in this category. Be the first to share your experience!
+            {language === 'hi'
+              ? 'इस श्रेणी में कोई समीक्षा नहीं मिली। अपना अनुभव साझा करने वाले पहले व्यक्ति बनें!'
+              : 'No testimonials found in this category. Be the first to share your experience!'}
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
             className="px-4 py-2 rounded-xl bg-amber-800 text-white text-xs font-medium hover:bg-amber-900 transition-colors inline-flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
-            <span>Write a Review</span>
+            <span>{language === 'hi' ? 'समीक्षा लिखें' : 'Write a Review'}</span>
           </button>
         </div>
       ) : viewMode === 'grid' ? (
@@ -364,13 +373,15 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
             <div className="space-y-1">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-[11px] font-semibold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Devotee Feedback</span>
+                <span>{language === 'hi' ? 'श्रद्धालु समीक्षा' : 'Devotee Feedback'}</span>
               </div>
               <h3 className="font-serif font-bold text-2xl text-stone-900 dark:text-stone-100">
-                Share Your Sacred Experience
+                {language === 'hi' ? 'अपना पावन अनुभव साझा करें' : 'Share Your Sacred Experience'}
               </h3>
               <p className="text-stone-500 dark:text-stone-400 text-xs">
-                Your authentic feedback helps other pilgrims plan their spiritual journey with confidence.
+                {language === 'hi'
+                  ? 'आपकी प्रामाणिक प्रतिक्रिया अन्य श्रद्धालुओं को उनकी तीर्थ यात्रा विश्वासपूर्वक नियोजित करने में सहायता करती है।'
+                  : 'Your authentic feedback helps other pilgrims plan their spiritual journey with confidence.'}
               </p>
             </div>
 
@@ -378,10 +389,12 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
               <div className="py-8 text-center space-y-3 bg-emerald-50 dark:bg-emerald-950/50 rounded-2xl border border-emerald-200 dark:border-emerald-800 p-6">
                 <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
                 <h4 className="font-serif font-bold text-lg text-emerald-900 dark:text-emerald-200">
-                  Dhanyawad & Jai Shree Mahakal!
+                  {language === 'hi' ? 'धन्यवाद एवं जय श्री महाकाल!' : 'Dhanyawad & Jai Shree Mahakal!'}
                 </h4>
                 <p className="text-emerald-700 dark:text-emerald-300 text-xs">
-                  Your review has been successfully submitted and added to our devotee wall.
+                  {language === 'hi'
+                    ? 'आपकी समीक्षा सफलतापूर्वक सबमिट हो गई है और हमारे श्रद्धालु पटल पर जोड़ दी गई है।'
+                    : 'Your review has been successfully submitted and added to our devotee wall.'}
                 </p>
               </div>
             ) : (
@@ -390,7 +403,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                 {/* Rating Selection */}
                 <div className="space-y-1">
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300">
-                    Overall Experience Rating
+                    {language === 'hi' ? 'कुल अनुभव रेटिंग' : 'Overall Experience Rating'}
                   </label>
                   <div className="flex items-center gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -410,7 +423,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                       </button>
                     ))}
                     <span className="text-xs font-bold text-amber-700 dark:text-amber-400 ml-2">
-                      {rating} / 5 Stars
+                      {rating} / 5 {language === 'hi' ? 'स्टार' : 'Stars'}
                     </span>
                   </div>
                 </div>
@@ -419,14 +432,14 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   {/* Devotee Name */}
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                      Your Full Name *
+                      {language === 'hi' ? 'आपका पूरा नाम *' : 'Your Full Name *'}
                     </label>
                     <input
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Ramesh Patel"
+                      placeholder={language === 'hi' ? 'उदा. रमेश पटेल' : 'e.g. Ramesh Patel'}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
                     />
                   </div>
@@ -434,13 +447,13 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   {/* Devotee Location */}
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                      City / State
+                      {language === 'hi' ? 'शहर / राज्य' : 'City / State'}
                     </label>
                     <input
                       type="text"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      placeholder="e.g. Mumbai, MH"
+                      placeholder={language === 'hi' ? 'उदा. मुंबई, महाराष्ट्र' : 'e.g. Mumbai, MH'}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
                     />
                   </div>
@@ -450,30 +463,30 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   {/* Category Selection */}
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                      Service Category
+                      {language === 'hi' ? 'सेवा श्रेणी' : 'Service Category'}
                     </label>
                     <select
                       value={serviceType}
                       onChange={(e) => setServiceType(e.target.value as any)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
                     >
-                      <option value="Pooja">Rudrabhishek / Pooja</option>
-                      <option value="Bhat Pooja">Bhat Pooja (Angareshwar)</option>
-                      <option value="Tour">Spiritual Yatra / Tour</option>
-                      <option value="General">General Experience</option>
+                      <option value="Pooja">{language === 'hi' ? 'रुद्राभिषेक / पूजा' : 'Rudrabhishek / Pooja'}</option>
+                      <option value="Bhat Pooja">{language === 'hi' ? 'भात पूजा (अंगारेश्वर/मंगलनाथ)' : 'Bhat Pooja (Angareshwar)'}</option>
+                      <option value="Tour">{language === 'hi' ? 'आध्यात्मिक यात्रा / टूर' : 'Spiritual Yatra / Tour'}</option>
+                      <option value="General">{language === 'hi' ? 'सामान्य अनुभव' : 'General Experience'}</option>
                     </select>
                   </div>
 
                   {/* Specific Service Name */}
                   <div>
                     <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                      Specific Service or Tour
+                      {language === 'hi' ? 'विशिष्ट सेवा या यात्रा का नाम' : 'Specific Service or Tour'}
                     </label>
                     <input
                       type="text"
                       value={serviceName}
                       onChange={(e) => setServiceName(e.target.value)}
-                      placeholder="e.g. Rudrabhishek or 3 Days Yatra"
+                      placeholder={language === 'hi' ? 'उदा. रुद्राभिषेक या 3 दिवसीय यात्रा' : 'e.g. Rudrabhishek or 3 Days Yatra'}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
                     />
                   </div>
@@ -482,14 +495,18 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                 {/* Review Text */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Your Feedback / Experience *
+                    {language === 'hi' ? 'आपका अनुभव / प्रतिक्रिया *' : 'Your Feedback / Experience *'}
                   </label>
                   <textarea
                     required
                     rows={4}
                     value={testimonialText}
                     onChange={(e) => setTestimonialText(e.target.value)}
-                    placeholder="Describe how your pooja ritual or pilgrimage journey was organized, pandit ji's coordination, samagri quality, etc."
+                    placeholder={
+                      language === 'hi'
+                        ? 'वर्णन करें कि आपकी पूजा या तीर्थ यात्रा की व्यवस्था कैसी रही, पंडित जी का समन्वय, सामग्री की गुणवत्ता आदि।'
+                        : "Describe how your pooja ritual or pilgrimage journey was organized, pandit ji's coordination, samagri quality, etc."
+                    }
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none resize-none"
                   />
                 </div>
@@ -497,7 +514,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                 {/* Optional Review Image URL */}
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    Photo URL (Optional Temple or Prasad Photo)
+                    {language === 'hi' ? 'फोटो यूआरएल (वैकल्पिक मंदिर या प्रसाद फोटो)' : 'Photo URL (Optional Temple or Prasad Photo)'}
                   </label>
                   <input
                     type="url"
@@ -514,14 +531,16 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                     onClick={() => setIsModalOpen(false)}
                     className="px-4 py-2.5 rounded-xl text-xs font-semibold text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                   >
-                    Cancel
+                    {language === 'hi' ? 'रद्द करें' : 'Cancel'}
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
                     className="px-6 py-2.5 rounded-xl bg-amber-800 hover:bg-amber-900 text-white text-xs font-bold transition-all shadow-md flex items-center gap-2"
                   >
-                    {isSubmitting ? 'Publishing...' : 'Submit Review'}
+                    {isSubmitting
+                      ? (language === 'hi' ? 'प्रकाशित हो रहा है...' : 'Publishing...')
+                      : (language === 'hi' ? 'समीक्षा सबमिट करें' : 'Submit Review')}
                   </button>
                 </div>
 
@@ -576,12 +595,13 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   onImageClick,
   onBookService,
 }) => {
+  const { language, translateText } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  const isLong = item.testimonial.length > 180;
-  const displayText =
-    isLong && !isExpanded ? `${item.testimonial.slice(0, 180)}...` : item.testimonial;
+  const rawText = language === 'hi' && item.hindiTestimonial ? item.hindiTestimonial : item.testimonial;
+  const isLong = rawText.length > 180;
+  const displayText = isLong && !isExpanded ? `${rawText.slice(0, 180)}...` : rawText;
 
   // Fallback avatar generator
   const initials = item.name
@@ -591,7 +611,19 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
     .join('')
     .toUpperCase();
 
-  const serviceTag = item.service || item.tour || 'Vedic Service';
+  const serviceTag = item.service
+    ? translateText(item.service)
+    : item.tour
+    ? translateText(item.tour)
+    : (language === 'hi' ? 'वैदिक सेवा' : 'Vedic Service');
+
+  const locationText = language === 'hi' && item.hindiLocation
+    ? item.hindiLocation
+    : translateText(item.location);
+
+  const dateText = language === 'hi' && item.hindiDate
+    ? item.hindiDate
+    : (language === 'hi' && item.date === 'Recent Visit' ? 'हाल ही का दर्शन' : (item.date || ''));
 
   return (
     <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4 flex flex-col justify-between h-full hover:border-amber-400/60 dark:hover:border-amber-700 transition-all duration-300 group">
@@ -623,17 +655,17 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
                 {item.verified !== false && (
                   <span
                     className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-900"
-                    title="Verified Booking Devotee"
+                    title={language === 'hi' ? 'सत्यापित श्रद्धालु बुकिंग' : 'Verified Booking Devotee'}
                   >
                     <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                    <span>Verified</span>
+                    <span>{language === 'hi' ? 'सत्यापित' : 'Verified'}</span>
                   </span>
                 )}
               </div>
               
               <div className="text-stone-500 dark:text-stone-400 text-xs flex items-center gap-1 mt-0.5">
-                <MapPin className="w-3 h-3 text-amber-700 dark:text-amber-400" />
-                <span>{item.location}</span>
+                <MapPin className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                <span>{locationText}</span>
               </div>
             </div>
           </div>
@@ -644,7 +676,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
               onClick={() => {
                 if (onBookService) {
                   const type = item.tour ? 'Tour' : 'Pooja';
-                  onBookService(type, serviceTag);
+                  onBookService(type, item.service || item.tour || serviceTag);
                 }
               }}
               className="text-[10px] font-semibold text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-stone-800 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-stone-700 hover:bg-amber-100 dark:hover:bg-stone-700 transition-colors"
@@ -662,10 +694,10 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
             ))}
           </div>
 
-          {item.date && (
+          {dateText && (
             <div className="flex items-center gap-1 text-[11px] text-stone-500 dark:text-stone-400 font-medium">
               <Calendar className="w-3 h-3 text-amber-600" />
-              <span>{item.date}</span>
+              <span>{dateText}</span>
             </div>
           )}
         </div>
@@ -682,7 +714,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
               onClick={() => setIsExpanded(!isExpanded)}
               className="text-[11px] font-bold text-amber-800 dark:text-amber-400 hover:underline mt-1 block pl-3"
             >
-              {isExpanded ? 'Show Less' : 'Read Full Review'}
+              {isExpanded ? (language === 'hi' ? 'कम दिखाएं' : 'Show Less') : (language === 'hi' ? 'पूरी समीक्षा पढ़ें' : 'Read Full Review')}
             </button>
           )}
         </div>
@@ -690,7 +722,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         {/* Attached Photo (if any) */}
         {item.reviewImage && (
           <div
-            onClick={() => onImageClick(item.reviewImage!, `${item.name}'s ${serviceTag}`)}
+            onClick={() => onImageClick(item.reviewImage!, `${item.name} - ${serviceTag}`)}
             className="relative rounded-xl overflow-hidden group/img cursor-pointer border border-stone-200 dark:border-stone-800 max-h-36"
           >
             <img
@@ -703,7 +735,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
             />
             <div className="absolute inset-0 bg-stone-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5 backdrop-blur-[2px]">
               <ImageIcon className="w-4 h-4" />
-              <span>Click to view photo</span>
+              <span>{language === 'hi' ? 'फोटो देखने के लिए क्लिक करें' : 'Click to view photo'}</span>
             </div>
           </div>
         )}
@@ -717,10 +749,12 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-stone-700 text-stone-600 dark:text-stone-300 transition-colors text-[11px] font-medium"
         >
           <ThumbsUp className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-          <span>Helpful ({item.helpfulCount || 12})</span>
+          <span>{language === 'hi' ? 'सहायक लगा' : 'Helpful'} ({item.helpfulCount || 12})</span>
         </button>
 
-        <span className="text-[10px] text-stone-400">Ujjain Verified</span>
+        <span className="text-[10px] text-stone-400">
+          {language === 'hi' ? 'उज्जैन सत्यापित' : 'Ujjain Verified'}
+        </span>
       </div>
 
     </div>
