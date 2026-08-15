@@ -311,6 +311,31 @@ export interface BrandColorPalette {
   presetName?: string;
 }
 
+export interface DevotionalTrack {
+  id: string;
+  title: string;
+  hindiTitle?: string;
+  subtitle?: string;
+  hindiSubtitle?: string;
+  type: 'om-namah-shivaya' | 'mahamrityunjaya' | 'vedic-chant' | 'temple-bells' | 'gayatri-mantra' | 'custom-url';
+  audioUrl?: string; // Optional custom MP3/streaming URL provided by Admin
+  lyrics?: string;
+  hindiLyrics?: string;
+  deity?: string;
+  duration?: string;
+  isBuiltIn?: boolean;
+}
+
+export interface DevotionalAtmosphereSettings {
+  isEnabled: boolean;
+  defaultTrackId: string;
+  defaultVolume: number; // 0 to 1 (e.g. 0.35)
+  showFloatingPlayer: boolean;
+  allowUserTrackSwitching: boolean;
+  enableAutoLoop: boolean;
+  tracks: DevotionalTrack[];
+}
+
 export interface SiteSettings {
   businessName: string;
   hindiBusinessName: string;
@@ -361,6 +386,7 @@ export interface SiteSettings {
   };
   aboutMissionText?: string;
   brandPalette?: BrandColorPalette;
+  devotionalAtmosphere?: DevotionalAtmosphereSettings;
 }
 
 export interface User {
@@ -381,6 +407,7 @@ export interface AdminPermission {
   canManageSettings: boolean;
   canManageSocials: boolean;
   canManageStaff: boolean;
+  canManageDevotionalSound?: boolean;
 }
 
 export interface StaffUser {
