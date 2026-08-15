@@ -12,7 +12,14 @@ interface PoojaCardProps {
 }
 
 export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }) => {
-  const { language, t } = useLanguage();
+  const { language, t, localize } = useLanguage();
+
+  const poojaName = localize(pooja, 'name', 'hindiName');
+  const poojaShortDesc = localize(pooja, 'shortDescription', 'hindiShortDescription');
+  const poojaCategory = localize(pooja, 'categoryName', 'hindiCategory') || (language === 'hi' ? 'वैदिक पूजा' : 'Temple Pooja');
+  const poojaCity = localize(pooja, 'city', 'hindiCity');
+  const poojaTemple = localize(pooja, 'templeName', 'hindiTempleName');
+  const poojaDuration = localize(pooja, 'duration', 'hindiDuration');
 
   return (
     <motion.div
@@ -44,7 +51,7 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
 
         {/* Category Pill */}
         <div className="absolute top-3 left-3 bg-red-950/85 backdrop-blur-md text-amber-200 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full border border-amber-500/40 shadow-sm group-hover:-translate-y-0.5 group-hover:scale-105 transition-transform duration-300">
-          {pooja.categoryName || 'Temple Pooja'}
+          {poojaCategory}
         </div>
 
         {/* Favorite Button */}
@@ -53,10 +60,10 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
         </div>
 
         {/* Location Badge */}
-        {pooja.city && (
+        {(poojaCity || poojaTemple) && (
           <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-white text-xs font-medium group-hover:translate-x-1 transition-transform duration-300">
             <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="drop-shadow-sm">{pooja.templeName ? `${pooja.templeName}` : `${pooja.city}, MP`}</span>
+            <span className="drop-shadow-sm">{poojaTemple ? poojaTemple : `${poojaCity}, MP`}</span>
           </div>
         )}
       </div>
@@ -66,7 +73,7 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
         <div>
           <div className="flex items-start justify-between gap-2 mb-1">
             <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-amber-100 group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors duration-300 leading-snug">
-              {language === 'hi' && pooja.hindiName ? pooja.hindiName : pooja.name}
+              {poojaName}
             </h3>
           </div>
 
@@ -77,15 +84,15 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
           )}
 
           <p className="text-stone-600 dark:text-stone-300 text-xs leading-relaxed line-clamp-2">
-            {language === 'hi' && pooja.hindiDescription ? pooja.hindiDescription : pooja.shortDescription}
+            {poojaShortDesc}
           </p>
 
           {/* Quick info specs */}
           <div className="mt-3 pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
-            {pooja.duration && (
+            {poojaDuration && (
               <span className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors" />
-                <span>{pooja.duration}</span>
+                <span>{poojaDuration}</span>
               </span>
             )}
             <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-medium ml-auto">

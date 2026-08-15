@@ -7,8 +7,10 @@ import { generateDestinationListingTitle } from '../utils/seoTitles';
 import { MapPin } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { SkeletonGrid } from '../components/Skeletons';
+import { useLanguage } from '../context/LanguageContext';
 
 export const DestinationListingPage: React.FC = () => {
+  const { language, t } = useLanguage();
   const destinations = StoreService.getDestinations();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +32,7 @@ export const DestinationListingPage: React.FC = () => {
         ogImageAlt="Sacred Pilgrimage Destinations and Shrines"
       />
 
-      <Breadcrumbs items={[{ label: 'Destinations' }]} />
+      <Breadcrumbs items={[{ label: t('nav.destinations', 'Destinations') }]} />
 
       <FadeIn direction="up">
         <div className="bg-gradient-to-r from-sky-950 via-stone-900 to-amber-950 text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden">
@@ -43,13 +45,15 @@ export const DestinationListingPage: React.FC = () => {
           <div className="relative z-10 max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 text-xs font-semibold uppercase tracking-wider border border-sky-500/30">
               <MapPin className="w-3.5 h-3.5 text-sky-400" />
-              <span>Holy Shrines & Cities</span>
+              <span>{language === 'hi' ? 'पावन तीर्थ व पवित्र नगर' : 'Holy Shrines & Cities'}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-serif font-bold text-amber-100">
-              Pilgrimage Destinations
+              {language === 'hi' ? 'प्रमुख तीर्थ स्थल एवं पावन धाम' : 'Pilgrimage Destinations'}
             </h1>
             <p className="text-sky-100/80 text-xs sm:text-sm leading-relaxed">
-              Detailed spiritual guides, major temple shrines, pooja arrangements, and travel connectivity across Madhya Pradesh & Uttarakhand.
+              {language === 'hi'
+                ? 'उज्जैन, ओंकारेश्वर, मां बगलामुखी नलखेड़ा और उत्तराखंड के पवित्र तीर्थों की विस्तृत दर्शन मार्गदर्शिका एवं व्यवस्था।'
+                : 'Detailed spiritual guides, major temple shrines, pooja arrangements, and travel connectivity across Madhya Pradesh & Uttarakhand.'}
             </p>
           </div>
         </div>

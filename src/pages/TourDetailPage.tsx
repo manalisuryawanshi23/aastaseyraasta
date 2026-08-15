@@ -6,6 +6,7 @@ import { generateTourTitle } from '../utils/seoTitles';
 import { TourCard } from '../components/TourCard';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { SocialShareButtons } from '../components/SocialShareButtons';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Compass,
   MapPin,
@@ -27,6 +28,7 @@ import {
   buildBreadcrumbSchema,
   buildFAQSchema,
 } from '../utils/seoSchemas';
+import { FAQAccordion } from '../components/FAQAccordion';
 
 interface TourDetailPageProps {
   slug: string;
@@ -34,20 +36,38 @@ interface TourDetailPageProps {
 }
 
 export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBooking }) => {
+  const { language, t, localize, translateText } = useLanguage();
   const settings = StoreService.getSettings();
   const tour = StoreService.getTourBySlug(slug);
 
   if (!tour) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <h1 className="text-3xl font-serif font-bold text-stone-900">Tour Package Not Found</h1>
-        <p className="text-stone-600 text-sm">The requested yatra package does not exist or may have been updated.</p>
+        <h1 className="text-3xl font-serif font-bold text-stone-900">
+          {language === 'hi' ? 'यात्रा पैकेज नहीं मिला' : 'Tour Package Not Found'}
+        </h1>
+        <p className="text-stone-600 text-sm">
+          {language === 'hi'
+            ? 'अनुरोधित तीर्थ यात्रा पैकेज उपलब्ध नहीं है या अद्यतित कर दिया गया है।'
+            : 'The requested yatra package does not exist or may have been updated.'}
+        </p>
         <a href="/spiritual-tours" className="inline-block px-6 py-2.5 rounded-xl bg-emerald-800 text-white font-medium text-xs">
-          Back to Tour Directory
+          {t('action.back_to_tours', 'Back to Tour Directory')}
         </a>
       </div>
     );
   }
+
+  const tourName = localize(tour, 'name', 'hindiName');
+  const tourShortDesc = localize(tour, 'shortDescription', 'hindiShortDescription');
+  const tourCategory = localize(tour, 'category', 'hindiCategory') || (language === 'hi' ? 'तीर्थ यात्रा परिपथ' : 'Pilgrimage Circuit');
+  const tourDuration = localize(tour, 'duration', 'hindiDuration');
+  const tourStart = localize(tour, 'startingPoint', 'hindiStartingPoint');
+  const tourEnd = localize(tour, 'endingPoint', 'hindiEndingPoint');
+  const tourPlacesCovered = localize(tour, 'placesCovered', 'hindiPlacesCovered') || [];
+  const tourItinerary = localize(tour, 'itinerary', 'hindiItinerary') || tour.itinerary;
+  const tourIncluded = localize(tour, 'included', 'hindiIncluded') || tour.included || [];
+  const tourExcluded = localize(tour, 'excluded', 'hindiExcluded') || tour.excluded || [];
 
   const allTours = StoreService.getTours();
   const relatedTours = allTours.filter((t) => t.id !== tour.id).slice(0, 3);
@@ -76,8 +96,8 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       <Breadcrumbs
         items={[
-          { label: 'Spiritual Tours', href: '/spiritual-tours' },
-          { label: tour.name },
+          { label: t('nav.tours', 'Spiritual Tours'), href: '/spiritual-tours' },
+          { label: tourName },
         ]}
       />
 
@@ -91,29 +111,29 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-semibold uppercase tracking-wider">
                 <Compass className="w-3.5 h-3.5 text-emerald-700" />
-                <span>{tour.category || 'Pilgrimage Circuit'}</span>
+                <span>{tourCategory}</span>
               </div>
               <FavoriteButton id={tour.id} type="tour" variant="button" />
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">
-              {tour.name}
+              {tourName}
             </h1>
 
             <p className="text-stone-600 text-sm leading-relaxed">
-              {tour.shortDescription}
+              {tourShortDesc}
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-stone-700 pt-1">
-              {tour.duration && (
+              {tourDuration && (
                 <div className="flex items-center gap-1.5 bg-emerald-50 text-emerald-900 px-3 py-1.5 rounded-lg border border-emerald-200">
                   <Clock className="w-4 h-4 text-emerald-700" />
-                  <span>Duration: {tour.duration}</span>
+                  <span>{language === 'hi' ? 'अवधि' : 'Duration'}: {tourDuration}</span>
                 </div>
               )}
               <div className="flex items-center gap-1.5 bg-stone-100 px-3 py-1.5 rounded-lg">
                 <MapPin className="w-4 h-4 text-stone-500" />
-                <span>Start/End: {tour.startingPoint} to {tour.endingPoint}</span>
+                <span>{language === 'hi' ? 'प्रारंभ / समापन' : 'Start/End'}: {tourStart} {language === 'hi' ? 'से' : 'to'} {tourEnd}</span>
               </div>
             </div>
           </div>
@@ -122,7 +142,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md h-80 bg-stone-100">
             <img
               src={tour.featuredImage || '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg'}
-              alt={tour.name}
+              alt={tourName}
               loading="eager"
               decoding="async"
               {...({ fetchPriority: 'high' } as any)}
@@ -132,13 +152,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           </div>
 
           {/* Places Covered Tags */}
-          {tour.placesCovered && tour.placesCovered.length > 0 && (
+          {tourPlacesCovered && tourPlacesCovered.length > 0 && (
             <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-3">
               <h3 className="font-serif font-bold text-stone-900 text-base">
-                Major Destinations & Shrines Covered
+                {t('tour.places_covered_title', 'Major Destinations & Shrines Covered')}
               </h3>
               <div className="flex flex-wrap gap-2">
-                {tour.placesCovered.map((place, idx) => (
+                {tourPlacesCovered.map((place: string, idx: number) => (
                   <span
                     key={idx}
                     className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-900 text-xs font-medium border border-emerald-200 flex items-center gap-1"
@@ -153,34 +173,35 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
           {/* Social Media Sharing */}
           <SocialShareButtons
-            title={tour.name}
-            description={tour.shortDescription}
-            category={tour.category}
+            title={tourName}
+            description={tourShortDesc}
+            category={tourCategory}
           />
 
           {/* Day-Wise Itinerary */}
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-6">
             <h2 className="text-xl font-serif font-bold text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-emerald-700" />
-              <span>Day-Wise Pilgrimage Itinerary</span>
+              <span>{t('tour.itinerary_title', 'Detailed Day-Wise Yatra Itinerary')}</span>
             </h2>
 
             <div className="space-y-6">
-              {tour.itinerary.map((day) => (
+              {tourItinerary.map((day: any) => (
                 <div key={day.dayNumber} className="border-l-2 border-emerald-600 pl-4 space-y-2 relative">
                   <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-700 text-white flex items-center justify-center text-[9px] font-bold">
                     {day.dayNumber}
                   </div>
                   <div className="font-serif font-bold text-stone-900 text-base">
-                    Day {day.dayNumber}: {day.title}
+                    {language === 'hi' ? `दिन ${day.dayNumber}: ` : `Day ${day.dayNumber}: `}
+                    {day.hindiTitle && language === 'hi' ? day.hindiTitle : day.title}
                   </div>
                   <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
-                    {day.description}
+                    {day.hindiDescription && language === 'hi' ? day.hindiDescription : day.description}
                   </p>
-                  {day.accommodation && (
+                  {(day.accommodation || day.hindiAccommodation) && (
                     <div className="text-xs text-stone-500 font-medium pt-1 flex items-center gap-1">
                       <Hotel className="w-3.5 h-3.5 text-stone-400" />
-                      <span>Stay: {day.accommodation}</span>
+                      <span>{language === 'hi' ? 'आवास / रात्रि विश्राम' : 'Stay'}: {day.hindiAccommodation && language === 'hi' ? day.hindiAccommodation : translateText(day.accommodation)}</span>
                     </div>
                   )}
                 </div>
@@ -190,14 +211,14 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
           {/* Inclusions & Exclusions */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {tour.included && tour.included.length > 0 && (
+            {tourIncluded && tourIncluded.length > 0 && (
               <div className="bg-emerald-50/60 p-6 rounded-2xl border border-emerald-200/80 space-y-3">
                 <h3 className="font-serif font-bold text-emerald-950 text-base flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  <span>What is Included</span>
+                  <span>{t('tour.inclusions', "What's Included in Package")}</span>
                 </h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-stone-800">
-                  {tour.included.map((inc, i) => (
+                  {tourIncluded.map((inc: string, i: number) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{inc}</span>
@@ -207,14 +228,14 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
             )}
 
-            {tour.excluded && tour.excluded.length > 0 && (
+            {tourExcluded && tourExcluded.length > 0 && (
               <div className="bg-stone-50 p-6 rounded-2xl border border-stone-200 space-y-3">
                 <h3 className="font-serif font-bold text-stone-900 text-base flex items-center gap-2">
                   <XCircle className="w-4 h-4 text-stone-500" />
-                  <span>What is Excluded</span>
+                  <span>{t('tour.exclusions', "What's Excluded")}</span>
                 </h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-stone-600">
-                  {tour.excluded.map((exc, i) => (
+                  {tourExcluded.map((exc: string, i: number) => (
                     <li key={i} className="flex items-start gap-2">
                       <XCircle className="w-3.5 h-3.5 text-stone-400 shrink-0 mt-0.5" />
                       <span>{exc}</span>
@@ -232,28 +253,28 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <div className="bg-white p-6 rounded-2xl border-2 border-emerald-300 shadow-xl space-y-5">
             <div>
               <div className="text-xs uppercase tracking-wider font-bold text-emerald-800">
-                Tour Reservation & Customization
+                {t('tour.sidebar_title', 'Tour Reservation & Customization')}
               </div>
               <h3 className="text-2xl font-serif font-bold text-stone-900 mt-0.5">
-                Book / Customize Yatra
+                {t('action.book_tour', 'Book / Customize Yatra')}
               </h3>
               <p className="text-xs text-stone-500 mt-1">
-                Private AC vehicle, hotel stay, and Darshan assistance.
+                {t('tour.sidebar_sub', 'Personalized vehicle, hotel bookings & Pandit darshan assistance.')}
               </p>
             </div>
 
             <div className="space-y-3 text-xs text-stone-700 bg-emerald-50/50 p-4 rounded-xl border border-emerald-200/60">
               <div className="flex items-center justify-between">
-                <span>Vehicle Type:</span>
-                <span className="font-semibold text-stone-900">AC Cab / SUV / Tempo</span>
+                <span>{language === 'hi' ? 'वाहन प्रकार:' : 'Vehicle Type:'}</span>
+                <span className="font-semibold text-stone-900">{language === 'hi' ? 'एसी कैब / एसयूवी / टेम्पो' : 'AC Cab / SUV / Tempo'}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Darshan Assistance:</span>
-                <span className="font-semibold text-emerald-800">Included</span>
+                <span>{language === 'hi' ? 'दर्शन सहायता:' : 'Darshan Assistance:'}</span>
+                <span className="font-semibold text-emerald-800">{language === 'hi' ? 'शामिल' : 'Included'}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span>Custom Dates:</span>
-                <span className="font-semibold text-stone-900">Flexible</span>
+                <span>{language === 'hi' ? 'यात्रा तिथि:' : 'Custom Dates:'}</span>
+                <span className="font-semibold text-stone-900">{language === 'hi' ? 'सुविधानुसार लचीली' : 'Flexible'}</span>
               </div>
             </div>
 
@@ -262,25 +283,27 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               className="w-full py-3.5 px-6 rounded-xl bg-emerald-700 text-white font-medium text-sm hover:bg-emerald-800 shadow-md shadow-emerald-700/20 transition-all flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>Request Custom Itinerary & Quote</span>
+              <span>{language === 'hi' ? 'कस्टम यात्रा कोटेशन प्राप्त करें' : 'Request Custom Itinerary & Quote'}</span>
             </button>
 
             <a
               href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                `Jai Shree Mahakal 🙏 I want to enquire about ${tour.name}.`
+                language === 'hi'
+                  ? `जय श्री महाकाल 🙏 मुझे ${tourName} यात्रा पैकेज के बारे में जानकारी चाहिए।`
+                  : `Jai Shree Mahakal 🙏 I want to enquire about ${tour.name}.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 px-6 rounded-xl bg-emerald-600 text-white font-medium text-xs hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2"
             >
               <MessageSquare className="w-4 h-4 fill-current" />
-              <span>WhatsApp Yatra Expert</span>
+              <span>{language === 'hi' ? 'व्हाट्सएप यात्रा विशेषज्ञ से बात करें' : 'WhatsApp Yatra Expert'}</span>
             </a>
 
             <div className="pt-2 text-center text-xs text-stone-500 space-y-1">
-              <div>Have specific requirements?</div>
+              <div>{language === 'hi' ? 'कोई विशेष आवश्यकता है?' : 'Have specific requirements?'}</div>
               <a href={`tel:${settings.phone1}`} className="font-mono font-bold text-emerald-800 hover:underline">
-                Call {settings.phone1}
+                {language === 'hi' ? 'कॉल करें' : 'Call'} {settings.phone1}
               </a>
             </div>
           </div>
@@ -288,11 +311,22 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       </div>
 
+      {/* FAQs */}
+      {faqs.length > 0 && (
+        <section className="pt-8 border-t border-stone-200">
+          <FAQAccordion
+            faqs={faqs}
+            showCategoryTabs={false}
+            title={language === 'hi' ? 'तीर्थ यात्रा से जुड़े महत्वपूर्ण प्रश्न एवं उत्तर' : 'Frequently Asked Questions about Yatra Packages'}
+          />
+        </section>
+      )}
+
       {/* Related Tours */}
       {relatedTours.length > 0 && (
         <section className="pt-8 border-t border-stone-200 space-y-6">
           <h2 className="text-2xl font-serif font-bold text-stone-900">
-            Other Popular Pilgrimage Packages
+            {t('tour.related_title', 'Explore Other Sacred Yatras')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedTours.map((t) => (
@@ -304,3 +338,4 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
     </div>
   );
 };
+

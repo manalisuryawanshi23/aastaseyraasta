@@ -148,12 +148,25 @@ export class StoreService {
     const saved = getItem<PoojaCategory[]>(KEYS.CATEGORIES, initialPoojaCategories);
     const savedIds = new Set(saved.map((c) => c.id));
     const missing = initialPoojaCategories.filter((c) => !savedIds.has(c.id));
+    let list = saved.map((c) => {
+      const init = initialPoojaCategories.find((ic) => ic.id === c.id);
+      if (init) {
+        return {
+          ...init,
+          ...c,
+          name: c.name || init.name,
+          hindiName: c.hindiName || init.hindiName,
+          description: c.description || init.description,
+          hindiDescription: c.hindiDescription || init.hindiDescription,
+        };
+      }
+      return c;
+    });
     if (missing.length > 0) {
-      const merged = [...saved, ...missing];
-      setItem(KEYS.CATEGORIES, merged);
-      return merged;
+      list = [...list, ...missing];
+      setItem(KEYS.CATEGORIES, list);
     }
-    return saved;
+    return list;
   }
 
   // Poojas
@@ -166,13 +179,35 @@ export class StoreService {
       const init = initialPoojas.find((ip) => ip.id === p.id);
       if (init) {
         return {
+          ...init,
           ...p,
           categoryId: init.categoryId,
           categoryName: init.categoryName,
-          name: init.name,
-          hindiName: init.hindiName,
-          templeName: init.templeName,
-          location: init.location,
+          name: p.name || init.name,
+          hindiName: p.hindiName || init.hindiName,
+          hindiCategoryName: p.hindiCategoryName || init.hindiCategoryName,
+          shortDescription: p.shortDescription || init.shortDescription,
+          hindiShortDescription: p.hindiShortDescription || init.hindiShortDescription,
+          description: p.description || init.description,
+          hindiDescription: p.hindiDescription || init.hindiDescription,
+          templeName: p.templeName || init.templeName,
+          hindiTempleName: p.hindiTempleName || init.hindiTempleName,
+          location: p.location || init.location,
+          hindiLocation: p.hindiLocation || init.hindiLocation,
+          city: p.city || init.city,
+          hindiCity: p.hindiCity || init.hindiCity,
+          state: p.state || init.state,
+          hindiState: p.hindiState || init.hindiState,
+          duration: p.duration || init.duration,
+          hindiDuration: p.hindiDuration || init.hindiDuration,
+          whatWeOffer: p.whatWeOffer && p.whatWeOffer.length > 0 ? p.whatWeOffer : init.whatWeOffer,
+          hindiWhatWeOffer: p.hindiWhatWeOffer && p.hindiWhatWeOffer.length > 0 ? p.hindiWhatWeOffer : init.hindiWhatWeOffer,
+          benefits: p.benefits && p.benefits.length > 0 ? p.benefits : init.benefits,
+          hindiBenefits: p.hindiBenefits && p.hindiBenefits.length > 0 ? p.hindiBenefits : init.hindiBenefits,
+          preparation: p.preparation && p.preparation.length > 0 ? p.preparation : init.preparation,
+          hindiPreparation: p.hindiPreparation && p.hindiPreparation.length > 0 ? p.hindiPreparation : init.hindiPreparation,
+          ritualDetails: p.ritualDetails || init.ritualDetails,
+          hindiRitualDetails: p.hindiRitualDetails || init.hindiRitualDetails,
         };
       }
       return p;
@@ -250,12 +285,34 @@ export class StoreService {
       const init = initialTours.find((it) => it.id === t.id);
       if (init) {
         return {
+          ...init,
           ...t,
-          name: init.name,
-          category: init.category,
-          placesCovered: init.placesCovered,
-          templesCovered: init.templesCovered,
-          duration: init.duration,
+          name: t.name || init.name,
+          hindiName: t.hindiName || init.hindiName,
+          category: t.category || init.category,
+          hindiCategory: t.hindiCategory || init.hindiCategory,
+          shortDescription: t.shortDescription || init.shortDescription,
+          hindiShortDescription: t.hindiShortDescription || init.hindiShortDescription,
+          description: t.description || init.description,
+          hindiDescription: t.hindiDescription || init.hindiDescription,
+          startingPoint: t.startingPoint || init.startingPoint,
+          hindiStartingPoint: t.hindiStartingPoint || init.hindiStartingPoint,
+          endingPoint: t.endingPoint || init.endingPoint,
+          hindiEndingPoint: t.hindiEndingPoint || init.hindiEndingPoint,
+          duration: t.duration || init.duration,
+          hindiDuration: t.hindiDuration || init.hindiDuration,
+          destinations: t.destinations && t.destinations.length > 0 ? t.destinations : init.destinations,
+          hindiDestinations: t.hindiDestinations && t.hindiDestinations.length > 0 ? t.hindiDestinations : init.hindiDestinations,
+          placesCovered: t.placesCovered && t.placesCovered.length > 0 ? t.placesCovered : init.placesCovered,
+          hindiPlacesCovered: t.hindiPlacesCovered && t.hindiPlacesCovered.length > 0 ? t.hindiPlacesCovered : init.hindiPlacesCovered,
+          templesCovered: t.templesCovered && t.templesCovered.length > 0 ? t.templesCovered : init.templesCovered,
+          hindiTemplesCovered: t.hindiTemplesCovered && t.hindiTemplesCovered.length > 0 ? t.hindiTemplesCovered : init.hindiTemplesCovered,
+          itinerary: t.itinerary && t.itinerary.length > 0 ? t.itinerary : init.itinerary,
+          hindiItinerary: t.hindiItinerary && t.hindiItinerary.length > 0 ? t.hindiItinerary : init.hindiItinerary,
+          included: t.included && t.included.length > 0 ? t.included : init.included,
+          hindiIncluded: t.hindiIncluded && t.hindiIncluded.length > 0 ? t.hindiIncluded : init.hindiIncluded,
+          excluded: t.excluded && t.excluded.length > 0 ? t.excluded : init.excluded,
+          hindiExcluded: t.hindiExcluded && t.hindiExcluded.length > 0 ? t.hindiExcluded : init.hindiExcluded,
         };
       }
       return t;
@@ -326,11 +383,40 @@ export class StoreService {
 
   // Destinations
   static getDestinations(publishedOnly = true): Destination[] {
-    const dests = getItem<Destination[]>(KEYS.DESTINATIONS, initialDestinations);
-    if (publishedOnly) {
-      return dests.filter((d) => d.isPublished);
+    const saved = getItem<Destination[]>(KEYS.DESTINATIONS, initialDestinations);
+    const savedIds = new Set(saved.map((d) => d.id));
+    const missing = initialDestinations.filter((d) => !savedIds.has(d.id));
+
+    let list = saved.map((d) => {
+      const init = initialDestinations.find((id) => id.id === d.id);
+      if (init) {
+        return {
+          ...init,
+          ...d,
+          name: d.name || init.name,
+          hindiName: d.hindiName || init.hindiName,
+          shortDescription: d.shortDescription || init.shortDescription,
+          hindiShortDescription: d.hindiShortDescription || init.hindiShortDescription,
+          description: d.description || init.description,
+          hindiDescription: d.hindiDescription || init.hindiDescription,
+          placesToVisit: d.placesToVisit && d.placesToVisit.length > 0 ? d.placesToVisit : init.placesToVisit,
+          hindiPlacesToVisit: d.hindiPlacesToVisit && d.hindiPlacesToVisit.length > 0 ? d.hindiPlacesToVisit : init.hindiPlacesToVisit,
+          temples: d.temples && d.temples.length > 0 ? d.temples : init.temples,
+          hindiTemples: d.hindiTemples && d.hindiTemples.length > 0 ? d.hindiTemples : init.hindiTemples,
+        };
+      }
+      return d;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.DESTINATIONS, list);
     }
-    return dests;
+
+    if (publishedOnly) {
+      return list.filter((d) => d.isPublished);
+    }
+    return list;
   }
 
   static getDestinationBySlug(slug: string): Destination | undefined {
@@ -383,11 +469,38 @@ export class StoreService {
 
   // Blogs
   static getBlogPosts(publishedOnly = true): BlogPost[] {
-    const blogs = getItem<BlogPost[]>(KEYS.BLOGS, initialBlogPosts);
-    if (publishedOnly) {
-      return blogs.filter((b) => b.isPublished);
+    const saved = getItem<BlogPost[]>(KEYS.BLOGS, initialBlogPosts);
+    const savedIds = new Set(saved.map((b) => b.id));
+    const missing = initialBlogPosts.filter((b) => !savedIds.has(b.id));
+
+    let list = saved.map((b) => {
+      const init = initialBlogPosts.find((ib) => ib.id === b.id);
+      if (init) {
+        return {
+          ...init,
+          ...b,
+          title: b.title || init.title,
+          hindiTitle: b.hindiTitle || init.hindiTitle,
+          excerpt: b.excerpt || init.excerpt,
+          hindiExcerpt: b.hindiExcerpt || init.hindiExcerpt,
+          content: b.content || init.content,
+          hindiContent: b.hindiContent || init.hindiContent,
+          category: b.category || init.category,
+          hindiCategory: b.hindiCategory || init.hindiCategory,
+        };
+      }
+      return b;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.BLOGS, list);
     }
-    return blogs;
+
+    if (publishedOnly) {
+      return list.filter((b) => b.isPublished);
+    }
+    return list;
   }
 
   static getBlogPostBySlug(slug: string): BlogPost | undefined {
@@ -442,7 +555,31 @@ export class StoreService {
 
   // FAQs
   static getFAQs(): FAQ[] {
-    return getItem<FAQ[]>(KEYS.FAQS, initialFAQs);
+    const saved = getItem<FAQ[]>(KEYS.FAQS, initialFAQs);
+    const savedIds = new Set(saved.map((f) => f.id));
+    const missing = initialFAQs.filter((f) => !savedIds.has(f.id));
+
+    let list = saved.map((f) => {
+      const init = initialFAQs.find((i) => i.id === f.id);
+      if (init) {
+        return {
+          ...init,
+          ...f,
+          question: f.question || init.question,
+          hindiQuestion: f.hindiQuestion || init.hindiQuestion,
+          answer: f.answer || init.answer,
+          hindiAnswer: f.hindiAnswer || init.hindiAnswer,
+          category: f.category || init.category,
+        };
+      }
+      return f;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.FAQS, list);
+    }
+    return list;
   }
 
   static saveFAQ(faq: Partial<FAQ> & { id?: string }): FAQ {

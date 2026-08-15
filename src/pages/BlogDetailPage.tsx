@@ -7,6 +7,7 @@ import { BlogCard } from '../components/BlogCard';
 import { ReadingProgressBar } from '../components/ReadingProgressBar';
 import { SocialShareButtons } from '../components/SocialShareButtons';
 import { FadeIn } from '../components/FadeIn';
+import { useLanguage } from '../context/LanguageContext';
 import { Clock, User, Calendar, Tag, ArrowLeft } from 'lucide-react';
 
 import {
@@ -19,18 +20,28 @@ interface BlogDetailPageProps {
 }
 
 export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
+  const { language, t, localize } = useLanguage();
   const post = StoreService.getBlogPostBySlug(slug);
 
   if (!post) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <h1 className="text-3xl font-serif italic font-bold text-stone-900">Article Not Found</h1>
+        <h1 className="text-3xl font-serif italic font-bold text-stone-900">
+          {language === 'hi' ? 'लेख उपलब्ध नहीं है' : 'Article Not Found'}
+        </h1>
         <a href="/blog" className="inline-block px-6 py-2.5 rounded-xl bg-[#121212] text-white font-medium text-xs">
-          Back to Blog Directory
+          {t('action.back_to_blog', 'Back to Blog Directory')}
         </a>
       </div>
     );
   }
+
+  const postTitle = localize(post, 'title', 'hindiTitle');
+  const postExcerpt = localize(post, 'excerpt', 'hindiExcerpt');
+  const postCategory = localize(post, 'category', 'hindiCategory') || (language === 'hi' ? 'वैदिक ज्ञान' : 'Spiritual Guide');
+  const postAuthor = localize(post, 'author', 'hindiAuthor') || post.author;
+  const postReadingTime = localize(post, 'readingTime', 'hindiReadingTime') || (language === 'hi' ? '5 मिनट पठन' : '5 min read');
+  const postContent = localize(post, 'content', 'hindiContent') || post.content;
 
   const allPosts = StoreService.getBlogPosts();
   const relatedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
@@ -59,8 +70,8 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
 
       <Breadcrumbs
         items={[
-          { label: 'Blog', href: '/blog' },
-          { label: post.title },
+          { label: t('nav.blog', 'Blog'), href: '/blog' },
+          { label: postTitle },
         ]}
       />
 
@@ -69,17 +80,17 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
         <div className="space-y-4 border-b border-[#121212]/10 dark:border-stone-800 pb-6">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-[10px] font-bold uppercase tracking-widest border border-amber-300 dark:border-amber-700/60">
             <Tag className="w-3 h-3 text-amber-700 dark:text-amber-400" />
-            <span>{post.category}</span>
+            <span>{postCategory}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-serif italic font-bold text-stone-900 dark:text-amber-100 leading-tight">
-            {post.title}
+            {postTitle}
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-xs text-stone-500 dark:text-stone-400 font-mono">
             <span className="flex items-center gap-1.5">
               <User className="w-3.5 h-3.5 text-amber-800 dark:text-amber-400" />
-              <span>{post.author}</span>
+              <span>{postAuthor}</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1.5">
@@ -89,7 +100,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
-              <span>{post.readingTime || '5 min read'}</span>
+              <span>{postReadingTime}</span>
             </span>
           </div>
         </div>
@@ -100,7 +111,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
         <div className="rounded-2xl overflow-hidden border border-[#121212]/10 dark:border-stone-800 shadow-sm h-80 bg-[#E8E4DF] dark:bg-stone-900">
           <img
             src={post.featuredImage || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg'}
-            alt={post.title}
+            alt={postTitle}
             loading="eager"
             decoding="async"
             {...({ fetchPriority: 'high' } as any)}
@@ -113,16 +124,16 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
       {/* Content */}
       <FadeIn delay={150} direction="up">
         <div className="bg-white dark:bg-[#1C1917] p-6 sm:p-10 rounded-2xl border border-[#121212]/10 dark:border-stone-800 shadow-sm leading-relaxed text-stone-800 dark:text-stone-200 text-sm sm:text-base whitespace-pre-line space-y-4 font-serif">
-          {post.content}
+          {postContent}
         </div>
       </FadeIn>
 
       {/* Social Media Sharing */}
       <FadeIn delay={200} direction="up">
         <SocialShareButtons
-          title={post.title}
-          description={post.excerpt}
-          category={post.category}
+          title={postTitle}
+          description={postExcerpt}
+          category={postCategory}
         />
       </FadeIn>
 
@@ -131,7 +142,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
         <section className="pt-8 border-t border-[#121212]/10 dark:border-stone-800 space-y-6">
           <FadeIn direction="up">
             <h2 className="text-2xl font-serif italic font-bold text-stone-900 dark:text-amber-100">
-              More Spiritual Articles
+              {language === 'hi' ? 'अन्य ज्ञानवर्धक लेख' : 'More Spiritual Articles'}
             </h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -146,4 +157,5 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
     </div>
   );
 };
+
 

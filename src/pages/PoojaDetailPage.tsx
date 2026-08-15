@@ -1,5 +1,6 @@
 import React from 'react';
 import { StoreService } from '../services/store';
+import { ContentService } from '../services/contentService';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { SEOHead } from '../components/SEOHead';
 import { generatePoojaTitle } from '../utils/seoTitles';
@@ -61,19 +62,23 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
   const relatedPoojas = allPoojas.filter((p) => p.id !== pooja.id && p.categoryId === pooja.categoryId).slice(0, 3);
   const faqs = StoreService.getFAQs().filter((f) => f.category === 'Pooja' || f.category === 'General');
 
-  const poojaName = localize(pooja, 'name', 'hindiName');
-  const poojaDesc = localize(pooja, 'description', 'hindiDescription') || pooja.shortDescription;
-  const poojaCategory = localize(pooja, 'categoryName', 'hindiCategoryName') || (language === 'hi' ? 'मंदिर पूजा' : 'Temple Pooja');
-  const duration = localize(pooja, 'duration', 'hindiDuration');
-  const offers = language === 'hi' && pooja.hindiWhatWeOffer && pooja.hindiWhatWeOffer.length > 0
-    ? pooja.hindiWhatWeOffer
-    : pooja.whatWeOffer;
-  const benefits = language === 'hi' && pooja.hindiBenefits && pooja.hindiBenefits.length > 0
-    ? pooja.hindiBenefits
-    : pooja.benefits;
-  const preparation = language === 'hi' && pooja.hindiPreparation && pooja.hindiPreparation.length > 0
-    ? pooja.hindiPreparation
-    : pooja.preparation;
+  const enrichedPooja = ContentService.enrichPooja(pooja, language);
+  const poojaName = localize(enrichedPooja, 'name', 'hindiName');
+  const poojaDesc = localize(enrichedPooja, 'description', 'hindiDescription') || localize(enrichedPooja, 'shortDescription', 'hindiShortDescription');
+  const poojaCategory = localize(enrichedPooja, 'categoryName', 'hindiCategoryName') || (language === 'hi' ? 'मंदिर पूजा सेवाएं' : 'Temple Pooja Services');
+  const templeName = localize(enrichedPooja, 'templeName', 'hindiTempleName');
+  const city = localize(enrichedPooja, 'city', 'hindiCity');
+  const duration = localize(enrichedPooja, 'duration', 'hindiDuration');
+  const offers = language === 'hi' && enrichedPooja.hindiWhatWeOffer && enrichedPooja.hindiWhatWeOffer.length > 0
+    ? enrichedPooja.hindiWhatWeOffer
+    : enrichedPooja.whatWeOffer;
+  const benefits = language === 'hi' && enrichedPooja.hindiBenefits && enrichedPooja.hindiBenefits.length > 0
+    ? enrichedPooja.hindiBenefits
+    : enrichedPooja.benefits;
+  const preparation = language === 'hi' && enrichedPooja.hindiPreparation && enrichedPooja.hindiPreparation.length > 0
+    ? enrichedPooja.hindiPreparation
+    : enrichedPooja.preparation;
+  const ritualDetails = localize(enrichedPooja, 'ritualDetails', 'hindiRitualDetails');
 
   // Build Rich JSON-LD Schemas for AEO / SEO / Google Search
   const poojaSchema = buildPoojaServiceSchema(pooja);
@@ -129,10 +134,10 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
             )}
 
             <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-stone-600 pt-1">
-              {pooja.templeName && (
+              {(templeName || pooja.templeName) && (
                 <div className="flex items-center gap-1 text-stone-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">
                   <MapPin className="w-3.5 h-3.5 text-amber-700" />
-                  <span>{pooja.templeName}, {pooja.city}</span>
+                  <span>{templeName || pooja.templeName}{city ? `, ${city}` : (pooja.city ? `, ${pooja.city}` : '')}</span>
                 </div>
               )}
               {duration && (
@@ -218,6 +223,19 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* Ritual Steps & Process */}
+          {ritualDetails && (
+            <div className="bg-stone-50/80 p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-serif font-bold text-stone-900 flex items-center gap-2">
+                <Flame className="w-5 h-5 text-amber-700" />
+                <span>{language === 'hi' ? 'वैदिक पूजा विधि एवं मुख्य चरण' : 'Vedic Ritual Steps & Vidhi'}</span>
+              </h2>
+              <div className="text-stone-700 text-sm leading-relaxed whitespace-pre-line space-y-3">
+                {ritualDetails}
+              </div>
             </div>
           )}
 

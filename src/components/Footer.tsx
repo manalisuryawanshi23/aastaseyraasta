@@ -22,40 +22,111 @@ import { LocalBusinessSchema } from './LocalBusinessSchema';
 
 export const Footer: React.FC = () => {
   const settings = StoreService.getSettings();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t, translateText } = useLanguage();
 
   const poojaLinks = [
-    { label: 'Rudrabhishek Pooja', href: '/pooja/rudrabhishek-pooja-ujjain' },
-    { label: 'Bhat Pooja (Angareshwar)', href: '/pooja/bhat-pooja-angareshwar-ujjain' },
-    { label: 'Bhat Pooja (Mangalnath)', href: '/pooja/bhat-pooja-mangalnath-ujjain' },
-    { label: 'Mahamrityunjaya Jaap', href: '/pooja/mahamrityunjaya-jaap-ujjain' },
-    { label: 'Baglamukhi Havan (Nalkheda)', href: '/pooja/baglamukhi-havan-nalkheda' },
-    { label: 'Pitru Dosh & Narayan Bali', href: '/pooja/pitru-dosh-shanti-narayan-bali-ujjain' },
-    { label: 'Kaal Sarp Dosh Shanti', href: '/pooja/kaal-sarp-dosh-shanti-ujjain' },
+    {
+      label: language === 'hi' ? 'रुद्राभिषेक पूजा' : 'Rudrabhishek Pooja',
+      href: '/pooja/rudrabhishek-pooja-ujjain',
+    },
+    {
+      label: language === 'hi' ? 'अंगारेश्वर भात पूजा' : 'Bhat Pooja (Angareshwar)',
+      href: '/pooja/bhat-pooja-angareshwar-ujjain',
+    },
+    {
+      label: language === 'hi' ? 'मंगलनाथ भात पूजा' : 'Bhat Pooja (Mangalnath)',
+      href: '/pooja/bhat-pooja-mangalnath-ujjain',
+    },
+    {
+      label: language === 'hi' ? 'महामृत्युंजय अनुष्ठान' : 'Mahamrityunjaya Jaap',
+      href: '/pooja/mahamrityunjaya-jaap-ujjain',
+    },
+    {
+      label: language === 'hi' ? 'मां बगलामुखी हवन' : 'Baglamukhi Havan (Nalkheda)',
+      href: '/pooja/baglamukhi-havan-nalkheda',
+    },
+    {
+      label: language === 'hi' ? 'पितृ दोष व नारायण बलि' : 'Pitru Dosh & Narayan Bali',
+      href: '/pooja/pitru-dosh-shanti-narayan-bali-ujjain',
+    },
+    {
+      label: language === 'hi' ? 'कालसर्प दोष शांति' : 'Kaal Sarp Dosh Shanti',
+      href: '/pooja/kaal-sarp-dosh-shanti-ujjain',
+    },
   ];
 
   const yatraLinks = [
-    { label: 'Ujjain Spiritual Tour (1 Day)', href: '/spiritual-tours/ujjain-spiritual-tour' },
-    { label: 'Ujjain + Omkareshwar Tour (2D)', href: '/spiritual-tours/ujjain-omkareshwar-tour' },
-    { label: 'Ujjain + Omkareshwar + Indore (3D)', href: '/spiritual-tours/ujjain-omkareshwar-indore-tour' },
-    { label: 'Ujjain + Baglamukhi Nalkheda', href: '/spiritual-tours/ujjain-baglamukhi-nalkheda-tour' },
-    { label: 'Char Dham Yatra Circuit', href: '/spiritual-tours/char-dham-yatra-uttarakhand' },
+    {
+      label: language === 'hi' ? 'उज्जैन दर्शन यात्रा (1 दिन)' : 'Ujjain Spiritual Tour (1 Day)',
+      href: '/spiritual-tours/ujjain-spiritual-tour',
+    },
+    {
+      label: language === 'hi' ? 'उज्जैन + ओंकारेश्वर यात्रा (2 दिन)' : 'Ujjain + Omkareshwar Tour (2D)',
+      href: '/spiritual-tours/ujjain-omkareshwar-tour',
+    },
+    {
+      label: language === 'hi' ? 'उज्जैन + ओंकारेश्वर + इंदौर (3 दिन)' : 'Ujjain + Omkareshwar + Indore (3D)',
+      href: '/spiritual-tours/ujjain-omkareshwar-indore-tour',
+    },
+    {
+      label: language === 'hi' ? 'उज्जैन + बगलामुखी नलखेड़ा' : 'Ujjain + Baglamukhi Nalkheda',
+      href: '/spiritual-tours/ujjain-baglamukhi-nalkheda-tour',
+    },
+    {
+      label: language === 'hi' ? 'उत्तराखंड चार धाम यात्रा' : 'Char Dham Yatra Circuit',
+      href: '/spiritual-tours/char-dham-yatra-uttarakhand',
+    },
   ];
 
   const aboutAndCompanyLinks = [
-    { label: 'About Our Gurukul Lineage', href: '/about-us', icon: Info },
-    { label: 'Why Choose Our Pandits', href: '/why-choose-us', icon: ShieldCheck },
-    { label: 'Vedic Pooja FAQ & Rules', href: '/faq', icon: HelpCircle },
-    { label: 'Ujjain Darshan Destinations', href: '/destinations', icon: MapPin },
-    { label: 'Direct Helpline & Location', href: '/contact', icon: Phone },
+    {
+      label: language === 'hi' ? 'हमारी गुरुकुल परंपरा' : 'About Our Gurukul Lineage',
+      href: '/about-us',
+      icon: Info,
+    },
+    {
+      label: language === 'hi' ? 'हमें क्यों चुनें' : 'Why Choose Our Pandits',
+      href: '/why-choose-us',
+      icon: ShieldCheck,
+    },
+    {
+      label: language === 'hi' ? 'पूजा संबंधी नियम व प्रश्न' : 'Vedic Pooja FAQ & Rules',
+      href: '/faq',
+      icon: HelpCircle,
+    },
+    {
+      label: language === 'hi' ? 'प्रमुख तीर्थ व मंदिर स्थल' : 'Ujjain Darshan Destinations',
+      href: '/destinations',
+      icon: MapPin,
+    },
+    {
+      label: language === 'hi' ? 'संपर्क एवं कार्यालय' : 'Direct Helpline & Location',
+      href: '/contact',
+      icon: Phone,
+    },
   ];
 
   const blogAndGuideLinks = [
-    { label: 'All Articles & Spiritual Guides', href: '/blog' },
-    { label: 'Mahakaleshwar Bhasma Aarti Timings', href: '/blog/mahakal-bhasma-aarti-booking-guide' },
-    { label: 'Mangalnath Bhat Pooja Vidhi', href: '/blog/mangalnath-bhat-pooja-ujjain-guide' },
-    { label: 'Kaal Sarp Dosh Nivaran Significance', href: '/blog/kaal-sarp-dosh-ujjain-complete-guide' },
-    { label: 'Omkareshwar Yatra Travel Guide', href: '/blog/omkareshwar-jyotirlinga-yatra-guide' },
+    {
+      label: language === 'hi' ? 'समस्त आध्यात्मिक लेख' : 'All Articles & Spiritual Guides',
+      href: '/blog',
+    },
+    {
+      label: language === 'hi' ? 'महाकाल भस्म आरती दर्शन गाइड' : 'Mahakaleshwar Bhasma Aarti Timings',
+      href: '/blog/mahakal-bhasma-aarti-booking-guide',
+    },
+    {
+      label: language === 'hi' ? 'मंगलनाथ भात पूजा विधि व लाभ' : 'Mangalnath Bhat Pooja Vidhi',
+      href: '/blog/mangalnath-bhat-pooja-ujjain-guide',
+    },
+    {
+      label: language === 'hi' ? 'कालसर्प दोष निवारण महत्व' : 'Kaal Sarp Dosh Nivaran Significance',
+      href: '/blog/kaal-sarp-dosh-ujjain-complete-guide',
+    },
+    {
+      label: language === 'hi' ? 'ओंकारेश्वर यात्रा यात्रा मार्गदर्शिका' : 'Omkareshwar Yatra Travel Guide',
+      href: '/blog/omkareshwar-jyotirlinga-yatra-guide',
+    },
   ];
 
   return (
@@ -116,21 +187,23 @@ export const Footer: React.FC = () => {
                 className="px-3 py-1.5 rounded-lg bg-emerald-600/90 hover:bg-emerald-600 text-white text-xs font-medium flex items-center gap-1.5 transition-colors shadow-xs"
               >
                 <MessageSquare className="w-3.5 h-3.5 fill-current" />
-                <span>WhatsApp Pandit Ji</span>
+                <span>{language === 'hi' ? 'पंडित जी से व्हाट्सएप पर बात करें' : 'WhatsApp Pandit Ji'}</span>
               </a>
               <a
                 href="/contact"
                 className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-200 text-xs font-medium border border-stone-700 transition-colors flex items-center gap-1.5"
               >
                 <Phone className="w-3.5 h-3.5 text-amber-400" />
-                <span>Contact & Enquiries</span>
+                <span>{language === 'hi' ? 'संपर्क एवं पूछताछ' : 'Contact & Enquiries'}</span>
               </a>
             </div>
 
             {/* Active Social Handles */}
             {settings.socialHandles && settings.socialHandles.filter((h) => h.isActive).length > 0 && (
               <div className="pt-2 space-y-1.5">
-                <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider font-serif">Connect With Us:</div>
+                <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider font-serif">
+                  {language === 'hi' ? 'सोशल मीडिया पर जुड़ें:' : 'Connect With Us:'}
+                </div>
                 <div className="flex flex-wrap gap-2">
                   {settings.socialHandles
                     .filter((h) => h.isActive)
@@ -154,7 +227,7 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
               <Flame className="w-3.5 h-3.5 text-amber-500" />
-              <span>Vedic Poojas</span>
+              <span>{language === 'hi' ? 'वैदिक पूजा अनुष्ठान' : 'Vedic Poojas'}</span>
             </h4>
             <ul className="space-y-2 text-xs">
               {poojaLinks.map((link) => (
@@ -170,7 +243,7 @@ export const Footer: React.FC = () => {
               ))}
               <li className="pt-1">
                 <a href="/pooja-services" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
-                  View All 15+ Poojas →
+                  {language === 'hi' ? 'सभी 15+ पूजा सेवाएं देखें →' : 'View All 15+ Poojas →'}
                 </a>
               </li>
             </ul>
@@ -180,7 +253,7 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5 text-amber-500" />
-              <span>Spiritual Tours</span>
+              <span>{language === 'hi' ? 'आध्यात्मिक यात्रा पैकेज' : 'Spiritual Tours'}</span>
             </h4>
             <ul className="space-y-2 text-xs">
               {yatraLinks.map((link) => (
@@ -196,7 +269,7 @@ export const Footer: React.FC = () => {
               ))}
               <li className="pt-1">
                 <a href="/spiritual-tours" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
-                  View All Tour Packages →
+                  {language === 'hi' ? 'सभी यात्रा पैकेज देखें →' : 'View All Tour Packages →'}
                 </a>
               </li>
             </ul>
@@ -207,7 +280,7 @@ export const Footer: React.FC = () => {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3.5 font-serif flex items-center gap-1.5">
                 <Info className="w-3.5 h-3.5 text-amber-500" />
-                <span>About & Guidance</span>
+                <span>{language === 'hi' ? 'परिचय एवं दर्शन मार्गदर्शिका' : 'About & Guidance'}</span>
               </h4>
               <ul className="space-y-2 text-xs">
                 {aboutAndCompanyLinks.map((link) => (
@@ -227,7 +300,7 @@ export const Footer: React.FC = () => {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-2 font-serif flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-amber-500" />
-                <span>Spiritual Blog</span>
+                <span>{language === 'hi' ? 'आध्यात्मिक ब्लॉग' : 'Spiritual Blog'}</span>
               </h4>
               <ul className="space-y-1.5 text-xs">
                 {blogAndGuideLinks.slice(0, 3).map((link) => (
@@ -242,7 +315,7 @@ export const Footer: React.FC = () => {
                 ))}
                 <li className="pt-0.5">
                   <a href="/blog" className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 underline underline-offset-2">
-                    Read Spiritual Articles →
+                    {language === 'hi' ? 'समस्त आध्यात्मिक लेख पढ़ें →' : 'Read Spiritual Articles →'}
                   </a>
                 </li>
               </ul>
@@ -254,27 +327,45 @@ export const Footer: React.FC = () => {
         {/* Middle Banner: Trust Signals */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-amber-950/30 border border-amber-900/40 text-center text-xs">
           <div className="space-y-1">
-            <div className="font-bold text-amber-300">Vedic Qualified Pandits</div>
-            <div className="text-stone-400">Traditional Gurukul Lineage</div>
+            <div className="font-bold text-amber-300">
+              {language === 'hi' ? 'वेदपाठी प्रामाणिक ब्राह्मण' : 'Vedic Qualified Pandits'}
+            </div>
+            <div className="text-stone-400">
+              {language === 'hi' ? 'पारंपरिक गुरुकुल वंशीय आचार्य' : 'Traditional Gurukul Lineage'}
+            </div>
           </div>
           <div className="space-y-1">
-            <div className="font-bold text-amber-300">Complete Samagri Vidhi</div>
-            <div className="text-stone-400">Pure Satvik Offerings</div>
+            <div className="font-bold text-amber-300">
+              {language === 'hi' ? 'शुद्ध सात्विक सामग्री विधि' : 'Complete Samagri Vidhi'}
+            </div>
+            <div className="text-stone-400">
+              {language === 'hi' ? 'शास्त्रोक्त पूजन द्रव्य' : 'Pure Satvik Offerings'}
+            </div>
           </div>
           <div className="space-y-1">
-            <div className="font-bold text-amber-300">Gotra Sankalp</div>
-            <div className="text-stone-400">Personalized Devotional Vow</div>
+            <div className="font-bold text-amber-300">
+              {language === 'hi' ? 'व्यक्तिगत गोत्र संकल्प' : 'Gotra Sankalp'}
+            </div>
+            <div className="text-stone-400">
+              {language === 'hi' ? 'नाम व गोत्रोच्चार सहित' : 'Personalized Devotional Vow'}
+            </div>
           </div>
           <div className="space-y-1">
-            <div className="font-bold text-amber-300">Transparent Service</div>
-            <div className="text-stone-400">No Hidden Promises</div>
+            <div className="font-bold text-amber-300">
+              {language === 'hi' ? 'पारदर्शी व प्रामाणिक सेवा' : 'Transparent Service'}
+            </div>
+            <div className="text-stone-400">
+              {language === 'hi' ? 'सटीक दक्षिणा व मार्गदर्शन' : 'No Hidden Promises'}
+            </div>
           </div>
         </div>
 
         {/* Bottom copyright and legal */}
         <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <span>© {new Date().getFullYear()} {settings.businessName}. All rights reserved. &quot;{settings.tagline}&quot;</span>
+            <span>
+              © {new Date().getFullYear()} {language === 'hi' ? settings.hindiBusinessName : settings.businessName}. {language === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'} &quot;{settings.tagline}&quot;
+            </span>
             <div className="inline-flex items-center gap-1 bg-stone-900 border border-stone-800 p-1 rounded-lg text-[11px]">
               <Globe className="w-3.5 h-3.5 text-amber-500 ml-1" />
               <button
@@ -293,18 +384,36 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap gap-4 text-xs">
-            <a href="/about-us" className="hover:text-stone-300 transition-colors">About Us</a>
-            <a href="/blog" className="hover:text-stone-300 transition-colors">Blog</a>
-            <a href="/contact" className="hover:text-stone-300 transition-colors">Contact</a>
-            <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">🗺️ Site Map</a>
-            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">XML Sitemap</a>
-            <a href="/privacy-policy" className="hover:text-stone-300 transition-colors">Privacy Policy</a>
-            <a href="/terms-and-conditions" className="hover:text-stone-300 transition-colors">Terms & Conditions</a>
-            <a href="/disclaimer" className="hover:text-stone-300 transition-colors">Disclaimer</a>
-            <a href="/refund-cancellation-policy" className="hover:text-stone-300 transition-colors">Cancellation Policy</a>
+            <a href="/about-us" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'हमारे बारे में' : 'About Us'}
+            </a>
+            <a href="/blog" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'ब्लॉग' : 'Blog'}
+            </a>
+            <a href="/contact" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'संपर्क' : 'Contact'}
+            </a>
+            <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">
+              {language === 'hi' ? '🗺️ साइट मैप' : '🗺️ Site Map'}
+            </a>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
+              XML Sitemap
+            </a>
+            <a href="/privacy-policy" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
+            </a>
+            <a href="/terms-and-conditions" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'नियम एवं शर्तें' : 'Terms & Conditions'}
+            </a>
+            <a href="/disclaimer" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'अस्वीकरण' : 'Disclaimer'}
+            </a>
+            <a href="/refund-cancellation-policy" className="hover:text-stone-300 transition-colors">
+              {language === 'hi' ? 'रद्दीकरण नीति' : 'Cancellation Policy'}
+            </a>
             <a href="/admin" className="hover:text-amber-400 transition-colors inline-flex items-center gap-1">
               <Lock className="w-3 h-3" />
-              <span>Admin</span>
+              <span>{language === 'hi' ? 'एडमिन' : 'Admin'}</span>
             </a>
           </div>
         </div>
