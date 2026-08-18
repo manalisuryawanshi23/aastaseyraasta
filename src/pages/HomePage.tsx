@@ -16,7 +16,9 @@ import {
   Handshake,
   Church,
   HeartHandshake,
+  Flower2,
 } from 'lucide-react';
+
 import { StoreService } from '../services/store';
 import { useLanguage } from '../context/LanguageContext';
 import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
@@ -28,6 +30,7 @@ import { Testimonials } from '../components/Testimonials';
 import { SEOHead } from '../components/SEOHead';
 import { FadeIn } from '../components/FadeIn';
 import { buildFAQSchema } from '../utils/seoSchemas';
+import { DarshanCarousel } from '../components/DarshanCarousel';
 
 interface HomePageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -38,7 +41,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
   const settings = StoreService.getSettings();
   const categories = StoreService.getCategories();
   const poojas = StoreService.getPoojas().filter((p) => p.isFeatured);
-  const tours = StoreService.getTours().filter((t) => t.isFeatured);
+  const allTours = StoreService.getTours();
+  const featuredYatraKeywords = [
+    '84-mahadev',
+    '9-narayana',
+    'sapt-sagar',
+    '6-vinayak'
+  ];
+  const filteredTours = featuredYatraKeywords
+    .map(kw => allTours.find(t => t.slug.includes(kw) || t.id.includes(kw)))
+    .filter(Boolean) as typeof allTours;
   const destinations = StoreService.getDestinations().filter((d) => d.isFeatured);
   const faqs = StoreService.getFAQs();
   const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
@@ -223,37 +235,29 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         </FadeIn>
       </section>
 
-      {/* Featured Yatras & Spiritual Tours Section */}
+      {/* Featured Yatras Section */}
       <section className="bg-gradient-to-b from-stone-100 to-amber-50/50 dark:from-stone-900/90 dark:to-[#1C1917] py-16 border-y border-stone-200/80 dark:border-stone-800">
-        <div className="max-w-7xl mx-auto px-4 space-y-8">
+        <div className="max-w-7xl mx-auto px-4 space-y-10">
           
+          {/* Section Header (Centered) */}
           <FadeIn direction="up">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-emerald-200 dark:border-emerald-800/50">
-                  <Compass className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-                  <span>{language === 'hi' ? 'तीर्थ यात्रा पैकेज' : 'Sacred Pilgrimages'}</span>
-                </div>
-                <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
-                  {t('home.featured_tours', 'Spiritual Tours & Yatra Packages')}
-                </h2>
-                <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
-                  {t('home.featured_tours_desc', 'Thoughtfully organized private circuit tours across Ujjain, Omkareshwar, Baglamukhi Nalkheda, and major Himalayan Dham Yatras.')}
-                </p>
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 text-xs font-semibold uppercase tracking-wider border border-emerald-200 dark:border-emerald-800/50">
+                <Compass className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+                <span>{language === 'hi' ? 'उज्जैन यात्रा सेवा' : 'UJJAIN YATRA SERVICES'}</span>
               </div>
-
-              <a
-                href="/spiritual-tours"
-                className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-200 group"
-              >
-                <span>{t('action.view_all_tours', 'Explore All Yatras')}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
+                {t('home.featured_tours', 'Traditional Yatras of Ujjain')}
+              </h2>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-[800px]">
+                {t('home.featured_tours_desc', 'Explore dedicated spiritual routes including 84 Mahadev, 9 Narayana, Sapt Sagar and 6 Vinayak Yatra with thoughtfully arranged support.')}
+              </p>
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tours.map((tour, index) => (
+          {/* 4-Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredTours.map((tour, index) => (
               <TourCard
                 key={tour.id}
                 tour={tour}
@@ -262,7 +266,59 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               />
             ))}
           </div>
+
+          {/* View All Yatras Button */}
+          <FadeIn delay={200} direction="up">
+            <div className="flex flex-col items-center pt-4 space-y-4">
+              <p className="text-stone-500 dark:text-stone-400 text-xs italic">
+                {t('home.yatra_cta_desc', 'Explore all available Yatra services and choose the journey that suits your spiritual plans.')}
+              </p>
+              <a
+                href="/ujjain-yatra"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-stone-900 dark:bg-amber-700 hover:bg-stone-800 dark:hover:bg-amber-800 text-white font-medium text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-stone-900/20 dark:shadow-amber-900/40"
+              >
+                <span>{t('action.view_all_yatras_btn', 'VIEW ALL YATRAS')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </FadeIn>
         </div>
+      </section>
+
+      {/* Darshan Assistance Section */}
+      <section className="py-16 max-w-full overflow-hidden space-y-10">
+        
+        {/* Section Header (Centered) */}
+        <FadeIn direction="up">
+          <div className="flex flex-col items-center text-center space-y-3 px-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/80 text-rose-900 dark:text-rose-200 text-xs font-semibold uppercase tracking-wider border border-rose-200 dark:border-rose-800/50">
+              <Flower2 className="w-3.5 h-3.5 text-rose-700 dark:text-rose-400" />
+              <span>{t('home.darshan_badge', 'DARSHAN ASSISTANCE')}</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
+              {t('home.darshan_title', 'Ujjain Darshan')}
+            </h2>
+            <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-[800px]">
+              {t('home.darshan_desc', 'Plan your temple visits with convenient Darshan assistance and personal support from Aastha Sey Raasta Seva.')}
+            </p>
+          </div>
+        </FadeIn>
+
+        {/* Auto-Sliding Darshan Cards */}
+        <DarshanCarousel />
+
+        {/* Explore Button */}
+        <FadeIn delay={200} direction="up">
+          <div className="flex justify-center pt-2 px-4">
+            <a
+              href="/tour/ujjain-spiritual-tour"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-stone-900 dark:bg-amber-700 hover:bg-stone-800 dark:hover:bg-amber-800 text-white font-medium text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-stone-900/20 dark:shadow-amber-900/40"
+            >
+              <span>{t('action.explore_darshan_btn', 'EXPLORE UJJAIN DARSHAN')}</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Featured Sacred Destinations */}
