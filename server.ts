@@ -3,7 +3,29 @@ import path from 'path';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import { createServer as createViteServer } from 'vite';
+import fs from 'fs';
+import multer from 'multer';
 
+const uploadDir = path.resolve('public/assets/images');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    if (req.body.existingImageUrl) {
+      const oldFilename = path.basename(req.body.existingImageUrl);
+      return cb(null, oldFilename);
+    }
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+const upload = multer({ storage: storage });
 dotenv.config();
 
 // In-memory / file server backing data fallback
@@ -46,6 +68,15 @@ async function startServer() {
       service: 'Aastha Sey Raasta Seva API',
       database: dbStatus ? 'MySQL Connected' : 'Fallback In-Memory',
     });
+  });
+
+  // Image Upload Endpoint
+  app.post('/api/upload', upload.single('image'), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+    const fileUrl = `/assets/images/${req.file.filename}`;
+    res.json({ success: true, url: fileUrl });
   });
 
   // 2. Site Settings
@@ -95,59 +126,78 @@ async function startServer() {
     res.json({ success: true, data: initialSiteSettings });
   });
 
+  // Helper to format MySQL pooja rows into API JSON objects
+  function formatPoojaRow(p: any) {
+    return {
+      id: p.id,
+      name: p.name,
+      hindiName: p.hindi_name,
+      slug: p.slug,
+      categoryId: p.category_id,
+      categoryName: p.category_name,
+      hindiCategoryName: p.hindi_category_name,
+      pageType: p.page_type || p.category_name,
+      primaryKeyword: p.primary_keyword,
+      secondaryKeywords: p.secondary_keywords_json ? JSON.parse(p.secondary_keywords_json) : [],
+      searchIntent: p.search_intent,
+      seoTitle: p.seo_title || p.meta_title,
+      metaDescription: p.meta_description,
+      urlSlug: p.url_slug,
+      h1: p.h1 || p.name,
+      quickAnswer: p.quick_answer,
+      shortDescription: p.short_description,
+      hindiShortDescription: p.hindi_short_description,
+      description: p.description,
+      hindiDescription: p.hindi_description,
+      templeName: p.temple_name,
+      hindiTempleName: p.hindi_temple_name,
+      location: p.location,
+      hindiLocation: p.hindi_location,
+      city: p.city,
+      hindiCity: p.hindi_city,
+      price: Number(p.price),
+      originalPrice: p.original_price ? Number(p.original_price) : null,
+      advanceBookingAmount: p.advance_booking_amount ? Number(p.advance_booking_amount) : null,
+      duration: p.duration,
+      hindiDuration: p.hindi_duration,
+      timing: p.timing,
+      hindiTiming: p.hindi_timing,
+      samagriIncluded: Boolean(p.samagri_included),
+      prasadHomeDelivery: Boolean(p.prasad_home_delivery),
+      liveVideoAvailable: Boolean(p.live_video_available),
+      vipEntryPass: Boolean(p.vip_entry_pass),
+      panditCount: p.pandit_count,
+      image: p.image,
+      galleryImages: p.gallery_images_json ? JSON.parse(p.gallery_images_json) : [],
+      whatWeOffer: p.what_we_offer_json ? JSON.parse(p.what_we_offer_json) : [],
+      benefits: p.benefits_json ? JSON.parse(p.benefits_json) : [],
+      hindiBenefits: p.hindi_benefits_json ? JSON.parse(p.hindi_benefits_json) : [],
+      whoCanConsider: p.who_can_consider_json ? JSON.parse(p.who_can_consider_json) : [],
+      procedureSteps: p.procedure_steps_json ? JSON.parse(p.procedure_steps_json) : [],
+      hindiProcedureSteps: p.hindi_procedure_steps_json ? JSON.parse(p.hindi_procedure_steps_json) : [],
+      faqs: p.faqs_json ? JSON.parse(p.faqs_json) : [],
+      internalLinks: p.internal_links_json ? JSON.parse(p.internal_links_json) : [],
+      imageSeo: p.image_seo_json ? JSON.parse(p.image_seo_json) : {},
+      schemaTypes: p.schema_types_json ? JSON.parse(p.schema_types_json) : [],
+      qualityScore: p.quality_score || 95,
+      idealFor: p.ideal_for,
+      hindiIdealFor: p.hindi_ideal_for,
+      auspiciousDays: p.auspicious_days,
+      hindiAuspiciousDays: p.hindi_auspicious_days,
+      mantra: p.mantra,
+      hindiMantra: p.hindi_mantra,
+      isPopular: Boolean(p.is_popular),
+      isPublished: Boolean(p.is_published),
+      metaTitle: p.seo_title || p.meta_title,
+    };
+  }
+
   // 3. Poojas
   app.get('/api/poojas', async (req, res) => {
     if (isDbConnected()) {
       try {
         const rows = await query('SELECT * FROM poojas WHERE is_published = 1 ORDER BY created_at DESC');
-        const formatted = rows.map((p) => ({
-          id: p.id,
-          name: p.name,
-          hindiName: p.hindi_name,
-          slug: p.slug,
-          categoryId: p.category_id,
-          categoryName: p.category_name,
-          hindiCategoryName: p.hindi_category_name,
-          shortDescription: p.short_description,
-          hindiShortDescription: p.hindi_short_description,
-          description: p.description,
-          hindiDescription: p.hindi_description,
-          templeName: p.temple_name,
-          hindiTempleName: p.hindi_temple_name,
-          location: p.location,
-          hindiLocation: p.hindi_location,
-          city: p.city,
-          hindiCity: p.hindi_city,
-          price: Number(p.price),
-          originalPrice: p.original_price ? Number(p.original_price) : null,
-          advanceBookingAmount: p.advance_booking_amount ? Number(p.advance_booking_amount) : null,
-          duration: p.duration,
-          hindiDuration: p.hindi_duration,
-          timing: p.timing,
-          hindiTiming: p.hindi_timing,
-          samagriIncluded: Boolean(p.samagri_included),
-          prasadHomeDelivery: Boolean(p.prasad_home_delivery),
-          liveVideoAvailable: Boolean(p.live_video_available),
-          vipEntryPass: Boolean(p.vip_entry_pass),
-          panditCount: p.pandit_count,
-          image: p.image,
-          galleryImages: p.gallery_images_json ? JSON.parse(p.gallery_images_json) : [],
-          benefits: p.benefits_json ? JSON.parse(p.benefits_json) : [],
-          hindiBenefits: p.hindi_benefits_json ? JSON.parse(p.hindi_benefits_json) : [],
-          procedureSteps: p.procedure_steps_json ? JSON.parse(p.procedure_steps_json) : [],
-          hindiProcedureSteps: p.hindi_procedure_steps_json ? JSON.parse(p.hindi_procedure_steps_json) : [],
-          faqs: p.faqs_json ? JSON.parse(p.faqs_json) : [],
-          idealFor: p.ideal_for,
-          hindiIdealFor: p.hindi_ideal_for,
-          auspiciousDays: p.auspicious_days,
-          hindiAuspiciousDays: p.hindi_auspicious_days,
-          mantra: p.mantra,
-          hindiMantra: p.hindi_mantra,
-          isPopular: Boolean(p.is_popular),
-          isPublished: Boolean(p.is_published),
-          metaTitle: p.meta_title,
-          metaDescription: p.meta_description,
-        }));
+        const formatted = rows.map(formatPoojaRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error('[DB ERROR] Failed to fetch poojas:', err);
@@ -157,66 +207,29 @@ async function startServer() {
   });
 
   app.get('/api/poojas/:slug', async (req, res) => {
+    const slug = req.params.slug;
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM poojas WHERE slug = ?', [req.params.slug]);
+        let rows = await query('SELECT * FROM poojas WHERE slug = ? OR url_slug = ? OR url_slug = ?', [slug, slug, `/pooja/${slug}`]);
+        if (rows.length === 0 && (slug === 'pitru-dosh-shanti-narayan-bali-ujjain' || slug === 'narayan-bali-pooja-ujjain')) {
+          rows = await query('SELECT * FROM poojas WHERE slug IN (?, ?) OR url_slug IN (?, ?)', [
+            'pitru-dosh-shanti-narayan-bali-ujjain',
+            'narayan-bali-pooja-ujjain',
+            '/pitru-dosh-shanti-narayan-bali-ujjain',
+            '/narayan-bali-pooja-ujjain'
+          ]);
+        }
         if (rows.length > 0) {
-          const p = rows[0];
-          const formatted = {
-            id: p.id,
-            name: p.name,
-            hindiName: p.hindi_name,
-            slug: p.slug,
-            categoryId: p.category_id,
-            categoryName: p.category_name,
-            hindiCategoryName: p.hindi_category_name,
-            shortDescription: p.short_description,
-            hindiShortDescription: p.hindi_short_description,
-            description: p.description,
-            hindiDescription: p.hindi_description,
-            templeName: p.temple_name,
-            hindiTempleName: p.hindi_temple_name,
-            location: p.location,
-            hindiLocation: p.hindi_location,
-            city: p.city,
-            hindiCity: p.hindi_city,
-            price: Number(p.price),
-            originalPrice: p.original_price ? Number(p.original_price) : null,
-            advanceBookingAmount: p.advance_booking_amount ? Number(p.advance_booking_amount) : null,
-            duration: p.duration,
-            hindiDuration: p.hindi_duration,
-            timing: p.timing,
-            hindiTiming: p.hindi_timing,
-            samagriIncluded: Boolean(p.samagri_included),
-            prasadHomeDelivery: Boolean(p.prasad_home_delivery),
-            liveVideoAvailable: Boolean(p.live_video_available),
-            vipEntryPass: Boolean(p.vip_entry_pass),
-            panditCount: p.pandit_count,
-            image: p.image,
-            galleryImages: p.gallery_images_json ? JSON.parse(p.gallery_images_json) : [],
-            benefits: p.benefits_json ? JSON.parse(p.benefits_json) : [],
-            hindiBenefits: p.hindi_benefits_json ? JSON.parse(p.hindi_benefits_json) : [],
-            procedureSteps: p.procedure_steps_json ? JSON.parse(p.procedure_steps_json) : [],
-            hindiProcedureSteps: p.hindi_procedure_steps_json ? JSON.parse(p.hindi_procedure_steps_json) : [],
-            faqs: p.faqs_json ? JSON.parse(p.faqs_json) : [],
-            idealFor: p.ideal_for,
-            hindiIdealFor: p.hindi_ideal_for,
-            auspiciousDays: p.auspicious_days,
-            hindiAuspiciousDays: p.hindi_auspicious_days,
-            mantra: p.mantra,
-            hindiMantra: p.hindi_mantra,
-            isPopular: Boolean(p.is_popular),
-            isPublished: Boolean(p.is_published),
-            metaTitle: p.meta_title,
-            metaDescription: p.meta_description,
-          };
-          return res.json({ success: true, data: formatted });
+          return res.json({ success: true, data: formatPoojaRow(rows[0]) });
         }
       } catch (err) {
         console.error('[DB ERROR] Failed to fetch pooja detail:', err);
       }
     }
-    const item = initialPoojas.find((p) => p.slug === req.params.slug);
+    const item = initialPoojas.find(
+      (p) => p.slug === slug || p.id === slug || p.urlSlug === `/pooja/${slug}` || p.urlSlug === `/${slug}` ||
+      ((slug === 'pitru-dosh-shanti-narayan-bali-ujjain' || slug === 'narayan-bali-pooja-ujjain') && (p.id === 'pooja-narayan-bali' || p.slug.includes('narayan-bali')))
+    );
     if (!item) return res.status(404).json({ success: false, message: 'Pooja not found' });
     res.json({ success: true, data: item });
   });
@@ -476,23 +489,151 @@ async function startServer() {
     res.status(201).json({ success: true, message: 'Enquiry received successfully', data: leadData });
   });
 
-  // 9. Admin Authentication
-  app.post('/api/admin/login', async (req, res) => {
-    const { username, password } = req.body;
+  // 9. Admin & Staff User Management (MySQL Backend)
+  app.get('/api/admin/users', async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query('SELECT * FROM admin_users ORDER BY created_at DESC');
+        const staffList = rows.map((u: any) => ({
+          id: u.id,
+          name: u.name,
+          email: u.email || '',
+          phone: u.phone || '',
+          role: u.role || 'Editor',
+          passcode: u.passcode || 'pass123',
+          status: u.is_active ? 'Active' : 'Inactive',
+          lastLogin: u.last_login || 'Never',
+          permissions: JSON.parse(u.permissions_json || '{}'),
+        }));
+        return res.json({ success: true, data: staffList });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to fetch admin users:', err);
+      }
+    }
+    res.json({ success: false, message: 'Database not connected', data: [] });
+  });
+
+  app.post('/api/admin/users', async (req, res) => {
+    const { name, email, phone, role, passcode, status, permissions } = req.body;
+    const userId = `staff-${Date.now()}`;
+    const username = email ? email.split('@')[0] : `user_${Math.floor(1000 + Math.random() * 9000)}`;
+    const passwordHash = await bcrypt.hash(passcode || 'pass123', 10);
+    const isActive = status === 'Active' ? 1 : 0;
 
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM admin_users WHERE username = ? AND is_active = 1', [username]);
-        if (rows.length > 0) {
-          const user = rows[0];
-          const isMatch = await bcrypt.compare(password, user.password_hash);
-          if (isMatch) {
-            return res.json({
-              success: true,
-              message: 'Authentication successful',
-              user: { id: user.id, username: user.username, name: user.name, role: user.role },
-            });
-          }
+        await execute(
+          `INSERT INTO admin_users (id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json, last_login)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           name = VALUES(name), email = VALUES(email), phone = VALUES(phone), role = VALUES(role),
+           passcode = VALUES(passcode), is_active = VALUES(is_active), permissions_json = VALUES(permissions_json)`,
+          [
+            userId,
+            username,
+            passwordHash,
+            passcode || 'pass123',
+            name,
+            email,
+            phone || '',
+            role || 'Editor',
+            isActive,
+            JSON.stringify(permissions || {}),
+            'Never'
+          ]
+        );
+        return res.json({
+          success: true,
+          message: 'Admin staff user saved successfully',
+          data: { id: userId, name, email, phone, role, passcode, status, permissions }
+        });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to save staff user:', err);
+        return res.status(500).json({ success: false, message: 'Failed to save staff user to database' });
+      }
+    }
+    res.json({ success: false, message: 'Database not connected' });
+  });
+
+  app.put('/api/admin/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, email, phone, role, passcode, status, permissions, lastLogin } = req.body;
+    const passwordHash = passcode ? await bcrypt.hash(passcode, 10) : undefined;
+    const isActive = status === 'Active' ? 1 : 0;
+
+    if (isDbConnected()) {
+      try {
+        let sql = `UPDATE admin_users SET name = ?, email = ?, phone = ?, role = ?, is_active = ?, permissions_json = ?`;
+        let params: any[] = [name, email, phone || '', role, isActive, JSON.stringify(permissions || {})];
+
+        if (passcode) {
+          sql += `, passcode = ?, password_hash = ?`;
+          params.push(passcode, passwordHash);
+        }
+        if (lastLogin) {
+          sql += `, last_login = ?`;
+          params.push(lastLogin);
+        }
+        sql += ` WHERE id = ?`;
+        params.push(id);
+
+        await execute(sql, params);
+        return res.json({ success: true, message: 'Staff user updated successfully' });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to update staff user:', err);
+        return res.status(500).json({ success: false, message: 'Failed to update staff user in database' });
+      }
+    }
+    res.json({ success: false, message: 'Database not connected' });
+  });
+
+  app.delete('/api/admin/users/:id', async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute('DELETE FROM admin_users WHERE id = ?', [id]);
+        return res.json({ success: true, message: 'Staff user deleted successfully' });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to delete staff user:', err);
+        return res.status(500).json({ success: false, message: 'Failed to delete staff user' });
+      }
+    }
+    res.json({ success: false, message: 'Database not connected' });
+  });
+
+  // 10. Admin Authentication Endpoint (Passcode & Username/Password)
+  app.post('/api/admin/login', async (req, res) => {
+    const { username, password, passcode } = req.body;
+    const authInput = (passcode || password || '').toString().trim();
+
+    if (isDbConnected()) {
+      try {
+        const rows = await query('SELECT * FROM admin_users WHERE is_active = 1');
+        const found = rows.find((u: any) =>
+          u.username.toLowerCase() === authInput.toLowerCase() ||
+          (u.email && u.email.toLowerCase() === authInput.toLowerCase()) ||
+          (u.passcode && u.passcode.toLowerCase() === authInput.toLowerCase())
+        );
+
+        if (found) {
+          const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+          await execute('UPDATE admin_users SET last_login = ? WHERE id = ?', [nowFormatted, found.id]);
+
+          return res.json({
+            success: true,
+            message: 'Authentication successful via MySQL',
+            user: {
+              id: found.id,
+              name: found.name,
+              email: found.email,
+              phone: found.phone,
+              role: found.role,
+              passcode: found.passcode,
+              status: found.is_active ? 'Active' : 'Inactive',
+              lastLogin: nowFormatted,
+              permissions: JSON.parse(found.permissions_json || '{}'),
+            },
+          });
         }
       } catch (err) {
         console.error('[DB ERROR] Failed admin login query:', err);
@@ -500,15 +641,32 @@ async function startServer() {
     }
 
     // Default fallback verification
-    if (username === 'admin' && password === 'AasthaAdmin#2026') {
+    if (authInput.toLowerCase() === 'mahakal' || authInput === 'AasthaAdmin#2026' || authInput.toLowerCase() === 'admin123') {
       return res.json({
         success: true,
         message: 'Authentication successful (fallback)',
-        user: { id: 'admin-1', username: 'admin', name: 'Aastha Super Admin', role: 'SuperAdmin' },
+        user: {
+          id: 'admin-1',
+          name: 'Aastha Super Admin',
+          email: 'admin@aasthaserasta.com',
+          role: 'Admin',
+          passcode: 'mahakal',
+          status: 'Active',
+          lastLogin: new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }),
+          permissions: {
+            canViewOverview: true,
+            canManageLeads: true,
+            canManageBlogs: true,
+            canManageServices: true,
+            canManageSettings: true,
+            canManageSocials: true,
+            canManageStaff: true,
+          },
+        },
       });
     }
 
-    res.status(401).json({ success: false, message: 'Invalid username or password' });
+    res.status(401).json({ success: false, message: 'Invalid credentials or passcode' });
   });
 
   // Dynamic XML Sitemap for SEO

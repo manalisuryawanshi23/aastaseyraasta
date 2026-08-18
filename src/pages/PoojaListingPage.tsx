@@ -50,6 +50,15 @@ const poojaHeaderSlides = [
 
 export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBooking }) => {
   const { language, t, localize } = useLanguage();
+
+  // Re-read from localStorage whenever the API sync fires
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const categories = StoreService.getCategories();
   const allPoojas = StoreService.getPoojas();
 

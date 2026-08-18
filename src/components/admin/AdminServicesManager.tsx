@@ -169,6 +169,46 @@ export const AdminServicesManager: React.FC = () => {
   const [editingTour, setEditingTour] = useState<Tour | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isPooja: boolean) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    
+    // Append the existing URL FIRST so multer can access it before processing the file
+    const existingUrl = isPooja ? editingPooja?.featuredImage : editingTour?.featuredImage;
+    if (existingUrl) {
+      formData.append('existingImageUrl', existingUrl);
+    }
+    
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        if (isPooja && editingPooja) {
+          setEditingPooja({ ...editingPooja, featuredImage: data.url });
+        } else if (!isPooja && editingTour) {
+          setEditingTour({ ...editingTour, featuredImage: data.url });
+        }
+        showToast('Image uploaded successfully');
+      } else {
+        alert('Upload failed: ' + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading image');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const refreshLists = () => {
     setPoojas(StoreService.getPoojas(false));
@@ -811,13 +851,22 @@ export const AdminServicesManager: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Featured Image URL</label>
-                  <input
-                    type="text"
-                    value={editingPooja.featuredImage || ''}
-                    onChange={(e) => setEditingPooja({ ...editingPooja, featuredImage: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
-                  />
+                  <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Upload Featured Image</label>
+                  {editingPooja.featuredImage && (
+                    <div className="mb-2">
+                      <img src={editingPooja.featuredImage} alt="Preview" className="h-20 rounded shadow" />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, true)}
+                      disabled={isUploading}
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
+                    />
+                    {isUploading && <span className="text-sm text-stone-500">Uploading...</span>}
+                  </div>
                 </div>
 
                 {/* SEO/AEO/GEO Fields */}
@@ -940,13 +989,22 @@ export const AdminServicesManager: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Featured Image URL</label>
-                  <input
-                    type="text"
-                    value={editingTour.featuredImage || ''}
-                    onChange={(e) => setEditingTour({ ...editingTour, featuredImage: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
-                  />
+                  <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Upload Featured Image</label>
+                  {editingTour.featuredImage && (
+                    <div className="mb-2">
+                      <img src={editingTour.featuredImage} alt="Preview" className="h-20 rounded shadow" />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, false)}
+                      disabled={isUploading}
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
+                    />
+                    {isUploading && <span className="text-sm text-stone-500">Uploading...</span>}
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-2">

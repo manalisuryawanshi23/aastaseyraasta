@@ -176,38 +176,28 @@ export class StoreService {
     const missing = initialPoojas.filter((p) => !savedIds.has(p.id));
 
     let list = saved.map((p) => {
-      const init = initialPoojas.find((ip) => ip.id === p.id);
+      const init = initialPoojas.find((i) => i.id === p.id || i.slug === p.slug);
       if (init) {
         return {
           ...init,
           ...p,
-          categoryId: init.categoryId,
-          categoryName: init.categoryName,
           name: p.name || init.name,
           hindiName: p.hindiName || init.hindiName,
-          hindiCategoryName: p.hindiCategoryName || init.hindiCategoryName,
           shortDescription: p.shortDescription || init.shortDescription,
-          hindiShortDescription: p.hindiShortDescription || init.hindiShortDescription,
           description: p.description || init.description,
-          hindiDescription: p.hindiDescription || init.hindiDescription,
           templeName: p.templeName || init.templeName,
-          hindiTempleName: p.hindiTempleName || init.hindiTempleName,
           location: p.location || init.location,
-          hindiLocation: p.hindiLocation || init.hindiLocation,
           city: p.city || init.city,
-          hindiCity: p.hindiCity || init.hindiCity,
           state: p.state || init.state,
-          hindiState: p.hindiState || init.hindiState,
           duration: p.duration || init.duration,
-          hindiDuration: p.hindiDuration || init.hindiDuration,
           whatWeOffer: p.whatWeOffer && p.whatWeOffer.length > 0 ? p.whatWeOffer : init.whatWeOffer,
           hindiWhatWeOffer: p.hindiWhatWeOffer && p.hindiWhatWeOffer.length > 0 ? p.hindiWhatWeOffer : init.hindiWhatWeOffer,
           benefits: p.benefits && p.benefits.length > 0 ? p.benefits : init.benefits,
           hindiBenefits: p.hindiBenefits && p.hindiBenefits.length > 0 ? p.hindiBenefits : init.hindiBenefits,
-          preparation: p.preparation && p.preparation.length > 0 ? p.preparation : init.preparation,
-          hindiPreparation: p.hindiPreparation && p.hindiPreparation.length > 0 ? p.hindiPreparation : init.hindiPreparation,
-          ritualDetails: p.ritualDetails || init.ritualDetails,
-          hindiRitualDetails: p.hindiRitualDetails || init.hindiRitualDetails,
+          whoCanConsider: p.whoCanConsider && p.whoCanConsider.length > 0 ? p.whoCanConsider : init.whoCanConsider,
+          faqs: p.faqs && p.faqs.length > 0 ? p.faqs : init.faqs,
+          quickAnswer: p.quickAnswer || init.quickAnswer,
+          h1: p.h1 || init.h1,
         };
       }
       return p;
@@ -285,34 +275,34 @@ export class StoreService {
       const init = initialTours.find((it) => it.id === t.id);
       if (init) {
         return {
-          ...init,
           ...t,
-          name: t.name || init.name,
-          hindiName: t.hindiName || init.hindiName,
-          category: t.category || init.category,
-          hindiCategory: t.hindiCategory || init.hindiCategory,
-          shortDescription: t.shortDescription || init.shortDescription,
-          hindiShortDescription: t.hindiShortDescription || init.hindiShortDescription,
-          description: t.description || init.description,
-          hindiDescription: t.hindiDescription || init.hindiDescription,
-          startingPoint: t.startingPoint || init.startingPoint,
-          hindiStartingPoint: t.hindiStartingPoint || init.hindiStartingPoint,
-          endingPoint: t.endingPoint || init.endingPoint,
-          hindiEndingPoint: t.hindiEndingPoint || init.hindiEndingPoint,
-          duration: t.duration || init.duration,
-          hindiDuration: t.hindiDuration || init.hindiDuration,
-          destinations: t.destinations && t.destinations.length > 0 ? t.destinations : init.destinations,
-          hindiDestinations: t.hindiDestinations && t.hindiDestinations.length > 0 ? t.hindiDestinations : init.hindiDestinations,
-          placesCovered: t.placesCovered && t.placesCovered.length > 0 ? t.placesCovered : init.placesCovered,
-          hindiPlacesCovered: t.hindiPlacesCovered && t.hindiPlacesCovered.length > 0 ? t.hindiPlacesCovered : init.hindiPlacesCovered,
-          templesCovered: t.templesCovered && t.templesCovered.length > 0 ? t.templesCovered : init.templesCovered,
-          hindiTemplesCovered: t.hindiTemplesCovered && t.hindiTemplesCovered.length > 0 ? t.hindiTemplesCovered : init.hindiTemplesCovered,
-          itinerary: t.itinerary && t.itinerary.length > 0 ? t.itinerary : init.itinerary,
-          hindiItinerary: t.hindiItinerary && t.hindiItinerary.length > 0 ? t.hindiItinerary : init.hindiItinerary,
-          included: t.included && t.included.length > 0 ? t.included : init.included,
-          hindiIncluded: t.hindiIncluded && t.hindiIncluded.length > 0 ? t.hindiIncluded : init.hindiIncluded,
-          excluded: t.excluded && t.excluded.length > 0 ? t.excluded : init.excluded,
-          hindiExcluded: t.hindiExcluded && t.hindiExcluded.length > 0 ? t.hindiExcluded : init.hindiExcluded,
+          ...init,
+          name: init.name || t.name,
+          hindiName: init.hindiName || t.hindiName,
+          category: init.category || t.category,
+          hindiCategory: init.hindiCategory || t.hindiCategory,
+          shortDescription: init.shortDescription || t.shortDescription,
+          hindiShortDescription: init.hindiShortDescription || t.hindiShortDescription,
+          description: init.description || t.description,
+          hindiDescription: init.hindiDescription || t.hindiDescription,
+          startingPoint: init.startingPoint || t.startingPoint,
+          hindiStartingPoint: init.hindiStartingPoint || t.hindiStartingPoint,
+          endingPoint: init.endingPoint || t.endingPoint,
+          hindiEndingPoint: init.hindiEndingPoint || t.hindiEndingPoint,
+          duration: init.duration || t.duration,
+          hindiDuration: init.hindiDuration || t.hindiDuration,
+          destinations: init.destinations && init.destinations.length > 0 ? init.destinations : t.destinations,
+          hindiDestinations: init.hindiDestinations && init.hindiDestinations.length > 0 ? init.hindiDestinations : t.hindiDestinations,
+          placesCovered: init.placesCovered && init.placesCovered.length > 0 ? init.placesCovered : t.placesCovered,
+          hindiPlacesCovered: init.hindiPlacesCovered && init.hindiPlacesCovered.length > 0 ? init.hindiPlacesCovered : t.hindiPlacesCovered,
+          templesCovered: init.templesCovered && init.templesCovered.length > 0 ? init.templesCovered : t.templesCovered,
+          hindiTemplesCovered: init.hindiTemplesCovered && init.hindiTemplesCovered.length > 0 ? init.hindiTemplesCovered : t.hindiTemplesCovered,
+          itinerary: init.itinerary && init.itinerary.length > 0 ? init.itinerary : t.itinerary,
+          hindiItinerary: init.hindiItinerary && init.hindiItinerary.length > 0 ? init.hindiItinerary : t.hindiItinerary,
+          included: init.included && init.included.length > 0 ? init.included : t.included,
+          hindiIncluded: init.hindiIncluded && init.hindiIncluded.length > 0 ? init.hindiIncluded : t.hindiIncluded,
+          excluded: init.excluded && init.excluded.length > 0 ? init.excluded : t.excluded,
+          hindiExcluded: init.hindiExcluded && init.hindiExcluded.length > 0 ? init.hindiExcluded : t.hindiExcluded,
         };
       }
       return t;
@@ -818,43 +808,63 @@ export class StoreService {
 
   static saveStaffUser(user: Partial<StaffUser> & { id?: string }): StaffUser {
     const list = this.getStaffUsers();
+    let resultUser: StaffUser;
+
     if (user.id) {
       const idx = list.findIndex((u) => u.id === user.id);
       if (idx !== -1) {
-        const updated = { ...list[idx], ...user } as StaffUser;
-        list[idx] = updated;
-        setItem(KEYS.STAFF, list);
-        return updated;
+        resultUser = { ...list[idx], ...user } as StaffUser;
+        list[idx] = resultUser;
+      } else {
+        resultUser = { ...user } as StaffUser;
+        list.push(resultUser);
       }
+    } else {
+      const defaultPermissions = user.role === 'Admin'
+        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true }
+        : user.role === 'Manager'
+        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false }
+        : { canViewOverview: true, canManageLeads: false, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false };
+
+      resultUser = {
+        id: `staff-${Date.now()}`,
+        name: user.name || 'Staff Member',
+        email: user.email || 'staff@aasthaseva.com',
+        role: user.role || 'Editor',
+        passcode: user.passcode || 'pass123',
+        phone: user.phone || '',
+        status: user.status || 'Active',
+        lastLogin: 'Never',
+        permissions: user.permissions || defaultPermissions,
+        ...user,
+      } as StaffUser;
+      list.push(resultUser);
     }
 
-    const defaultPermissions = user.role === 'Admin'
-      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true }
-      : user.role === 'Manager'
-      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false }
-      : { canViewOverview: true, canManageLeads: false, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false };
-
-    const newUser: StaffUser = {
-      id: `staff-${Date.now()}`,
-      name: user.name || 'Staff Member',
-      email: user.email || 'staff@aasthaseva.com',
-      role: user.role || 'Editor',
-      passcode: user.passcode || 'pass123',
-      phone: user.phone || '',
-      status: user.status || 'Active',
-      lastLogin: 'Never',
-      permissions: user.permissions || defaultPermissions,
-      ...user,
-    } as StaffUser;
-
-    list.push(newUser);
     setItem(KEYS.STAFF, list);
-    return newUser;
+
+    // Sync with MySQL Backend API
+    if (typeof window !== 'undefined') {
+      const url = user.id ? `/api/admin/users/${user.id}` : '/api/admin/users';
+      const method = user.id ? 'PUT' : 'POST';
+      fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(resultUser),
+      }).catch((err) => console.log('[API SYNC NOTICE] MySQL sync notice:', err));
+    }
+
+    return resultUser;
   }
 
   static deleteStaffUser(id: string): void {
     const list = this.getStaffUsers().filter((u) => u.id !== id);
     setItem(KEYS.STAFF, list);
+
+    if (typeof window !== 'undefined') {
+      fetch(`/api/admin/users/${id}`, { method: 'DELETE' })
+        .catch((err) => console.log('[API SYNC NOTICE] MySQL sync notice:', err));
+    }
   }
 
   static authenticateStaffPasscode(passcode: string): StaffUser | null {
@@ -877,10 +887,17 @@ export class StoreService {
     if (cleanPass === 'manager123') {
       return users.find((u) => u.role === 'Manager') || users[1] || users[0];
     }
-    if (cleanPass === 'editor123') {
-      return users.find((u) => u.role === 'Editor') || users[2] || users[0];
-    }
-
     return null;
+  }
+
+  static resetToInitialData(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(KEYS.POOJAS);
+      localStorage.removeItem(KEYS.TOURS);
+      localStorage.removeItem(KEYS.DESTINATIONS);
+      localStorage.removeItem(KEYS.FAQS);
+      localStorage.removeItem(KEYS.SETTINGS);
+      localStorage.removeItem(KEYS.BLOGS);
+    }
   }
 }

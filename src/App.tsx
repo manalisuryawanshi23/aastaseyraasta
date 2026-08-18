@@ -26,8 +26,12 @@ import { SavedItemsPage } from './pages/SavedItemsPage';
 import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
+import { useApiSync } from './hooks/useApiSync';
 
 export default function App() {
+  // Sync MySQL API data into localStorage on every page load
+  useApiSync();
+
   const [currentPath, setCurrentPath] = useState<string>(
     typeof window !== 'undefined' ? window.location.pathname : '/'
   );
@@ -100,7 +104,7 @@ export default function App() {
       );
     }
 
-    if (path === '/pooja-services') {
+    if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {
       return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }
 
@@ -109,12 +113,27 @@ export default function App() {
       return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
     }
 
-    if (path === '/spiritual-tours') {
+    if (path.startsWith('/poojas/')) {
+      const slug = path.replace('/poojas/', '');
+      return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/spiritual-tours' || path === '/tours' || path === '/tour') {
       return <TourListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/spiritual-tours/')) {
       const slug = path.replace('/spiritual-tours/', '');
+      return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path.startsWith('/tours/')) {
+      const slug = path.replace('/tours/', '');
+      return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path.startsWith('/tour/')) {
+      const slug = path.replace('/tour/', '');
       return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
     }
 

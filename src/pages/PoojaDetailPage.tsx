@@ -39,6 +39,15 @@ interface PoojaDetailPageProps {
 
 export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBooking }) => {
   const { language, t, localize } = useLanguage();
+
+  // Re-read from localStorage when API sync fires
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const settings = StoreService.getSettings();
   const pooja = StoreService.getPoojaBySlug(slug);
 
@@ -60,7 +69,6 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
 
   const allPoojas = StoreService.getPoojas();
   const relatedPoojas = allPoojas.filter((p) => p.id !== pooja.id && p.categoryId === pooja.categoryId).slice(0, 3);
-  const faqs = StoreService.getFAQs().filter((f) => f.category === 'Pooja' || f.category === 'General');
 
   const enrichedPooja = ContentService.enrichPooja(pooja, language);
   const poojaName = localize(enrichedPooja, 'name', 'hindiName');
@@ -80,6 +88,19 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
     : enrichedPooja.preparation;
   const ritualDetails = localize(enrichedPooja, 'ritualDetails', 'hindiRitualDetails');
 
+  // Use each pooja's own AEO questions (from faqs or aeoQuestions field); fall back to global FAQs
+  const rawFaqs = (enrichedPooja as any).faqs;
+  const rawAeo = (enrichedPooja as any).aeoQuestions;
+  const poojaFaqs: { question: string; answer: string }[] =
+    Array.isArray(rawFaqs) && rawFaqs.length > 0
+      ? rawFaqs
+      : Array.isArray(rawAeo) && rawAeo.length > 0
+      ? rawAeo
+      : StoreService.getFAQs()
+          .filter((f) => f.category === 'Pooja' || f.category === 'General')
+          .slice(0, 5)
+          .map((f) => ({ question: f.question, answer: f.answer }));
+
   // Build Rich JSON-LD Schemas for AEO / SEO / Google Search
   const poojaSchema = buildPoojaServiceSchema(pooja);
   const breadcrumbSchema = buildBreadcrumbSchema([
@@ -87,7 +108,68 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
     { name: 'Pooja Services', url: '/pooja-services' },
     { name: pooja.name, url: `/pooja/${pooja.slug}` },
   ]);
-  const faqSchema = buildFAQSchema(faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
+  const faqSchema = buildFAQSchema(poojaFaqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
+
+  const renderStructuredDescription = (text?: string) => {
+    if (!text) return null;
+    const lines = text.split('\n');
+    const elements: React.ReactNode[] = [];
+    let paragraphBuffer: string[] = [];
+
+    const flushParagraph = (key: number) => {
+      if (paragraphBuffer.length > 0) {
+        const paragraphText = paragraphBuffer.join(' ').trim();
+        if (paragraphText) {
+          elements.push(
+            <p key={`p-${key}`} className="text-stone-700 leading-relaxed text-sm sm:text-base mb-4">
+              {paragraphText}
+            </p>
+          );
+        }
+        paragraphBuffer = [];
+      }
+    };
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        flushParagraph(index);
+        return;
+      }
+
+      if (trimmed.startsWith('## ')) {
+        flushParagraph(index);
+        const heading = trimmed.replace(/^##\s+/, '');
+        elements.push(
+          <h2 key={`h2-${index}`} className="text-xl sm:text-2xl font-serif font-bold text-stone-900 pt-6 pb-2 border-b border-amber-100 mb-3">
+            {heading}
+          </h2>
+        );
+      } else if (trimmed.startsWith('### ')) {
+        flushParagraph(index);
+        const heading = trimmed.replace(/^###\s+/, '');
+        elements.push(
+          <h3 key={`h3-${index}`} className="text-lg font-serif font-bold text-amber-900 pt-4 mb-2">
+            {heading}
+          </h3>
+        );
+      } else if (trimmed.startsWith('- ')) {
+        flushParagraph(index);
+        const item = trimmed.replace(/^- \s*/, '');
+        elements.push(
+          <div key={`li-${index}`} className="flex items-start gap-2.5 text-stone-700 text-sm sm:text-base my-1.5 ml-2">
+            <span className="text-amber-700 font-bold shrink-0 mt-0.5">•</span>
+            <span>{item}</span>
+          </div>
+        );
+      } else {
+        paragraphBuffer.push(trimmed);
+      }
+    });
+
+    flushParagraph(99999);
+    return elements;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
@@ -123,8 +205,8 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               <FavoriteButton id={pooja.id} type="pooja" variant="button" />
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">
-              {poojaName}
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 leading-tight">
+              {pooja.h1 || poojaName}
             </h1>
 
             {(pooja.hindiName || pooja.name) && (
@@ -153,8 +235,21 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
             </div>
           </div>
 
+          {/* Quick Answer Box for AEO */}
+          {pooja.quickAnswer && (
+            <div className="bg-amber-900 text-amber-50 p-6 sm:p-7 rounded-2xl border border-amber-800 shadow-md space-y-2">
+              <div className="text-xs uppercase tracking-widest text-amber-300 font-bold flex items-center gap-1.5">
+                <HelpCircle className="w-4 h-4 text-amber-400" />
+                <span>{language === 'hi' ? 'त्वरित उत्तर' : 'Quick Answer'}</span>
+              </div>
+              <p className="text-sm sm:text-base leading-relaxed text-amber-100 font-medium">
+                {pooja.quickAnswer}
+              </p>
+            </div>
+          )}
+
           {/* Featured Image */}
-          <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md h-80 bg-stone-100">
+          <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md aspect-video w-full bg-stone-100">
             <img
               src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
               alt={poojaName}
@@ -169,10 +264,10 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           {/* Detailed Description */}
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-4">
             <h2 className="text-xl font-serif font-bold text-stone-900 border-b border-stone-100 pb-2">
-              {language === 'hi' ? 'आध्यात्मिक महत्व एवं विधि परिचय' : 'Spiritual Significance & Overview'}
+              {language === 'hi' ? 'आध्यात्मिक महत्व एवं विधि परिचय' : 'Overview & Ritual Significance'}
             </h2>
-            <div className="text-stone-700 text-sm leading-relaxed whitespace-pre-line space-y-3">
-              {poojaDesc}
+            <div>
+              {renderStructuredDescription(poojaDesc)}
             </div>
           </div>
 
@@ -220,6 +315,24 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   <li key={idx} className="flex items-start gap-2.5">
                     <Flame className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                     <span>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Who Can Consider */}
+          {pooja.whoCanConsider && pooja.whoCanConsider.length > 0 && (
+            <div className="bg-stone-50 p-6 sm:p-8 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+              <h2 className="text-xl font-serif font-bold text-stone-900 flex items-center gap-2">
+                <Users className="w-5 h-5 text-amber-700" />
+                <span>{language === 'hi' ? 'यह पूजा सेवा किसके लिए उपयुक्त है' : 'Who Can Consider This Ritual'}</span>
+              </h2>
+              <ul className="space-y-2.5 text-xs sm:text-sm text-stone-700">
+                {pooja.whoCanConsider.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -318,9 +431,12 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
       </div>
 
       {/* FAQs */}
-      {faqs.length > 0 && (
+      {poojaFaqs.length > 0 && (
         <section className="pt-8 border-t border-stone-200">
-          <FAQAccordion faqs={faqs} title={language === 'hi' ? 'पूजा सेवाओं से जुड़े प्रश्नोत्तरी' : `Frequently Asked Questions about Pooja Services`} />
+          <FAQAccordion
+            faqs={poojaFaqs}
+            title={language === 'hi' ? `${poojaName} — अक्सर पूछे जाने वाले प्रश्न` : `Frequently Asked Questions — ${poojaName}`}
+          />
         </section>
       )}
 

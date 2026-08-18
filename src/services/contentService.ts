@@ -1575,8 +1575,8 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
       hi: '3 घंटे',
     },
     whatWeOffer: {
-      en: ['Butter & Yellow Flowers', 'Santan Gopal Stotra Path', 'Gotra Sankalp', 'Prasad'],
-      hi: ['माखन-मिश्री व पीले फूल', 'संतान गोपाल स्तोत्र पाठ', 'गोत्र संकल्प', 'महाप्रसाद'],
+      en: ['Tulsi Patra Archana', '108 Sahasranama Chanting', 'Kheer Bhog', 'Gopal Blessings'],
+      hi: ['तुलसी दल अर्पण', '108 सहस्रनाम पाठ', 'खीर का भोग', 'गोपाल आशीर्वाद'],
     },
     benefits: {
       en: ['Blessed progeny, relief from child hurdles, peace of mind'],
@@ -1824,7 +1824,7 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
 
   'pooja-narayan-bali': {
     id: 'pooja-narayan-bali',
-    slug: 'narayan-bali-pooja-ujjain',
+    slug: 'pitru-dosh-shanti-narayan-bali-ujjain',
     name: {
       en: 'Narayan Bali',
       hi: 'नारायण बली विधान',
@@ -2258,6 +2258,9 @@ export class ContentService {
     if (!slugOrId) return undefined;
     const direct = POOJA_CONTENT_CATALOG[slugOrId];
     if (direct) return direct;
+    if (slugOrId === 'pitru-dosh-shanti-narayan-bali-ujjain' || slugOrId === 'narayan-bali-pooja-ujjain') {
+      return POOJA_CONTENT_CATALOG['pooja-narayan-bali'];
+    }
     return Object.values(POOJA_CONTENT_CATALOG).find(
       (p) => p.slug === slugOrId || p.id === slugOrId
     );
@@ -2292,36 +2295,22 @@ export class ContentService {
    */
   static enrichPooja(pooja: PoojaService, language: Language): PoojaService {
     const catalog = this.getPoojaContent(pooja.slug || pooja.id, language);
+
+    const hasBenefits = pooja.benefits && pooja.benefits.length > 0;
+    const hasHindiBenefits = pooja.hindiBenefits && pooja.hindiBenefits.length > 0;
+    const hasOffers = pooja.whatWeOffer && pooja.whatWeOffer.length > 0;
+    const hasHindiOffers = pooja.hindiWhatWeOffer && pooja.hindiWhatWeOffer.length > 0;
+
     if (!catalog) return pooja;
 
     return {
       ...pooja,
-      name: language === 'hi' ? catalog.name.hi : catalog.name.en,
-      hindiName: catalog.name.hi,
-      categoryName: language === 'hi' ? catalog.categoryName.hi : catalog.categoryName.en,
-      hindiCategoryName: catalog.categoryName.hi,
-      shortDescription: language === 'hi' ? catalog.shortDescription.hi : catalog.shortDescription.en,
-      hindiShortDescription: catalog.shortDescription.hi,
-      description: language === 'hi' ? catalog.description.hi : catalog.description.en,
-      hindiDescription: catalog.description.hi,
-      templeName: language === 'hi' ? catalog.templeName.hi : catalog.templeName.en,
-      hindiTempleName: catalog.templeName.hi,
-      location: language === 'hi' ? catalog.location.hi : catalog.location.en,
-      hindiLocation: catalog.location.hi,
-      city: language === 'hi' ? catalog.city.hi : catalog.city.en,
-      hindiCity: catalog.city.hi,
-      state: language === 'hi' ? catalog.state.hi : catalog.state.en,
-      hindiState: catalog.state.hi,
-      duration: language === 'hi' ? catalog.duration.hi : catalog.duration.en,
-      hindiDuration: catalog.duration.hi,
-      whatWeOffer: language === 'hi' ? catalog.whatWeOffer.hi : catalog.whatWeOffer.en,
-      hindiWhatWeOffer: catalog.whatWeOffer.hi,
-      benefits: language === 'hi' ? catalog.benefits.hi : catalog.benefits.en,
-      hindiBenefits: catalog.benefits.hi,
-      preparation: language === 'hi' ? catalog.preparation.hi : catalog.preparation.en,
-      hindiPreparation: catalog.preparation.hi,
-      ritualDetails: language === 'hi' ? catalog.ritualDetails.hi : catalog.ritualDetails.en,
-      hindiRitualDetails: catalog.ritualDetails.hi,
+      benefits: hasBenefits ? pooja.benefits : (language === 'hi' ? catalog.benefits.hi : catalog.benefits.en),
+      hindiBenefits: hasHindiBenefits ? pooja.hindiBenefits : catalog.benefits.hi,
+      whatWeOffer: hasOffers ? pooja.whatWeOffer : (language === 'hi' ? catalog.whatWeOffer.hi : catalog.whatWeOffer.en),
+      hindiWhatWeOffer: hasHindiOffers ? pooja.hindiWhatWeOffer : catalog.whatWeOffer.hi,
+      preparation: (pooja.preparation && pooja.preparation.length > 0) ? pooja.preparation : (language === 'hi' ? catalog.preparation.hi : catalog.preparation.en),
+      hindiPreparation: (pooja.hindiPreparation && pooja.hindiPreparation.length > 0) ? pooja.hindiPreparation : catalog.preparation.hi,
     };
   }
 

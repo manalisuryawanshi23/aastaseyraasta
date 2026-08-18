@@ -35,7 +35,7 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
     >
       
       {/* Image Thumbnail Header */}
-      <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
+      <div className="relative aspect-video w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
           alt={pooja.name}

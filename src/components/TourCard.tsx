@@ -36,7 +36,7 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
     >
       
       {/* Thumbnail */}
-      <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
+      <div className="relative aspect-video w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
           src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
           alt={tourName}

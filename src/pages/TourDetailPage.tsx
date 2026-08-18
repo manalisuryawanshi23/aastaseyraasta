@@ -37,6 +37,15 @@ interface TourDetailPageProps {
 
 export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBooking }) => {
   const { language, t, localize, translateText } = useLanguage();
+
+  // Re-read from localStorage when API sync fires
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const settings = StoreService.getSettings();
   const tour = StoreService.getTourBySlug(slug);
 
@@ -71,7 +80,15 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
   const allTours = StoreService.getTours();
   const relatedTours = allTours.filter((t) => t.id !== tour.id).slice(0, 3);
-  const faqs = StoreService.getFAQs().filter((f) => f.category === 'Tour' || f.category === 'General');
+  const tourFaqs: { question: string; answer: string }[] =
+    (tour as any).faqs?.length > 0
+      ? (tour as any).faqs
+      : (tour as any).aeoQuestions?.length > 0
+      ? (tour as any).aeoQuestions
+      : StoreService.getFAQs()
+          .filter((f) => f.category === 'Tour' || f.category === 'General')
+          .slice(0, 5)
+          .map((f) => ({ question: f.question, answer: f.answer }));
 
   // Build JSON-LD Schemas for search engines & AI assistants
   const tourSchema = buildTourSchema(tour);
@@ -80,7 +97,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
     { name: 'Spiritual Tours', url: '/spiritual-tours' },
     { name: tour.name, url: `/spiritual-tours/${tour.slug}` },
   ]);
-  const faqSchema = buildFAQSchema(faqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
+  const faqSchema = buildFAQSchema(tourFaqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer })));
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-10">
@@ -139,7 +156,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           </div>
 
           {/* Featured Image */}
-          <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md h-80 bg-stone-100">
+          <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md aspect-video w-full bg-stone-100">
             <img
               src={tour.featuredImage || '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg'}
               alt={tourName}
@@ -312,12 +329,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       </div>
 
       {/* FAQs */}
-      {faqs.length > 0 && (
+      {tourFaqs.length > 0 && (
         <section className="pt-8 border-t border-stone-200">
           <FAQAccordion
-            faqs={faqs}
+            faqs={tourFaqs}
             showCategoryTabs={false}
-            title={language === 'hi' ? 'तीर्थ यात्रा से जुड़े महत्वपूर्ण प्रश्न एवं उत्तर' : 'Frequently Asked Questions about Yatra Packages'}
+            title={language === 'hi' ? `${tourName} — अक्सर पूछे जाने वाले प्रश्न` : `Frequently Asked Questions — ${tourName}`}
           />
         </section>
       )}

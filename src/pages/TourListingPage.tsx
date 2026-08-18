@@ -50,6 +50,15 @@ const tourHeaderSlides = [
 
 export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking }) => {
   const { language, t, localize } = useLanguage();
+
+  // Re-read from localStorage when API sync fires
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const allTours = StoreService.getTours();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');

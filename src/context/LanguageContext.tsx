@@ -66,9 +66,9 @@ const translations: Record<Language, Record<string, string>> = {
     'action.saved': 'Saved',
 
     // Hero Section
-    'hero.badge': 'Official Spiritual Services in Ujjain & Pilgrimage Hubs',
-    'hero.title_prefix': 'Begin Your Sacred Journey with',
-    'hero.subtitle': 'Authentic Vedic Poojas, Rudrabhishek, Bhat Pooja & Guided Pilgrimages thoughtfully arranged in Ujjain.',
+    'hero.badge': 'YOUR TRUSTED PARTNER FOR POOJA, DARSHAN & SPIRITUAL JOURNEYS',
+    'hero.title_prefix': 'Begin Your Journey of Faith with',
+    'hero.subtitle': 'From Vedic Poojas to Darshan and Spiritual Yatras, we help you plan every step of your journey.',
     'hero.search_placeholder': 'Search Rudrabhishek, Bhat Pooja, Char Dham Yatra...',
     'hero.search_button': 'Search',
 

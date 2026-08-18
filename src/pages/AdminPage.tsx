@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { StoreService } from '../services/store';
 import { SEOHead } from '../components/SEOHead';
 import { AdminBlogManager } from '../components/admin/AdminBlogManager';
@@ -107,6 +107,14 @@ export const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<AdminTab>('Overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Re-read fresh MySQL data when API sync fires
+  const [syncTick, setSyncTick] = useState(0);
+  useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   // Data state
   const [leads, setLeads] = useState<Lead[]>(() => {
     const existing = StoreService.getLeads();
@@ -116,9 +124,9 @@ export const AdminPage: React.FC = () => {
     return existing;
   });
 
-  const blogs = useMemo(() => StoreService.getBlogPosts(false), [activeTab]);
-  const poojas = useMemo(() => StoreService.getPoojas(false), [activeTab]);
-  const settings = useMemo(() => StoreService.getSettings(), [activeTab]);
+  const blogs = useMemo(() => StoreService.getBlogPosts(false), [activeTab, syncTick]);
+  const poojas = useMemo(() => StoreService.getPoojas(false), [activeTab, syncTick]);
+  const settings = useMemo(() => StoreService.getSettings(), [activeTab, syncTick]);
 
   // Lead filtering
   const [leadSearch, setLeadSearch] = useState('');

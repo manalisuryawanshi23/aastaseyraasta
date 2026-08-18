@@ -13,6 +13,9 @@ import {
   HelpCircle,
   Star,
   Users,
+  Handshake,
+  Church,
+  HeartHandshake,
 } from 'lucide-react';
 import { StoreService } from '../services/store';
 import { useLanguage } from '../context/LanguageContext';
@@ -44,10 +47,23 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
   const [selectedCatId, setSelectedCatId] = useState<string>('all');
 
-  const filteredPoojas =
-    selectedCatId === 'all'
-      ? poojas
-      : poojas.filter((p) => p.categoryId === selectedCatId);
+  // Fetch all poojas directly to ensure we find the specifically requested ones
+  // even if their isFeatured flag was toggled off in the CMS.
+  const allPoojas = StoreService.getPoojas();
+
+  // Use a resilient keyword matcher to prevent localStorage/DB sync ID mismatches
+  const featuredKeywords = [
+    'rudrabhishek',
+    'bhat-pooja-mangalnath',
+    'kaal-sarp',
+    'navgraha-shanti',
+    'grahan-dosh',
+    'pitru-shanti'
+  ];
+
+  const filteredPoojas = featuredKeywords
+    .map(kw => allPoojas.find(p => p.slug.includes(kw) || p.id.includes(kw)))
+    .filter(Boolean) as typeof allPoojas;
 
   const faqSchema = buildFAQSchema(faqs.map((f) => ({ question: f.question, answer: f.answer })));
 
@@ -73,7 +89,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-medium tracking-wide uppercase backdrop-blur-md shadow-lg">
             <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
-            <span>{t('hero.badge', 'Official Spiritual Services in Ujjain & Pilgrimage Hubs')}</span>
+            <span>{t('hero.badge', 'YOUR TRUSTED PARTNER FOR POOJA, DARSHAN & SPIRITUAL JOURNEYS')}</span>
           </div>
 
           {/* Main Title */}
@@ -87,9 +103,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               </>
             ) : (
               <>
-                Begin Your Sacred Journey with <br />
+                Begin Your Journey of Faith with <br />
                 <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 bg-clip-text text-transparent">
-                  {settings.businessName}
+                  Aastha Sey Raasta Seva
                 </span>
               </>
             )}
@@ -97,7 +113,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
           {/* Tagline */}
           <p className="text-amber-200/90 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto font-serif italic font-light">
-            {t('hero.subtitle', `"${settings.tagline}" • Authentic Vedic Poojas, Rudrabhishek, Bhat Pooja & Guided Pilgrimages thoughtfully arranged in Ujjain.`)}
+            {t('hero.subtitle', 'From Vedic Poojas to Darshan and Spiritual Yatras, we help you plan every step of your journey.')}
           </p>
 
           {/* Action CTAs */}
@@ -136,22 +152,26 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           </div>
 
           {/* Trust badges */}
-          <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-amber-200/80 text-xs font-medium max-w-3xl mx-auto border-t border-amber-900/40">
+          <div className="pt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-amber-200/80 text-[11px] sm:text-xs font-medium max-w-5xl mx-auto border-t border-amber-900/40">
             <div className="flex items-center justify-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>{language === 'hi' ? 'वेदपाठी विद्वान ब्राह्मण' : 'Vedic Qualified Pandits'}</span>
+              <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">{language === 'hi' ? 'आसान पूछताछ' : 'Easy Enquiry'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>{language === 'hi' ? 'संपूर्ण सात्विक सामग्री' : 'Complete Samagri Vidhi'}</span>
+              <Handshake className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">{language === 'hi' ? 'व्यक्तिगत समर्थन' : 'Personal Support'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>{language === 'hi' ? 'नाम व गोत्र संकल्प' : 'Gotra & Name Sankalp'}</span>
+              <Church className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">{language === 'hi' ? 'दर्शन सहायता' : 'Darshan Assistance'}</span>
             </div>
             <div className="flex items-center justify-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-amber-400" />
-              <span>{language === 'hi' ? '100% पारदर्शी सेवा' : '100% Transparent Services'}</span>
+              <Compass className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">{language === 'hi' ? 'आध्यात्मिक यात्रा' : 'Spiritual Yatra & Tours'}</span>
+            </div>
+            <div className="flex items-center justify-center gap-1.5 md:col-span-3 lg:col-span-1">
+              <HeartHandshake className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">{language === 'hi' ? 'संपूर्ण व्यवस्था' : 'Complete Arrangements'}</span>
             </div>
           </div>
 
@@ -159,64 +179,25 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       </section>
 
       {/* Featured Pooja Services Section */}
-      <section className="max-w-7xl mx-auto px-4 space-y-8">
+      <section className="max-w-7xl mx-auto px-4 space-y-10">
         
-        {/* Section Header */}
+        {/* Section Header (Centered) */}
         <FadeIn direction="up">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs font-semibold uppercase tracking-wider mb-2 border border-amber-200 dark:border-amber-800/50">
-                <Flame className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-                <span>{language === 'hi' ? 'वैदिक अनुष्ठान सेवा' : 'Devotional Offerings'}</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
-                {t('home.featured_poojas', 'Authentic Pooja Services in Ujjain')}
-              </h2>
-              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-2xl">
-                {t('home.featured_poojas_desc', 'Conducted strictly according to Vedic scriptures by experienced Brahmins with pure satvik samagri and gotra sankalp.')}
-              </p>
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs font-semibold uppercase tracking-wider border border-amber-200 dark:border-amber-800/50">
+              <Flame className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+              <span>{language === 'hi' ? 'वैदिक अनुष्ठान सेवा' : 'Devotional Offerings'}</span>
             </div>
-
-            <a
-              href="/pooja-services"
-              className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 dark:text-amber-400 hover:text-amber-950 dark:hover:text-amber-200 group"
-            >
-              <span>{t('action.view_all_poojas', 'View All 15+ Poojas')}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
+              {t('home.featured_poojas', 'Pooja, Jaap & Havan Services in Ujjain')}
+            </h2>
+            <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm mt-1 max-w-[800px]">
+              {t('home.featured_poojas_desc', 'Explore a range of Pooja, Dosh Shanti, Jaap and Havan services arranged with experienced Pandits and thoughtful support from Aastha Sey Raasta Seva.')}
+            </p>
           </div>
         </FadeIn>
 
-        {/* Category Filter Pills */}
-        <FadeIn delay={100} direction="up">
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            <button
-              onClick={() => setSelectedCatId('all')}
-              className={`px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-                selectedCatId === 'all'
-                  ? 'bg-amber-800 text-white shadow-md'
-                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
-              }`}
-            >
-              {t('action.all_featured', 'All Featured')}
-            </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCatId(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-                  selectedCatId === cat.id
-                    ? 'bg-amber-800 text-white shadow-md'
-                    : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
-                }`}
-              >
-                {language === 'hi' && cat.hindiName ? cat.hindiName : cat.name}
-              </button>
-            ))}
-          </div>
-        </FadeIn>
-
-        {/* Pooja Cards Grid */}
+        {/* Pooja Cards Grid (Exactly 6 featured Poojas) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPoojas.map((pooja, index) => (
             <PoojaCard
@@ -227,6 +208,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             />
           ))}
         </div>
+
+        {/* View All Poojas Button */}
+        <FadeIn delay={200} direction="up">
+          <div className="flex justify-center pt-2">
+            <a
+              href="/pooja-services"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-stone-900 dark:bg-amber-700 hover:bg-stone-800 dark:hover:bg-amber-800 text-white font-medium text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-stone-900/20 dark:shadow-amber-900/40"
+            >
+              <span>{t('action.view_all_poojas_btn', 'VIEW ALL POOJAS')}</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Featured Yatras & Spiritual Tours Section */}
