@@ -20,7 +20,43 @@ import {
   BookOpen,
   Info,
   ShieldCheck,
+  Church,
+  Mountain,
 } from 'lucide-react';
+
+const yatraItems = [
+  { name: '84 Mahadev Yatra & Pooja', href: '/tour/84-mahadev-yatra-pooja-ujjain' },
+  { name: '9 Narayana Yatra & Pooja', href: '/tour/9-narayana-yatra-pooja-ujjain' },
+  { name: 'Sapt Sagar Yatra & Pooja', href: '/tour/sapt-sagar-yatra-pooja-ujjain' },
+  { name: '6 Vinayak Yatra & Pooja', href: '/tour/6-vinayak-yatra-pooja-ujjain' },
+];
+
+const tourItems = [
+  { name: 'Ujjain – Omkareshwar', href: '/tour/ujjain-omkareshwar-tour' },
+  { name: 'Ujjain – Omkareshwar – Indore', href: '/tour/ujjain-omkareshwar-indore-tour' },
+  { name: 'Ujjain – Omkareshwar – Baglamukhi Nalkheda', href: '/tour/ujjain-omkareshwar-baglamukhi-nalkheda-tour' },
+  { name: 'Ujjain – Baglamukhi Nalkheda', href: '/tour/ujjain-baglamukhi-nalkheda-tour' },
+  { name: 'Ujjain – Pashupatinath Mahadev – Sanwariya Seth', href: '/tour/ujjain-pashupatinath-sanwariya-seth-tour' },
+];
+
+const himalayanItems = [
+  { name: 'Char Dham Yatra', href: '/tour/char-dham-yatra-uttarakhand' },
+  { name: 'Panch Kedar Yatra', href: '/tour/panch-kedar-yatra-uttarakhand' },
+  { name: 'Panch Badri Yatra', href: '/tour/panch-badri-yatra-uttarakhand' },
+];
+
+const trekkingItems = [
+  { name: 'Kedarkantha Trek', href: '/tour/sankri-kedarkantha-trek' },
+  { name: 'Pangarchulla Trek', href: '/tour/joshimath-pangarchulla-trek' },
+  { name: 'Kuari Pass Trek', href: '/tour/joshimath-kuari-pass-trek' },
+  { name: 'Kagbhusundi Trek', href: '/tour/chamoli-kagbhusundi-trek' },
+  { name: 'Roopkund Trek', href: '/tour/chamoli-roopkund-trek' },
+  { name: 'Pindari Glacier Trek', href: '/tour/bageshwar-pindari-glacier-trek' },
+  { name: 'Dayara Bugyal Trek', href: '/tour/uttarkashi-dayara-bugyal-trek' },
+  { name: 'Satopanth Trek', href: '/tour/chamoli-satopanth-trek' },
+  { name: 'Valley of Flowers Trek', href: '/tour/chamoli-valley-of-flowers-trek' },
+  { name: 'Gaumukh Trek', href: '/tour/gangotri-gaumukh-trek' },
+];
 import { StoreService } from '../services/store';
 import { FavoritesService } from '../services/favorites';
 import { useLanguage } from '../context/LanguageContext';
@@ -38,6 +74,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [favCount, setFavCount] = useState(() => FavoritesService.getFavorites().length);
   const [currentPath, setCurrentPath] = useState('');
+  const [mobileSubMenuOpen, setMobileSubMenuOpen] = useState<'yatra' | 'tours' | 'himalayan' | 'trekking' | null>(null);
+  const [mobileSpiritualOpen, setMobileSpiritualOpen] = useState(false);
   
   const hamburgerButtonRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -352,7 +390,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
 
             {/* 3. Spiritual Tours Dropdown */}
             <div
-              className="relative"
+              className=""
               onMouseEnter={() => handleMouseEnter('tours')}
               onMouseLeave={handleMouseLeave}
             >
@@ -360,60 +398,183 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 href="/spiritual-tours"
                 className={`px-3 py-2 rounded-xl transition-all font-medium inline-flex items-center gap-1.5 ${
                   currentPath.includes('/spiritual-tours')
-                    ? 'bg-amber-100/70 dark:bg-stone-800 text-amber-900 dark:text-amber-300 font-semibold'
+                    ? 'bg-amber-100/70 dark:bg-stone-850 text-amber-900 dark:text-amber-300 font-semibold'
                     : 'hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-amber-800 dark:hover:text-amber-300'
                 }`}
               >
-                <span>{t('nav.tours', 'Spiritual Tours')}</span>
+                <span>{language === 'hi' ? 'तीर्थ यात्रा पैकेज' : 'Spiritual Journeys'}</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-stone-500 transition-transform duration-200 ${activeDropdown === 'tours' ? 'rotate-180 text-amber-700 dark:text-amber-400' : ''}`} />
               </a>
 
               {/* Mega Dropdown Panel */}
               {activeDropdown === 'tours' && (
-                <div className="absolute top-full left-0 w-80 lg:w-96 pt-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="bg-white dark:bg-[#1C1917] rounded-2xl shadow-2xl border border-amber-200/60 dark:border-stone-800 p-3 space-y-1.5">
-                    <div className="px-3 py-1.5 border-b border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs font-serif text-amber-800 dark:text-amber-400">
-                      <span className="font-bold uppercase tracking-wider text-[11px]">Pilgrimage Circuits</span>
-                      <span className="text-[10px] font-sans bg-amber-100 dark:bg-amber-950/80 px-2 py-0.5 rounded-full text-amber-900 dark:text-amber-300 font-semibold">VIP Darshan & Stay</span>
-                    </div>
-
-                    <div className="py-1 space-y-1">
-                      {featuredTours.map((tour) => (
-                        <a
-                          key={tour.name}
-                          href={tour.href}
-                          className="p-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-stone-800/80 transition-colors flex items-start justify-between group"
-                        >
-                          <div className="space-y-0.5 min-w-0 pr-2">
-                            <div className="text-xs font-semibold text-stone-900 dark:text-stone-100 group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors truncate">
-                              {tour.name}
-                            </div>
-                            <div className="text-[11px] text-stone-500 dark:text-stone-400 truncate">
-                              {tour.desc}
-                            </div>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-[95vw] max-w-6xl pt-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="bg-white dark:bg-[#1C1917] rounded-3xl shadow-2xl border border-stone-200/80 dark:border-stone-800 p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-stone-800 dark:text-stone-200">
+                    
+                    {/* Column 1: UJJAIN YATRA */}
+                    <div className="flex flex-col justify-between h-full space-y-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/40">
+                            <Church className="w-5 h-5 text-rose-600 dark:text-rose-400" />
                           </div>
-                          <span className="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 border border-amber-300/40">
-                            {tour.tag}
-                          </span>
+                          <div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400 font-serif">
+                              {language === 'hi' ? 'उज्जैन यात्रा' : 'UJJAIN YATRA'}
+                            </h3>
+                            <p className="text-[10px] text-stone-500 dark:text-stone-400 font-serif italic leading-none mt-0.5">
+                              Traditional Yatras of Ujjain
+                            </p>
+                          </div>
+                        </div>
+                        <div className="h-px bg-stone-100 dark:bg-stone-800"></div>
+                        <ul className="space-y-2">
+                          {yatraItems.map((item) => (
+                            <li key={item.name}>
+                              <a
+                                href={item.href}
+                                className="text-xs font-semibold text-stone-900 dark:text-stone-100 hover:text-rose-600 dark:hover:text-rose-400 transition-colors flex items-center py-0.5"
+                              >
+                                <span className="text-[14px] text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                <span>{item.name}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href="/spiritual-tours"
+                          className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider transition-all"
+                        >
+                          <span>{language === 'hi' ? 'सभी यात्राएं' : 'View All Ujjain Yatras →'}</span>
                         </a>
-                      ))}
+                      </div>
                     </div>
 
-                    <div className="pt-2 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between px-2">
-                      <a
-                        href="/spiritual-tours"
-                        className="text-xs font-semibold text-amber-800 dark:text-amber-300 hover:text-amber-900 dark:hover:text-amber-200 flex items-center gap-1 transition-colors"
-                      >
-                        <span>View All Yatra Packages</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </a>
-                      <a
-                        href="/spiritual-tours/char-dham-yatra-uttarakhand"
-                        className="text-[11px] font-medium text-amber-700 dark:text-amber-400 hover:underline"
-                      >
-                        Char Dham Yatra →
-                      </a>
+                    {/* Column 2: TOURS */}
+                    <div className="flex flex-col justify-between h-full space-y-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 rounded-lg bg-orange-50 dark:bg-orange-950/40">
+                            <Compass className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-orange-850 dark:text-orange-400 font-serif">
+                              {language === 'hi' ? 'यात्रा पैकेज' : 'TOURS'}
+                            </h3>
+                            <p className="text-[10px] text-stone-500 dark:text-stone-400 font-serif italic leading-none mt-0.5">
+                              Pilgrimage Tour Packages
+                            </p>
+                          </div>
+                        </div>
+                        <div className="h-px bg-stone-100 dark:bg-stone-800"></div>
+                        <ul className="space-y-2">
+                          {tourItems.map((item) => (
+                            <li key={item.name}>
+                              <a
+                                href={item.href}
+                                className="text-xs font-semibold text-stone-900 dark:text-stone-100 hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center py-0.5"
+                              >
+                                <span className="text-[14px] text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                <span className="leading-snug">{item.name}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href="/spiritual-tours"
+                          className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider transition-all"
+                        >
+                          <span>{language === 'hi' ? 'सभी टूर देखें' : 'View All Tours →'}</span>
+                        </a>
+                      </div>
                     </div>
+
+                    {/* Column 3: HIMALAYAN PILGRIMAGE TOURS */}
+                    <div className="flex flex-col justify-between h-full space-y-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/40">
+                            <Mountain className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-amber-850 dark:text-amber-400 font-serif">
+                              {language === 'hi' ? 'हिमालयन यात्रा' : 'HIMALAYAN PILGRIMAGE'}
+                            </h3>
+                            <p className="text-[10px] text-stone-500 dark:text-stone-400 font-serif italic leading-none mt-0.5">
+                              Pilgrimage Journeys
+                            </p>
+                          </div>
+                        </div>
+                        <div className="h-px bg-stone-100 dark:bg-stone-800"></div>
+                        <ul className="space-y-2">
+                          {himalayanItems.map((item) => (
+                            <li key={item.name}>
+                              <a
+                                href={item.href}
+                                className="text-xs font-semibold text-stone-900 dark:text-stone-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center py-0.5"
+                              >
+                                <span className="text-[14px] text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                <span>{item.name}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href="/spiritual-tours"
+                          className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider transition-all"
+                        >
+                          <span>{language === 'hi' ? 'सभी धाम यात्राएं' : 'Explore All Tours →'}</span>
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Column 4: TREKKING */}
+                    <div className="flex flex-col justify-between h-full space-y-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40">
+                            <Mountain className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-serif">
+                              {language === 'hi' ? 'ट्रेकिंग' : 'TREKKING'}
+                            </h3>
+                            <p className="text-[10px] text-stone-500 dark:text-stone-400 font-serif italic leading-none mt-0.5">
+                              Uttarakhand Trekking
+                            </p>
+                          </div>
+                        </div>
+                        <div className="h-px bg-stone-100 dark:bg-stone-800"></div>
+                        <ul className="space-y-1.5 max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
+                          {trekkingItems.map((item) => (
+                            <li key={item.name}>
+                              <a
+                                href={item.href}
+                                className="text-xs font-semibold text-stone-900 dark:text-stone-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center py-0.5"
+                              >
+                                <span className="text-[14px] text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                <span>{item.name}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href="/spiritual-tours"
+                          className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider transition-all"
+                        >
+                          <span>{language === 'hi' ? 'सभी ट्रेक्स देखें' : 'Explore All Treks →'}</span>
+                        </a>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               )}
@@ -649,6 +810,184 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 {mobileNavLinks.map((link) => {
                   const Icon = link.icon;
                   const isActive = currentPath === link.href;
+
+                  // Conditional Accordion rendering for SPIRITUAL TOUR dropdown
+                  if (link.href === '/spiritual-tours') {
+                    return (
+                      <div key={link.label} className="space-y-1 border-y border-stone-800/40 py-2">
+                        {/* Parent Accordion trigger */}
+                        <button
+                          onClick={() => setMobileSpiritualOpen(!mobileSpiritualOpen)}
+                          className="w-full py-2 px-3.5 flex items-center justify-between text-rose-500 hover:text-rose-400 font-bold transition-all min-h-[40px]"
+                        >
+                          <span className="text-sm font-semibold">{language === 'hi' ? 'तीर्थ यात्रा पैकेज' : 'Spiritual Journeys'}</span>
+                          <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${mobileSpiritualOpen ? 'rotate-180 text-rose-500' : 'text-stone-500'}`} />
+                        </button>
+
+                        {/* Sub-categories visible only when parent is expanded */}
+                        {mobileSpiritualOpen && (
+                          <div className="pl-2 space-y-1 mt-1 animate-in fade-in slide-in-from-top-1 duration-200">
+                            {/* 1. UJJAIN YATRA Accordion */}
+                            <div className="border border-transparent">
+                              <button
+                                onClick={() => setMobileSubMenuOpen(mobileSubMenuOpen === 'yatra' ? null : 'yatra')}
+                                className="w-full py-2.5 px-3 px-3.5 rounded-xl hover:bg-stone-800/40 text-stone-200 hover:text-amber-200 transition-all flex items-center justify-between min-h-[44px]"
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="w-8 h-8 rounded-lg bg-stone-800/85 text-rose-500 flex items-center justify-center shrink-0">
+                                    <Church className="w-4 h-4" />
+                                  </div>
+                                  <span className="text-xs font-bold leading-tight">UJJAIN YATRA</span>
+                                </div>
+                                <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${mobileSubMenuOpen === 'yatra' ? 'rotate-180 text-rose-500' : 'text-stone-500'}`} />
+                              </button>
+
+                              {mobileSubMenuOpen === 'yatra' && (
+                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                  {yatraItems.map(item => (
+                                    <a
+                                      key={item.name}
+                                      href={item.href}
+                                      onClick={handleCloseDrawer}
+                                      className="block py-1.5 text-xs text-stone-300 hover:text-amber-300 transition-colors flex items-center"
+                                    >
+                                      <span className="text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                      <span>{item.name}</span>
+                                    </a>
+                                  ))}
+                                  <a
+                                    href="/spiritual-tours"
+                                    onClick={handleCloseDrawer}
+                                    className="inline-block mt-2 px-3 py-1.5 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider"
+                                  >
+                                    View All Ujjain Yatras →
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* 2. TOURS Accordion */}
+                            <div className="border border-transparent">
+                              <button
+                                onClick={() => setMobileSubMenuOpen(mobileSubMenuOpen === 'tours' ? null : 'tours')}
+                                className="w-full py-2.5 px-3 px-3.5 rounded-xl hover:bg-stone-800/40 text-stone-200 hover:text-amber-200 transition-all flex items-center justify-between min-h-[44px]"
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="w-8 h-8 rounded-lg bg-stone-800/85 text-orange-500 flex items-center justify-center shrink-0">
+                                    <Compass className="w-4 h-4" />
+                                  </div>
+                                  <span className="text-xs font-bold leading-tight">TOURS</span>
+                                </div>
+                                <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${mobileSubMenuOpen === 'tours' ? 'rotate-180 text-rose-500' : 'text-stone-500'}`} />
+                              </button>
+
+                              {mobileSubMenuOpen === 'tours' && (
+                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                  {tourItems.map(item => (
+                                    <a
+                                      key={item.name}
+                                      href={item.href}
+                                      onClick={handleCloseDrawer}
+                                      className="block py-1.5 text-xs text-stone-300 hover:text-amber-300 transition-colors flex items-center"
+                                    >
+                                      <span className="text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                      <span>{item.name}</span>
+                                    </a>
+                                  ))}
+                                  <a
+                                    href="/spiritual-tours"
+                                    onClick={handleCloseDrawer}
+                                    className="inline-block mt-2 px-3 py-1.5 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider"
+                                  >
+                                    View All Tours →
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* 3. HIMALAYAN PILGRIMAGE Accordion */}
+                            <div className="border border-transparent">
+                              <button
+                                onClick={() => setMobileSubMenuOpen(mobileSubMenuOpen === 'himalayan' ? null : 'himalayan')}
+                                className="w-full py-2.5 px-3 px-3.5 rounded-xl hover:bg-stone-800/40 text-stone-200 hover:text-amber-200 transition-all flex items-center justify-between min-h-[44px]"
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="w-8 h-8 rounded-lg bg-stone-800/85 text-amber-500 flex items-center justify-center shrink-0">
+                                    <Mountain className="w-4 h-4" />
+                                  </div>
+                                  <span className="text-xs font-bold leading-tight">HIMALAYAN PILGRIMAGE</span>
+                                </div>
+                                <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${mobileSubMenuOpen === 'himalayan' ? 'rotate-180 text-rose-500' : 'text-stone-500'}`} />
+                              </button>
+
+                              {mobileSubMenuOpen === 'himalayan' && (
+                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                  {himalayanItems.map(item => (
+                                    <a
+                                      key={item.name}
+                                      href={item.href}
+                                      onClick={handleCloseDrawer}
+                                      className="block py-1.5 text-xs text-stone-300 hover:text-amber-300 transition-colors flex items-center"
+                                    >
+                                      <span className="text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                      <span>{item.name}</span>
+                                    </a>
+                                  ))}
+                                  <a
+                                    href="/spiritual-tours"
+                                    onClick={handleCloseDrawer}
+                                    className="inline-block mt-2 px-3 py-1.5 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider"
+                                  >
+                                    Explore All Tours →
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* 4. TREKKING Accordion */}
+                            <div className="border border-transparent">
+                              <button
+                                onClick={() => setMobileSubMenuOpen(mobileSubMenuOpen === 'trekking' ? null : 'trekking')}
+                                className="w-full py-2.5 px-3 px-3.5 rounded-xl hover:bg-stone-800/40 text-stone-200 hover:text-amber-200 transition-all flex items-center justify-between min-h-[44px]"
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <div className="w-8 h-8 rounded-lg bg-stone-800/85 text-emerald-50 flex items-center justify-center shrink-0">
+                                    <Mountain className="w-4 h-4" />
+                                  </div>
+                                  <span className="text-xs font-bold leading-tight">TREKKING</span>
+                                </div>
+                                <ChevronDown className={`w-4 h-4 shrink-0 transition-transform ${mobileSubMenuOpen === 'trekking' ? 'rotate-180 text-rose-500' : 'text-stone-500'}`} />
+                              </button>
+
+                              {mobileSubMenuOpen === 'trekking' && (
+                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50 max-h-[220px] overflow-y-auto scrollbar-thin">
+                                  {trekkingItems.map(item => (
+                                    <a
+                                      key={item.name}
+                                      href={item.href}
+                                      onClick={handleCloseDrawer}
+                                      className="block py-1.5 text-xs text-stone-300 hover:text-amber-300 transition-colors flex items-center"
+                                    >
+                                      <span className="text-rose-600 dark:text-rose-500 mr-2 font-bold leading-none select-none">•</span>
+                                      <span>{item.name}</span>
+                                    </a>
+                                  ))}
+                                  <a
+                                    href="/spiritual-tours"
+                                    onClick={handleCloseDrawer}
+                                    className="inline-block mt-2 px-3 py-1.5 rounded-lg border border-rose-600/40 text-rose-700 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-[10px] font-bold uppercase tracking-wider"
+                                  >
+                                    Explore All Treks →
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <a
                       key={link.label}
