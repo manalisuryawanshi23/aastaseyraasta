@@ -46,7 +46,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [role, setRole] = useState<AdminRole>('Editor');
+  const [role, setRole] = useState<AdminRole>('Manager');
   const [passcode, setPasscode] = useState('');
   const [status, setStatus] = useState<'Active' | 'Inactive'>('Active');
   const [showPasscodes, setShowPasscodes] = useState<Record<string, boolean>>({});
@@ -73,7 +73,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     setName('');
     setEmail('');
     setPhone('');
-    setRole('Editor');
+    setRole('Manager');
     setPasscode(`pass${Math.floor(1000 + Math.random() * 9000)}`);
     setStatus('Active');
     setPermissions({
@@ -118,17 +118,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canViewOverview: true,
         canManageLeads: true,
         canManageBlogs: true,
-        canManageServices: true,
-        canManageSettings: false,
-        canManageSocials: false,
-        canManageStaff: false,
-      });
-    } else {
-      setPermissions({
-        canViewOverview: true,
-        canManageLeads: false,
-        canManageBlogs: true,
-        canManageServices: true,
+        canManageServices: false,
         canManageSettings: false,
         canManageSocials: false,
         canManageStaff: false,
@@ -201,7 +191,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
             Staff Access & Permissions Management
           </h2>
           <p className="text-xs md:text-sm text-amber-200/80 leading-relaxed">
-            Assign custom roles (Admin, Manager, Editor) to temple staff & digital managers. Control access to devotee CRM leads, blog engine, and pricing.
+            Assign custom roles (Admin, Manager) to temple staff & digital managers. Control access to devotee CRM leads, blog engine, and pricing.
           </p>
         </div>
 
@@ -254,24 +244,6 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
           </div>
         </div>
 
-        {/* Role 3: Editor */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-amber-900/40 shadow-sm space-y-3 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-blue-500" />
-              <span className="font-serif font-bold text-stone-900 dark:text-stone-100">Editor (Content Specialist)</span>
-            </div>
-            <span className="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[10px] font-mono font-bold">
-              Blog & Services
-            </span>
-          </div>
-          <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-            Restricted content editor. Can write/edit WordPress articles and service details. Protected from seeing sensitive devotee CRM phone numbers.
-          </p>
-          <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
-            Demo Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">editor123</span>
-          </div>
-        </div>
       </div>
 
       {/* Search & Role Filters Bar */}
@@ -290,7 +262,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
 
         {/* Role Pills */}
         <div className="flex items-center gap-2 self-start md:self-auto overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-          {(['All', 'Admin', 'Manager', 'Editor'] as const).map((r) => (
+          {(['All', 'Admin', 'Manager'] as const).map((r) => (
             <button
               key={r}
               onClick={() => setRoleFilter(r)}
@@ -369,9 +341,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                         className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono border ${
                           staff.role === 'Admin'
                             ? 'bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300 border-red-200 dark:border-red-900'
-                            : staff.role === 'Manager'
-                            ? 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900'
-                            : 'bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-900'
+                            : 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900'
                         }`}
                       >
                         {staff.role}
@@ -536,7 +506,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
               <div className="space-y-1">
                 <label className="font-bold text-stone-700 dark:text-stone-300">Assigned Role Preset</label>
                 <div className="grid grid-cols-3 gap-2">
-                  {(['Admin', 'Manager', 'Editor'] as const).map((r) => (
+                  {(['Admin', 'Manager'] as const).map((r) => (
                     <button
                       type="button"
                       key={r}

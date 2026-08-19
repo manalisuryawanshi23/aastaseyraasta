@@ -59,26 +59,7 @@ export const initialStaffUsers: StaffUser[] = [
       canViewOverview: true,
       canManageLeads: true,
       canManageBlogs: true,
-      canManageServices: true,
-      canManageSettings: false,
-      canManageSocials: false,
-      canManageStaff: false,
-    },
-  },
-  {
-    id: 'staff-3',
-    name: 'Ananya Verma',
-    email: 'editor@aasthaseva.com',
-    role: 'Editor',
-    passcode: 'editor123',
-    phone: '+91 98260 00003',
-    status: 'Active',
-    lastLogin: '2026-08-09 05:45 PM',
-    permissions: {
-      canViewOverview: true,
-      canManageLeads: false,
-      canManageBlogs: true,
-      canManageServices: true,
+      canManageServices: false,
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
@@ -822,15 +803,13 @@ export class StoreService {
     } else {
       const defaultPermissions = user.role === 'Admin'
         ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true }
-        : user.role === 'Manager'
-        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false }
-        : { canViewOverview: true, canManageLeads: false, canManageBlogs: true, canManageServices: true, canManageSettings: false, canManageSocials: false, canManageStaff: false };
+        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false };
 
       resultUser = {
         id: `staff-${Date.now()}`,
         name: user.name || 'Staff Member',
         email: user.email || 'staff@aasthaseva.com',
-        role: user.role || 'Editor',
+        role: user.role || 'Manager',
         passcode: user.passcode || 'pass123',
         phone: user.phone || '',
         status: user.status || 'Active',

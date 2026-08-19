@@ -341,17 +341,7 @@ async function seed() {
     canViewOverview: true,
     canManageLeads: true,
     canManageBlogs: true,
-    canManageServices: true,
-    canManageSettings: false,
-    canManageSocials: false,
-    canManageStaff: false,
-  });
-
-  const editorPermissions = JSON.stringify({
-    canViewOverview: true,
-    canManageLeads: false,
-    canManageBlogs: true,
-    canManageServices: true,
+    canManageServices: false,
     canManageSettings: false,
     canManageSocials: false,
     canManageStaff: false,
@@ -359,7 +349,6 @@ async function seed() {
 
   const pass1 = await bcrypt.hash('AasthaAdmin#2026', 10);
   const pass2 = await bcrypt.hash('manager123', 10);
-  const pass3 = await bcrypt.hash('editor123', 10);
 
   await execute(
     `INSERT INTO admin_users (id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json, last_login)
@@ -373,13 +362,7 @@ async function seed() {
     ['staff-manager-1', 'manager', pass2, 'manager123', 'Rajesh Sharma (Operations Manager)', 'manager@aasthaseva.com', '+91 98260 11111', 'Manager', 1, managerPermissions, 'Never']
   );
 
-  await execute(
-    `INSERT INTO admin_users (id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json, last_login)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    ['staff-editor-1', 'editor', pass3, 'editor123', 'Priya Verma (Content Editor)', 'editor@aasthaseva.com', '+91 98260 22222', 'Editor', 1, editorPermissions, 'Never']
-  );
-
-  console.log('✅ Seeded 3 admin & staff users (Admin: mahakal, Manager: manager123, Editor: editor123).');
+  console.log('✅ Seeded 2 admin & staff users (Admin: mahakal, Manager: manager123).');
 
   console.log('🎉 Seeding completed successfully!');
   process.exit(0);

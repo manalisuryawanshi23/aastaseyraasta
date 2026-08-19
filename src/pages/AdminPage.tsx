@@ -10,6 +10,8 @@ import { AdminStaffManager } from '../components/admin/AdminStaffManager';
 import { AdminBrandColorPicker } from '../components/admin/AdminBrandColorPicker';
 import { AdminDataExportManager } from '../components/admin/AdminDataExportManager';
 import { Lead, StaffUser, AdminRole } from '../types';
+import { AdminGalleryManager } from '../components/admin/AdminGalleryManager';
+import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsManager';
 import {
   Lock,
   Users,
@@ -96,15 +98,65 @@ const initialSampleLeads: Lead[] = [
   },
 ];
 
-type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff';
+type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials';
 
-export const AdminPage: React.FC = () => {
+interface AdminPageProps {
+  defaultPath?: string;
+}
+
+export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [currentStaffUser, setCurrentStaffUser] = useState<StaffUser | null>(null);
 
-  const [activeTab, setActiveTab] = useState<AdminTab>('Overview');
+  const resolveTabFromPath = (pathStr: string): AdminTab => {
+    const p = pathStr.toLowerCase().replace(/\/$/, '');
+    if (p.endsWith('/dashboard') || p.endsWith('/admin')) return 'Overview';
+    if (p.endsWith('/leads')) return 'Leads';
+    if (p.endsWith('/blog')) return 'Blog';
+    if (p.endsWith('/services')) return 'Services';
+    if (p.endsWith('/dataexport')) return 'DataExport';
+    if (p.endsWith('/informative')) return 'Informative';
+    if (p.endsWith('/brandcolors') || p.endsWith('/brand')) return 'BrandColors';
+    if (p.endsWith('/socials')) return 'Socials';
+    if (p.endsWith('/staff')) return 'Staff';
+    if (p.endsWith('/gallery')) return 'Gallery';
+    if (p.endsWith('/testimonials')) return 'Testimonials';
+    return 'Overview';
+  };
+
+  const [activeTab, setActiveTab] = useState<AdminTab>(() => {
+    if (defaultPath) {
+      return resolveTabFromPath(defaultPath);
+    }
+    if (typeof window !== 'undefined') {
+      return resolveTabFromPath(window.location.pathname);
+    }
+    return 'Overview';
+  });
+
+  const changeTab = (tab: AdminTab) => {
+    setActiveTab(tab);
+    if (typeof window !== 'undefined') {
+      const subpath = tab === 'Overview' ? 'dashboard' : tab.toLowerCase();
+      window.history.pushState({}, '', `/admin/${subpath}`);
+    }
+  };
+
+  // Enforce access control and URL redirections for Manager
+  useEffect(() => {
+    if (isAuthenticated && currentStaffUser) {
+      if (currentStaffUser.role === 'Manager') {
+        const restrictedTabs = ['Services', 'BrandColors', 'Informative', 'Socials', 'Staff'];
+        if (restrictedTabs.includes(activeTab)) {
+          changeTab('Overview');
+          alert('Access Denied (403 Forbidden): Manager role does not have permission to access the Pooja, Yatra, or System Settings modules.');
+        }
+      }
+    }
+  }, [activeTab, isAuthenticated, currentStaffUser]);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Re-read fresh MySQL data when API sync fires
@@ -150,15 +202,21 @@ export const AdminPage: React.FC = () => {
 
       // Select default permitted tab
       const p = staffUser.permissions;
-      if (p.canViewOverview) setActiveTab('Overview');
-      else if (p.canManageLeads) setActiveTab('Leads');
-      else if (p.canManageBlogs) setActiveTab('Blog');
-      else if (p.canManageServices) setActiveTab('Services');
-      else if (p.canManageSettings) setActiveTab('Informative');
-      else if (p.canManageSocials) setActiveTab('Socials');
-      else if (p.canManageStaff) setActiveTab('Staff');
+      if (defaultPath) {
+        changeTab(resolveTabFromPath(defaultPath));
+      } else if (typeof window !== 'undefined') {
+        changeTab(resolveTabFromPath(window.location.pathname));
+      } else {
+        if (p.canViewOverview) changeTab('Overview');
+        else if (p.canManageLeads) changeTab('Leads');
+        else if (p.canManageBlogs) changeTab('Blog');
+        else if (p.canManageServices) changeTab('Services');
+        else if (p.canManageSettings) changeTab('Informative');
+        else if (p.canManageSocials) changeTab('Socials');
+        else if (p.canManageStaff) changeTab('Staff');
+      }
     } else {
-      setLoginError('Invalid passcode. Use "admin123" (Admin), "manager123" (Manager), or "editor123" (Editor)');
+      setLoginError('Invalid passcode. Use "admin123" (Admin) or "manager123" (Manager)');
     }
   };
 
@@ -389,214 +447,364 @@ export const AdminPage: React.FC = () => {
 
           {/* Navigation Links */}
           <nav className="space-y-6">
-            {/* GROUP 1: OVERVIEW */}
-            {userPerms?.canViewOverview && (
-              <div>
-                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Main Dashboard</div>
-                <button
-                  onClick={() => {
-                    setActiveTab('Overview');
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                    activeTab === 'Overview'
-                      ? 'bg-amber-600 text-white shadow-md'
-                      : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <LayoutDashboard className="w-4 h-4" />
-                    <span>Overview & KPIs</span>
-                  </div>
-                  {activeTab === 'Overview' && <ChevronRight className="w-3.5 h-3.5" />}
-                </button>
-              </div>
-            )}
-
-            {/* GROUP 2: INQUIRIES */}
-            {userPerms?.canManageLeads && (
-              <div>
-                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Devotee CRM</div>
-                <button
-                  onClick={() => {
-                    setActiveTab('Leads');
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                    activeTab === 'Leads'
-                      ? 'bg-amber-600 text-white shadow-md'
-                      : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Users className="w-4 h-4" />
-                    <span>Devotee Enquiries</span>
-                  </div>
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
-                      activeTab === 'Leads'
-                        ? 'bg-amber-800 text-amber-100'
-                        : 'bg-stone-800 text-amber-400 border border-stone-700'
+            {currentStaffUser?.role === 'Manager' ? (
+              <>
+                {/* MAIN DASHBOARD */}
+                <div>
+                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">MAIN DASHBOARD</div>
+                  <button
+                    onClick={() => {
+                      changeTab('Overview');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Overview'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
                     }`}
                   >
-                    {leads.length}
-                  </span>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setActiveTab('DataExport');
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                    activeTab === 'DataExport'
-                      ? 'bg-amber-600 text-white shadow-md'
-                      : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Download className="w-4 h-4 text-amber-400" />
-                    <span>Data Export & CSV Reports</span>
-                  </div>
-                </button>
-              </div>
-            )}
-
-            {/* GROUP 3: CONTENT ENGINE */}
-            {(userPerms?.canManageBlogs || userPerms?.canManageServices) && (
-              <div>
-                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Content Engine</div>
-                <div className="space-y-1">
-                  {userPerms?.canManageBlogs && (
-                    <button
-                      onClick={() => {
-                        setActiveTab('Blog');
-                        setSidebarOpen(false);
-                      }}
-                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                        activeTab === 'Blog'
-                          ? 'bg-amber-600 text-white shadow-md'
-                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <FileText className="w-4 h-4" />
-                        <span>WordPress Blog CMS</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-stone-400">{blogs.length}</span>
-                    </button>
-                  )}
-
-                  {userPerms?.canManageServices && (
-                    <button
-                      onClick={() => {
-                        setActiveTab('Services');
-                        setSidebarOpen(false);
-                      }}
-                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                        activeTab === 'Services'
-                          ? 'bg-amber-600 text-white shadow-md'
-                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Flame className="w-4 h-4" />
-                        <span>Pooja & Yatra Services</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-stone-400">{poojas.length}</span>
-                    </button>
-                  )}
+                    <div className="flex items-center gap-2.5">
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Overview & KPIs</span>
+                    </div>
+                  </button>
                 </div>
-              </div>
-            )}
 
-            {/* GROUP 4: SITE CONTROL */}
-            {(userPerms?.canManageSettings || userPerms?.canManageSocials) && (
-              <div>
-                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Site Management</div>
-                <div className="space-y-1">
-                  {userPerms?.canManageSettings && (
-                    <>
-                      <button
-                        onClick={() => {
-                          setActiveTab('BrandColors');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'BrandColors'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Palette className="w-4 h-4" />
-                          <span>Brand Color Palette</span>
-                        </div>
-                      </button>
+                {/* DEVOTEE CRM */}
+                <div>
+                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">DEVOTEE CRM</div>
+                  <button
+                    onClick={() => {
+                      changeTab('Leads');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Leads'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Users className="w-4 h-4" />
+                      <span>Devotee Enquiries</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
+                      {leads.length}
+                    </span>
+                  </button>
 
-                      <button
-                        onClick={() => {
-                          setActiveTab('Informative');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'Informative'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Info className="w-4 h-4" />
-                          <span>Banner & Details</span>
-                        </div>
-                      </button>
-                    </>
-                  )}
+                  <button
+                    onClick={() => {
+                      changeTab('DataExport');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'DataExport'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Download className="w-4 h-4 text-amber-400" />
+                      <span>Data Export & CSV Reports</span>
+                    </div>
+                  </button>
+                </div>
 
-                  {userPerms?.canManageSocials && (
+                {/* CONTENT ENGINE */}
+                <div>
+                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">CONTENT ENGINE</div>
+                  <button
+                    onClick={() => {
+                      changeTab('Blog');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Blog'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <FileText className="w-4 h-4" />
+                      <span>WordPress Blog CMS</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-stone-400">{blogs.length}</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      changeTab('Gallery');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Gallery'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <BarChart3 className="w-4 h-4 text-amber-400" />
+                      <span>Gallery Management</span>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      changeTab('Testimonials');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Testimonials'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <MessageCircle className="w-4 h-4 text-amber-400" />
+                      <span>Testimonials Management</span>
+                    </div>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* ADMIN / OTHER ROLES SIDEBAR */}
+                {userPerms?.canViewOverview && (
+                  <div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Main Dashboard</div>
                     <button
                       onClick={() => {
-                        setActiveTab('Socials');
+                        changeTab('Overview');
                         setSidebarOpen(false);
                       }}
                       className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                        activeTab === 'Socials'
+                        activeTab === 'Overview'
                           ? 'bg-amber-600 text-white shadow-md'
                           : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Share2 className="w-4 h-4" />
-                        <span>Social Media Channels</span>
+                        <LayoutDashboard className="w-4 h-4" />
+                        <span>Overview & KPIs</span>
                       </div>
                     </button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* GROUP 5: STAFF & PERMISSIONS */}
-            {userPerms?.canManageStaff && (
-              <div>
-                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Access Control</div>
-                <button
-                  onClick={() => {
-                    setActiveTab('Staff');
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                    activeTab === 'Staff'
-                      ? 'bg-amber-600 text-white shadow-md'
-                      : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <ShieldCheck className="w-4 h-4 text-amber-400" />
-                    <span>Staff Roles & RBAC</span>
                   </div>
-                  {activeTab === 'Staff' && <ChevronRight className="w-3.5 h-3.5" />}
-                </button>
-              </div>
+                )}
+
+                {userPerms?.canManageLeads && (
+                  <div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Devotee CRM</div>
+                    <button
+                      onClick={() => {
+                        changeTab('Leads');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Leads'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Users className="w-4 h-4" />
+                        <span>Devotee Enquiries</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
+                        {leads.length}
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        changeTab('DataExport');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'DataExport'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Download className="w-4 h-4 text-amber-400" />
+                        <span>Data Export & CSV Reports</span>
+                      </div>
+                    </button>
+                  </div>
+                )}
+
+                {(userPerms?.canManageBlogs || userPerms?.canManageServices) && (
+                  <div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Content Engine</div>
+                    <div className="space-y-1">
+                      {userPerms?.canManageServices && (
+                        <button
+                          onClick={() => {
+                            changeTab('Services');
+                            setSidebarOpen(false);
+                          }}
+                          className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                            activeTab === 'Services'
+                              ? 'bg-amber-600 text-white shadow-md'
+                              : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <Flame className="w-4 h-4" />
+                            <span>Pooja & Yatra Services</span>
+                          </div>
+                          <span className="text-[10px] font-mono text-stone-400">{poojas.length}</span>
+                        </button>
+                      )}
+
+                      {userPerms?.canManageBlogs && (
+                        <button
+                          onClick={() => {
+                            changeTab('Blog');
+                            setSidebarOpen(false);
+                          }}
+                          className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                            activeTab === 'Blog'
+                              ? 'bg-amber-600 text-white shadow-md'
+                              : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <FileText className="w-4 h-4" />
+                            <span>WordPress Blog CMS</span>
+                          </div>
+                          <span className="text-[10px] font-mono text-stone-400">{blogs.length}</span>
+                        </button>
+                      )}
+
+                      {currentStaffUser?.role === 'Admin' && (
+                        <>
+                          <button
+                            onClick={() => {
+                              changeTab('Gallery');
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                              activeTab === 'Gallery'
+                                ? 'bg-amber-600 text-white shadow-md'
+                                : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <BarChart3 className="w-4 h-4 text-amber-400" />
+                              <span>Gallery Management</span>
+                            </div>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              changeTab('Testimonials');
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                              activeTab === 'Testimonials'
+                                ? 'bg-amber-600 text-white shadow-md'
+                                : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <MessageCircle className="w-4 h-4 text-amber-400" />
+                              <span>Testimonials Management</span>
+                            </div>
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {(userPerms?.canManageSettings || userPerms?.canManageSocials) && (
+                  <div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Site Management</div>
+                    <div className="space-y-1">
+                      {userPerms?.canManageSettings && (
+                        <>
+                          <button
+                            onClick={() => {
+                              changeTab('BrandColors');
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                              activeTab === 'BrandColors'
+                                ? 'bg-amber-600 text-white shadow-md'
+                                : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <Palette className="w-4 h-4" />
+                              <span>Brand Color Palette</span>
+                            </div>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              changeTab('Informative');
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                              activeTab === 'Informative'
+                                ? 'bg-amber-600 text-white shadow-md'
+                                : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <Info className="w-4 h-4" />
+                              <span>Banner & Details</span>
+                            </div>
+                          </button>
+                        </>
+                      )}
+
+                      {userPerms?.canManageSocials && (
+                        <button
+                          onClick={() => {
+                            changeTab('Socials');
+                            setSidebarOpen(false);
+                          }}
+                          className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                            activeTab === 'Socials'
+                              ? 'bg-amber-600 text-white shadow-md'
+                              : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <Share2 className="w-4 h-4" />
+                            <span>Social Media Channels</span>
+                          </div>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {userPerms?.canManageStaff && (
+                  <div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Access Control</div>
+                    <button
+                      onClick={() => {
+                        changeTab('Staff');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Staff'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <ShieldCheck className="w-4 h-4 text-amber-400" />
+                        <span>Staff Roles & RBAC</span>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </nav>
         </div>
@@ -658,6 +866,8 @@ export const AdminPage: React.FC = () => {
                 {activeTab === 'Informative' && 'Site Banners & Informative Details'}
                 {activeTab === 'Socials' && 'Social Media Handles Control'}
                 {activeTab === 'Staff' && 'Staff Access & Roles (RBAC)'}
+                {activeTab === 'Gallery' && 'Homepage Gallery Manager'}
+                {activeTab === 'Testimonials' && 'Customer Testimonials Manager'}
               </h1>
             </div>
           </div>
@@ -690,9 +900,12 @@ export const AdminPage: React.FC = () => {
               leads={leads}
               blogCount={blogs.length}
               poojaCount={poojas.length}
+              galleryCount={StoreService.getGallery().length}
+              testimonialsCount={StoreService.getTestimonials().length}
               bannerActive={!!settings.announcementBanner?.isActive}
               bannerText={settings.announcementBanner?.text}
-              onNavigateTab={(tab) => setActiveTab(tab)}
+              onNavigateTab={(tab) => changeTab(tab as any)}
+              role={currentStaffUser?.role}
             />
           )}
 
@@ -958,6 +1171,16 @@ export const AdminPage: React.FC = () => {
             />
           )}
 
+          {/* TAB 8: GALLERY MANAGEMENT */}
+          {activeTab === 'Gallery' && (currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
+            <AdminGalleryManager />
+          )}
+
+          {/* TAB 9: TESTIMONIALS MANAGEMENT */}
+          {activeTab === 'Testimonials' && (currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
+            <AdminTestimonialsManager />
+          )}
+
           {/* PERMISSION DENIED FALLBACK */}
           {((activeTab === 'Leads' && !userPerms?.canManageLeads) ||
             (activeTab === 'Blog' && !userPerms?.canManageBlogs) ||
@@ -965,7 +1188,9 @@ export const AdminPage: React.FC = () => {
             (activeTab === 'DataExport' && !userPerms?.canManageLeads && !userPerms?.canManageSettings) ||
             (activeTab === 'Informative' && !userPerms?.canManageSettings) ||
             (activeTab === 'Socials' && !userPerms?.canManageSocials) ||
-            (activeTab === 'Staff' && !userPerms?.canManageStaff)) && (
+            (activeTab === 'Staff' && !userPerms?.canManageStaff) ||
+            (activeTab === 'Gallery' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
+            (activeTab === 'Testimonials' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (
             <div className="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-center space-y-4 max-w-lg mx-auto my-12">
               <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300 flex items-center justify-center mx-auto">
                 <ShieldAlert className="w-8 h-8" />
@@ -977,7 +1202,7 @@ export const AdminPage: React.FC = () => {
                 Your account (<strong className="text-stone-900 dark:text-stone-200">{currentStaffUser?.email}</strong>) does not have permission to access the <strong className="text-amber-700 dark:text-amber-400">{activeTab}</strong> module. Please contact the Super Admin (Pt. Sharma) to upgrade your staff permissions.
               </p>
               <button
-                onClick={() => setActiveTab('Overview')}
+                onClick={() => changeTab('Overview')}
                 className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition-all"
               >
                 Return to Overview Dashboard

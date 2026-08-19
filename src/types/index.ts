@@ -407,7 +407,7 @@ export interface User {
   email: string;
 }
 
-export type AdminRole = 'Admin' | 'Manager' | 'Editor';
+export type AdminRole = 'Admin' | 'Manager';
 
 export interface AdminPermission {
   canViewOverview: boolean;

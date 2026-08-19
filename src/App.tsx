@@ -24,7 +24,6 @@ import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
 import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
-import { MoolShantiPoojaPage } from './pages/MoolShantiPoojaPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
 import { useApiSync } from './hooks/useApiSync';
@@ -106,7 +105,11 @@ export default function App() {
     }
 
     if (path === '/mool-shanti-pooja-ujjain') {
-      return <MoolShantiPoojaPage onOpenBooking={handleOpenBooking} />;
+      return <PoojaDetailPage slug="mool-shanti-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/rudrabhishek-pooja-ujjain') {
+      return <PoojaDetailPage slug="rudrabhishek-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {
@@ -176,8 +179,8 @@ export default function App() {
       return <HTMLSitemapPage />;
     }
 
-    if (path === '/admin') {
-      return <AdminPage />;
+    if (path.startsWith('/admin')) {
+      return <AdminPage defaultPath={path} />;
     }
 
     // Default fallback to Home

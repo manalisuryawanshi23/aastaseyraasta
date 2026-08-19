@@ -55,6 +55,32 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
   const [reviewPhotoUrl, setReviewPhotoUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setReviewPhotoUrl(data.url);
+      } else {
+        alert((language === 'hi' ? 'अपलोड विफल: ' : 'Upload failed: ') + data.error);
+      }
+    } catch (err) {
+      alert(language === 'hi' ? 'फोटो अपलोड करने में त्रुटि हुई' : 'Error uploading photo');
+    }
+    setIsUploading(false);
+  };
 
   // Lightbox modal for review photo view
   const [selectedImage, setSelectedImage] = useState<{ url: string; title: string } | null>(null);
@@ -511,18 +537,67 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                   />
                 </div>
 
-                {/* Optional Review Image URL */}
-                <div>
-                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    {language === 'hi' ? 'फोटो यूआरएल (वैकल्पिक मंदिर या प्रसाद फोटो)' : 'Photo URL (Optional Temple or Prasad Photo)'}
+                {/* Optional Review Image Upload or URL */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300">
+                    {language === 'hi' ? 'फोटो (वैकल्पिक मंदिर, प्रसाद या दर्शन फोटो)' : 'Photo (Optional Temple, Prasad, or Darshan Photo)'}
                   </label>
-                  <input
-                    type="url"
-                    value={reviewPhotoUrl}
-                    onChange={(e) => setReviewPhotoUrl(e.target.value)}
-                    placeholder="https://..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
-                  />
+                  
+                  {reviewPhotoUrl ? (
+                    <div className="relative rounded-2xl overflow-hidden border border-amber-200 dark:border-stone-800 max-w-xs bg-stone-50 dark:bg-stone-900/50 p-2 flex items-center gap-3">
+                      <img
+                        src={reviewPhotoUrl}
+                        alt="Preview"
+                        className="w-16 h-16 rounded-xl object-cover border border-stone-200 dark:border-stone-800 shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[10px] text-stone-500 dark:text-stone-400 truncate">
+                          {reviewPhotoUrl}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setReviewPhotoUrl('')}
+                          className="mt-1 text-[11px] font-bold text-red-650 hover:underline block"
+                        >
+                          {language === 'hi' ? 'फोटो हटाएं' : 'Remove Photo'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* File Upload Zone */}
+                      <label className="border-2 border-dashed border-stone-300 dark:border-stone-700 hover:border-amber-500 dark:hover:border-amber-700 rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer bg-stone-50/50 dark:bg-stone-900/50 hover:bg-amber-50/20 dark:hover:bg-amber-950/10 transition-all text-center">
+                        <ImageIcon className="w-5 h-5 text-stone-450" />
+                        <span className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                          {isUploading ? (language === 'hi' ? 'अपलोड हो रहा है...' : 'Uploading...') : (language === 'hi' ? 'फोटो अपलोड करें' : 'Upload Image File')}
+                        </span>
+                        <span className="text-[10px] text-stone-500">
+                          {language === 'hi' ? 'PNG, JPG, WEBP (अधिकतम 10MB)' : 'PNG, JPG, WEBP (Max 10MB)'}
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={isUploading}
+                          className="hidden"
+                        />
+                      </label>
+
+                      {/* Manual Image URL field */}
+                      <div className="flex flex-col justify-center">
+                        <span className="text-[10px] text-stone-500 font-bold block mb-1">
+                          {language === 'hi' ? 'या फोटो का वेब यूआरएल दर्ज करें:' : 'Or enter a web photo URL:'}
+                        </span>
+                        <input
+                          type="url"
+                          value={reviewPhotoUrl}
+                          onChange={(e) => setReviewPhotoUrl(e.target.value)}
+                          placeholder="https://example.com/photo.jpg"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-2 flex items-center justify-end gap-3">

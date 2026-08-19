@@ -40,9 +40,12 @@ interface AdminDashboardOverviewProps {
   leads: Lead[];
   blogCount: number;
   poojaCount: number;
+  galleryCount?: number;
+  testimonialsCount?: number;
   bannerActive: boolean;
   bannerText?: string;
-  onNavigateTab: (tab: 'Leads' | 'Blog' | 'Services' | 'Informative' | 'Socials') => void;
+  onNavigateTab: (tab: any) => void;
+  role?: string;
 }
 
 // Sample time-series data for Booking Trends (past 10 days)
@@ -90,9 +93,12 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
   leads,
   blogCount,
   poojaCount,
+  galleryCount = 0,
+  testimonialsCount = 0,
   bannerActive,
   bannerText,
   onNavigateTab,
+  role = 'Admin',
 }) => {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('7d');
 
@@ -216,29 +222,49 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         </div>
 
         {/* Metric 4 */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
-          <div className="flex items-center justify-between text-stone-500 dark:text-stone-400">
-            <span className="text-xs font-bold uppercase tracking-wider">Active Services</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center">
-              <Flame className="w-5 h-5" />
+        {role === 'Manager' ? (
+          <div className="p-5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm space-y-2 relative overflow-hidden">
+            <div className="flex items-center justify-between text-stone-500 dark:text-stone-400">
+              <span className="text-xs font-bold uppercase tracking-wider">Testimonials Approved</span>
+              <div className="w-9 h-9 rounded-xl bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 flex items-center justify-center">
+                <MessageCircle className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100">{testimonialsCount}</div>
+              <span className="text-xs font-bold text-stone-500">Reviews</span>
+            </div>
+            <div className="text-[11px] text-stone-550 font-medium flex items-center gap-1 pt-1">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                Verified Devotees
+              </span>
             </div>
           </div>
-          <div className="flex items-baseline gap-2">
-            <div className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100">{poojaCount}</div>
-            <span className="text-xs font-bold text-stone-500">Packages</span>
+        ) : (
+          <div className="p-5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-sm space-y-2">
+            <div className="flex items-center justify-between text-stone-500 dark:text-stone-400">
+              <span className="text-xs font-bold uppercase tracking-wider">Active Services</span>
+              <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center">
+                <Flame className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100">{poojaCount}</div>
+              <span className="text-xs font-bold text-stone-500">Packages</span>
+            </div>
+            <div className="text-[11px] font-medium flex items-center gap-1 pt-1">
+              <span
+                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                  bannerActive
+                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                    : 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-400'
+                }`}
+              >
+                {bannerActive ? 'Banner Active' : 'Banner Hidden'}
+              </span>
+            </div>
           </div>
-          <div className="text-[11px] font-medium flex items-center gap-1 pt-1">
-            <span
-              className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                bannerActive
-                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
-                  : 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-400'
-              }`}
-            >
-              {bannerActive ? 'Banner Active' : 'Banner Hidden'}
-            </span>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* CHART SECTION 1: Booking Trends Over Time */}
@@ -541,7 +567,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <span>Devotee Enquiries</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
             </div>
-            <div className="text-[11px] text-stone-500">Filter, export, and respond to devotee inquiries.</div>
+            <div className="text-[11px] text-stone-550">Filter, export, and respond to devotee inquiries.</div>
           </button>
 
           <button
@@ -555,36 +581,70 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <span>WordPress Blog CMS</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
             </div>
-            <div className="text-[11px] text-stone-500">Publish articles, SEO tags, and pilgrim guides.</div>
+            <div className="text-[11px] text-stone-550">Publish articles, SEO tags, and pilgrim guides.</div>
           </button>
 
-          <button
-            onClick={() => onNavigateTab('Services')}
-            className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
-          >
-            <div className="w-8 h-8 rounded-xl bg-red-600 text-white flex items-center justify-center">
-              <Flame className="w-4 h-4" />
-            </div>
-            <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
-              <span>Pooja & Yatra Packages</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
-            </div>
-            <div className="text-[11px] text-stone-500">Update dakshina pricing, benefits, and steps.</div>
-          </button>
+          {role === 'Manager' ? (
+            <>
+              <button
+                onClick={() => onNavigateTab('Gallery')}
+                className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
+              >
+                <div className="w-8 h-8 rounded-xl bg-amber-700 text-white flex items-center justify-center">
+                  <BarChart3 className="w-4 h-4" />
+                </div>
+                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
+                  <span>Gallery Management</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
+                </div>
+                <div className="text-[11px] text-stone-550">Upload, sort, and manage live photo gallery.</div>
+              </button>
 
-          <button
-            onClick={() => onNavigateTab('Informative')}
-            className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
-          >
-            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center">
-              <Info className="w-4 h-4" />
-            </div>
-            <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
-              <span>Announcement Banner</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
-            </div>
-            <div className="text-[11px] text-stone-500">Set top notification banner for special festivals.</div>
-          </button>
+              <button
+                onClick={() => onNavigateTab('Testimonials')}
+                className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
+              >
+                <div className="w-8 h-8 rounded-xl bg-pink-650 text-white flex items-center justify-center">
+                  <MessageCircle className="w-4 h-4" />
+                </div>
+                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
+                  <span>Testimonials Management</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
+                </div>
+                <div className="text-[11px] text-stone-550">Review and verify devotee experiences.</div>
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => onNavigateTab('Services')}
+                className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
+              >
+                <div className="w-8 h-8 rounded-xl bg-red-600 text-white flex items-center justify-center">
+                  <Flame className="w-4 h-4" />
+                </div>
+                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
+                  <span>Pooja & Yatra Packages</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
+                </div>
+                <div className="text-[11px] text-stone-550">Update dakshina pricing, benefits, and steps.</div>
+              </button>
+
+              <button
+                onClick={() => onNavigateTab('Informative')}
+                className="p-4 rounded-2xl bg-amber-50/50 dark:bg-stone-800/80 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-amber-200/80 dark:border-stone-700 text-left transition-all group space-y-2"
+              >
+                <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center">
+                  <Info className="w-4 h-4" />
+                </div>
+                <div className="font-bold text-xs text-stone-900 dark:text-stone-100 flex items-center justify-between">
+                  <span>Announcement Banner</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600" />
+                </div>
+                <div className="text-[11px] text-stone-550">Set top notification banner for special festivals.</div>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
