@@ -24,6 +24,7 @@ import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
 import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
+import { MoolShantiPoojaPage } from './pages/MoolShantiPoojaPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
 import { useApiSync } from './hooks/useApiSync';
@@ -102,6 +103,10 @@ export default function App() {
           onOpenSearch={() => setSearchModalOpen(true)}
         />
       );
+    }
+
+    if (path === '/mool-shanti-pooja-ujjain') {
+      return <MoolShantiPoojaPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {

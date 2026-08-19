@@ -262,7 +262,7 @@ export interface GalleryItem {
   description?: string;
   image: string;
   altText: string;
-  category: 'Pooja' | 'Temples' | 'Ujjain' | 'Tours' | 'Events';
+  category: 'Pooja' | 'Darshan' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking';
   location?: string;
   sortOrder: number;
   isPublished: boolean;
