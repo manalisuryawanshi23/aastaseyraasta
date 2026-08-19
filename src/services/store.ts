@@ -284,6 +284,11 @@ export class StoreService {
           hindiIncluded: init.hindiIncluded && init.hindiIncluded.length > 0 ? init.hindiIncluded : t.hindiIncluded,
           excluded: init.excluded && init.excluded.length > 0 ? init.excluded : t.excluded,
           hindiExcluded: init.hindiExcluded && init.hindiExcluded.length > 0 ? init.hindiExcluded : t.hindiExcluded,
+          quickAnswer: init.quickAnswer || t.quickAnswer,
+          whyChoose: init.whyChoose && init.whyChoose.length > 0 ? init.whyChoose : t.whyChoose,
+          whatWeOffer: init.whatWeOffer && init.whatWeOffer.length > 0 ? init.whatWeOffer : t.whatWeOffer,
+          howToReach: init.howToReach || t.howToReach,
+          travelTips: init.travelTips && init.travelTips.length > 0 ? init.travelTips : t.travelTips,
         };
       }
       return t;

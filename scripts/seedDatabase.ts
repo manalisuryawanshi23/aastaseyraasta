@@ -30,6 +30,10 @@ async function seed() {
   // 1. Run Schema DDL
   await execute('DROP TABLE IF EXISTS admin_users');
   await execute('DROP TABLE IF EXISTS poojas');
+  await execute('DROP TABLE IF EXISTS tours');
+  await execute('DROP TABLE IF EXISTS destinations');
+  await execute('DROP TABLE IF EXISTS blog_posts');
+  await execute('DROP TABLE IF EXISTS faqs');
   const schemaPath = path.join(process.cwd(), 'src', 'db', 'schema.sql');
   const sqlContent = fs.readFileSync(schemaPath, 'utf-8');
 
@@ -185,8 +189,11 @@ async function seed() {
         drop_location, hindi_drop_location, vehicle_options_json, overview, hindi_overview,
         itinerary_json, key_highlights_json, hindi_key_highlights_json, inclusions_json,
         hindi_inclusions_json, exclusions_json, hindi_exclusions_json, faqs_json,
-        is_popular, is_published, meta_title, meta_description
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        is_popular, is_published, meta_title, meta_description,
+        quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
+        category, focus_keyword, secondary_keywords_json, canonical_url,
+        og_title, og_description, og_image
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)` ,
       [
         t.id,
         t.name || t.title || '',
@@ -219,6 +226,18 @@ async function seed() {
         t.isPublished !== false ? 1 : 0,
         t.seoTitle || t.metaTitle || '',
         t.metaDescription || '',
+        t.quickAnswer || '',
+        JSON.stringify(t.whyChoose || []),
+        JSON.stringify(t.whatWeOffer || []),
+        t.howToReach || '',
+        JSON.stringify(t.travelTips || []),
+        t.category || '',
+        t.focusKeyword || '',
+        JSON.stringify(t.secondaryKeywords || []),
+        t.canonicalUrl || '',
+        t.ogTitle || '',
+        t.ogDescription || '',
+        t.ogImage || '',
       ]
     );
   }

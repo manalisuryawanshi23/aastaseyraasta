@@ -134,6 +134,7 @@ export interface Tour {
   foodDetails?: string;
   hindiFoodDetails?: string;
   price?: number | null;
+  originalPrice?: number | null;
   priceType?: 'Fixed' | 'Starting From' | 'On Request';
   featuredImage?: string;
   gallery?: string[];
@@ -151,6 +152,11 @@ export interface Tour {
   keyTakeaways?: string[];
   geoCity?: string;
   geoRegion?: string;
+  quickAnswer?: string;
+  whyChoose?: string[];
+  whatWeOffer?: string[];
+  howToReach?: string;
+  travelTips?: string[];
   geoEntities?: string[];
   createdAt: string;
   updatedAt: string;

@@ -271,6 +271,18 @@ async function startServer() {
           isPublished: Boolean(t.is_published),
           metaTitle: t.meta_title,
           metaDescription: t.meta_description,
+          quickAnswer: t.quick_answer || '',
+          whyChoose: t.why_choose_json ? JSON.parse(t.why_choose_json) : [],
+          whatWeOffer: t.what_we_offer_json ? JSON.parse(t.what_we_offer_json) : [],
+          howToReach: t.how_to_reach || '',
+          travelTips: t.travel_tips_json ? JSON.parse(t.travel_tips_json) : [],
+          category: t.category || '',
+          focusKeyword: t.focus_keyword || '',
+          secondaryKeywords: t.secondary_keywords_json ? JSON.parse(t.secondary_keywords_json) : [],
+          canonicalUrl: t.canonical_url || '',
+          ogTitle: t.og_title || '',
+          ogDescription: t.og_description || '',
+          ogImage: t.og_image || '',
         }));
         return res.json({ success: true, data: formatted });
       } catch (err) {
@@ -318,6 +330,18 @@ async function startServer() {
             isPublished: Boolean(t.is_published),
             metaTitle: t.meta_title,
             metaDescription: t.meta_description,
+            quickAnswer: t.quick_answer || '',
+            whyChoose: t.why_choose_json ? JSON.parse(t.why_choose_json) : [],
+            whatWeOffer: t.what_we_offer_json ? JSON.parse(t.what_we_offer_json) : [],
+            howToReach: t.how_to_reach || '',
+            travelTips: t.travel_tips_json ? JSON.parse(t.travel_tips_json) : [],
+            category: t.category || '',
+            focusKeyword: t.focus_keyword || '',
+            secondaryKeywords: t.secondary_keywords_json ? JSON.parse(t.secondary_keywords_json) : [],
+            canonicalUrl: t.canonical_url || '',
+            ogTitle: t.og_title || '',
+            ogDescription: t.og_description || '',
+            ogImage: t.og_image || '',
           };
           return res.json({ success: true, data: formatted });
         }

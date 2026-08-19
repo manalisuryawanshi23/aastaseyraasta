@@ -131,6 +131,18 @@ CREATE TABLE IF NOT EXISTS tours (
     is_published TINYINT(1) DEFAULT 1,
     meta_title VARCHAR(255),
     meta_description TEXT,
+    quick_answer TEXT,
+    why_choose_json LONGTEXT,
+    what_we_offer_json LONGTEXT,
+    how_to_reach TEXT,
+    travel_tips_json LONGTEXT,
+    category VARCHAR(100),
+    focus_keyword VARCHAR(255),
+    secondary_keywords_json LONGTEXT,
+    canonical_url VARCHAR(255),
+    og_title VARCHAR(255),
+    og_description TEXT,
+    og_image VARCHAR(550),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
