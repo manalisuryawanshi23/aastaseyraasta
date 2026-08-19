@@ -203,8 +203,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
               <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" />
               <span className="truncate">{t('nav.tagline_location', 'Mahakal Marg, Ujjain')}</span>
             </span>
-            <span className="hidden md:inline text-amber-400/40">•</span>
-            <span className="hidden md:inline text-amber-200/80 font-serif italic truncate">
+            <span className="hidden lg:inline text-amber-400/40">•</span>
+            <span className="hidden lg:inline text-amber-200/80 font-serif italic truncate">
               &quot;{settings.tagline}&quot;
             </span>
             <span className="hidden lg:inline-flex items-center gap-1 bg-amber-900/40 text-amber-300/90 px-2 py-0.5 rounded text-[10px] border border-amber-800/40 font-medium">
@@ -264,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
 
             <a
               href="/admin"
-              className="hidden md:flex items-center gap-1 text-amber-300/80 hover:text-amber-200 transition-colors pl-2 border-l border-amber-800/60"
+              className="hidden lg:flex items-center gap-1 text-amber-300/80 hover:text-amber-200 transition-colors pl-2 border-l border-amber-800/60"
               aria-label="Admin Portal"
             >
               <Lock className="w-2.5 h-2.5" />
@@ -304,7 +304,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
 
           {/* Professional Desktop Navigation Menu (Streamlined Core Pillars with Rich Dropdowns) */}
           <nav 
-            className="hidden md:flex items-center gap-1 lg:gap-2 text-xs lg:text-sm font-medium text-stone-700 dark:text-stone-300"
+            className="hidden lg:flex items-center gap-1 lg:gap-2 text-xs lg:text-sm font-medium text-stone-700 dark:text-stone-300"
             aria-label="Desktop Primary Navigation"
           >
             {/* 1. Home Link */}
@@ -685,19 +685,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
             {/* Book / Enquire Button (Desktop & Tablet) */}
             <button
               onClick={() => onOpenBooking()}
-              className="hidden sm:flex py-2 sm:py-2.5 px-3.5 sm:px-4 lg:px-5 rounded-xl bg-gradient-to-r from-red-800 via-amber-800 to-amber-900 text-white font-medium text-xs sm:text-sm hover:from-red-900 hover:to-amber-950 shadow-md shadow-amber-900/20 hover:shadow-lg transition-all items-center gap-1.5 sm:gap-2 border border-amber-600/30 active:scale-[0.98]"
+              className="hidden lg:flex py-2 sm:py-2.5 px-3.5 sm:px-4 lg:px-5 rounded-xl bg-gradient-to-r from-red-800 via-amber-800 to-amber-900 text-white font-medium text-xs sm:text-sm hover:from-red-900 hover:to-amber-950 shadow-md shadow-amber-900/20 hover:shadow-lg transition-all items-center gap-1.5 sm:gap-2 border border-amber-600/30 active:scale-[0.98]"
               aria-label="Open Booking and Consultation Form"
             >
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300" />
               <span>{t('nav.book', 'Book / Enquire')}</span>
             </button>
 
-            {/* Mobile-Optimized Hamburger Menu Button (Strictly for viewports under 768px: md:hidden) */}
+            {/* Mobile & Tablet Hamburger Menu Button (viewports under 1024px: lg:hidden) */}
             <button
               ref={hamburgerButtonRef}
               id="mobile-menu-trigger"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 rounded-xl bg-amber-50 dark:bg-stone-800 text-stone-800 dark:text-stone-100 hover:bg-amber-100 dark:hover:bg-stone-700 border border-amber-300/50 dark:border-stone-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shadow-xs"
+              className="lg:hidden p-2.5 rounded-xl bg-amber-50 dark:bg-stone-800 text-stone-800 dark:text-stone-100 hover:bg-amber-100 dark:hover:bg-stone-700 border border-amber-300/50 dark:border-stone-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shadow-xs"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation-drawer"
@@ -709,12 +709,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
         </div>
       </div>
 
-      {/* Mobile-Optimized Navigation Drawer (Strictly for viewports under 768px: md:hidden) */}
+      {/* Mobile & Tablet Navigation Drawer (viewports under 1024px: lg:hidden) */}
       {mobileMenuOpen && (
         <>
           {/* Backdrop Blur Overlay with Click-to-Dismiss */}
           <div
-            className="fixed inset-0 bg-stone-950/75 backdrop-blur-sm z-50 md:hidden transition-opacity duration-300 animate-in fade-in"
+            className="fixed inset-0 bg-stone-950/75 backdrop-blur-sm z-50 lg:hidden transition-opacity duration-300 animate-in fade-in"
             onClick={handleCloseDrawer}
             aria-hidden="true"
           />
@@ -725,7 +725,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation Menu"
-            className="fixed top-0 right-0 bottom-0 w-[86vw] max-w-sm bg-[#181615] text-stone-100 z-50 md:hidden shadow-2xl flex flex-col justify-between border-l border-amber-800/40 overflow-hidden animate-in slide-in-from-right duration-300"
+            className="fixed top-0 right-0 bottom-0 w-[86vw] max-w-sm bg-[#181615] text-stone-100 z-50 lg:hidden shadow-2xl flex flex-col justify-between border-l border-amber-800/40 overflow-hidden animate-in slide-in-from-right duration-300"
           >
             
             {/* Drawer Header */}

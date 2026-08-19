@@ -335,55 +335,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                 <span>Sign In to Admin Panel</span>
               </button>
             </form>
-
-            {/* Quick Demo Role Sign-in Selectors */}
-            <div className="space-y-2 pt-2 border-t border-stone-100 dark:border-stone-800">
-              <div className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Quick Role Demo Sign-in Passcodes:</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPassword('admin123');
-                    handleLogin(undefined, 'admin123');
-                  }}
-                  className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-stone-200 dark:border-stone-700 text-left transition-all group"
-                >
-                  <div className="text-[10px] font-bold font-mono text-red-600 dark:text-red-400">ADMIN</div>
-                  <div className="text-xs font-bold text-stone-900 dark:text-stone-100">Pt. Sharma</div>
-                  <div className="text-[10px] text-stone-500 font-mono">admin123</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPassword('manager123');
-                    handleLogin(undefined, 'manager123');
-                  }}
-                  className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-stone-200 dark:border-stone-700 text-left transition-all group"
-                >
-                  <div className="text-[10px] font-bold font-mono text-amber-600 dark:text-amber-400">MANAGER</div>
-                  <div className="text-xs font-bold text-stone-900 dark:text-stone-100">Ramesh S.</div>
-                  <div className="text-[10px] text-stone-500 font-mono">manager123</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPassword('editor123');
-                    handleLogin(undefined, 'editor123');
-                  }}
-                  className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 hover:bg-amber-100 dark:hover:bg-amber-950/60 border border-stone-200 dark:border-stone-700 text-left transition-all group"
-                >
-                  <div className="text-[10px] font-bold font-mono text-blue-600 dark:text-blue-400">EDITOR</div>
-                  <div className="text-xs font-bold text-stone-900 dark:text-stone-100">Ananya V.</div>
-                  <div className="text-[10px] text-stone-500 font-mono">editor123</div>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

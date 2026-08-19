@@ -46,6 +46,10 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Static Asset Serving — supports both /assets/images (uploaded) and /src/assets/images (bundled source)
+  app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images')));
+  app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images')));
+
   // Test MySQL Connection on Startup
   const dbAvailable = await testConnection();
   if (dbAvailable) {

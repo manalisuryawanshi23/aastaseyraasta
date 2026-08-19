@@ -384,44 +384,44 @@ export const AuspiciousCountdownTimer: React.FC<AuspiciousCountdownTimerProps> =
           </div>
 
           {/* Time Digits Grid */}
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
             
             {/* Days */}
-            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-2.5 rounded-xl border border-amber-900/50 space-y-0.5">
+            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-1.5 sm:p-2.5 rounded-xl border border-amber-900/50 space-y-0.5 min-w-0">
               <div className="text-xl sm:text-2xl font-serif font-bold text-amber-300">
                 {String(timeLeft.days).padStart(2, '0')}
               </div>
-              <div className="text-[10px] text-stone-400 uppercase font-semibold">
+              <div className="text-[9px] sm:text-[10px] text-stone-400 uppercase font-semibold truncate">
                 {language === 'hi' ? 'दिन' : 'Days'}
               </div>
             </div>
 
             {/* Hours */}
-            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-2.5 rounded-xl border border-amber-900/50 space-y-0.5">
+            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-1.5 sm:p-2.5 rounded-xl border border-amber-900/50 space-y-0.5 min-w-0">
               <div className="text-xl sm:text-2xl font-serif font-bold text-amber-300">
                 {String(timeLeft.hours).padStart(2, '0')}
               </div>
-              <div className="text-[10px] text-stone-400 uppercase font-semibold">
+              <div className="text-[9px] sm:text-[10px] text-stone-400 uppercase font-semibold truncate">
                 {language === 'hi' ? 'घंटे' : 'Hours'}
               </div>
             </div>
 
             {/* Minutes */}
-            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-2.5 rounded-xl border border-amber-900/50 space-y-0.5">
+            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-1.5 sm:p-2.5 rounded-xl border border-amber-900/50 space-y-0.5 min-w-0">
               <div className="text-xl sm:text-2xl font-serif font-bold text-amber-300">
                 {String(timeLeft.minutes).padStart(2, '0')}
               </div>
-              <div className="text-[10px] text-stone-400 uppercase font-semibold">
+              <div className="text-[9px] sm:text-[10px] text-stone-400 uppercase font-semibold truncate">
                 {language === 'hi' ? 'मिनट' : 'Mins'}
               </div>
             </div>
 
             {/* Seconds */}
-            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-2.5 rounded-xl border border-amber-900/50 space-y-0.5">
+            <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-1.5 sm:p-2.5 rounded-xl border border-amber-900/50 space-y-0.5 min-w-0">
               <div className="text-xl sm:text-2xl font-serif font-bold text-amber-400 animate-pulse">
                 {String(timeLeft.seconds).padStart(2, '0')}
               </div>
-              <div className="text-[10px] text-stone-400 uppercase font-semibold">
+              <div className="text-[9px] sm:text-[10px] text-stone-400 uppercase font-semibold truncate">
                 {language === 'hi' ? 'सेकंड' : 'Secs'}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Star,
   Quote,
@@ -43,6 +43,20 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('carousel');
   const [carouselIndex, setCarouselIndex] = useState(0);
+
+  // Responsive carousel: number of cards visible (1 mobile / 2 tablet / 3 desktop)
+  const getVisibleCount = () => {
+    if (typeof window === 'undefined') return 3;
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 1024) return 2;
+    return 3;
+  };
+  const [visibleCount, setVisibleCount] = useState(getVisibleCount);
+  useEffect(() => {
+    const onResize = () => setVisibleCount(getVisibleCount());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   // Review Submission Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -323,17 +337,19 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
       ) : (
         /* Carousel Display Mode */
         <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Display up to 3 cards sliding */}
+          <div className={`grid gap-6 ${
+            visibleCount === 1 ? 'grid-cols-1' : visibleCount === 2 ? 'grid-cols-2' : 'grid-cols-3'
+          }`}>
+            {/* Display only visibleCount cards at a time */}
             {filteredTestimonials
-              .slice(carouselIndex, carouselIndex + 3)
+              .slice(carouselIndex, carouselIndex + visibleCount)
               .concat(
                 filteredTestimonials.slice(
                   0,
-                  Math.max(0, 3 - (filteredTestimonials.length - carouselIndex))
+                  Math.max(0, visibleCount - (filteredTestimonials.length - carouselIndex))
                 )
               )
-              .slice(0, Math.min(3, filteredTestimonials.length))
+              .slice(0, Math.min(visibleCount, filteredTestimonials.length))
               .map((test) => (
                 <TestimonialCard
                   key={test.id}
