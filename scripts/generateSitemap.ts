@@ -8,8 +8,14 @@ import {
   initialBlogPosts,
 } from '../src/data/initialData';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const getDirname = () => {
+  if (typeof __dirname !== 'undefined') {
+    return __dirname;
+  }
+  const filename = fileURLToPath(import.meta.url);
+  return path.dirname(filename);
+};
+const _dirname = getDirname();
 
 const BASE_URL = process.env.APP_URL || 'https://aasthaserasta.com';
 const TODAY = new Date().toISOString().split('T')[0];
@@ -128,7 +134,7 @@ export function writeSitemapFile(): void {
   const xmlContent = generateSitemapXml();
 
   // Save to public directory
-  const publicDir = path.resolve(__dirname, '../public');
+  const publicDir = path.resolve(_dirname, '../public');
   if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true });
   }
@@ -138,7 +144,7 @@ export function writeSitemapFile(): void {
   console.log(`[Sitemap Generator] Successfully written sitemap to: ${publicSitemapPath}`);
 
   // Also save to dist directory if dist folder exists (for production build artifact)
-  const distDir = path.resolve(__dirname, '../dist');
+  const distDir = path.resolve(_dirname, '../dist');
   if (fs.existsSync(distDir)) {
     const distSitemapPath = path.join(distDir, 'sitemap.xml');
     fs.writeFileSync(distSitemapPath, xmlContent, 'utf-8');

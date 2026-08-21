@@ -5430,8 +5430,14 @@ var import_fs = __toESM(require("fs"), 1);
 var import_path = __toESM(require("path"), 1);
 var import_url = require("url");
 var import_meta = {};
-var __filename = (0, import_url.fileURLToPath)(import_meta.url);
-var __dirname = import_path.default.dirname(__filename);
+var getDirname = () => {
+  if (typeof __dirname !== "undefined") {
+    return __dirname;
+  }
+  const filename = (0, import_url.fileURLToPath)(import_meta.url);
+  return import_path.default.dirname(filename);
+};
+var _dirname = getDirname();
 var BASE_URL = process.env.APP_URL || "https://aasthaserasta.com";
 var TODAY = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
 function escapeXml(str) {
@@ -5529,14 +5535,14 @@ function generateSitemapXml() {
 }
 function writeSitemapFile() {
   const xmlContent = generateSitemapXml();
-  const publicDir = import_path.default.resolve(__dirname, "../public");
+  const publicDir = import_path.default.resolve(_dirname, "../public");
   if (!import_fs.default.existsSync(publicDir)) {
     import_fs.default.mkdirSync(publicDir, { recursive: true });
   }
   const publicSitemapPath = import_path.default.join(publicDir, "sitemap.xml");
   import_fs.default.writeFileSync(publicSitemapPath, xmlContent, "utf-8");
   console.log(`[Sitemap Generator] Successfully written sitemap to: ${publicSitemapPath}`);
-  const distDir = import_path.default.resolve(__dirname, "../dist");
+  const distDir = import_path.default.resolve(_dirname, "../dist");
   if (import_fs.default.existsSync(distDir)) {
     const distSitemapPath = import_path.default.join(distDir, "sitemap.xml");
     import_fs.default.writeFileSync(distSitemapPath, xmlContent, "utf-8");
