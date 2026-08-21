@@ -39,6 +39,7 @@ import {
 } from './src/data/initialData';
 import { generateSitemapXml } from './scripts/generateSitemap';
 import { testConnection, query, execute, isDbConnected } from './src/db/mysql';
+import { autoInitializeDatabase } from './src/db/autoSeed';
 
 async function startServer() {
   const app = express();
@@ -49,14 +50,6 @@ async function startServer() {
   // Static Asset Serving — supports both /assets/images (uploaded) and /src/assets/images (bundled source)
   app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images')));
   app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images')));
-
-  // Test MySQL Connection on Startup
-  const dbAvailable = await testConnection();
-  if (dbAvailable) {
-    console.log('[MYSQL] Connected to Hostinger MySQL Database.');
-  } else {
-    console.log('[MYSQL INFO] MySQL DB not configured/available. Running with initialData fallback.');
-  }
 
   // Store in-memory leads array for non-DB fallback
   const serverLeads: any[] = [];
@@ -735,6 +728,8 @@ Sitemap: ${baseUrl}/sitemap.xml
 
   app.listen(PORT, () => {
     console.log(`[AASTHA SEY RAASTA SEVA] Server listening on http://localhost:${PORT}`);
+    // Run DB connection checks, schema creation, and seeding asynchronously
+    autoInitializeDatabase();
   });
 }
 
