@@ -80,7 +80,10 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
   ];
 
   const filtered = allTours.filter((t) => {
-    const matchesCat = selectedCategory === 'all' || t.category === selectedCategory;
+    const matchesCat =
+      selectedCategory === 'all' ||
+      t.category === selectedCategory ||
+      (selectedCategory === 'Named Yatra' && t.category === 'Ujjain Yatra');
     const matchesSearch =
       !searchTerm.trim() ||
       t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
