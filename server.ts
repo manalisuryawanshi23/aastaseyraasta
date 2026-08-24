@@ -7,15 +7,20 @@ import fs from 'fs';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const metaUrl = typeof import.meta !== 'undefined' ? import.meta.url : undefined;
+const resolvedFilename = typeof __filename !== 'undefined' 
+  ? __filename 
+  : (metaUrl ? fileURLToPath(metaUrl) : '');
+const resolvedDirname = typeof __dirname !== 'undefined' 
+  ? __dirname 
+  : path.dirname(resolvedFilename);
 
 // Comprehensive multi-path .env loader for Hostinger / Passenger / local environments
 const envPaths = [
   path.resolve(process.cwd(), '.env'),
-  path.resolve(__dirname, '.env'),
-  path.resolve(__dirname, '..', '.env'),
-  path.resolve(__dirname, '../..', '.env'),
+  path.resolve(resolvedDirname, '.env'),
+  path.resolve(resolvedDirname, '..', '.env'),
+  path.resolve(resolvedDirname, '../..', '.env'),
 ];
 for (const envPath of envPaths) {
   if (fs.existsSync(envPath)) {

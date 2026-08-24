@@ -6678,13 +6678,14 @@ async function autoInitializeDatabase() {
 
 // server.ts
 var import_meta2 = {};
-var __filename = (0, import_url2.fileURLToPath)(import_meta2.url);
-var __dirname2 = import_path2.default.dirname(__filename);
+var metaUrl = typeof import_meta2 !== "undefined" ? import_meta2.url : void 0;
+var resolvedFilename = typeof __filename !== "undefined" ? __filename : metaUrl ? (0, import_url2.fileURLToPath)(metaUrl) : "";
+var resolvedDirname = typeof __dirname !== "undefined" ? __dirname : import_path2.default.dirname(resolvedFilename);
 var envPaths = [
   import_path2.default.resolve(process.cwd(), ".env"),
-  import_path2.default.resolve(__dirname2, ".env"),
-  import_path2.default.resolve(__dirname2, "..", ".env"),
-  import_path2.default.resolve(__dirname2, "../..", ".env")
+  import_path2.default.resolve(resolvedDirname, ".env"),
+  import_path2.default.resolve(resolvedDirname, "..", ".env"),
+  import_path2.default.resolve(resolvedDirname, "../..", ".env")
 ];
 for (const envPath of envPaths) {
   if (import_fs2.default.existsSync(envPath)) {
