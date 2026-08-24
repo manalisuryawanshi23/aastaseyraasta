@@ -5283,10 +5283,115 @@ export const initialDestinations: Destination[] = [
     name: 'Indore',
     hindiName: 'इंदौर',
     slug: 'indore',
-    shortDescription: 'The clean commercial & transit hub of Malwa, famous for Khajrana Ganesh, Rajwada, and culinary traditions.',
-    description: 'Indore serves as the primary air and rail gateway for travelers visiting Ujjain and Omkareshwar. It is home to the miraculous Khajrana Ganesh Temple and Ahilya Bai Holkar\'s Rajwada Palace.',
-    heroImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    placesToVisit: ['Khajrana Ganesh Temple', 'Rajwada Palace', 'Annapurna Temple', 'Chappan Dukan', 'Sarafa Night Market'],
+    shortDescription: 'The clean commercial & transit hub of Malwa, famous for Khajrana Ganesh, Pitra Parvat, and Lal Bagh Palace.',
+    description: `Indore serves as the primary air and rail gateway for travelers visiting Ujjain and Omkareshwar. It is home to the miraculous Khajrana Ganesh Temple, the colossal Pitra Parvat, and Ahilya Bai Holkar's Lal Bagh Palace.
+
+# Indore: The Gateway to Malwa's Shrines and the Smart Transit Hub
+
+**Indore**, the commercial capital of Madhya Pradesh, is widely recognized as the cleanest city in India. But beyond its modern economy and clean streets, Indore serves as a vital spiritual gateway and key transit hub for pilgrims visiting the twin Jyotirlingas of Central India: Mahakaleshwar in Ujjain (55 km away) and Omkareshwar (75 km away). With its excellent airport, railway connectivity, and road infrastructure, Indore is the starting point for most spiritual yatras in the region.
+
+However, Indore is a destination in its own right. It is home to ancient temples of immense spiritual energy, beautiful palaces of the Holkar dynasty, and magnificent gardens, making it a perfect stopover during your pilgrimage.
+
+---
+
+## Major Spiritual Landmarks of Indore
+
+While transit is convenient, spending a day in Indore allows you to cover these powerful sacred sites:
+
+### 1. Khajrana Ganesh Temple: The Wish-Fulfilling Shrine
+Built in 1735 by the noble Queen Ahilya Bai Holkar of the Holkar dynasty, the **Khajrana Ganesh Temple** is one of the most famous and highly visited Ganesha temples in Central India. The main deity is a massive, highly revered idol of Lord Ganesha. 
+* **The Legend:** According to historical beliefs, the idol was hidden in a local well during Aurangzeb's reign to protect it. Ahilya Bai Holkar later retrieved the idol and built the temple. It is firmly believed that any wish (mannat) made here by tying a thread or offering prayers is fulfilled by Lord Ganesha. The temple complex also houses small shrines dedicated to various Hindu gods and goddesses.
+
+### 2. Pitra Parvat (Pitreshwar Hanuman Dham)
+Located on the outskirts of Indore, **Pitra Parvat** has emerged as a major spiritual and tourist landmark. The hill features the monumental **Pitreshwar Hanuman** statue—a colossal 72-foot-tall metallic statue of Lord Hanuman sitting in a meditative posture, made of eight metals (Ashtadhatu). The statue is the largest of its kind in India. 
+* **The Spiritual Focus:** Pitra Parvat is unique because it is designed as a site for planting trees in memory of ancestors (Pitras), combining environment protection with sacred Vedic remembrance.
+
+### 3. Annapurna Temple
+Similar in architecture to the famous Madurai Meenakshi Temple, the Annapurna Temple in Indore is dedicated to the Goddess of Food and Nourishment. The temple entrance features a grand archway supported by four life-size stone elephants.
+
+---
+
+## Heritage and Cultural Highlights
+
+* **Lal Bagh Palace:** Built by the Holkar rulers, this European-style palace is a masterpiece of Italian marble columns, grand chandeliers, and gates modeled after London's Buckingham Palace. It offers a glimpse into the royal history of Indore.
+* **Rajwada Palace:** A historic 7-story palace in the center of the city, Rajwada is a unique blend of Maratha and French architecture, featuring wooden balconies and grand stone courtyards.
+
+---
+
+## Seamless Travel Connectivity
+
+Indore's **Devi Ahilya Bai Holkar Airport (IDR)** is the closest airport to the entire Malwa Jyotirlinga circuit.
+* **Indore to Ujjain:** 55 km via the Ujjain-Indore 4-lane Super Corridor. The road journey by cab takes just 1 hour.
+* **Indore to Omkareshwar:** 75 km via the Khandwa highway. The drive takes about 2 hours.
+
+---
+
+## Why Choose Aastha Sey Raasta for Indore Transfers?
+
+We make your arrival and transit through Indore absolutely stress-free:
+* **Airport Pickups & Drops:** Direct, on-time airport cab pickups with professional, polite drivers who know the routes to Ujjain and Omkareshwar perfectly.
+* **Custom Sightseeing Tours:** We organize 1-day Indore tours covering Khajrana Ganesh, Pitra Parvat, Lal Bagh Palace, and Rajwada before dropping you off at your destination.
+* **Premium Sanitized Fleet:** Clean AC Sedan, SUV, or Innova vehicles to ensure a comfortable ride for families and senior citizens.
+
+---
+
+## Indore Travel FAQ
+
+**Q1: What is the distance between Indore Airport and Ujjain?**
+* **Answer:** The distance is approximately 55 km, and it takes about 1 hour to reach Ujjain via the Super Corridor highway.
+
+**Q2: Are there good hotels near Indore Airport?**
+* **Answer:** Yes, there are several premium and budget-friendly AC hotels within a 15-minute drive from the airport.
+
+**Q3: Can we cover Khajrana Ganesh and Pitra Parvat on the way to Ujjain?**
+* **Answer:** Yes, both temples are easily accessible, and our drivers can include them as a stopover during your airport-to-ujjain transfer.`,
+    hindiDescription: `इंदौर: मालवा तीर्थ यात्रा का प्रवेश द्वार और स्वच्छतम महानगर
+
+इंदौर मध्य प्रदेश की व्यावसायिक राजधानी है और भारत का सबसे स्वच्छ शहर है। लेकिन अपनी आधुनिक अर्थव्यवस्था और स्वच्छ सड़कों के अलावा, इंदौर मध्य भारत के जुड़वां ज्योतिर्लिंगों: उज्जैन (५५ किमी दूर) और ओंकारेश्वर (७५ किमी दूर) जाने वाले तीर्थयात्रियों के लिए एक महत्वपूर्ण आध्यात्मिक प्रवेश द्वार और पारगमन केंद्र (Transit Hub) के रूप में कार्य करता है।
+
+हाँ, इंदौर अपने आप में एक प्रमुख गंतव्य है। यह प्राचीन भव्य मंदिरों, होल्कर राजवंश के सुंदर महलों और ऐतिहासिक धरोहरों का घर है।
+
+---
+
+## इंदौर के प्रमुख आध्यात्मिक स्थल
+
+* **१. खजराना गणेश मंदिर:** देवी अहिल्याबाई होल्कर द्वारा १७३५ में निर्मित यह मंदिर मालवा का सबसे प्रतिष्ठित गणेश मंदिर है। मान्यता है कि यहाँ मन्नत का धागा बाँधकर मांगी गई हर मुराद पूरी होती है।
+* **२. पितृ पर्वत (पित्रेश्वर हनुमान धाम):** यहाँ स्थापित पित्रेश्वर हनुमान की ७२ फीट ऊंची अष्टधातु की विशाल मूर्ति ध्यान मुद्रा में बैठे हनुमान जी की भारत में सबसे बड़ी प्रतिमा है। यहाँ श्रद्धालु अपने पूर्वजों (पितरों) की स्मृति में पौधे लगाते हैं।
+* **३. अन्नपूर्णा देवी मंदिर:** मीनाक्षी मंदिर की वास्तुकला से प्रभावित यह मंदिर अन्न और पोषण की देवी माँ अन्नपूर्णा को समर्पित है।
+
+---
+
+## ऐतिहासिक व सांस्कृतिक धरोहर
+
+* **लालबाग पैलेस (Lal Bagh Palace):** होल्कर राजाओं द्वारा बनवाया गया यह महल यूरोपीय वास्तुकला, इतालवी संगमरमर के खंभों और लंदन के बकिंघम पैलेस जैसे मुख्य द्वार के लिए प्रसिद्ध है।
+* **राजवाड़ा पैलेस:** शहर के बीचों-बीच स्थित ७ मंजिला यह महल मराठा और फ्रेंच वास्तुकला का ऐतिहासिक मिश्रण है।
+
+---
+
+## यात्रा मार्ग व सुगम संपर्क
+
+* **इंदौर से उज्जैन:** सुपर कॉरिडोर मार्ग से दूरी लगभग ५५ किमी है, जिसे कार द्वारा केवल १ घंटे में तय किया जा सकता है।
+* **इंदौर से ओंकारेश्वर:** खंडवा हाईवे मार्ग से दूरी लगभग ७५ किमी है, जिसे तय करने में २ घंटे का समय लगता है।
+
+---
+
+## इंदौर स्थानांतरण और यात्रा के लिए आस्था से रास्ता क्यों चुनें?
+
+* **समय पर एयरपोर्ट पिकअप/ड्रॉप:** इंदौर हवाई अड्डे पर आपकी फ्लाइट लैंड होते ही आरामदायक एसी कैब उपलब्ध कराना।
+* **कस्टमाइज्ड इंदौर दर्शन:** उज्जैन जाने से पूर्व खजराना गणेश, पितृ पर्वत और लालबाग पैलेस का दर्शन मार्ग में शामिल करना।
+* **स्वच्छ व सुरक्षित गाड़ियां:** परिवारों और बुजुर्गों की सुविधा के लिए प्रीमियम सेडान व एसयूवी गाड़ियां।
+
+---
+
+## अक्सर पूछे जाने वाले प्रश्न (FAQ)
+
+**प्र१: इंदौर हवाई अड्डे से उज्जैन जाने का सबसे सरल साधन क्या है?**
+* **उत्तर:** इंदौर हवाई अड्डे से सीधे उज्जैन के लिए प्री-बुक की गई निजी एसी कैब सबसे सुरक्षित और तीव्र माध्यम है, जिसमें १ घंटा लगता है।
+
+**प्र२: क्या हम उज्जैन से लौटते समय इंदौर दर्शन कर सकते हैं?**
+* **उत्तर:** हाँ, आप अपनी फ्लाइट या ट्रेन के समय के अनुसार मार्ग में खजराना गणेश और लालबाग पैलेस का दर्शन कर सकते हैं।`,
+    heroImage: 'https://images.unsplash.com/photo-1583089892943-e02e5b017b6a?auto=format&fit=crop&w=1200&q=80',
+    placesToVisit: ['Khajrana Ganesh Temple', 'Pitra Parvat (Pitreshwar Hanuman)', 'Lal Bagh Palace', 'Annapurna Temple', 'Rajwada Palace'],
     temples: ['Khajrana Ganesh', 'Annapurna Temple', 'Bada Ganpati'],
     travelInformation: 'Devi Ahilya Bai Holkar Airport (IDR) connects major domestic cities with frequent flights.',
     isFeatured: false,
@@ -5296,7 +5401,7 @@ export const initialDestinations: Destination[] = [
     focusKeyword: 'Indore Travel Guide',
     createdAt: '2026-08-01T10:00:00Z',
     updatedAt: '2026-08-01T10:00:00Z',
-  },
+},
 ];
 
 export const initialBlogPosts: BlogPost[] = [

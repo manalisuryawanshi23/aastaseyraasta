@@ -146,7 +146,7 @@ export default function App() {
     }
 
     if (path === '/destinations') {
-      return <DestinationListingPage />;
+      return <DestinationListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/destinations/')) {

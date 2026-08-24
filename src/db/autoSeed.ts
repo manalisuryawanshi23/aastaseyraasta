@@ -903,6 +903,35 @@ export async function autoInitializeDatabase() {
       await execute('UPDATE tours SET sort_order = ? WHERE id = ?', [idx + 1, t.id]);
     }
 
+    // Sync all destinations details, attractions, and images in database
+    console.log('[AUTO-DB] Syncing all destinations key data, description, attractions, and images in database...');
+    for (const item of initialDestinations) {
+      const d = item as any;
+      await execute(
+        `UPDATE destinations 
+         SET title = ?, 
+             hindi_title = ?, 
+             description = ?, 
+             hindi_description = ?, 
+             image = ?, 
+             key_attractions_json = ?, 
+             hindi_key_attractions_json = ?, 
+             nearby_temples_json = ? 
+         WHERE id = ?`,
+        [
+          d.name || d.title || '',
+          d.hindiName || d.hindiTitle || '',
+          d.description || '',
+          d.hindiDescription || '',
+          d.image || d.heroImage || '',
+          JSON.stringify(d.keyAttractions || d.placesToVisit || []),
+          JSON.stringify(d.hindiKeyAttractions || []),
+          JSON.stringify(d.nearbyTemples || d.temples || []),
+          d.id
+        ]
+      );
+    }
+
     console.log('[AUTO-DB SUCCESS] Database tables and default records verified and seeded successfully!');
     return result;
   } catch (error: any) {
