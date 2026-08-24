@@ -368,7 +368,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [serviceType, setServiceType] = useState<'Pooja' | 'Tour' | 'Destination' | 'General'>(defaultServiceType);
   const [serviceName, setServiceName] = useState(defaultServiceName);
   const [preferredDate, setPreferredDate] = useState('');
-  const [numberOfPeople, setNumberOfPeople] = useState(1);
+  const [numberOfPeople, setNumberOfPeople] = useState<number | string>(1);
   const [gotra, setGotra] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -392,7 +392,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       serviceType,
       serviceName: serviceName || 'General Enquiry',
       preferredDate,
-      numberOfPeople,
+      numberOfPeople: Number(numberOfPeople) || 1,
       message: fullMessage,
       source: 'Website Booking Modal',
     });
@@ -403,8 +403,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const getWhatsAppUrl = () => {
     const text = language === 'hi'
-      ? `जय श्री महाकाल 🙏\n*आस्था से रास्ता सेवा बुकिंग एवं पूछताछ*\n\n*नाम:* ${name || 'भक्त'}\n*फोन:* ${phone}\n*सेवा प्रकार:* ${serviceType} - ${serviceName || 'सामान्य'}\n*इच्छित तिथि:* ${preferredDate || 'विचारणीय'}\n*भक्तों की संख्या:* ${numberOfPeople}${gotra ? '\n*गोत्र:* ' + gotra : ''}${message ? '\n*नोट:* ' + message : ''}\n\nकृपया बुकिंग प्रक्रिया एवं विधि विवरण साझा करें।`
-      : `Jai Shree Mahakal 🙏\n*Aastha Sey Raasta Seva Booking Enquiry*\n\n*Name:* ${name || 'Devotee'}\n*Phone:* ${phone}\n*Service:* ${serviceType} - ${serviceName || 'General'}\n*Preferred Date:* ${preferredDate || 'To be decided'}\n*No. of Devotees:* ${numberOfPeople}${gotra ? '\n*Gotra:* ' + gotra : ''}${message ? '\n*Note:* ' + message : ''}\n\nPlease share booking procedure and vidhi details.`;
+      ? `जय श्री महाकाल 🙏\n*आस्था से रास्ता सेवा बुकिंग एवं पूछताछ*\n\n*नाम:* ${name || 'भक्त'}\n*फोन:* ${phone}\n*सेवा प्रकार:* ${serviceType} - ${serviceName || 'सामान्य'}\n*इच्छित तिथि:* ${preferredDate || 'विचारणीय'}\n*भक्तों की संख्या:* ${Number(numberOfPeople) || 1}${gotra ? '\n*गोत्र:* ' + gotra : ''}${message ? '\n*नोट:* ' + message : ''}\n\nकृपया बुकिंग प्रक्रिया एवं विधि विवरण साझा करें।`
+      : `Jai Shree Mahakal 🙏\n*Aastha Sey Raasta Seva Booking Enquiry*\n\n*Name:* ${name || 'Devotee'}\n*Phone:* ${phone}\n*Service:* ${serviceType} - ${serviceName || 'General'}\n*Preferred Date:* ${preferredDate || 'To be decided'}\n*No. of Devotees:* ${Number(numberOfPeople) || 1}${gotra ? '\n*Gotra:* ' + gotra : ''}${message ? '\n*Note:* ' + message : ''}\n\nPlease share booking procedure and vidhi details.`;
     return `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -587,14 +587,40 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
                     {language === 'hi' ? 'भक्तों की संख्या' : 'No. of Devotees'}
                   </label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="100"
-                    value={numberOfPeople}
-                    onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
-                  />
+                  <div className="flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setNumberOfPeople(Math.max(1, (Number(numberOfPeople) || 1) - 1))}
+                      className="px-3 py-2.5 rounded-l-xl border border-r-0 border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-100 active:bg-stone-200 transition-colors font-bold text-sm select-none"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      min="1"
+                      max="100"
+                      value={numberOfPeople}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '') {
+                          setNumberOfPeople('');
+                        } else {
+                          const parsed = parseInt(val);
+                          if (!isNaN(parsed)) {
+                            setNumberOfPeople(Math.max(1, Math.min(100, parsed)));
+                          }
+                        }
+                      }}
+                      className="w-full px-3 py-2.5 border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm text-center focus:ring-1 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all font-semibold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setNumberOfPeople(Math.min(100, (Number(numberOfPeople) || 1) + 1))}
+                      className="px-3 py-2.5 rounded-r-xl border border-l-0 border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-100 active:bg-stone-200 transition-colors font-bold text-sm select-none"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
 
                 {/* Gotra */}
