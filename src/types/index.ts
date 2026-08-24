@@ -73,6 +73,7 @@ export interface PoojaService {
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
+  sortOrder?: number;
 }
 
 export interface TourDay {
@@ -161,6 +162,7 @@ export interface Tour {
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
+  sortOrder?: number;
 }
 
 export interface Destination {

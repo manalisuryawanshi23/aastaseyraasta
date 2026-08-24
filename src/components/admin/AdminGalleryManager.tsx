@@ -19,10 +19,39 @@ export const AdminGalleryManager: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3000);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingItem) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.success) {
+        setEditingItem({ ...editingItem, image: data.url });
+        showToast('Image uploaded successfully.');
+      } else {
+        alert('Upload failed: ' + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading image');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleTogglePublish = (id: string) => {
@@ -292,7 +321,28 @@ export const AdminGalleryManager: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5">
-                  Image URL / Asset Path
+                  Upload Image File
+                </label>
+                {editingItem.image && (
+                  <div className="mb-2">
+                    <img src={editingItem.image} alt="Preview" className="h-16 rounded shadow object-cover aspect-video" />
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={isUploading}
+                    className="w-full p-2 border border-stone-300 dark:border-stone-700 rounded-xl bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 cursor-pointer"
+                  />
+                  {isUploading && <span className="text-[10px] text-stone-500">Uploading...</span>}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5">
+                  Or Image URL / Asset Path
                 </label>
                 <input
                   type="text"

@@ -22,6 +22,9 @@ import {
   HelpCircle,
   Sparkles,
   Filter,
+  ChevronUp,
+  ChevronDown,
+  Power,
 } from 'lucide-react';
 
 export interface ServiceAudit {
@@ -234,6 +237,66 @@ export const AdminServicesManager: React.FC = () => {
       refreshLists();
       showToast(`Tour service deleted.`);
     }
+  };
+
+  const togglePoojaPublish = (id: string) => {
+    const item = poojas.find((p) => p.id === id);
+    if (!item) return;
+    const updated = StoreService.savePooja({ id, isPublished: !item.isPublished });
+    setPoojas((prev) => prev.map((p) => (p.id === id ? updated : p)));
+    showToast(`Pooja "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
+  };
+
+  const movePoojaOrder = (id: string, direction: 'up' | 'down') => {
+    const newList = [...poojas];
+    const index = newList.findIndex((p) => p.id === id);
+    if (index === -1) return;
+    const targetIdx = direction === 'up' ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= newList.length) return;
+
+    // Swap items
+    const temp = newList[index];
+    newList[index] = newList[targetIdx];
+    newList[targetIdx] = temp;
+
+    // Reassign sort orders
+    newList.forEach((item, idx) => {
+      item.sortOrder = idx + 1;
+      StoreService.savePooja({ id: item.id, sortOrder: item.sortOrder });
+    });
+
+    setPoojas(newList);
+    showToast('Pooja sequence rearranged.');
+  };
+
+  const toggleTourPublish = (id: string) => {
+    const item = tours.find((t) => t.id === id);
+    if (!item) return;
+    const updated = StoreService.saveTour({ id, isPublished: !item.isPublished });
+    setTours((prev) => prev.map((t) => (t.id === id ? updated : t)));
+    showToast(`Tour "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
+  };
+
+  const moveTourOrder = (id: string, direction: 'up' | 'down') => {
+    const newList = [...tours];
+    const index = newList.findIndex((t) => t.id === id);
+    if (index === -1) return;
+    const targetIdx = direction === 'up' ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= newList.length) return;
+
+    // Swap items
+    const temp = newList[index];
+    newList[index] = newList[targetIdx];
+    newList[targetIdx] = temp;
+
+    // Reassign sort orders
+    newList.forEach((item, idx) => {
+      item.sortOrder = idx + 1;
+      StoreService.saveTour({ id: item.id, sortOrder: item.sortOrder });
+    });
+
+    setTours(newList);
+    showToast('Tour sequence rearranged.');
   };
 
   const openNewPoojaModal = () => {
@@ -570,29 +633,66 @@ export const AdminServicesManager: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs">
-                <span className="font-semibold text-amber-800 dark:text-amber-300 font-mono">
-                  {p.price ? `₹${p.price}` : p.priceType || 'On Request'}
-                </span>
+              <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between gap-1 text-xs">
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => movePoojaOrder(p.id, 'up')}
+                    disabled={poojas.findIndex(item => item.id === p.id) === 0}
+                    className="p-1 rounded-md bg-stone-100 dark:bg-stone-850 hover:bg-stone-200 disabled:opacity-30 disabled:pointer-events-none text-stone-700 dark:text-stone-300 cursor-pointer border border-transparent hover:border-stone-300"
+                    title="Move Up"
+                  >
+                    <ChevronUp className="w-3.5 h-3.5" />
+                  </button>
+                  <input
+                    type="number"
+                    value={p.sortOrder || 0}
+                    onChange={(e) => {
+                      const newOrder = Number(e.target.value);
+                      StoreService.savePooja({ id: p.id, sortOrder: newOrder });
+                      refreshLists();
+                    }}
+                    className="w-10 py-0.5 text-center font-bold text-[11px] border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-850 text-stone-900 dark:text-stone-100 rounded-md outline-none"
+                    title="Sequence Number"
+                  />
+                  <button
+                    onClick={() => movePoojaOrder(p.id, 'down')}
+                    disabled={poojas.findIndex(item => item.id === p.id) === poojas.length - 1}
+                    className="p-1 rounded-md bg-stone-100 dark:bg-stone-850 hover:bg-stone-200 disabled:opacity-30 disabled:pointer-events-none text-stone-700 dark:text-stone-300 cursor-pointer border border-transparent hover:border-stone-300"
+                    title="Move Down"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => togglePoojaPublish(p.id)}
+                    title={p.isPublished ? 'Draft / Hide from site' : 'Publish / Show on site'}
+                    className={`p-1 rounded-md border text-xs transition-colors cursor-pointer ${
+                      p.isPublished
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-350 dark:border-emerald-900'
+                        : 'bg-stone-100 text-stone-500 border-stone-300 dark:bg-stone-800 dark:text-stone-400'
+                    }`}
+                  >
+                    <Power className="w-3.5 h-3.5" />
+                  </button>
+                </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => {
                       setEditingPooja(p);
                       setEditingTour(null);
                       setIsModalOpen(true);
                     }}
-                    className="px-2.5 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[11px] flex items-center gap-1 border border-amber-200 dark:border-amber-800 cursor-pointer"
+                    className="px-2 py-1 rounded bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[10px] flex items-center gap-0.5 border border-amber-200 dark:border-amber-800 cursor-pointer"
                   >
-                    <Edit3 className="w-3 h-3" />
-                    <span>Audit & Edit</span>
+                    <Edit3 className="w-2.5 h-2.5" />
+                    <span>Edit</span>
                   </button>
                   <button
                     onClick={() => handleDeletePooja(p.id, p.name)}
-                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer"
+                    className="p-1 rounded bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer border border-red-200/20 dark:border-red-900/30"
                     title="Delete Pooja Service"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-3 h-3" />
                   </button>
                 </div>
               </div>
@@ -657,29 +757,66 @@ export const AdminServicesManager: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs">
-                <span className="font-semibold text-amber-800 dark:text-amber-300 font-mono">
-                  {t.price ? `₹${t.price}` : t.priceType || 'On Request'}
-                </span>
+              <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between gap-1 text-xs">
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => moveTourOrder(t.id, 'up')}
+                    disabled={tours.findIndex(item => item.id === t.id) === 0}
+                    className="p-1 rounded-md bg-stone-100 dark:bg-stone-855 hover:bg-stone-200 disabled:opacity-30 disabled:pointer-events-none text-stone-700 dark:text-stone-300 cursor-pointer border border-transparent hover:border-stone-300"
+                    title="Move Up"
+                  >
+                    <ChevronUp className="w-3.5 h-3.5" />
+                  </button>
+                  <input
+                    type="number"
+                    value={t.sortOrder || 0}
+                    onChange={(e) => {
+                      const newOrder = Number(e.target.value);
+                      StoreService.saveTour({ id: t.id, sortOrder: newOrder });
+                      refreshLists();
+                    }}
+                    className="w-10 py-0.5 text-center font-bold text-[11px] border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-850 text-stone-900 dark:text-stone-100 rounded-md outline-none"
+                    title="Sequence Number"
+                  />
+                  <button
+                    onClick={() => moveTourOrder(t.id, 'down')}
+                    disabled={tours.findIndex(item => item.id === t.id) === tours.length - 1}
+                    className="p-1 rounded-md bg-stone-100 dark:bg-stone-855 hover:bg-stone-200 disabled:opacity-30 disabled:pointer-events-none text-stone-700 dark:text-stone-300 cursor-pointer border border-transparent hover:border-stone-300"
+                    title="Move Down"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => toggleTourPublish(t.id)}
+                    title={t.isPublished ? 'Draft / Hide from site' : 'Publish / Show on site'}
+                    className={`p-1 rounded-md border text-xs transition-colors cursor-pointer ${
+                      t.isPublished
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-350 dark:border-emerald-900'
+                        : 'bg-stone-100 text-stone-500 border-stone-300 dark:bg-stone-800 dark:text-stone-400'
+                    }`}
+                  >
+                    <Power className="w-3.5 h-3.5" />
+                  </button>
+                </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => {
                       setEditingTour(t);
                       setEditingPooja(null);
                       setIsModalOpen(true);
                     }}
-                    className="px-2.5 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[11px] flex items-center gap-1 border border-amber-200 dark:border-amber-800 cursor-pointer"
+                    className="px-2 py-1 rounded bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 hover:bg-amber-100 font-semibold text-[10px] flex items-center gap-0.5 border border-amber-200 dark:border-amber-800 cursor-pointer"
                   >
-                    <Edit3 className="w-3 h-3" />
-                    <span>Audit & Edit</span>
+                    <Edit3 className="w-2.5 h-2.5" />
+                    <span>Edit</span>
                   </button>
                   <button
                     onClick={() => handleDeleteTour(t.id, t.name)}
-                    className="p-1.5 rounded-lg bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer"
+                    className="p-1 rounded bg-red-50 dark:bg-red-950 hover:bg-red-100 text-red-600 dark:text-red-400 cursor-pointer border border-red-200/20 dark:border-red-900/30"
                     title="Delete Tour Service"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-3 h-3" />
                   </button>
                 </div>
               </div>
@@ -776,6 +913,36 @@ export const AdminServicesManager: React.FC = () => {
                   </div>
 
                   <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Pooja Category *</label>
+                    <select
+                      value={editingPooja.categoryId || 'cat-temple'}
+                      onChange={(e) => {
+                        const catId = e.target.value;
+                        let catName = 'Temple Pooja Services';
+                        if (catId === 'cat-dosh') catName = 'Dosh Shanti & Special Poojas';
+                        else if (catId === 'cat-jaap-havan') catName = 'Jaap & Havan Services';
+                        else if (catId === 'cat-special-jaap') catName = 'Special Jaap & Path';
+                        else if (catId === 'cat-pitru') catName = 'Pitru Rituals';
+                        else if (catId === 'cat-special-vedic') catName = 'Special Vedic Rituals';
+                        
+                        setEditingPooja({
+                          ...editingPooja,
+                          categoryId: catId,
+                          categoryName: catName
+                        });
+                      }}
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-semibold"
+                    >
+                      <option value="cat-temple">Temple Pooja Services</option>
+                      <option value="cat-dosh">Dosh Shanti & Special Poojas</option>
+                      <option value="cat-jaap-havan">Jaap & Havan Services</option>
+                      <option value="cat-special-jaap">Special Jaap & Path</option>
+                      <option value="cat-pitru">Pitru Rituals</option>
+                      <option value="cat-special-vedic">Special Vedic Rituals</option>
+                    </select>
+                  </div>
+
+                  <div>
                     <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Hindi Name</label>
                     <input
                       type="text"
@@ -826,6 +993,17 @@ export const AdminServicesManager: React.FC = () => {
                       onChange={(e) => setEditingPooja({ ...editingPooja, duration: e.target.value })}
                       placeholder="e.g. 2 Hours"
                       className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Sort Order / Sequence Number</label>
+                    <input
+                      type="number"
+                      value={editingPooja.sortOrder || 0}
+                      onChange={(e) => setEditingPooja({ ...editingPooja, sortOrder: Number(e.target.value) })}
+                      placeholder="e.g. 1"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-bold"
                     />
                   </div>
                 </div>
@@ -967,6 +1145,16 @@ export const AdminServicesManager: React.FC = () => {
                   </div>
 
                   <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Ending Point</label>
+                    <input
+                      type="text"
+                      value={editingTour.endingPoint || ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, endingPoint: e.target.value })}
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
                     <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Duration</label>
                     <input
                       type="text"
@@ -974,6 +1162,74 @@ export const AdminServicesManager: React.FC = () => {
                       onChange={(e) => setEditingTour({ ...editingTour, duration: e.target.value })}
                       placeholder="2 Days / 1 Night"
                       className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Price (Optional)</label>
+                    <input
+                      type="number"
+                      value={editingTour.price || ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, price: e.target.value ? Number(e.target.value) : null })}
+                      placeholder="e.g. 4500"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Price Type</label>
+                    <select
+                      value={editingTour.priceType || 'On Request'}
+                      onChange={(e) => setEditingTour({ ...editingTour, priceType: e.target.value as any })}
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    >
+                      <option value="Fixed">Fixed Price</option>
+                      <option value="Starting From">Starting From</option>
+                      <option value="On Request">On Request</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Destinations (comma separated)</label>
+                    <input
+                      type="text"
+                      value={editingTour.destinations ? editingTour.destinations.join(', ') : ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, destinations: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
+                      placeholder="e.g. Ujjain, Omkareshwar"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Places Covered (comma separated)</label>
+                    <input
+                      type="text"
+                      value={editingTour.placesCovered ? editingTour.placesCovered.join(', ') : ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, placesCovered: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
+                      placeholder="e.g. Mahakaleshwar Darshan, Ramghat"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Temples Covered (comma separated)</label>
+                    <input
+                      type="text"
+                      value={editingTour.templesCovered ? editingTour.templesCovered.join(', ') : ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, templesCovered: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
+                      placeholder="e.g. Mahakaleshwar, Harsiddhi"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Sort Order / Sequence Number</label>
+                    <input
+                      type="number"
+                      value={editingTour.sortOrder || 0}
+                      onChange={(e) => setEditingTour({ ...editingTour, sortOrder: Number(e.target.value) })}
+                      placeholder="e.g. 1"
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-bold"
                     />
                   </div>
                 </div>
@@ -984,6 +1240,16 @@ export const AdminServicesManager: React.FC = () => {
                     value={editingTour.shortDescription}
                     onChange={(e) => setEditingTour({ ...editingTour, shortDescription: e.target.value })}
                     rows={2}
+                    className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Full Detailed Description</label>
+                  <textarea
+                    value={editingTour.description || ''}
+                    onChange={(e) => setEditingTour({ ...editingTour, description: e.target.value })}
+                    rows={4}
                     className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
                   />
                 </div>
@@ -1004,6 +1270,49 @@ export const AdminServicesManager: React.FC = () => {
                       className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
                     />
                     {isUploading && <span className="text-sm text-stone-500">Uploading...</span>}
+                  </div>
+                </div>
+
+                {/* SEO/AEO/GEO Fields for Tour */}
+                <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 space-y-3">
+                  <h4 className="font-serif font-bold text-amber-900 dark:text-amber-200 flex items-center gap-1.5">
+                    <Globe className="w-4 h-4 text-amber-700" />
+                    <span>SEO / AEO / GEO Tour Enablement</span>
+                  </h4>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">SEO Title</label>
+                      <input
+                        type="text"
+                        value={editingTour.seoTitle || ''}
+                        onChange={(e) => setEditingTour({ ...editingTour, seoTitle: e.target.value })}
+                        placeholder="Ujjain Spiritual Tour | Devotional Itinerary"
+                        className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Focus Keyword</label>
+                      <input
+                        type="text"
+                        value={editingTour.focusKeyword || ''}
+                        onChange={(e) => setEditingTour({ ...editingTour, focusKeyword: e.target.value })}
+                        placeholder="ujjain spiritual tour"
+                        className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-stone-700 dark:text-stone-300 mb-1">Meta Description</label>
+                    <textarea
+                      value={editingTour.metaDescription || ''}
+                      onChange={(e) => setEditingTour({ ...editingTour, metaDescription: e.target.value })}
+                      rows={2}
+                      placeholder="Enter optimized meta description..."
+                      className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900"
+                    />
                   </div>
                 </div>
 

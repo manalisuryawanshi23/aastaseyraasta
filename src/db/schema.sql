@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS poojas (
     is_popular TINYINT(1) DEFAULT 0,
     is_published TINYINT(1) DEFAULT 1,
     meta_title VARCHAR(255),
+    sort_order INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -143,6 +144,13 @@ CREATE TABLE IF NOT EXISTS tours (
     og_title VARCHAR(255),
     og_description TEXT,
     og_image VARCHAR(550),
+    destinations_json LONGTEXT,
+    places_covered_json LONGTEXT,
+    temples_covered_json LONGTEXT,
+    hindi_destinations_json LONGTEXT,
+    hindi_places_covered_json LONGTEXT,
+    hindi_temples_covered_json LONGTEXT,
+    sort_order INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

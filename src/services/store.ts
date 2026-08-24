@@ -208,6 +208,13 @@ export class StoreService {
       setItem(KEYS.POOJAS, list);
     }
 
+    list.sort((a, b) => {
+      const orderA = a.sortOrder || 9999;
+      const orderB = b.sortOrder || 9999;
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+
     if (publishedOnly) {
       return list.filter((p) => p.isPublished);
     }
@@ -320,6 +327,13 @@ export class StoreService {
       list = [...list, ...missing];
       setItem(KEYS.TOURS, list);
     }
+
+    list.sort((a, b) => {
+      const orderA = a.sortOrder || 9999;
+      const orderB = b.sortOrder || 9999;
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.name || '').localeCompare(b.name || '');
+    });
 
     if (publishedOnly) {
       return list.filter((t) => t.isPublished);

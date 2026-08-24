@@ -330,6 +330,7 @@ async function startServer() {
       isPopular: Boolean(p.is_popular),
       isPublished: Boolean(p.is_published),
       metaTitle: p.seo_title || p.meta_title,
+      sortOrder: p.sort_order || 0,
     };
   }
 
@@ -337,7 +338,7 @@ async function startServer() {
   app.get('/api/poojas', async (req, res) => {
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM poojas WHERE is_published = 1 ORDER BY created_at DESC');
+        const rows = await query('SELECT * FROM poojas WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC');
         const formatted = rows.map(formatPoojaRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
@@ -393,8 +394,8 @@ async function startServer() {
             vip_entry_pass, pandit_count, image, gallery_images_json, what_we_offer_json, benefits_json,
             hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
             faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
-            mantra, hindi_mantra, is_popular, is_published, meta_title
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           ON DUPLICATE KEY UPDATE
             name = VALUES(name),
             hindi_name = VALUES(hindi_name),
@@ -452,9 +453,10 @@ async function startServer() {
             hindi_auspicious_days = VALUES(hindi_auspicious_days),
             mantra = VALUES(mantra),
             hindi_mantra = VALUES(hindi_mantra),
-            is_popular = VALUES(is_popular),
+             is_popular = VALUES(is_popular),
             is_published = VALUES(is_published),
-            meta_title = VALUES(meta_title)`,
+            meta_title = VALUES(meta_title),
+            sort_order = VALUES(sort_order)`,
           [
             p.id,
             p.name,
@@ -516,6 +518,7 @@ async function startServer() {
             p.isFeatured ? 1 : 0,
             p.isPublished !== false ? 1 : 0,
             p.seoTitle || p.metaTitle || '',
+            p.sortOrder || 0,
           ]
         );
         return res.json({ success: true, message: 'Pooja saved to MySQL', data: p });
@@ -598,16 +601,20 @@ async function startServer() {
       ogTitle: t.og_title,
       ogDescription: t.og_description,
       ogImage: t.og_image,
-      destinations: [t.pickup_location || 'Ujjain'],
-      placesCovered: [],
-      templesCovered: [],
+      destinations: t.destinations_json ? JSON.parse(t.destinations_json) : [t.pickup_location || 'Ujjain'],
+      placesCovered: t.places_covered_json ? JSON.parse(t.places_covered_json) : [],
+      templesCovered: t.temples_covered_json ? JSON.parse(t.temples_covered_json) : [],
+      hindiDestinations: t.hindi_destinations_json ? JSON.parse(t.hindi_destinations_json) : [],
+      hindiPlacesCovered: t.hindi_places_covered_json ? JSON.parse(t.hindi_places_covered_json) : [],
+      hindiTemplesCovered: t.hindi_temples_covered_json ? JSON.parse(t.hindi_temples_covered_json) : [],
+      sortOrder: t.sort_order || 0,
     };
   }
 
   app.get('/api/tours', async (req, res) => {
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM tours WHERE is_published = 1 ORDER BY created_at DESC');
+        const rows = await query('SELECT * FROM tours WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC');
         const formatted = rows.map(formatTourRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
@@ -651,8 +658,10 @@ async function startServer() {
             is_popular, is_published, meta_title, meta_description,
             quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
             category, focus_keyword, secondary_keywords_json, canonical_url,
-            og_title, og_description, og_image
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            og_title, og_description, og_image,
+            destinations_json, places_covered_json, temples_covered_json,
+            hindi_destinations_json, hindi_places_covered_json, hindi_temples_covered_json, sort_order
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           ON DUPLICATE KEY UPDATE
             title = VALUES(title),
             hindi_title = VALUES(hindi_title),
@@ -695,7 +704,14 @@ async function startServer() {
             canonical_url = VALUES(canonical_url),
             og_title = VALUES(og_title),
             og_description = VALUES(og_description),
-            og_image = VALUES(og_image)`,
+            og_image = VALUES(og_image),
+             destinations_json = VALUES(destinations_json),
+            places_covered_json = VALUES(places_covered_json),
+            temples_covered_json = VALUES(temples_covered_json),
+            hindi_destinations_json = VALUES(hindi_destinations_json),
+            hindi_places_covered_json = VALUES(hindi_places_covered_json),
+            hindi_temples_covered_json = VALUES(hindi_temples_covered_json),
+            sort_order = VALUES(sort_order)`,
           [
             t.id,
             t.name || t.title || '',
@@ -740,6 +756,13 @@ async function startServer() {
             t.ogTitle || '',
             t.ogDescription || '',
             t.ogImage || '',
+            JSON.stringify(t.destinations || []),
+            JSON.stringify(t.placesCovered || []),
+            JSON.stringify(t.templesCovered || []),
+            JSON.stringify(t.hindiDestinations || []),
+            JSON.stringify(t.hindiPlacesCovered || []),
+            JSON.stringify(t.hindiTemplesCovered || []),
+            t.sortOrder || 0,
           ]
         );
         return res.json({ success: true, message: 'Tour saved to MySQL', data: t });

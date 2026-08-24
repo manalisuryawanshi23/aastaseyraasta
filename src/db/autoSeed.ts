@@ -104,6 +104,7 @@ const TABLE_SCHEMAS = [
     is_popular TINYINT(1) DEFAULT 0,
     is_published TINYINT(1) DEFAULT 1,
     meta_title VARCHAR(255),
+    sort_order INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
@@ -152,6 +153,13 @@ const TABLE_SCHEMAS = [
     og_title VARCHAR(255),
     og_description TEXT,
     og_image VARCHAR(550),
+    destinations_json LONGTEXT,
+    places_covered_json LONGTEXT,
+    temples_covered_json LONGTEXT,
+    hindi_destinations_json LONGTEXT,
+    hindi_places_covered_json LONGTEXT,
+    hindi_temples_covered_json LONGTEXT,
+    sort_order INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
@@ -294,6 +302,65 @@ export async function autoInitializeDatabase() {
     result.schemaCreated = true;
     console.log('[AUTO-DB] Database schema verified/created.');
 
+    // 1b. Schema Migration Guard: Ensure tours and poojas tables contain the necessary columns (json arrays and sort_order)
+    if (result.connected) {
+      try {
+        // 1. Tours table checks
+        const toursColumns = await query<any>('SHOW COLUMNS FROM tours');
+        const toursColNames = toursColumns.map((col: any) => col.Field);
+        
+        const toursAlters: string[] = [];
+        if (!toursColNames.includes('destinations_json')) {
+          toursAlters.push('ADD COLUMN destinations_json LONGTEXT');
+        }
+        if (!toursColNames.includes('places_covered_json')) {
+          toursAlters.push('ADD COLUMN places_covered_json LONGTEXT');
+        }
+        if (!toursColNames.includes('temples_covered_json')) {
+          toursAlters.push('ADD COLUMN temples_covered_json LONGTEXT');
+        }
+        if (!toursColNames.includes('hindi_destinations_json')) {
+          toursAlters.push('ADD COLUMN hindi_destinations_json LONGTEXT');
+        }
+        if (!toursColNames.includes('hindi_places_covered_json')) {
+          toursAlters.push('ADD COLUMN hindi_places_covered_json LONGTEXT');
+        }
+        if (!toursColNames.includes('hindi_temples_covered_json')) {
+          toursAlters.push('ADD COLUMN hindi_temples_covered_json LONGTEXT');
+        }
+        if (!toursColNames.includes('sort_order')) {
+          toursAlters.push('ADD COLUMN sort_order INT DEFAULT 0');
+        }
+        
+        if (toursAlters.length > 0) {
+          console.log('[AUTO-DB] tours table is missing columns. Running ALTER migrations...', toursAlters);
+          await execute(`ALTER TABLE tours ${toursAlters.join(', ')}`);
+          console.log('[AUTO-DB] tours table schema successfully updated!');
+          
+          // Delete existing tours so the seeding block below re-seeds them with fresh, complete columns
+          await execute('DELETE FROM tours');
+          console.log('[AUTO-DB] Cleared old tours to trigger re-seeding with updated columns.');
+        }
+
+        // 2. Poojas table checks
+        const poojasColumns = await query<any>('SHOW COLUMNS FROM poojas');
+        const poojasColNames = poojasColumns.map((col: any) => col.Field);
+        
+        const poojasAlters: string[] = [];
+        if (!poojasColNames.includes('sort_order')) {
+          poojasAlters.push('ADD COLUMN sort_order INT DEFAULT 0');
+        }
+        
+        if (poojasAlters.length > 0) {
+          console.log('[AUTO-DB] poojas table is missing columns. Running ALTER migrations...', poojasAlters);
+          await execute(`ALTER TABLE poojas ${poojasAlters.join(', ')}`);
+          console.log('[AUTO-DB] poojas table schema successfully updated!');
+        }
+      } catch (e) {
+        console.error('[AUTO-DB WARNING] Failed to run schema check or migrations for tours/poojas:', e);
+      }
+    }
+
     // 2. Safe Auto-Seeding: Site Settings
     const settingsCount = await query('SELECT COUNT(*) as count FROM site_settings');
     if (settingsCount[0].count === 0) {
@@ -347,8 +414,8 @@ export async function autoInitializeDatabase() {
     const poojasCount = await query('SELECT COUNT(*) as count FROM poojas');
     if (poojasCount[0].count === 0) {
       console.log('[AUTO-DB] Seeding default poojas...');
-      for (const item of initialPoojas) {
-        const p = item as any;
+      for (let idx = 0; idx < initialPoojas.length; idx++) {
+        const p = initialPoojas[idx] as any;
         await execute(
           `INSERT INTO poojas (
             id, name, hindi_name, slug, category_id, category_name, hindi_category_name,
@@ -360,8 +427,8 @@ export async function autoInitializeDatabase() {
             vip_entry_pass, pandit_count, image, gallery_images_json, what_we_offer_json, benefits_json,
             hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
             faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
-            mantra, hindi_mantra, is_popular, is_published, meta_title
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             p.id,
             p.name,
@@ -389,16 +456,16 @@ export async function autoInitializeDatabase() {
             p.hindiLocation || '',
             p.city || '',
             p.hindiCity || '',
-            p.price || 0,
+            p.price || 0.00,
             p.originalPrice || null,
             p.advanceBookingAmount || null,
             p.duration || '',
             p.hindiDuration || '',
             p.timing || '',
             p.hindiTiming || '',
-            p.samagriIncluded ? 1 : 0,
-            p.prasadHomeDelivery ? 1 : 0,
-            p.liveVideoAvailable ? 1 : 0,
+            p.samagriIncluded !== false ? 1 : 0,
+            p.prasadHomeDelivery !== false ? 1 : 0,
+            p.liveVideoAvailable !== false ? 1 : 0,
             p.vipEntryPass ? 1 : 0,
             p.panditCount || 1,
             p.featuredImage || p.image || p.ogImage || '',
@@ -423,6 +490,7 @@ export async function autoInitializeDatabase() {
             p.isFeatured ? 1 : 0,
             p.isPublished !== false ? 1 : 0,
             p.seoTitle || p.metaTitle || '',
+            idx + 1,
           ]
         );
         result.seeded.poojas++;
@@ -433,8 +501,8 @@ export async function autoInitializeDatabase() {
     const toursCount = await query('SELECT COUNT(*) as count FROM tours');
     if (toursCount[0].count === 0) {
       console.log('[AUTO-DB] Seeding default tours...');
-      for (const item of initialTours) {
-        const t = item as any;
+      for (let idx = 0; idx < initialTours.length; idx++) {
+        const t = initialTours[idx] as any;
         await execute(
           `INSERT INTO tours (
             id, title, hindi_title, slug, duration, hindi_duration, price, original_price,
@@ -445,8 +513,10 @@ export async function autoInitializeDatabase() {
             is_popular, is_published, meta_title, meta_description,
             quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
             category, focus_keyword, secondary_keywords_json, canonical_url,
-            og_title, og_description, og_image
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            og_title, og_description, og_image,
+            destinations_json, places_covered_json, temples_covered_json,
+            hindi_destinations_json, hindi_places_covered_json, hindi_temples_covered_json, sort_order
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             t.id,
             t.name || t.title || '',
@@ -491,6 +561,13 @@ export async function autoInitializeDatabase() {
             t.ogTitle || '',
             t.ogDescription || '',
             t.ogImage || '',
+            JSON.stringify(t.destinations || []),
+            JSON.stringify(t.placesCovered || []),
+            JSON.stringify(t.templesCovered || []),
+            JSON.stringify(t.hindiDestinations || []),
+            JSON.stringify(t.hindiPlacesCovered || []),
+            JSON.stringify(t.hindiTemplesCovered || []),
+            idx + 1,
           ]
         );
         result.seeded.tours++;

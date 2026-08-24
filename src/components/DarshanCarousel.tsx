@@ -12,6 +12,7 @@ import {
   Waves, 
   Bell 
 } from 'lucide-react';
+import { StoreService } from '../services/store';
 
 const darshanItems = [
   { name: 'Mahakaleshwar Darshan', Icon: Flame },
@@ -28,6 +29,21 @@ const darshanItems = [
 ];
 
 export const DarshanCarousel: React.FC = () => {
+  const [galleryItems] = useState(() =>
+    StoreService.getGallery().filter((g) => g.category === 'Darshan' && g.isPublished)
+  );
+
+  const displayItems = galleryItems.length > 0
+    ? galleryItems.map((g) => ({
+        name: g.title,
+        image: g.image,
+        isCustom: true,
+      }))
+    : darshanItems.map((d) => ({
+        name: d.name,
+        Icon: d.Icon,
+        isCustom: false,
+      }));
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -142,24 +158,40 @@ export const DarshanCarousel: React.FC = () => {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {/* Triple the items to allow seamless infinite scrolling */}
-              {[...darshanItems, ...darshanItems, ...darshanItems].map((item, index) => {
-          const IconComponent = item.Icon;
+        {[...displayItems, ...displayItems, ...displayItems].map((item, index) => {
           return (
             <div
               key={index}
               className="shrink-0 w-[220px]"
             >
-              <div className="h-full flex flex-col items-center justify-center text-center px-4 py-6 rounded-xl bg-white dark:bg-[#1C1917] border border-orange-200/60 dark:border-orange-900/40 shadow-sm hover:shadow-md hover:border-rose-400/50 dark:hover:border-rose-700/50 transition-all cursor-pointer">
-                <a
-                  href="/tour/ujjain-spiritual-tour"
-                  className="w-full h-full flex flex-col items-center justify-center text-center"
-                >
-                  <IconComponent className="w-6 h-6 text-rose-600 dark:text-rose-500 mb-3" />
-                  <div className="w-8 h-px bg-rose-200 dark:bg-rose-900/50 mb-3 rounded-full"></div>
-                  <span className="text-sm font-semibold text-stone-800 dark:text-stone-200 leading-snug">
-                    {item.name}
-                  </span>
-                </a>
+              <div className={`h-36 rounded-xl overflow-hidden border border-orange-200/60 dark:border-orange-900/40 shadow-sm hover:shadow-md hover:border-rose-400/50 dark:hover:border-rose-700/50 transition-all cursor-pointer relative group ${!item.isCustom ? 'bg-white dark:bg-[#1C1917]' : ''}`}>
+                {item.isCustom ? (
+                  <a
+                    href="/tour/ujjain-spiritual-tour"
+                    className="w-full h-full block relative"
+                  >
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                    <span className="absolute bottom-3 left-3 right-3 text-xs font-semibold text-white drop-shadow-md text-left line-clamp-2 leading-snug">
+                      {item.name}
+                    </span>
+                  </a>
+                ) : (
+                  <a
+                    href="/tour/ujjain-spiritual-tour"
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-4 py-6"
+                  >
+                    {item.Icon && <item.Icon className="w-6 h-6 text-rose-600 dark:text-rose-500 mb-3" />}
+                    <div className="w-8 h-px bg-rose-200 dark:bg-rose-900/50 mb-3 rounded-full"></div>
+                    <span className="text-sm font-semibold text-stone-800 dark:text-stone-200 leading-snug">
+                      {item.name}
+                    </span>
+                  </a>
+                )}
               </div>
             </div>
           );
