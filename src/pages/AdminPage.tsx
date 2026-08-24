@@ -42,6 +42,8 @@ import {
   ShieldAlert,
   UserPlus,
   Palette,
+  Phone,
+  MapPin,
 } from 'lucide-react';
 
 const initialSampleLeads: Lead[] = [
@@ -705,8 +707,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                             }`}
                           >
                             <div className="flex items-center gap-2.5">
-                              <Info className="w-4 h-4" />
-                              <span>Banner & Details</span>
+                              <Phone className="w-4 h-4 text-amber-400" />
+                              <span>Contact & Address Settings</span>
                             </div>
                           </button>
                         </>

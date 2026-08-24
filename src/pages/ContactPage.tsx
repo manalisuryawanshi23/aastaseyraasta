@@ -87,7 +87,9 @@ export const ContactPage: React.FC = () => {
                   <div className="font-semibold text-stone-900 dark:text-stone-100">
                     {language === 'hi' ? 'फोन नंबर:' : 'Phone Lines:'}
                   </div>
-                  <div className="font-mono text-stone-800 dark:text-stone-200">{settings.phone1} / {settings.phone2}</div>
+                  <div className="font-mono text-stone-800 dark:text-stone-200">
+                    {[settings.phone1, settings.phone2].filter(Boolean).join(' / ') || 'Helpline Available'}
+                  </div>
                 </div>
               </div>
 

@@ -170,7 +170,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2.5 text-stone-300">
                 <Phone className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="font-mono">{settings.phone1} / {settings.phone2}</span>
+                <span className="font-mono">{[settings.phone1, settings.phone2].filter(Boolean).join(' / ') || 'Helpline Available'}</span>
               </div>
               <div className="flex items-center gap-2.5 text-stone-300">
                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
