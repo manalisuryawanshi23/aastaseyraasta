@@ -84,6 +84,8 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
     return matchCat && matchSearch;
   });
 
+
+
   const activeCategory = categories.find((c) => c.id === selectedCat);
   const activeCategoryName = activeCategory ? localize(activeCategory, 'name', 'hindiName') : undefined;
 

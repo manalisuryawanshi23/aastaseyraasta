@@ -295,6 +295,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
     .map(kw => allPoojas.find(p => p.slug.includes(kw) || p.id.includes(kw)))
     .filter(Boolean) as typeof allPoojas;
 
+  filteredPoojas.sort((a, b) => {
+    const orderA = a.sortOrder ?? 9999;
+    const orderB = b.sortOrder ?? 9999;
+    if (orderA !== orderB) return orderA - orderB;
+    const idxA = allPoojas.findIndex((x) => x.id === a.id);
+    const idxB = allPoojas.findIndex((x) => x.id === b.id);
+    return idxA - idxB;
+  });
+
   const faqSchema = buildFAQSchema(faqs.map((f) => ({ question: f.question, answer: f.answer })));
 
   return (

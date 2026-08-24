@@ -209,10 +209,12 @@ export class StoreService {
     }
 
     list.sort((a, b) => {
-      const orderA = a.sortOrder || 9999;
-      const orderB = b.sortOrder || 9999;
+      const orderA = a.sortOrder ?? 9999;
+      const orderB = b.sortOrder ?? 9999;
       if (orderA !== orderB) return orderA - orderB;
-      return (a.name || '').localeCompare(b.name || '');
+      const idxA = initialPoojas.findIndex((x) => x.id === a.id);
+      const idxB = initialPoojas.findIndex((x) => x.id === b.id);
+      return idxA - idxB;
     });
 
     if (publishedOnly) {
@@ -329,10 +331,12 @@ export class StoreService {
     }
 
     list.sort((a, b) => {
-      const orderA = a.sortOrder || 9999;
-      const orderB = b.sortOrder || 9999;
+      const orderA = a.sortOrder ?? 9999;
+      const orderB = b.sortOrder ?? 9999;
       if (orderA !== orderB) return orderA - orderB;
-      return (a.name || '').localeCompare(b.name || '');
+      const idxA = initialTours.findIndex((x) => x.id === a.id);
+      const idxB = initialTours.findIndex((x) => x.id === b.id);
+      return idxA - idxB;
     });
 
     if (publishedOnly) {
