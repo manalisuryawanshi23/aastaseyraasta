@@ -73,17 +73,26 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
 
   const categories = [
     { id: 'all', label: language === 'hi' ? 'सभी तीर्थ यात्राएं' : 'All Circuits' },
-    { id: 'Ujjain & Central India', label: language === 'hi' ? 'उज्जैन व मध्य भारत' : 'Ujjain & Central India' },
-    { id: 'Himalayan Yatra', label: language === 'hi' ? 'हिमालयन यात्राएं' : 'Himalayan Yatra' },
-    { id: 'Named Yatra', label: language === 'hi' ? 'प्रमुख यात्रा परिपथ' : 'Named Yatras' },
-    { id: 'Trekking & High Altitude', label: language === 'hi' ? 'ट्रेकिंग व उच्च हिमालय' : 'Trekking & High Altitude' },
+    { id: 'ujjain-yatra', label: language === 'hi' ? 'उज्जैन यात्रा' : 'Ujjain Yatra' },
+    { id: 'tours', label: language === 'hi' ? 'यात्रा पैकेज' : 'Tours' },
+    { id: 'himalayan', label: language === 'hi' ? 'हिमालयन यात्रा' : 'Himalayan Pilgrimage' },
+    { id: 'trekking', label: language === 'hi' ? 'ट्रेकिंग' : 'Trekking' },
   ];
 
   const filtered = allTours.filter((t) => {
-    const matchesCat =
-      selectedCategory === 'all' ||
-      t.category === selectedCategory ||
-      (selectedCategory === 'Named Yatra' && t.category === 'Ujjain Yatra');
+    let matchesCat = false;
+    if (selectedCategory === 'all') {
+      matchesCat = true;
+    } else if (selectedCategory === 'ujjain-yatra') {
+      matchesCat = t.category === 'Ujjain Yatra';
+    } else if (selectedCategory === 'tours') {
+      matchesCat = t.category === 'Ujjain & Central India';
+    } else if (selectedCategory === 'himalayan') {
+      matchesCat = t.category === 'Himalayan Yatra';
+    } else if (selectedCategory === 'trekking') {
+      matchesCat = t.category === 'Trekking & High Altitude';
+    }
+
     const matchesSearch =
       !searchTerm.trim() ||
       t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
