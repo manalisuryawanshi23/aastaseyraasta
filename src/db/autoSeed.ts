@@ -696,6 +696,213 @@ export async function autoInitializeDatabase() {
       result.seeded.adminUsers++;
     }
 
+    // Sapt Sagar Name Migration Update Statement
+    console.log('[AUTO-DB] Migrating Sapt Sagar water body names in database...');
+    await execute(
+      `UPDATE tours 
+       SET overview = REPLACE(overview, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar'),
+           quick_answer = REPLACE(quick_answer, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar'),
+           places_covered_json = REPLACE(REPLACE(places_covered_json, '"Kaushalya Sagar"', '"Purushottam Sagar"'), '"Som Sagar"', '"Ratnakar Sagar"'),
+           itinerary_json = REPLACE(REPLACE(itinerary_json, 'Kaushalya, Som', 'Purushottam, Ratnakar'), 'Kaushalya, Som', 'Purushottam, Ratnakar'),
+           faqs_json = REPLACE(faqs_json, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar')
+       WHERE id = 'tour-sapt-sagar'`
+    );
+
+    // 84 Mahadev 3/4 Days and Mahakaleshwar Pilgrimage Update Statement
+    console.log('[AUTO-DB] Migrating 84 Mahadev Yatra itinerary and destinations in database...');
+    const updatedItinerary = [
+      {
+        dayNumber: 1,
+        title: "Sacred Sankalp & Initial Shrines (Temples 1-21)",
+        description: "Perform initial gotra sankalp and begin the parikrama from Agastyeshwar, followed by the first 21 Shiva shrines."
+      },
+      {
+        dayNumber: 2,
+        title: "Historical Quarter Shrines (Temples 22-42)",
+        description: "Continue the parikrama visiting temples 22 to 42 situated within the historic core of Ujjain."
+      },
+      {
+        dayNumber: 3,
+        title: "Rural & Outer Border Shrines (Temples 43-63)",
+        description: "Travel to the peaceful outer boundary locations to visit Shiva temples 43 to 63."
+      },
+      {
+        dayNumber: 4,
+        title: "Parikrama Conclusion & Rudrabhishek (Temples 64-84)",
+        description: "Visit the final temples 64 to 84, followed by a concluding Abhishek Pooja at Mahakaleshwar temple."
+      }
+    ];
+    const updatedDestinations = ["Mahakaleshwar", "Ujjain 84 Shrines"];
+    const updatedPlacesCovered = ["84 Mahadev Temples", "Ramghat", "Harsiddhi", "Mahakaleshwar Jyotirlinga"];
+    const updatedWhyChoose = [
+      "Covers the full traditional 84 Mahadev parikrama circuit in Ujjain.",
+      "Complete puja samagri and Pandit coordination included.",
+      "Private transport to navigate through diverse temple locations.",
+      "Conclude with sacred Mahakaleshwar Jyotirlinga Darshan."
+    ];
+    const updatedTravelTips = [
+      "The full parikrama is usually done comfortably over 3 to 4 days.",
+      "Maintain a list of the 84 temples to track your visits.",
+      "Offer Bilva leaves and water to the Shivlings at each temple."
+    ];
+    const updatedFaqs = [
+      {
+        question: "How long does the 84 Mahadev Yatra take?",
+        answer: "It takes 3 to 4 days to comfortably visit all 84 temples located across Ujjain."
+      },
+      {
+        question: "Do we perform Pooja at all 84 temples?",
+        answer: "Devotees typically offer water and Bilva leaves at all temples, and perform special Abhishek/Pooja at selected major shrines."
+      },
+      {
+        question: "Is this tour customizable?",
+        answer: "Yes, we can design the pace according to your arrival and stay duration."
+      }
+    ];
+
+    await execute(
+      `UPDATE tours 
+       SET duration = '3 Days / 4 Days',
+           overview = REPLACE(overview, 'Over two to three days', 'Over three to four days'),
+           destinations_json = ?,
+           places_covered_json = ?,
+           itinerary_json = ?,
+           why_choose_json = ?,
+           travel_tips_json = ?,
+           faqs_json = ?
+       WHERE id = 'tour-84-mahadev'`,
+      [
+        JSON.stringify(updatedDestinations),
+        JSON.stringify(updatedPlacesCovered),
+        JSON.stringify(updatedItinerary),
+        JSON.stringify(updatedWhyChoose),
+        JSON.stringify(updatedTravelTips),
+        JSON.stringify(updatedFaqs)
+      ]
+    );
+
+    // 9 Narayana Names Migration Update Statement
+    console.log('[AUTO-DB] Migrating 9 Narayana names in database...');
+    await execute(
+      `UPDATE tours 
+       SET overview = REPLACE(overview, 'Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabha, Dharanidhara, Laxminarayan, and Badrinarayan', 'Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan'),
+           quick_answer = REPLACE(quick_answer, 'Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabhanarayan, Dharanidharanarayan, Laxminarayan, and Badri Narayan', 'Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan')
+       WHERE id = 'tour-9-narayana'`
+    );
+
+    // 6 Vinayak Names Migration Update Statement
+    console.log('[AUTO-DB] Migrating 6 Vinayak names in database...');
+    await execute(
+      `UPDATE tours 
+       SET overview = REPLACE(overview, 'Pramod, Sumukh, Gajanand, Bhalchandra, Jatashankar, and Vignaharan Vinayak', 'Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak'),
+           quick_answer = REPLACE(quick_answer, 'Pramod Vinayak, Sumukh Vinayak, Gajanand Vinayak, Bhalchandra Vinayak, Jatashankar Vinayak, and Vignaharan Vinayak', 'Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak')
+       WHERE id = 'tour-6-vinayak'`
+    );
+
+    // Ujjain-Baglamukhi Nalkheda Tour WhyChoose Update Statement
+    console.log('[AUTO-DB] Migrating Ujjain-Baglamukhi Nalkheda tour whyChoose in database...');
+    await execute(
+      `UPDATE tours 
+       SET why_choose_json = REPLACE(why_choose_json, 'Direct pandit contacts at Nalkheda for yellow Havan rituals.', 'Complete arrangement at nalkheda for yellow havan rituals.')
+       WHERE id = 'tour-ujjain-baglamukhi'`
+    );
+
+    // Ujjain-Baglamukhi Nalkheda Tour TravelTips Update Statement
+    console.log('[AUTO-DB] Migrating Ujjain-Baglamukhi Nalkheda tour travelTips in database...');
+    const updatedNalkhedaTips = [
+      "It is customary to offer yellow flowers, coconut, and yellow sweets to Maa Baglamukhi.",
+      "Havan rituals at Nalkheda can take 1-2 hours depending on the type."
+    ];
+    await execute(
+      `UPDATE tours 
+       SET travel_tips_json = ?
+       WHERE id = 'tour-ujjain-baglamukhi'`,
+      [JSON.stringify(updatedNalkhedaTips)]
+    );
+
+    // Ujjain-Omkareshwar-Baglamukhi Nalkheda Tour TravelTips Update Statement
+    console.log('[AUTO-DB] Migrating Ujjain-Omkareshwar-Baglamukhi Nalkheda tour travelTips in database...');
+    await execute(
+      `UPDATE tours 
+       SET travel_tips_json = REPLACE(travel_tips_json, 'Consult local pandits beforehand if you wish to perform special Havans at Nalkheda.', 'Consult Aastha Sey Raasta beforehand if you wish to perform special Havans at Nalkheda.')
+       WHERE id = 'tour-ujjain-omkareshwar-baglamukhi'`
+    );
+
+    // Ujjain-Omkareshwar-Indore Tour Migration
+    console.log('[AUTO-DB] Migrating Ujjain-Omkareshwar-Indore tour in database...');
+    const updatedUOIPlaces = [
+      "Ujjain Darshan",
+      "Omkareshwar & Mamleshwar",
+      "Indore Khajrana Ganesh",
+      "Pitra Parvat",
+      "Lal Bagh Palace"
+    ];
+    const updatedUOIItinerary = [
+      {
+        "dayNumber": 1,
+        "title": "Indore Arrival & Ujjain Transfer",
+        "description": "Pickup from Indore, transfer to Ujjain. Perform local temple darshan (Mahakaleshwar, Harsiddhi, Kal Bhairav)."
+      },
+      {
+        "dayNumber": 2,
+        "title": "Ujjain to Omkareshwar",
+        "description": "Early travel to Omkareshwar on Narmada. Boat ride to island temple, Darshan of Omkareshwar & Mamleshwar."
+      },
+      {
+        "dayNumber": 3,
+        "title": "Indore Local Sightseeing & Departure",
+        "description": "Drive back to Indore. Visit the grand Lal Bagh Palace, seek wish-fulfilling blessings at Khajrana Ganesha Temple, and visit the sacred Pitra Parvat to see the monumental 72-foot Pitreshwar Hanuman statue before departure."
+      }
+    ];
+    const updatedUOIWhy = [
+      "Combines twin Jyotirlinga Darshan with Indore's cultural, heritage, and religious tour.",
+      "Covers Khajrana Ganesh, Lal Bagh Palace, and the iconic 72-ft Pitra Parvat Hanuman statue.",
+      "Pick and drop options from both Ujjain and Indore."
+    ];
+    const updatedUOIFaqs = [
+      {
+        "question": "Where is the pickup point?",
+        "answer": "We pick you up from Indore airport, Indore station, or Ujjain station based on your preference."
+      },
+      {
+        "question": "What is included in the hotel stays?",
+        "answer": "We arrange comfortable AC rooms with attached bath and breakfast included."
+      },
+      {
+        "question": "Can we customize the Indore sightseeing list?",
+        "answer": "Yes, we can customize the list to include Rajwada Palace, Chappan Dukan, Sarafa Bazaar, or other destinations based on your travel preferences."
+      }
+    ];
+    const updatedUOITips = [
+      "Indore is known as the cleanest city in India; please keep trash in bins.",
+      "Dress conservatively for Jyotirlinga entries."
+    ];
+    await execute(
+      `UPDATE tours 
+       SET overview = 'The Ujjain – Omkareshwar – Indore Tour is an optimized 3-day spiritual and heritage package meticulously designed for family yatras and senior citizens. This comprehensive circuit seamlessly connects the twin Jyotirlingas of Madhya Pradesh with Indore’s prominent cultural landmarks.\\n\\nYour pilgrimage starts in holy Ujjain with an extensive Ujjain Darshan covering Mahakaleshwar Jyotirlinga, Harsiddhi Shaktipeeth, and Kal Bhairav temple. On Day 2, you will journey to the serene Narmada River island for the sacred darshan of Omkareshwar and Mamleshwar Jyotirlingas. On the final day, the tour enters Indore to cover the wish-fulfilling Khajrana Ganesh Temple, the monumental 72-foot metallic Pitreshwar Hanuman statue at Pitra Parvat, and the magnificent European-inspired Lal Bagh Palace of the Holkar dynasty. This itinerary offers a perfect blend of profound Vedic rituals and royal Central Indian history.',
+           quick_answer = 'The Ujjain – Omkareshwar – Indore Tour is a 3-day spiritual and heritage circuit. It covers the Mahakaleshwar Jyotirlinga in Ujjain, the Omkareshwar & Mamleshwar Jyotirlingas on the Narmada River, and Indore\\\'s main attractions: the historic Lal Bagh Palace, wish-fulfilling Khajrana Ganesh Temple, and the monumental Pitreshwar Hanuman at Pitra Parvat.',
+           places_covered_json = ?,
+           itinerary_json = ?,
+           why_choose_json = ?,
+           faqs_json = ?,
+           travel_tips_json = ?
+       WHERE id = 'tour-ujjain-omkareshwar-indore'`,
+      [
+        JSON.stringify(updatedUOIPlaces),
+        JSON.stringify(updatedUOIItinerary),
+        JSON.stringify(updatedUOIWhy),
+        JSON.stringify(updatedUOIFaqs),
+        JSON.stringify(updatedUOITips)
+      ]
+    );
+
+    // Sync sequential sort_order for all default tours
+    console.log('[AUTO-DB] Aligning tour sort_orders in database...');
+    for (let idx = 0; idx < initialTours.length; idx++) {
+      const t = initialTours[idx];
+      await execute('UPDATE tours SET sort_order = ? WHERE id = ?', [idx + 1, t.id]);
+    }
+
     console.log('[AUTO-DB SUCCESS] Database tables and default records verified and seeded successfully!');
     return result;
   } catch (error: any) {

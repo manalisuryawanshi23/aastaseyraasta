@@ -172,10 +172,10 @@ export const FAQAccordion: React.FC<FAQAccordionProps> = ({
       <div className="max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-50 to-amber-50 dark:from-emerald-950/30 dark:to-amber-950/20 border border-emerald-200/80 dark:border-emerald-800/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
         <div className="space-y-1">
           <div className="font-serif font-bold text-stone-900 dark:text-stone-100 text-sm sm:text-base">
-            {t('faq.ask_more', 'Have a specific query about your Gotra, Muhurat, or Travel?')}
+            {t('faq.ask_more', 'Have a specific query about Pooja or Travel?')}
           </div>
           <div className="text-stone-600 dark:text-stone-400 text-xs">
-            {t('faq.ask_more_sub', 'Our Vedic Acharyas and pilgrimage coordinators are available 24/7 on WhatsApp.')}
+            {t('faq.ask_more_sub', 'Connect with our Pooja & Yatra Support Team on WhatsApp')}
           </div>
         </div>
         <a

@@ -109,8 +109,8 @@ const translations: Record<Language, Record<string, string>> = {
     'faq.tour': 'Tours & Yatra',
     'faq.general': 'General & Booking',
     'faq.no_results': 'No questions found in this category.',
-    'faq.ask_more': 'Have a specific query about your Gotra, Muhurat, or Travel?',
-    'faq.ask_more_sub': 'Our Vedic Acharyas and pilgrimage coordinators are available 24/7 on WhatsApp.',
+    'faq.ask_more': 'Have a specific query about Pooja or Travel?',
+    'faq.ask_more_sub': 'Connect with our Pooja & Yatra Support Team on WhatsApp',
     'faq.whatsapp_btn': 'Ask on WhatsApp',
 
     // How It Works Steps
@@ -319,8 +319,8 @@ const translations: Record<Language, Record<string, string>> = {
     'faq.tour': 'यात्रा एवं दर्शन',
     'faq.general': 'सामान्य एवं बुकिंग',
     'faq.no_results': 'इस श्रेणी में कोई प्रश्न उपलब्ध नहीं है।',
-    'faq.ask_more': 'क्या आपका गोत्र, मुहूर्त या यात्रा से जुड़ा कोई विशिष्ट प्रश्न है?',
-    'faq.ask_more_sub': 'हमारे वेदपाठी आचार्य और यात्रा समन्वयक व्हाट्सएप पर 24/7 आपकी सेवा में उपलब्ध हैं।',
+    'faq.ask_more': 'क्या आपके पास पूजा या यात्रा के बारे में कोई विशिष्ट प्रश्न है?',
+    'faq.ask_more_sub': 'व्हाट्सएप पर हमारी पूजा और यात्रा सहायता टीम से जुड़ें',
     'faq.whatsapp_btn': 'व्हाट्सएप पर पूछें',
 
     // How It Works Steps

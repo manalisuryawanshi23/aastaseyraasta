@@ -187,7 +187,7 @@ export const Footer: React.FC = () => {
                 className="px-3 py-1.5 rounded-lg bg-emerald-600/90 hover:bg-emerald-600 text-white text-xs font-medium flex items-center gap-1.5 transition-colors shadow-xs"
               >
                 <MessageSquare className="w-3.5 h-3.5 fill-current" />
-                <span>{language === 'hi' ? 'पंडित जी से व्हाट्सएप पर बात करें' : 'WhatsApp Pandit Ji'}</span>
+                <span>{language === 'hi' ? 'व्हाट्सएप' : 'WhatsApp'}</span>
               </a>
               <a
                 href="/contact"
@@ -365,22 +365,18 @@ export const Footer: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <span className="text-center sm:text-left leading-snug">
               &copy; {new Date().getFullYear()} {language === 'hi' ? settings.hindiBusinessName : settings.businessName}. {language === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
+              <span className="mx-1.5 opacity-60">|</span>
+              Designed & Developed by{' '}
+              <a
+                href="https://www.manalitheboss.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-500 hover:text-amber-400 transition-colors font-medium hover:underline"
+              >
+                manalitheboss
+              </a>
             </span>
-            <div className="inline-flex items-center gap-1 bg-stone-900 border border-stone-800 p-1 rounded-lg text-[11px]">
-              <Globe className="w-3.5 h-3.5 text-amber-500 ml-1" />
-              <button
-                onClick={() => setLanguage('en')}
-                className={`px-2 py-0.5 rounded ${language === 'en' ? 'bg-amber-800 text-amber-100 font-bold' : 'text-stone-400 hover:text-stone-200'}`}
-              >
-                English
-              </button>
-              <button
-                onClick={() => setLanguage('hi')}
-                className={`px-2 py-0.5 rounded font-serif ${language === 'hi' ? 'bg-amber-800 text-amber-100 font-bold' : 'text-stone-400 hover:text-stone-200'}`}
-              >
-                हिंदी
-              </button>
-            </div>
+
           </div>
 
           <div className="flex flex-wrap gap-3 sm:gap-4 text-xs justify-center md:justify-end">
@@ -395,21 +391,6 @@ export const Footer: React.FC = () => {
             </a>
             <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">
               {language === 'hi' ? '🗺️ साइट मैप' : '🗺️ Site Map'}
-            </a>
-            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
-              XML Sitemap
-            </a>
-            <a href="/privacy-policy" className="hover:text-stone-300 transition-colors">
-              {language === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
-            </a>
-            <a href="/terms-and-conditions" className="hover:text-stone-300 transition-colors">
-              {language === 'hi' ? 'नियम एवं शर्तें' : 'Terms & Conditions'}
-            </a>
-            <a href="/disclaimer" className="hover:text-stone-300 transition-colors">
-              {language === 'hi' ? 'अस्वीकरण' : 'Disclaimer'}
-            </a>
-            <a href="/refund-cancellation-policy" className="hover:text-stone-300 transition-colors">
-              {language === 'hi' ? 'रद्दीकरण नीति' : 'Cancellation Policy'}
             </a>
             <a href="/admin" className="hover:text-amber-400 transition-colors inline-flex items-center gap-1">
               <Lock className="w-3 h-3" />

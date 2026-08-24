@@ -2780,7 +2780,7 @@ Arranging a narayan bali pooja in ujjain through Aastha Sey Raasta Seva guarante
   },
 ];
 
-export const initialTours: Tour[] = [
+const rawTours: Tour[] = [
   {
     "id": "tour-ujjain-local",
     "name": "Ujjain Spiritual Tour",
@@ -2988,7 +2988,7 @@ export const initialTours: Tour[] = [
     "slug": "ujjain-omkareshwar-indore-tour",
     "category": "Ujjain & Central India",
     "shortDescription": "Twin Jyotirlinga pilgrimage covering Ujjain Mahakal & Omkareshwar / Mamleshwar on Narmada River plus Indore highlights.",
-    "description": "This three-day package is a wonderful combination of deep spiritual devotion, rich royal history, and delicious local culture. We take you from the holy temple steps of Ujjain and Omkareshwar to the lively, clean streets of Indore. It is a thoughtfully paced trip that gives you enough time to pray at the sacred shrines while also enjoying the cultural heritage and famous food of Central India.\n\nYour journey begins with the sacred atmosphere of Ujjain's ancient temples. Next, you will travel to the peaceful river island of Omkareshwar for a soothing boat ride and darshan of the twin Shiva temples. Finally, we explore Indore, visiting the grand Rajwada Palace and the historic Khajrana Ganesh temple, and enjoying the famous street foods at Chappan Dukan. It is a complete experience that satisfies both the soul and the heart.",
+    "description": "The Ujjain – Omkareshwar – Indore Tour is an optimized 3-day spiritual and heritage package meticulously designed for family yatras and senior citizens. This comprehensive circuit seamlessly connects the twin Jyotirlingas of Madhya Pradesh with Indore’s prominent cultural landmarks.\n\nYour pilgrimage starts in holy Ujjain with an extensive Ujjain Darshan covering Mahakaleshwar Jyotirlinga, Harsiddhi Shaktipeeth, and Kal Bhairav temple. On Day 2, you will journey to the serene Narmada River island for the sacred darshan of Omkareshwar and Mamleshwar Jyotirlingas. On the final day, the tour enters Indore to cover the wish-fulfilling Khajrana Ganesh Temple, the monumental 72-foot metallic Pitreshwar Hanuman statue at Pitra Parvat, and the magnificent European-inspired Lal Bagh Palace of the Holkar dynasty. This itinerary offers a perfect blend of profound Vedic rituals and royal Central Indian history.",
     "startingPoint": "Indore / Ujjain",
     "endingPoint": "Indore / Ujjain",
     "duration": "3 Days",
@@ -3000,14 +3000,16 @@ export const initialTours: Tour[] = [
     "placesCovered": [
       "Ujjain Darshan",
       "Omkareshwar & Mamleshwar",
-      "Indore Rajwada",
-      "Khajrana Ganesh Temple"
+      "Indore Khajrana Ganesh",
+      "Pitra Parvat",
+      "Lal Bagh Palace"
     ],
     "templesCovered": [
       "Mahakaleshwar",
       "Omkareshwar",
       "Mamleshwar",
       "Khajrana Ganesh",
+      "Pitreshwar Hanuman (Pitra Parvat)",
       "Harsiddhi",
       "Kalbhairav"
     ],
@@ -3015,7 +3017,7 @@ export const initialTours: Tour[] = [
       {
         "dayNumber": 1,
         "title": "Indore Arrival & Ujjain Transfer",
-        "description": "Pickup from Indore, transfer to Ujjain. Perform local temple darshan (Mahakaleshwar, Harsiddhi)."
+        "description": "Pickup from Indore, transfer to Ujjain. Perform local temple darshan (Mahakaleshwar, Harsiddhi, Kal Bhairav)."
       },
       {
         "dayNumber": 2,
@@ -3025,7 +3027,7 @@ export const initialTours: Tour[] = [
       {
         "dayNumber": 3,
         "title": "Indore Local Sightseeing & Departure",
-        "description": "Drive back to Indore, visit Rajwada Palace, Lal Bagh Palace, Khajrana Ganesh, and departure."
+        "description": "Drive back to Indore. Visit the grand Lal Bagh Palace, seek wish-fulfilling blessings at Khajrana Ganesha Temple, and visit the sacred Pitra Parvat to see the monumental 72-foot Pitreshwar Hanuman statue before departure."
       }
     ],
     "included": [
@@ -3037,34 +3039,35 @@ export const initialTours: Tour[] = [
     "featuredImage": "/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
     "isFeatured": true,
     "isPublished": true,
-    "quickAnswer": "The Ujjain – Omkareshwar – Indore Tour is a 3-day spiritual and heritage circuit. It covers the Mahakaleshwar Jyotirlinga in Ujjain, the Omkareshwar & Mamleshwar Jyotirlingas on the Narmada River, and Indore's local attractions including the historic Rajwada Palace and Khajrana Ganesh Temple.",
+    "quickAnswer": "The Ujjain – Omkareshwar – Indore Tour is a 3-day spiritual and heritage circuit. It covers the Mahakaleshwar Jyotirlinga in Ujjain, the Omkareshwar & Mamleshwar Jyotirlingas on the Narmada River, and Indore's main attractions: the historic Lal Bagh Palace, wish-fulfilling Khajrana Ganesh Temple, and the monumental Pitreshwar Hanuman at Pitra Parvat.",
     "whyChoose": [
-      "Combines spiritual Jyotirlinga Darshan with Indore's cultural and culinary tour.",
-      "Well-paced 3-day itinerary suitable for families and senior citizens.",
+      "Combines twin Jyotirlinga Darshan with Indore's cultural, heritage, and religious tour.",
+      "Covers Khajrana Ganesh, Lal Bagh Palace, and the iconic 72-ft Pitra Parvat Hanuman statue.",
       "Pick and drop options from both Ujjain and Indore."
     ],
     "whatWeOffer": [
       "3 Days private AC SUV or Sedan transfers",
       "2 Nights premium hotel stays",
-      "Indore local street food walk guidance",
+      "Indore local sightseeing guidance",
       "VIP Darshan assistance"
     ],
     "howToReach": "Fly to Indore Airport or arrive at Ujjain/Indore Railway station.",
     "travelTips": [
       "Indore is known as the cleanest city in India; please keep trash in bins.",
-      "Indore Sarafa Bazaar street food market opens after 9 PM.",
       "Dress conservatively for Jyotirlinga entries."
     ],
     "focusKeyword": "ujjain omkareshwar indore tour",
     "secondaryKeywords": [
       "ujjain omkareshwar indore package",
-      "madhya pradesh jyotirlinga itinerary"
+      "khajrana ganesh indore",
+      "pitra parvat hanuman statue",
+      "lal bagh palace indore"
     ],
     "seoTitle": "Ujjain Omkareshwar Indore Tour Package | 3-Day Yatra",
-    "metaDescription": "Book a 3-day Ujjain Omkareshwar Indore tour package. Includes private AC transport, hotel stays, and twin Jyotirlinga darshan assistance.",
+    "metaDescription": "Book a 3-day Ujjain Omkareshwar Indore tour package. Cover Mahakaleshwar, Omkareshwar & Mamleshwar, plus Indore's Khajrana, Pitra Parvat, and Lal Bagh.",
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-indore-tour",
     "ogTitle": "Ujjain Omkareshwar Indore Tour Package | 3 Days",
-    "ogDescription": "Combined Jyotirlinga & Indore heritage tour package covering Mahakaleshwar, Omkareshwar, and Indore Khajrana.",
+    "ogDescription": "Combined Jyotirlinga & Indore heritage tour package covering Mahakaleshwar, Omkareshwar, Khajrana, Pitra Parvat, and Lal Bagh.",
     "ogImage": "/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
     "faqs": [
       {
@@ -3077,7 +3080,7 @@ export const initialTours: Tour[] = [
       },
       {
         "question": "Can we customize the Indore sightseeing list?",
-        "answer": "Yes, we can include Lal Bagh, Chappan Dukan, or Rajwada as per your interests."
+        "answer": "Yes, we can customize the list to include Rajwada Palace, Chappan Dukan, Sarafa Bazaar, or other destinations based on your travel preferences."
       }
     ],
     "createdAt": "2026-08-01T10:00:00Z",
@@ -3152,7 +3155,7 @@ export const initialTours: Tour[] = [
     "howToReach": "Nalkheda is located about 100 km from Ujjain. The tour starts from Ujjain or Indore and travels by road.",
     "travelTips": [
       "Yellow clothing is traditionally worn for Maa Baglamukhi rituals.",
-      "Consult local pandits beforehand if you wish to perform special Havans at Nalkheda.",
+      "Consult Aastha Sey Raasta beforehand if you wish to perform special Havans at Nalkheda.",
       "Expect longer queues during Navratri festivals."
     ],
     "focusKeyword": "ujjain omkareshwar baglamukhi nalkheda tour",
@@ -3232,7 +3235,7 @@ export const initialTours: Tour[] = [
     "whyChoose": [
       "Focused pilgrimage for seeking protection and obstacle removal.",
       "Short 2-day weekend package.",
-      "Direct pandit contacts at Nalkheda for yellow Havan rituals."
+      "Complete arrangement at nalkheda for yellow havan rituals."
     ],
     "whatWeOffer": [
       "AC Cab transfers from Ujjain to Nalkheda and back",
@@ -3243,8 +3246,7 @@ export const initialTours: Tour[] = [
     "howToReach": "Start from Ujjain. Nalkheda is a 2.5-hour drive via Agar Road.",
     "travelTips": [
       "It is customary to offer yellow flowers, coconut, and yellow sweets to Maa Baglamukhi.",
-      "Havan rituals at Nalkheda can take 1-2 hours depending on the type.",
-      "Carry cash as digital payments can be slow in Nalkheda due to network issues."
+      "Havan rituals at Nalkheda can take 1-2 hours depending on the type."
     ],
     "focusKeyword": "ujjain baglamukhi nalkheda tour",
     "secondaryKeywords": [
@@ -3763,17 +3765,19 @@ export const initialTours: Tour[] = [
     "slug": "84-mahadev-yatra-pooja-ujjain",
     "category": "Ujjain Yatra",
     "shortDescription": "Traditional Chaurasi Mahadev parikrama circuit visiting 84 Shiva temples inside Ujjain's sacred Mahakal Van.",
-    "description": "The 84 Mahadev Yatra is a ancient parikrama circuit that leads you to the 84 temples representing the 84 distinct forms of Lord Shiva in Ujjain's sacred Mahakal Forest. This yatra is a beautiful, traditional way to explore the deeper spiritual layers of Ujjain, beyond the main Mahakaleshwar temple. Devotees perform this yatra to seek peace, clear away old karmic debts, and experience the diverse legends of Shiva's grace.\n\nOver two to three days, you will travel through Ujjain's narrow lanes and quiet countryside locations, visiting each of the 84 Shivlings. At each temple, you can make simple offerings of water and Bilva leaves. It is a journey of patience and deep devotion, guided by local Pandits who share the unique story behind each manifestation of Lord Shiva, leaving you with a profound sense of spiritual achievement.",
+    "description": "The 84 Mahadev Yatra is a ancient parikrama circuit that leads you to the 84 temples representing the 84 distinct forms of Lord Shiva in Ujjain's sacred Mahakal Forest. This yatra is a beautiful, traditional way to explore the deeper spiritual layers of Ujjain, beyond the main Mahakaleshwar temple. Devotees perform this yatra to seek peace, clear away old karmic debts, and experience the diverse legends of Shiva's grace.\n\nOver three to four days, you will travel through Ujjain's narrow lanes and quiet countryside locations, visiting each of the 84 Shivlings. At each temple, you can make simple offerings of water and Bilva leaves. It is a journey of patience and deep devotion, guided by local Pandits who share the unique story behind each manifestation of Lord Shiva, leaving you with a profound sense of spiritual achievement.",
     "startingPoint": "Ujjain Station",
     "endingPoint": "Ujjain Station",
-    "duration": "2 Days / 3 Days",
+    "duration": "3 Days / 4 Days",
     "destinations": [
+      "Mahakaleshwar",
       "Ujjain 84 Shrines"
     ],
     "placesCovered": [
       "84 Mahadev Temples",
       "Ramghat",
-      "Harsiddhi"
+      "Harsiddhi",
+      "Mahakaleshwar Jyotirlinga"
     ],
     "templesCovered": [
       "84 Mahadev Temples",
@@ -3782,13 +3786,23 @@ export const initialTours: Tour[] = [
     "itinerary": [
       {
         "dayNumber": 1,
-        "title": "Start Parikrama (Temples 1-42)",
-        "description": "Begin parikrama from Agastyeshwar, followed by other local Shiva shrines."
+        "title": "Sacred Sankalp & Initial Shrines (Temples 1-21)",
+        "description": "Perform initial gotra sankalp and begin the parikrama from Agastyeshwar, followed by the first 21 Shiva shrines."
       },
       {
         "dayNumber": 2,
-        "title": "Conclude Parikrama (Temples 43-84)",
-        "description": "Visit remaining temples and perform concluding Abhishek pooja."
+        "title": "Historical Quarter Shrines (Temples 22-42)",
+        "description": "Continue the parikrama visiting temples 22 to 42 situated within the historic core of Ujjain."
+      },
+      {
+        "dayNumber": 3,
+        "title": "Rural & Outer Border Shrines (Temples 43-63)",
+        "description": "Travel to the peaceful outer boundary locations to visit Shiva temples 43 to 63."
+      },
+      {
+        "dayNumber": 4,
+        "title": "Parikrama Conclusion & Rudrabhishek (Temples 64-84)",
+        "description": "Visit the final temples 64 to 84, followed by a concluding Abhishek Pooja at Mahakaleshwar temple."
       }
     ],
     "included": [
@@ -3804,7 +3818,8 @@ export const initialTours: Tour[] = [
     "whyChoose": [
       "Covers the full traditional 84 Mahadev parikrama circuit in Ujjain.",
       "Complete puja samagri and Pandit coordination included.",
-      "Private transport to navigate through diverse temple locations."
+      "Private transport to navigate through diverse temple locations.",
+      "Conclude with sacred Mahakaleshwar Jyotirlinga Darshan."
     ],
     "whatWeOffer": [
       "Structured transport to all 84 Mahadev temples in Ujjain",
@@ -3814,7 +3829,7 @@ export const initialTours: Tour[] = [
     ],
     "howToReach": "Start from Ujjain Junction (UJN) or Indore Airport. The temples are located within Ujjain city limits and surrounding rural borders.",
     "travelTips": [
-      "The full parikrama is usually done over 2-3 days for comfort.",
+      "The full parikrama is usually done comfortably over 3 to 4 days.",
       "Maintain a list of the 84 temples to track your visits.",
       "Offer Bilva leaves and water to the Shivlings at each temple."
     ],
@@ -3832,7 +3847,7 @@ export const initialTours: Tour[] = [
     "faqs": [
       {
         "question": "How long does the 84 Mahadev Yatra take?",
-        "answer": "It takes 2 to 3 days to comfortably visit all 84 temples located across Ujjain."
+        "answer": "It takes 3 to 4 days to comfortably visit all 84 temples located across Ujjain."
       },
       {
         "question": "Do we perform Pooja at all 84 temples?",
@@ -3852,7 +3867,7 @@ export const initialTours: Tour[] = [
     "slug": "9-narayana-yatra-pooja-ujjain",
     "category": "Ujjain Yatra",
     "shortDescription": "Sacred parikrama covering 9 ancient Vishnu temples of Ujjain for Navgraha planetary balance.",
-    "description": "The 9 Narayan Yatra is a sacred Vishnu parikrama circuit visiting nine historic temples in Ujjain: Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabha, Dharanidhara, Laxminarayan, and Badrinarayan. This yatra is highly valued by devotees who wish to balance their planetary energies (Navgraha) and seek the blessings of Lord Vishnu for harmony, prosperity, and family well-being.\n\nThis gentle one-day tour takes you through Ujjain's ancient quarters, where these beautiful shrines are hidden. Led by experienced Vedic Pandits, you will participate in simple prayers and chanting of Vishnu names at each stop. The peaceful, positive energy of these temples and the traditional yellow-clothed rituals create a warm, comforting atmosphere of safety and divine protection.",
+    "description": "The 9 Narayan Yatra is a sacred Vishnu parikrama circuit visiting nine historic temples in Ujjain: Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan. This yatra is highly valued by devotees who wish to balance their planetary energies (Navgraha) and seek the blessings of Lord Vishnu for harmony, prosperity, and family well-being.\n\nThis gentle one-day tour takes you through Ujjain's ancient quarters, where these beautiful shrines are hidden. Led by experienced Vedic Pandits, you will participate in simple prayers and chanting of Vishnu names at each stop. The peaceful, positive energy of these temples and the traditional yellow-clothed rituals create a warm, comforting atmosphere of safety and divine protection.",
     "startingPoint": "Ujjain Station",
     "endingPoint": "Ujjain Station",
     "duration": "1 Day",
@@ -3882,7 +3897,7 @@ export const initialTours: Tour[] = [
     "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
-    "quickAnswer": "The 9 Narayan Yatra is a traditional pilgrimage circuit covering nine ancient Vishnu temples in Ujjain, Madhya Pradesh: Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabhanarayan, Dharanidharanarayan, Laxminarayan, and Badri Narayan. Devotees believe this yatra balances planetary influences.",
+    "quickAnswer": "The 9 Narayan Yatra is a traditional pilgrimage circuit covering nine ancient Vishnu temples in Ujjain, Madhya Pradesh: Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan. Devotees believe this yatra balances planetary influences.",
     "whyChoose": [
       "Visits the nine highly sacred Vishnu temples of Ujjain.",
       "Helps balance the Navgraha planetary energies traditionally.",
@@ -3934,7 +3949,7 @@ export const initialTours: Tour[] = [
     "slug": "sapt-sagar-yatra-pooja-ujjain",
     "category": "Ujjain Yatra",
     "shortDescription": "Spiritual tour visiting the 7 holy water bodies (Sagars/Kunds) of ancient Ujjain.",
-    "description": "The Sapt Sagar Yatra is a holy water-body pilgrimage circuit visiting the seven ancient lakes and reservoirs of Ujjain: Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Kaushalya Sagar, Som Sagar, and Vishnu Sagar. In Vedic tradition, these water bodies represent the seven holy oceans, and performing rituals on their banks is believed to purify past karma and bring peace to one's ancestors.\n\nOn this single-day journey, you will visit the different water bodies across the city. With the help of Vedic Pandits, you will perform simple water offerings (tarpan) and prayers. The gentle breeze carrying the scent of flowers and incense over the waters, combined with the soft chanting of mantras, makes this a deeply comforting and reflective experience for devotees looking for spiritual cleansing.",
+    "description": "The Sapt Sagar Yatra is a holy water-body pilgrimage circuit visiting the seven ancient lakes and reservoirs of Ujjain: Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Purushottam Sagar, Ratnakar Sagar, and Vishnu Sagar. In Vedic tradition, these water bodies represent the seven holy oceans, and performing rituals on their banks is believed to purify past karma and bring peace to one's ancestors.\n\nOn this single-day journey, you will visit the different water bodies across the city. With the help of Vedic Pandits, you will perform simple water offerings (tarpan) and prayers. The gentle breeze carrying the scent of flowers and incense over the waters, combined with the soft chanting of mantras, makes this a deeply comforting and reflective experience for devotees looking for spiritual cleansing.",
     "startingPoint": "Ujjain Station",
     "endingPoint": "Ujjain Station",
     "duration": "1 Day",
@@ -3946,8 +3961,8 @@ export const initialTours: Tour[] = [
       "Pushkar Sagar",
       "Ksheer Sagar",
       "Govardhan Sagar",
-      "Kaushalya Sagar",
-      "Som Sagar",
+      "Purushottam Sagar",
+      "Ratnakar Sagar",
       "Vishnu Sagar"
     ],
     "templesCovered": [
@@ -3957,7 +3972,7 @@ export const initialTours: Tour[] = [
       {
         "dayNumber": 1,
         "title": "Sapt Sagar Water Offering Rituals",
-        "description": "Visit Rudra Sagar, Pushkar, Ksheer, Govardhan, Kaushalya, Som, and Vishnu Sagar. Offer prayers and tarpan."
+        "description": "Visit Rudra Sagar, Pushkar, Ksheer, Govardhan, Purushottam, Ratnakar, and Vishnu Sagar. Offer prayers and tarpan."
       }
     ],
     "included": [
@@ -3969,7 +3984,7 @@ export const initialTours: Tour[] = [
     "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
-    "quickAnswer": "The Sapt Sagar Yatra is an ancient pilgrimage circuit visiting the seven holy water bodies (Sagars/Kunds) of Ujjain: Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Kaushalya Sagar, Som Sagar, and Vishnu Sagar. Cleansing rituals here are believed to purify past karma.",
+    "quickAnswer": "The Sapt Sagar Yatra is an ancient pilgrimage circuit visiting the seven holy water bodies (Sagars/Kunds) of Ujjain: Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Purushottam Sagar, Ratnakar Sagar, and Vishnu Sagar. Cleansing rituals here are believed to purify past karma.",
     "whyChoose": [
       "Visits all seven sacred water bodies of ancient Avanti/Ujjain.",
       "Includes tarpan and cleaning rituals led by Vedic pandits.",
@@ -4001,7 +4016,7 @@ export const initialTours: Tour[] = [
     "faqs": [
       {
         "question": "What are the names of the seven Sagars?",
-        "answer": "Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Kaushalya Sagar, Som Sagar, and Vishnu Sagar."
+        "answer": "Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Purushottam Sagar, Ratnakar Sagar, and Vishnu Sagar."
       },
       {
         "question": "Is bathing allowed in all these water bodies?",
@@ -4021,7 +4036,7 @@ export const initialTours: Tour[] = [
     "slug": "6-vinayak-yatra-pooja-ujjain",
     "category": "Ujjain Yatra",
     "shortDescription": "Spiritual tour visiting the 6 ancient Ganesha temples (Shad Vinayak) of Ujjain consecrated by Lord Shri Rama.",
-    "description": "The 6 Vinayak Yatra is a joyful pilgrimage circuit visiting the six ancient Ganesha temples of Ujjain: Pramod, Sumukh, Gajanand, Bhalchandra, Jatashankar, and Vignaharan Vinayak. According to local belief, these shrines were consecrated by Lord Shri Rama during his exile to seek success and smooth journeys. Devotees perform this yatra to remove obstacles from their lives and bring wisdom and success to new ventures.\n\nThis half-day tour takes you through the historical lanes of Ujjain, offering a sweet and peaceful experience for families. You will offer fresh Modaks and Durva grass to Lord Ganesha at each temple while listening to the beautiful stories of Rama's devotion. It is a perfect yatra to schedule before starting a new business, housewarming, or any major life event.",
+    "description": "The 6 Vinayak Yatra is a joyful pilgrimage circuit visiting the six ancient Ganesha temples of Ujjain: Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak. According to local belief, these shrines were consecrated by Lord Shri Rama during his exile to seek success and smooth journeys. Devotees perform this yatra to remove obstacles from their lives and bring wisdom and success to new ventures.\n\nThis half-day tour takes you through the historical lanes of Ujjain, offering a sweet and peaceful experience for families. You will offer fresh Modaks and Durva grass to Lord Ganesha at each temple while listening to the beautiful stories of Rama's devotion. It is a perfect yatra to schedule before starting a new business, housewarming, or any major life event.",
     "startingPoint": "Ujjain Station",
     "endingPoint": "Ujjain Station",
     "duration": "1 Day",
@@ -4050,7 +4065,7 @@ export const initialTours: Tour[] = [
     "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
-    "quickAnswer": "The 6 Vinayak Yatra covers the six ancient Ganesha temples in Ujjain consecrated by Lord Shri Rama: Pramod Vinayak, Sumukh Vinayak, Gajanand Vinayak, Bhalchandra Vinayak, Jatashankar Vinayak, and Vignaharan Vinayak. Devotees perform this yatra to invoke wisdom and remove obstacles.",
+    "quickAnswer": "The 6 Vinayak Yatra covers the six ancient Ganesha temples in Ujjain consecrated by Lord Shri Rama: Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak. Devotees perform this yatra to invoke wisdom and remove obstacles.",
     "whyChoose": [
       "Visits the six ancient Ganesha temples (Shad Vinayak) of Ujjain.",
       "Traditionally associated with wisdom, intellect, and success in new tasks.",
@@ -5170,6 +5185,40 @@ export const initialTours: Tour[] = [
     "updatedAt": "2026-08-01T10:00:00Z"
   }
 ];
+
+const desiredOrder = [
+  'tour-84-mahadev',
+  'tour-9-narayana',
+  'tour-sapt-sagar',
+  'tour-6-vinayak',
+  'tour-ujjain-local',
+  'tour-ujjain-omkareshwar',
+  'tour-ujjain-omkareshwar-indore',
+  'tour-ujjain-omkareshwar-baglamukhi',
+  'tour-ujjain-baglamukhi',
+  'tour-ujjain-pashupatinath-sanwariya',
+  'tour-char-dham',
+  'tour-panch-kedar',
+  'tour-panch-badri',
+  'trek-kedarkantha',
+  'trek-pangarchulla',
+  'trek-kuari-pass',
+  'trek-kagbhusundi',
+  'trek-roopkund',
+  'trek-pindari-glacier',
+  'trek-dayara-bugyal',
+  'trek-satopanth',
+  'trek-valley-of-flowers',
+  'trek-gaumukh'
+];
+
+export const initialTours: Tour[] = [...rawTours].sort((a, b) => {
+  const idxA = desiredOrder.indexOf(a.id);
+  const idxB = desiredOrder.indexOf(b.id);
+  const valA = idxA === -1 ? 9999 : idxA;
+  const valB = idxB === -1 ? 9999 : idxB;
+  return valA - valB;
+});
 
 export const initialDestinations: Destination[] = [
   {

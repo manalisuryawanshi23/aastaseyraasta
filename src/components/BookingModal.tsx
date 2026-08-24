@@ -647,7 +647,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   rows={2}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder={language === 'hi' ? 'मनपसंद मंदिर, विश्राम आवश्यकता या स्वास्थ्य संकल्प का विवरण दें...' : 'Mention preferred temple, lodging requirement or health prayer...'}
+                  placeholder=""
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none"
                 />
               </div>
