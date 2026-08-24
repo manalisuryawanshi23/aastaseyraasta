@@ -307,12 +307,12 @@ export const AmbientAudioPlayer: React.FC = () => {
 
   return (
     <>
-      {/* Floating Sacred Sound Capsule (Visible on all devices) */}
-      <div className="fixed bottom-20 right-3.5 sm:right-6 z-40 flex flex-col items-end">
+      {/* Floating Sacred Sound Capsule (above MobileStickyCTA on mobile) */}
+      <div className="fixed bottom-[76px] sm:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end">
         
         {/* Sound Control Modal Panel */}
         {isPanelOpen && (
-          <div className="mb-3 w-80 sm:w-88 bg-stone-950/95 text-stone-100 border border-amber-500/40 backdrop-blur-xl p-4 rounded-3xl shadow-2xl space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <div className="mb-3 w-[calc(100vw-1.5rem)] max-w-80 bg-stone-950/95 text-stone-100 border border-amber-500/40 backdrop-blur-xl p-4 rounded-3xl shadow-2xl space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-200 max-h-[80vh] overflow-y-auto">
             
             {/* Header */}
             <div className="flex items-center justify-between border-b border-stone-800 pb-2.5">

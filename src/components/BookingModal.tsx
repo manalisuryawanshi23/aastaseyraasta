@@ -159,9 +159,9 @@ const InteractiveDatePicker: React.FC<{
         <Calendar className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 ml-2" />
       </button>
 
-      {/* Dropdown Calendar Modal */}
+      {/* Dropdown Calendar Modal — full-width to prevent 320px overflow */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 z-50 bg-white dark:bg-[#1C1917] rounded-2xl border border-amber-300/60 dark:border-stone-700 shadow-2xl p-4 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-white dark:bg-[#1C1917] rounded-2xl border border-amber-300/60 dark:border-stone-700 shadow-2xl p-4 animate-in fade-in zoom-in-95 duration-150">
           
           {/* Quick Shortcuts Bar */}
           <div className="mb-3 space-y-1.5">

@@ -205,10 +205,10 @@ export const SupportChatWidget: React.FC<SupportChatWidgetProps> = ({ onOpenBook
 
   return (
     <>
-      {/* Floating Action Button */}
-      <div className="fixed bottom-16 sm:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end pointer-events-auto">
+      {/* Floating Action Button — sits above MobileStickyCTA + AmbientAudioPlayer on mobile */}
+      <div className="fixed bottom-[138px] sm:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end pointer-events-auto">
         {!isOpen && (
-          <div className="hidden xs:flex mb-2 bg-stone-900 dark:bg-amber-950 text-white dark:text-amber-100 text-xs py-1.5 px-3 rounded-full shadow-lg border border-amber-500/30 items-center gap-2 animate-bounce max-w-[220px]">
+          <div className="hidden xs:flex mb-2 bg-stone-900 dark:bg-amber-950 text-white dark:text-amber-100 text-xs py-1.5 px-3 rounded-full shadow-lg border border-amber-500/30 items-center gap-2 animate-bounce max-w-[180px] sm:max-w-[220px]">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span className="font-medium truncate">Ask Pandit Ji</span>
           </div>
@@ -240,7 +240,7 @@ export const SupportChatWidget: React.FC<SupportChatWidgetProps> = ({ onOpenBook
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-[72px] sm:bottom-24 right-2 left-2 sm:left-auto sm:right-6 z-50 sm:w-96 h-[480px] max-h-[75vh] bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-300 dark:border-stone-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
+        <div className="fixed bottom-[76px] sm:bottom-24 right-2 left-2 sm:left-auto sm:right-6 z-50 sm:w-96 h-[460px] max-h-[70vh] bg-white dark:bg-[#1C1917] rounded-2xl border border-stone-300 dark:border-stone-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
           
           {/* Header */}
           <div className="bg-stone-900 dark:bg-[#121110] text-white p-3.5 px-4 flex items-center justify-between border-b border-amber-800/40">

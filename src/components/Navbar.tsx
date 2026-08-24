@@ -189,19 +189,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full transition-all duration-300 shadow-xs">
+    <header className="sticky top-0 z-40 w-full transition-all duration-300 shadow-xs overflow-x-clip">
       {/* Top Scrolling Marquee Offer Banner */}
       <SpecialOfferMarquee />
 
       {/* Top Banner Bar */}
-      <div className="bg-gradient-to-r from-red-950 via-amber-950 to-red-950 text-amber-100/90 text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-amber-900/40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+      <div className="bg-gradient-to-r from-red-950 via-amber-950 to-red-950 text-amber-100/90 text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-amber-900/40 overflow-x-clip">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-2">
           
           {/* Location & Tagline */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 overflow-hidden">
             <span className="flex items-center gap-1 text-amber-300 font-medium shrink-0">
               <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" />
-              <span className="truncate">{t('nav.tagline_location', 'Mahakal Marg, Ujjain')}</span>
+              <span className="hidden xs:inline truncate max-w-[120px] sm:max-w-none">{t('nav.tagline_location', 'Mahakal Marg, Ujjain')}</span>
             </span>
             <span className="hidden lg:inline text-amber-400/40">•</span>
             <span className="hidden lg:inline text-amber-200/80 font-serif italic truncate">
@@ -214,14 +214,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
           </div>
 
           {/* Quick Contact & Language Switcher */}
-          <div className="flex items-center gap-2 sm:gap-4 text-[11px] sm:text-xs shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-4 text-[11px] sm:text-xs shrink-0">
             <a
               href={`tel:${settings.phone1}`}
               className="flex items-center gap-1 hover:text-white transition-colors"
               aria-label={`Call ${settings.phone1}`}
             >
               <Phone className="w-3 h-3 text-amber-400 shrink-0" />
-              <span className="font-mono">{settings.phone1}</span>
+              <span className="font-mono hidden sm:inline">{settings.phone1}</span>
             </a>
             <a
               href={`https://wa.me/${settings.whatsappNumber}`}
@@ -258,7 +258,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 title="हिंदी में पढ़ें"
                 aria-label="हिंदी भाषा में बदलें"
               >
-                हिंदी
+                {/* Shorten Hindi label to 'हिं' on very small screens to save space */}
+                <span className="inline xs:hidden">हिं</span>
+                <span className="hidden xs:inline">हिंदी</span>
               </button>
             </div>
 
@@ -283,19 +285,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
         <div className="max-w-7xl mx-auto px-3 sm:px-4 flex items-center justify-between gap-2 sm:gap-6">
           
           {/* Brand Logo Lockup */}
-          <a href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0" aria-label="Aastha Sey Raasta Home">
+          <a href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0 overflow-hidden max-w-[55%] sm:max-w-none" aria-label="Aastha Sey Raasta Home">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-800 via-amber-700 to-amber-900 text-amber-200 flex items-center justify-center shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform shrink-0 border border-amber-500/30">
               <Flame className="w-5 h-5 sm:w-6 sm:h-6 fill-amber-300 text-amber-300" />
             </div>
-            <div className="min-w-0">
-              <div className="font-serif font-bold text-base sm:text-lg lg:text-xl text-stone-900 dark:text-amber-100 tracking-tight leading-tight group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors truncate">
+            <div className="min-w-0 overflow-hidden">
+              <div className="font-serif font-bold text-sm sm:text-lg lg:text-xl text-stone-900 dark:text-amber-100 tracking-tight leading-tight group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors truncate">
                 {language === 'hi' ? settings.hindiBusinessName : settings.businessName}
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-[10px] sm:text-[11px] font-medium text-amber-800 dark:text-amber-400 tracking-widest font-serif truncate">
+              <div className="flex items-center gap-1.5 sm:gap-2 overflow-hidden">
+                <span className="text-[9px] sm:text-[11px] font-medium text-amber-800 dark:text-amber-400 tracking-widest font-serif truncate hidden xs:block">
                   {language === 'hi' ? settings.businessName : settings.hindiBusinessName}
                 </span>
-                <span className="hidden xs:inline text-[9px] sm:text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider">
+                <span className="hidden sm:inline text-[9px] sm:text-[10px] uppercase font-bold text-stone-500 dark:text-stone-400 tracking-wider shrink-0">
                   Ujjain
                 </span>
               </div>
@@ -639,7 +641,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
           </nav>
 
           {/* Right Action CTAs */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
             
             {/* Theme Toggle Button */}
             <button
@@ -843,7 +845,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                               </button>
 
                               {mobileSubMenuOpen === 'yatra' && (
-                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                <div className="pl-8 pr-3 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
                                   {yatraItems.map(item => (
                                     <a
                                       key={item.name}
@@ -882,7 +884,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                               </button>
 
                               {mobileSubMenuOpen === 'tours' && (
-                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                <div className="pl-8 pr-3 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
                                   {tourItems.map(item => (
                                     <a
                                       key={item.name}
@@ -921,7 +923,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                               </button>
 
                               {mobileSubMenuOpen === 'himalayan' && (
-                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
+                                <div className="pl-8 pr-3 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50">
                                   {himalayanItems.map(item => (
                                     <a
                                       key={item.name}
@@ -960,7 +962,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                               </button>
 
                               {mobileSubMenuOpen === 'trekking' && (
-                                <div className="pl-12 pr-4 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50 max-h-[220px] overflow-y-auto scrollbar-thin">
+                                <div className="pl-8 pr-3 py-2 space-y-2 bg-stone-900/60 rounded-xl mt-1 border border-stone-800/50 max-h-[220px] overflow-y-auto scrollbar-thin">
                                   {trekkingItems.map(item => (
                                     <a
                                       key={item.name}

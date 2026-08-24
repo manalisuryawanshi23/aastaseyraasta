@@ -139,8 +139,8 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-10 sm:space-y-12">
         
-        {/* Top 5-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
+        {/* Top Grid — 1col mobile, 2col tablet, 5col desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           
           {/* Col 1: Brand & Direct Pandit Contact Bio */}
           <div className="lg:col-span-2 space-y-4">
@@ -363,8 +363,8 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright and legal */}
         <div className="pt-8 border-t border-stone-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <span>
-              © {new Date().getFullYear()} {language === 'hi' ? settings.hindiBusinessName : settings.businessName}. {language === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'} &quot;{settings.tagline}&quot;
+            <span className="text-center sm:text-left leading-snug">
+              &copy; {new Date().getFullYear()} {language === 'hi' ? settings.hindiBusinessName : settings.businessName}. {language === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
             </span>
             <div className="inline-flex items-center gap-1 bg-stone-900 border border-stone-800 p-1 rounded-lg text-[11px]">
               <Globe className="w-3.5 h-3.5 text-amber-500 ml-1" />
@@ -383,7 +383,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 text-xs">
+          <div className="flex flex-wrap gap-3 sm:gap-4 text-xs justify-center md:justify-end">
             <a href="/about-us" className="hover:text-stone-300 transition-colors">
               {language === 'hi' ? 'हमारे बारे में' : 'About Us'}
             </a>

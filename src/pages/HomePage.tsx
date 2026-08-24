@@ -317,9 +317,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-6 pt-8">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-medium tracking-wide uppercase backdrop-blur-md shadow-lg">
-            <Flame className="w-4 h-4 fill-amber-400 text-amber-400" />
-            <span>{t('hero.badge', 'YOUR TRUSTED PARTNER FOR POOJA, DARSHAN & SPIRITUAL JOURNEYS')}</span>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[10px] sm:text-xs font-medium tracking-wide uppercase backdrop-blur-md shadow-lg max-w-xs sm:max-w-none text-center">
+            <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400 shrink-0" />
+            <span className="leading-snug">{t('hero.badge', 'YOUR TRUSTED PARTNER FOR POOJA, DARSHAN & SPIRITUAL JOURNEYS')}</span>
           </div>
 
           {/* Main Title */}
@@ -366,22 +366,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           </div>
 
           {/* Search Bar Prompt */}
-          <div className="pt-4 max-w-xl mx-auto">
+          <div className="pt-4 max-w-xl mx-auto w-full px-2 sm:px-0">
             <button
               onClick={onOpenSearch}
-              className="w-full py-3 px-4 rounded-xl bg-stone-900/80 border border-amber-500/30 text-stone-300 text-xs sm:text-sm flex items-center justify-between gap-3 hover:border-amber-400 transition-all shadow-lg"
+              className="w-full py-3 px-4 rounded-xl bg-stone-900/80 border border-amber-500/30 text-stone-300 text-xs sm:text-sm flex items-center justify-between gap-2 hover:border-amber-400 transition-all shadow-lg"
             >
-              <span className="flex items-center gap-2 text-stone-400">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>{language === 'hi' ? 'रुद्राभिषेक, भात पूजा, चार धाम यात्रा खोजें...' : 'Search Rudrabhishek, Bhat Pooja, Char Dham Yatra...'}</span>
+              <span className="flex items-center gap-2 text-stone-400 min-w-0">
+                <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="truncate">{language === 'hi' ? 'रुद्राभिषेक, भात पूजा, चार धाम यात्रा खोजें...' : 'Search Rudrabhishek, Bhat Pooja, Char Dham...'}</span>
               </span>
-              <span className="px-2.5 py-1 rounded bg-amber-900/60 text-amber-200 text-xs font-semibold">
+              <span className="px-2.5 py-1 rounded bg-amber-900/60 text-amber-200 text-xs font-semibold shrink-0">
                 {t('nav.search', 'Search')}
               </span>
             </button>
           </div>
 
-          {/* Trust badges */}
+          {/* Trust badges — 2 cols on mobile, 3 on md, 5 on lg */}
           <div className="pt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-amber-200/80 text-[11px] sm:text-xs font-medium max-w-5xl mx-auto border-t border-amber-900/40">
             <div className="flex items-center justify-center gap-1.5">
               <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
@@ -397,9 +397,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             </div>
             <div className="flex items-center justify-center gap-1.5">
               <Compass className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="whitespace-nowrap">{language === 'hi' ? 'आध्यात्मिक यात्रा' : 'Spiritual Yatra & Tours'}</span>
+              <span className="whitespace-nowrap">{language === 'hi' ? 'आध्यात्मिक यात्रा' : 'Spiritual Yatra'}</span>
             </div>
-            <div className="flex items-center justify-center gap-1.5 md:col-span-3 lg:col-span-1">
+            {/* 5th item: centered row on 2-col mobile using col-span-2, single on larger */}
+            <div className="flex items-center justify-center gap-1.5 col-span-2 md:col-span-1">
               <HeartHandshake className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="whitespace-nowrap">{language === 'hi' ? 'संपूर्ण व्यवस्था' : 'Complete Arrangements'}</span>
             </div>
@@ -521,10 +522,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             </div>
           </FadeIn>
 
-          {/* Category Tabs */}
+          {/* Category Tabs — horizontally scrollable on mobile, centred on desktop */}
           <FadeIn delay={100} direction="up">
-            <div className="flex justify-center">
-              <div className="flex items-center gap-1 bg-white dark:bg-[#1C1917] p-1 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-xs max-w-full overflow-x-auto scrollbar-none py-1.5 px-1.5">
+            <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex justify-start sm:justify-center">
+              <div className="flex items-center gap-1 bg-white dark:bg-[#1C1917] p-1.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-xs overflow-x-auto scrollbar-none touch-pan-x">
                 {tourTabs.map((tab) => {
                   const active = activeTourTab === tab.id;
                   const labelText = language === 'hi' ? tab.hindiLabel : tab.label;
@@ -532,7 +533,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                     <button
                       key={tab.id}
                       onClick={() => setActiveTourTab(tab.id as any)}
-                      className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                      className={`px-3 sm:px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 ${
                         active
                           ? 'bg-rose-600 text-white shadow-md shadow-rose-900/20'
                           : 'text-stone-600 dark:text-stone-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-stone-50 dark:hover:bg-stone-900/60'
