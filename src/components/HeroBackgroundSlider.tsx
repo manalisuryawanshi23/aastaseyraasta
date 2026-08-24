@@ -107,9 +107,9 @@ export const HeroBackgroundSlider: React.FC<HeroBackgroundSliderProps> = ({
       <div className={`absolute inset-0 z-20 ${overlayGradient}`} />
       <div className="absolute inset-0 z-20 bg-gradient-to-r from-red-950/80 via-stone-950/50 to-amber-950/80" />
 
-      {/* Controls & Slide Location Tag */}
+      {/* Controls & Slide Location Tag — hidden on mobile to prevent clashing with content */}
       {showCaptionBadge && (
-        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 right-4 sm:right-8 z-30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-amber-100/90 font-mono">
+        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 right-4 sm:right-8 z-30 hidden sm:flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-amber-100/90 font-mono">
           
           {/* Active Location Info */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-900/80 border border-amber-500/30 backdrop-blur-md shadow-lg">

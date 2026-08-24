@@ -44,6 +44,7 @@ export const AmbientAudioPlayer: React.FC = () => {
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const masterGainRef = useRef<GainNode | null>(null);
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
   const activeNodesRef = useRef<{
     oscillators: OscillatorNode[];
     gains: GainNode[];
@@ -72,6 +73,10 @@ export const AmbientAudioPlayer: React.FC = () => {
 
   // Stop all active sound nodes cleanly
   const stopCurrentSounds = () => {
+    if (audioElRef.current) {
+      audioElRef.current.pause();
+      audioElRef.current.currentTime = 0;
+    }
     activeNodesRef.current.intervals.forEach((timer) => clearInterval(timer));
     activeNodesRef.current.intervals = [];
 
@@ -255,16 +260,26 @@ export const AmbientAudioPlayer: React.FC = () => {
   // Start Sound for Current Preset
   const startSound = (presetId: string) => {
     stopCurrentSounds();
-    const ctx = getAudioContext();
-    const masterGain = masterGainRef.current;
-    if (!masterGain) return;
 
     if (presetId === 'om_meditation') {
-      playOmResonance(ctx, masterGain);
-    } else if (presetId === 'temple_bells') {
-      playTempleBellsPreset(ctx, masterGain);
-    } else if (presetId === 'vedic_tanpura') {
-      playVedicTanpura(ctx, masterGain);
+      if (!audioElRef.current) {
+        const audio = new Audio('/assets/audio/om_meditation.m4a');
+        audio.loop = true;
+        audio.preload = 'auto';
+        audioElRef.current = audio;
+      }
+      audioElRef.current.volume = volume;
+      audioElRef.current.play().catch((err) => console.warn('Audio play failed: ', err));
+    } else {
+      const ctx = getAudioContext();
+      const masterGain = masterGainRef.current;
+      if (!masterGain) return;
+
+      if (presetId === 'temple_bells') {
+        playTempleBellsPreset(ctx, masterGain);
+      } else if (presetId === 'vedic_tanpura') {
+        playVedicTanpura(ctx, masterGain);
+      }
     }
   };
 
@@ -291,6 +306,9 @@ export const AmbientAudioPlayer: React.FC = () => {
     if (masterGainRef.current && audioCtxRef.current) {
       masterGainRef.current.gain.setValueAtTime(newVol, audioCtxRef.current.currentTime);
     }
+    if (audioElRef.current) {
+      audioElRef.current.volume = newVol;
+    }
   };
 
   // Clean up on unmount
@@ -307,8 +325,8 @@ export const AmbientAudioPlayer: React.FC = () => {
 
   return (
     <>
-      {/* Floating Sacred Sound Capsule (above MobileStickyCTA on mobile) */}
-      <div className="fixed bottom-[76px] sm:bottom-6 right-3 sm:right-6 z-40 flex flex-col items-end">
+      {/* Floating Sacred Sound Capsule — shifted left on desktop sm:left-6 to avoid overlap with chat widget on right */}
+      <div className="fixed bottom-[76px] sm:bottom-6 right-3 sm:right-auto sm:left-6 z-40 flex flex-col items-end sm:items-start">
         
         {/* Sound Control Modal Panel */}
         {isPanelOpen && (

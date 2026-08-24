@@ -5,6 +5,10 @@ import bcrypt from 'bcryptjs';
 import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
 import multer from 'multer';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Comprehensive multi-path .env loader for Hostinger / Passenger / local environments
 const envPaths = [
@@ -61,8 +65,9 @@ async function startServer() {
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-  // Static Asset Serving — supports both /assets/images (uploaded) and /src/assets/images (bundled source)
+  // Static Asset Serving — supports both /assets/images (uploaded), /assets/audio, and /src/assets/images (bundled source)
   app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images')));
+  app.use('/assets/audio', express.static(path.join(process.cwd(), 'public/assets/audio')));
   app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images')));
 
   // Store in-memory leads array for non-DB fallback
