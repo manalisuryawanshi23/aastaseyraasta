@@ -101,6 +101,24 @@ function setItem<T>(key: string, val: T): void {
   }
 }
 
+function syncApiPost(endpoint: string, data: any) {
+  if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).catch((err) => console.log(`[API SYNC NOTICE] POST ${endpoint} notice:`, err));
+  }
+}
+
+function syncApiDelete(endpoint: string) {
+  if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    fetch(endpoint, {
+      method: 'DELETE',
+    }).catch((err) => console.log(`[API SYNC NOTICE] DELETE ${endpoint} notice:`, err));
+  }
+}
+
 export class StoreService {
   // Settings
   static getSettings(): SiteSettings {
@@ -121,6 +139,7 @@ export class StoreService {
       applyBrandColorPalette(settings.brandPalette);
     }
     window.dispatchEvent(new CustomEvent('settings-updated', { detail: settings }));
+    syncApiPost('/api/settings', settings);
     return settings;
   }
 
@@ -214,6 +233,7 @@ export class StoreService {
         } as PoojaService;
         poojas[idx] = updated;
         setItem(KEYS.POOJAS, poojas);
+        syncApiPost('/api/poojas', updated);
         return updated;
       }
     }
@@ -238,12 +258,14 @@ export class StoreService {
 
     poojas.unshift(newPooja);
     setItem(KEYS.POOJAS, poojas);
+    syncApiPost('/api/poojas', newPooja);
     return newPooja;
   }
 
   static deletePooja(id: string): void {
     const poojas = this.getPoojas(false).filter((p) => p.id !== id);
     setItem(KEYS.POOJAS, poojas);
+    syncApiDelete(`/api/poojas/${id}`);
   }
 
   // Tours
@@ -324,6 +346,7 @@ export class StoreService {
         } as Tour;
         tours[idx] = updated;
         setItem(KEYS.TOURS, tours);
+        syncApiPost('/api/tours', updated);
         return updated;
       }
     }
@@ -349,12 +372,14 @@ export class StoreService {
 
     tours.unshift(newTour);
     setItem(KEYS.TOURS, tours);
+    syncApiPost('/api/tours', newTour);
     return newTour;
   }
 
   static deleteTour(id: string): void {
     const tours = this.getTours(false).filter((t) => t.id !== id);
     setItem(KEYS.TOURS, tours);
+    syncApiDelete(`/api/tours/${id}`);
   }
 
   // Destinations
@@ -414,6 +439,7 @@ export class StoreService {
         } as Destination;
         dests[idx] = updated;
         setItem(KEYS.DESTINATIONS, dests);
+        syncApiPost('/api/destinations', updated);
         return updated;
       }
     }
@@ -435,12 +461,14 @@ export class StoreService {
 
     dests.unshift(newDest);
     setItem(KEYS.DESTINATIONS, dests);
+    syncApiPost('/api/destinations', newDest);
     return newDest;
   }
 
   static deleteDestination(id: string): void {
     const dests = this.getDestinations(false).filter((d) => d.id !== id);
     setItem(KEYS.DESTINATIONS, dests);
+    syncApiDelete(`/api/destinations/${id}`);
   }
 
   // Blogs
@@ -498,6 +526,7 @@ export class StoreService {
         } as BlogPost;
         blogs[idx] = updated;
         setItem(KEYS.BLOGS, blogs);
+        syncApiPost('/api/blogs', updated);
         return updated;
       }
     }
@@ -521,12 +550,14 @@ export class StoreService {
 
     blogs.unshift(newBlog);
     setItem(KEYS.BLOGS, blogs);
+    syncApiPost('/api/blogs', newBlog);
     return newBlog;
   }
 
   static deleteBlogPost(id: string): void {
     const blogs = this.getBlogPosts(false).filter((b) => b.id !== id);
     setItem(KEYS.BLOGS, blogs);
+    syncApiDelete(`/api/blogs/${id}`);
   }
 
   // FAQs
@@ -568,6 +599,7 @@ export class StoreService {
         const updated = { ...faqs[idx], ...faq } as FAQ;
         faqs[idx] = updated;
         setItem(KEYS.FAQS, faqs);
+        syncApiPost('/api/faqs', updated);
         return updated;
       }
     }
@@ -585,12 +617,14 @@ export class StoreService {
 
     faqs.push(newFaq);
     setItem(KEYS.FAQS, faqs);
+    syncApiPost('/api/faqs', newFaq);
     return newFaq;
   }
 
   static deleteFAQ(id: string): void {
     const faqs = this.getFAQs().filter((f) => f.id !== id);
     setItem(KEYS.FAQS, faqs);
+    syncApiDelete(`/api/faqs/${id}`);
   }
 
   // Testimonials
@@ -738,6 +772,14 @@ export class StoreService {
       if (notes !== undefined) leads[idx].notes = notes;
       leads[idx].updatedAt = new Date().toISOString();
       setItem(KEYS.LEADS, leads);
+
+      if (typeof window !== 'undefined') {
+        fetch(`/api/leads/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status, notes }),
+        }).catch((err) => console.log('[API SYNC NOTICE] Update lead error:', err));
+      }
       return leads[idx];
     }
     return undefined;
@@ -746,6 +788,7 @@ export class StoreService {
   static deleteLead(id: string): void {
     const leads = this.getLeads().filter((l) => l.id !== id);
     setItem(KEYS.LEADS, leads);
+    syncApiDelete(`/api/leads/${id}`);
   }
 
   // Redirects

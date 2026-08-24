@@ -23,11 +23,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 
 // server.ts
 var import_express = __toESM(require("express"), 1);
-var import_path3 = __toESM(require("path"), 1);
+var import_path2 = __toESM(require("path"), 1);
 var import_dotenv = __toESM(require("dotenv"), 1);
 var import_bcryptjs2 = __toESM(require("bcryptjs"), 1);
 var import_vite = require("vite");
-var import_fs3 = __toESM(require("fs"), 1);
+var import_fs2 = __toESM(require("fs"), 1);
 var import_multer = __toESM(require("multer"), 1);
 
 // src/data/initialData.ts
@@ -5557,19 +5557,44 @@ if (process.argv[1] && process.argv[1].endsWith("generateSitemap.ts")) {
 var import_promise = __toESM(require("mysql2/promise"), 1);
 var pool = null;
 var isConnected = false;
+var lastDbError = null;
+function getDbConfigDetails() {
+  const dbHost = process.env.DB_HOST || "localhost";
+  const effectiveHost = dbHost === "localhost" ? "127.0.0.1" : dbHost;
+  const dbUser = process.env.DB_USER || "";
+  const dbName = process.env.DB_NAME || "";
+  const dbPort = parseInt(process.env.DB_PORT || "3306", 10);
+  return {
+    host: dbHost,
+    effectiveHost,
+    port: dbPort,
+    userProvided: !!dbUser,
+    userPrefix: dbUser ? `${dbUser.substring(0, 4)}...` : "not_set",
+    nameProvided: !!dbName,
+    dbName: dbName || "not_set",
+    passwordProvided: !!process.env.DB_PASSWORD,
+    connected: isConnected,
+    lastError: lastDbError
+  };
+}
+function getLastDbError() {
+  return lastDbError;
+}
 function getDbPool() {
   if (pool) return pool;
   const dbHost = process.env.DB_HOST || "localhost";
+  const effectiveHost = dbHost === "localhost" ? "127.0.0.1" : dbHost;
   const dbUser = process.env.DB_USER;
   const dbPassword = process.env.DB_PASSWORD;
   const dbName = process.env.DB_NAME;
   const dbPort = parseInt(process.env.DB_PORT || "3306", 10);
   if (!dbUser || !dbName) {
+    lastDbError = `Missing DB credentials: DB_USER=${dbUser ? "set" : "EMPTY"}, DB_NAME=${dbName ? "set" : "EMPTY"}`;
     return null;
   }
   try {
     pool = import_promise.default.createPool({
-      host: dbHost,
+      host: effectiveHost,
       port: dbPort,
       user: dbUser,
       password: dbPassword,
@@ -5577,10 +5602,12 @@ function getDbPool() {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      charset: "utf8mb4"
+      charset: "utf8mb4",
+      connectTimeout: 1e4
     });
     return pool;
   } catch (error) {
+    lastDbError = error?.message || String(error);
     console.warn("[MYSQL INIT WARNING] Could not initialize MySQL pool:", error);
     return null;
   }
@@ -5596,9 +5623,11 @@ async function testConnection() {
     await connection.ping();
     connection.release();
     isConnected = true;
+    lastDbError = null;
     return true;
   } catch (err) {
-    console.warn("[MYSQL CONNECT WARNING] MySQL connection test failed:", err);
+    lastDbError = `MySQL Ping Error: ${err?.message || String(err)} (code: ${err?.code || "UNKNOWN"})`;
+    console.warn("[MYSQL CONNECT WARNING] MySQL connection test failed:", lastDbError);
     isConnected = false;
     return false;
   }
@@ -5608,40 +5637,291 @@ function isDbConnected() {
 }
 async function query(sql, params = []) {
   const p = getDbPool();
-  if (!p) throw new Error("MySQL pool is not configured");
+  if (!p) throw new Error(lastDbError || "MySQL pool is not configured");
   const [rows] = await p.query(sql, params);
   return rows;
 }
 async function execute(sql, params = []) {
   const p = getDbPool();
-  if (!p) throw new Error("MySQL pool is not configured");
+  if (!p) throw new Error(lastDbError || "MySQL pool is not configured");
   const [result] = await p.execute(sql, params);
   return result;
 }
 
 // src/db/autoSeed.ts
-var import_fs2 = __toESM(require("fs"), 1);
-var import_path2 = __toESM(require("path"), 1);
 var import_bcryptjs = __toESM(require("bcryptjs"), 1);
+var TABLE_SCHEMAS = [
+  `CREATE TABLE IF NOT EXISTS site_settings (
+    id VARCHAR(50) PRIMARY KEY DEFAULT 'default',
+    business_name VARCHAR(255) NOT NULL,
+    hindi_business_name VARCHAR(255),
+    tagline VARCHAR(255),
+    phone1 VARCHAR(50),
+    phone2 VARCHAR(50),
+    whatsapp_number VARCHAR(50),
+    emergency_helpline VARCHAR(50),
+    email VARCHAR(100),
+    address TEXT,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    country VARCHAR(100),
+    pincode VARCHAR(20),
+    logo_text VARCHAR(255),
+    social_facebook VARCHAR(255),
+    social_instagram VARCHAR(255),
+    social_youtube VARCHAR(255),
+    google_business_profile VARCHAR(255),
+    social_handles_json LONGTEXT,
+    default_seo_title VARCHAR(255),
+    default_meta_description TEXT,
+    default_og_image VARCHAR(255),
+    google_analytics_id VARCHAR(50),
+    business_hours VARCHAR(255),
+    footer_description TEXT,
+    announcement_banner_json LONGTEXT,
+    trust_stats_json LONGTEXT,
+    about_mission_text TEXT,
+    brand_palette_json LONGTEXT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS poojas (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    hindi_name VARCHAR(255),
+    slug VARCHAR(150) NOT NULL UNIQUE,
+    category_id VARCHAR(50),
+    category_name VARCHAR(100),
+    hindi_category_name VARCHAR(100),
+    page_type VARCHAR(100),
+    primary_keyword VARCHAR(255),
+    secondary_keywords_json LONGTEXT,
+    search_intent VARCHAR(255),
+    seo_title VARCHAR(255),
+    meta_description TEXT,
+    url_slug VARCHAR(150),
+    h1 VARCHAR(255),
+    quick_answer TEXT,
+    short_description TEXT,
+    hindi_short_description TEXT,
+    description LONGTEXT,
+    hindi_description LONGTEXT,
+    temple_name VARCHAR(255),
+    hindi_temple_name VARCHAR(255),
+    location VARCHAR(255),
+    hindi_location VARCHAR(255),
+    city VARCHAR(100),
+    hindi_city VARCHAR(100),
+    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    original_price DECIMAL(10,2),
+    advance_booking_amount DECIMAL(10,2),
+    duration VARCHAR(50),
+    hindi_duration VARCHAR(50),
+    timing VARCHAR(100),
+    hindi_timing VARCHAR(100),
+    samagri_included TINYINT(1) DEFAULT 1,
+    prasad_home_delivery TINYINT(1) DEFAULT 1,
+    live_video_available TINYINT(1) DEFAULT 1,
+    vip_entry_pass TINYINT(1) DEFAULT 0,
+    pandit_count INT DEFAULT 1,
+    image VARCHAR(550),
+    gallery_images_json LONGTEXT,
+    what_we_offer_json LONGTEXT,
+    benefits_json LONGTEXT,
+    hindi_benefits_json LONGTEXT,
+    who_can_consider_json LONGTEXT,
+    procedure_steps_json LONGTEXT,
+    hindi_procedure_steps_json LONGTEXT,
+    faqs_json LONGTEXT,
+    internal_links_json LONGTEXT,
+    image_seo_json LONGTEXT,
+    schema_types_json LONGTEXT,
+    quality_score INT DEFAULT 95,
+    ideal_for VARCHAR(255),
+    hindi_ideal_for VARCHAR(255),
+    auspicious_days VARCHAR(255),
+    hindi_auspicious_days VARCHAR(255),
+    mantra VARCHAR(255),
+    hindi_mantra VARCHAR(255),
+    is_popular TINYINT(1) DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    meta_title VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS tours (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    hindi_title VARCHAR(255),
+    slug VARCHAR(150) NOT NULL UNIQUE,
+    duration VARCHAR(50),
+    hindi_duration VARCHAR(50),
+    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    original_price DECIMAL(10,2),
+    badge VARCHAR(100),
+    hindi_badge VARCHAR(100),
+    image VARCHAR(550),
+    gallery_images_json LONGTEXT,
+    pickup_location VARCHAR(255),
+    hindi_pickup_location VARCHAR(255),
+    drop_location VARCHAR(255),
+    hindi_drop_location VARCHAR(255),
+    vehicle_options_json LONGTEXT,
+    overview TEXT,
+    hindi_overview TEXT,
+    itinerary_json LONGTEXT,
+    key_highlights_json LONGTEXT,
+    hindi_key_highlights_json LONGTEXT,
+    inclusions_json LONGTEXT,
+    hindi_inclusions_json LONGTEXT,
+    exclusions_json LONGTEXT,
+    hindi_exclusions_json LONGTEXT,
+    faqs_json LONGTEXT,
+    is_popular TINYINT(1) DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    meta_title VARCHAR(255),
+    meta_description TEXT,
+    quick_answer TEXT,
+    why_choose_json LONGTEXT,
+    what_we_offer_json LONGTEXT,
+    how_to_reach TEXT,
+    travel_tips_json LONGTEXT,
+    category VARCHAR(100),
+    focus_keyword VARCHAR(255),
+    secondary_keywords_json LONGTEXT,
+    canonical_url VARCHAR(255),
+    og_title VARCHAR(255),
+    og_description TEXT,
+    og_image VARCHAR(550),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS destinations (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    hindi_title VARCHAR(255),
+    slug VARCHAR(150) NOT NULL UNIQUE,
+    city VARCHAR(100),
+    hindi_city VARCHAR(100),
+    state VARCHAR(100),
+    image VARCHAR(550),
+    gallery_images_json LONGTEXT,
+    distance_from_center VARCHAR(100),
+    hindi_distance_from_center VARCHAR(100),
+    timings VARCHAR(100),
+    hindi_timings VARCHAR(100),
+    best_time_to_visit VARCHAR(100),
+    hindi_best_time_to_visit VARCHAR(100),
+    description LONGTEXT,
+    hindi_description LONGTEXT,
+    spiritual_significance TEXT,
+    hindi_spiritual_significance TEXT,
+    key_attractions_json LONGTEXT,
+    hindi_key_attractions_json LONGTEXT,
+    how_to_reach_json LONGTEXT,
+    nearby_temples_json LONGTEXT,
+    map_coordinates_json LONGTEXT,
+    is_published TINYINT(1) DEFAULT 1,
+    meta_title VARCHAR(255),
+    meta_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS blog_posts (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    hindi_title VARCHAR(255),
+    slug VARCHAR(150) NOT NULL UNIQUE,
+    author VARCHAR(100),
+    date VARCHAR(50),
+    category VARCHAR(100),
+    hindi_category VARCHAR(100),
+    image VARCHAR(550),
+    excerpt TEXT,
+    hindi_excerpt TEXT,
+    content LONGTEXT,
+    hindi_content LONGTEXT,
+    read_time VARCHAR(50),
+    hindi_read_time VARCHAR(50),
+    tags_json LONGTEXT,
+    is_published TINYINT(1) DEFAULT 1,
+    meta_title VARCHAR(255),
+    meta_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS faqs (
+    id VARCHAR(100) PRIMARY KEY,
+    question VARCHAR(255) NOT NULL,
+    hindi_question VARCHAR(255),
+    answer TEXT NOT NULL,
+    hindi_answer TEXT,
+    category VARCHAR(100),
+    hindi_category VARCHAR(100),
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS leads (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(100),
+    service_type VARCHAR(50) NOT NULL DEFAULT 'Pooja',
+    service_name VARCHAR(255),
+    preferred_date VARCHAR(50),
+    guest_count VARCHAR(20),
+    message TEXT,
+    status VARCHAR(50) NOT NULL DEFAULT 'New',
+    notes TEXT,
+    source VARCHAR(50) DEFAULT 'Website Form',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS admin_users (
+    id VARCHAR(100) PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    passcode VARCHAR(100),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(50),
+    role VARCHAR(50) NOT NULL DEFAULT 'Admin',
+    is_active TINYINT(1) DEFAULT 1,
+    permissions_json LONGTEXT,
+    last_login VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
+];
 async function autoInitializeDatabase() {
+  const result = {
+    connected: false,
+    schemaCreated: false,
+    seeded: {
+      settings: false,
+      poojas: 0,
+      tours: 0,
+      destinations: 0,
+      faqs: 0,
+      adminUsers: 0
+    },
+    error: null
+  };
   try {
     console.log("[AUTO-DB] Checking database connection...");
     const connected = await testConnection();
     if (!connected) {
-      console.log("[AUTO-DB INFO] MySQL Database not available/configured. Running with in-memory fallback.");
-      return;
+      const err = getLastDbError();
+      console.log("[AUTO-DB INFO] MySQL Database not connected. Details:", err);
+      result.error = err || "Could not connect to MySQL";
+      return result;
     }
+    result.connected = true;
     console.log("[AUTO-DB] Connected to MySQL. Initializing tables if they do not exist...");
-    const schemaPath = import_path2.default.join(process.cwd(), "src", "db", "schema.sql");
-    if (!import_fs2.default.existsSync(schemaPath)) {
-      console.warn("[AUTO-DB WARNING] schema.sql file not found at:", schemaPath);
-      return;
-    }
-    const sqlContent = import_fs2.default.readFileSync(schemaPath, "utf-8");
-    const statements = sqlContent.split(";").map((s) => s.trim()).filter((s) => s.length > 0);
-    for (const stmt of statements) {
+    for (const stmt of TABLE_SCHEMAS) {
       await execute(stmt);
     }
+    result.schemaCreated = true;
     console.log("[AUTO-DB] Database schema verified/created.");
     const settingsCount = await query("SELECT COUNT(*) as count FROM site_settings");
     if (settingsCount[0].count === 0) {
@@ -5688,6 +5968,7 @@ async function autoInitializeDatabase() {
           JSON.stringify(initialSiteSettings.brandPalette || {})
         ]
       );
+      result.seeded.settings = true;
     }
     const poojasCount = await query("SELECT COUNT(*) as count FROM poojas");
     if (poojasCount[0].count === 0) {
@@ -5770,6 +6051,7 @@ async function autoInitializeDatabase() {
             p.seoTitle || p.metaTitle || ""
           ]
         );
+        result.seeded.poojas++;
       }
     }
     const toursCount = await query("SELECT COUNT(*) as count FROM tours");
@@ -5835,6 +6117,7 @@ async function autoInitializeDatabase() {
             t.ogImage || ""
           ]
         );
+        result.seeded.tours++;
       }
     }
     const destCount = await query("SELECT COUNT(*) as count FROM destinations");
@@ -5881,6 +6164,7 @@ async function autoInitializeDatabase() {
             d.metaDescription || ""
           ]
         );
+        result.seeded.destinations++;
       }
     }
     const faqsCount = await query("SELECT COUNT(*) as count FROM faqs");
@@ -5903,6 +6187,7 @@ async function autoInitializeDatabase() {
             f.isPublished !== false ? 1 : 0
           ]
         );
+        result.seeded.faqs++;
       }
     }
     const adminsCount = await query("SELECT COUNT(*) as count FROM admin_users");
@@ -5927,6 +6212,7 @@ async function autoInitializeDatabase() {
           JSON.stringify(["manage_leads", "manage_site", "manage_content", "manage_gallery", "manage_settings"])
         ]
       );
+      result.seeded.adminUsers++;
       await execute(
         `INSERT INTO admin_users (
           id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json
@@ -5944,17 +6230,34 @@ async function autoInitializeDatabase() {
           JSON.stringify(["manage_leads", "manage_content", "manage_gallery"])
         ]
       );
+      result.seeded.adminUsers++;
     }
     console.log("[AUTO-DB SUCCESS] Database tables and default records verified and seeded successfully!");
+    return result;
   } catch (error) {
-    console.error("[AUTO-DB ERROR] Auto initialization failed:", error);
+    const errorMsg = error?.message || String(error);
+    console.error("[AUTO-DB ERROR] Auto initialization failed:", errorMsg);
+    result.error = errorMsg;
+    return result;
   }
 }
 
 // server.ts
-var uploadDir = import_path3.default.resolve("public/assets/images");
-if (!import_fs3.default.existsSync(uploadDir)) {
-  import_fs3.default.mkdirSync(uploadDir, { recursive: true });
+var envPaths = [
+  import_path2.default.resolve(process.cwd(), ".env"),
+  import_path2.default.resolve(__dirname, ".env"),
+  import_path2.default.resolve(__dirname, "..", ".env"),
+  import_path2.default.resolve(__dirname, "../..", ".env")
+];
+for (const envPath of envPaths) {
+  if (import_fs2.default.existsSync(envPath)) {
+    import_dotenv.default.config({ path: envPath });
+  }
+}
+import_dotenv.default.config();
+var uploadDir = import_path2.default.resolve("public/assets/images");
+if (!import_fs2.default.existsSync(uploadDir)) {
+  import_fs2.default.mkdirSync(uploadDir, { recursive: true });
 }
 var storage = import_multer.default.diskStorage({
   destination: function(req, file, cb) {
@@ -5962,31 +6265,65 @@ var storage = import_multer.default.diskStorage({
   },
   filename: function(req, file, cb) {
     if (req.body.existingImageUrl) {
-      const oldFilename = import_path3.default.basename(req.body.existingImageUrl);
+      const oldFilename = import_path2.default.basename(req.body.existingImageUrl);
       return cb(null, oldFilename);
     }
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const ext = import_path3.default.extname(file.originalname);
+    const ext = import_path2.default.extname(file.originalname);
     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
   }
 });
 var upload = (0, import_multer.default)({ storage });
-import_dotenv.default.config();
 async function startServer() {
   const app = (0, import_express.default)();
   const PORT = process.env.PORT || 3001;
-  app.use(import_express.default.json());
-  app.use("/assets/images", import_express.default.static(import_path3.default.join(process.cwd(), "public/assets/images")));
-  app.use("/src/assets/images", import_express.default.static(import_path3.default.join(process.cwd(), "src/assets/images")));
+  app.use(import_express.default.json({ limit: "10mb" }));
+  app.use(import_express.default.urlencoded({ extended: true, limit: "10mb" }));
+  app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images")));
+  app.use("/src/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "src/assets/images")));
   const serverLeads = [];
   app.get("/api/health", async (req, res) => {
     const dbStatus = isDbConnected();
+    const config = getDbConfigDetails();
+    let tables = [];
+    if (dbStatus) {
+      try {
+        const rows = await query("SHOW TABLES");
+        tables = rows.map((r) => String(Object.values(r)[0]));
+      } catch (e) {
+      }
+    }
     res.json({
       status: "ok",
       timestamp: (/* @__PURE__ */ new Date()).toISOString(),
       service: "Aastha Sey Raasta Seva API",
-      database: dbStatus ? "MySQL Connected" : "Fallback In-Memory"
+      database: dbStatus ? "MySQL Connected" : "Fallback In-Memory",
+      database_details: config,
+      tables_found: tables,
+      tables_count: tables.length
     });
+  });
+  app.get("/api/db-init", async (req, res) => {
+    try {
+      const result = await autoInitializeDatabase();
+      const config = getDbConfigDetails();
+      let tables = [];
+      if (result.connected) {
+        try {
+          const rows = await query("SHOW TABLES");
+          tables = rows.map((r) => String(Object.values(r)[0]));
+        } catch (e) {
+        }
+      }
+      res.json({
+        success: result.connected && result.schemaCreated,
+        result,
+        database_config: config,
+        tables_in_db: tables
+      });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err?.message || String(err), config: getDbConfigDetails() });
+    }
   });
   app.post("/api/upload", upload.single("image"), (req, res) => {
     if (!req.file) {
@@ -6039,6 +6376,90 @@ async function startServer() {
       }
     }
     res.json({ success: true, data: initialSiteSettings });
+  });
+  app.post("/api/settings", async (req, res) => {
+    const s = req.body;
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO site_settings (
+            id, business_name, hindi_business_name, tagline, phone1, phone2, whatsapp_number,
+            emergency_helpline, email, address, city, state, country, pincode, logo_text,
+            social_facebook, social_instagram, social_youtube, google_business_profile,
+            social_handles_json, default_seo_title, default_meta_description, default_og_image,
+            google_analytics_id, business_hours, footer_description, announcement_banner_json,
+            trust_stats_json, about_mission_text, brand_palette_json
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            business_name = VALUES(business_name),
+            hindi_business_name = VALUES(hindi_business_name),
+            tagline = VALUES(tagline),
+            phone1 = VALUES(phone1),
+            phone2 = VALUES(phone2),
+            whatsapp_number = VALUES(whatsapp_number),
+            emergency_helpline = VALUES(emergency_helpline),
+            email = VALUES(email),
+            address = VALUES(address),
+            city = VALUES(city),
+            state = VALUES(state),
+            country = VALUES(country),
+            pincode = VALUES(pincode),
+            logo_text = VALUES(logo_text),
+            social_facebook = VALUES(social_facebook),
+            social_instagram = VALUES(social_instagram),
+            social_youtube = VALUES(social_youtube),
+            google_business_profile = VALUES(google_business_profile),
+            social_handles_json = VALUES(social_handles_json),
+            default_seo_title = VALUES(default_seo_title),
+            default_meta_description = VALUES(default_meta_description),
+            default_og_image = VALUES(default_og_image),
+            google_analytics_id = VALUES(google_analytics_id),
+            business_hours = VALUES(business_hours),
+            footer_description = VALUES(footer_description),
+            announcement_banner_json = VALUES(announcement_banner_json),
+            trust_stats_json = VALUES(trust_stats_json),
+            about_mission_text = VALUES(about_mission_text),
+            brand_palette_json = VALUES(brand_palette_json)`,
+          [
+            "default",
+            s.businessName || "",
+            s.hindiBusinessName || "",
+            s.tagline || "",
+            s.phone1 || "",
+            s.phone2 || "",
+            s.whatsappNumber || "",
+            s.emergencyHelpline || "",
+            s.email || "",
+            s.address || "",
+            s.city || "",
+            s.state || "",
+            s.country || "",
+            s.pincode || "",
+            s.logoText || "",
+            s.socialFacebook || "",
+            s.socialInstagram || "",
+            s.socialYoutube || "",
+            s.googleBusinessProfile || "",
+            JSON.stringify(s.socialHandles || []),
+            s.defaultSeoTitle || "",
+            s.defaultMetaDescription || "",
+            s.defaultOgImage || "",
+            s.googleAnalyticsId || "",
+            s.businessHours || "",
+            s.footerDescription || "",
+            JSON.stringify(s.announcementBanner || {}),
+            JSON.stringify(s.trustStats || {}),
+            s.aboutMissionText || "",
+            JSON.stringify(s.brandPalette || {})
+          ]
+        );
+        return res.json({ success: true, message: "Settings saved to MySQL", data: s });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save settings:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Settings saved in-memory (DB not connected)", data: s });
   });
   function formatPoojaRow(p) {
     return {
@@ -6142,55 +6563,236 @@ async function startServer() {
     if (!item) return res.status(404).json({ success: false, message: "Pooja not found" });
     res.json({ success: true, data: item });
   });
+  app.post("/api/poojas", async (req, res) => {
+    const p = req.body;
+    if (!p.id || !p.name || !p.slug) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, name, slug)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO poojas (
+            id, name, hindi_name, slug, category_id, category_name, hindi_category_name,
+            page_type, primary_keyword, secondary_keywords_json, search_intent, seo_title, meta_description, url_slug, h1, quick_answer,
+            short_description, hindi_short_description, description, hindi_description,
+            temple_name, hindi_temple_name, location, hindi_location, city, hindi_city,
+            price, original_price, advance_booking_amount, duration, hindi_duration,
+            timing, hindi_timing, samagri_included, prasad_home_delivery, live_video_available,
+            vip_entry_pass, pandit_count, image, gallery_images_json, what_we_offer_json, benefits_json,
+            hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
+            faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
+            mantra, hindi_mantra, is_popular, is_published, meta_title
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            name = VALUES(name),
+            hindi_name = VALUES(hindi_name),
+            slug = VALUES(slug),
+            category_id = VALUES(category_id),
+            category_name = VALUES(category_name),
+            hindi_category_name = VALUES(hindi_category_name),
+            page_type = VALUES(page_type),
+            primary_keyword = VALUES(primary_keyword),
+            secondary_keywords_json = VALUES(secondary_keywords_json),
+            search_intent = VALUES(search_intent),
+            seo_title = VALUES(seo_title),
+            meta_description = VALUES(meta_description),
+            url_slug = VALUES(url_slug),
+            h1 = VALUES(h1),
+            quick_answer = VALUES(quick_answer),
+            short_description = VALUES(short_description),
+            hindi_short_description = VALUES(hindi_short_description),
+            description = VALUES(description),
+            hindi_description = VALUES(hindi_description),
+            temple_name = VALUES(temple_name),
+            hindi_temple_name = VALUES(hindi_temple_name),
+            location = VALUES(location),
+            hindi_location = VALUES(hindi_location),
+            city = VALUES(city),
+            hindi_city = VALUES(hindi_city),
+            price = VALUES(price),
+            original_price = VALUES(original_price),
+            advance_booking_amount = VALUES(advance_booking_amount),
+            duration = VALUES(duration),
+            hindi_duration = VALUES(hindi_duration),
+            timing = VALUES(timing),
+            hindi_timing = VALUES(hindi_timing),
+            samagri_included = VALUES(samagri_included),
+            prasad_home_delivery = VALUES(prasad_home_delivery),
+            live_video_available = VALUES(live_video_available),
+            vip_entry_pass = VALUES(vip_entry_pass),
+            pandit_count = VALUES(pandit_count),
+            image = VALUES(image),
+            gallery_images_json = VALUES(gallery_images_json),
+            what_we_offer_json = VALUES(what_we_offer_json),
+            benefits_json = VALUES(benefits_json),
+            hindi_benefits_json = VALUES(hindi_benefits_json),
+            who_can_consider_json = VALUES(who_can_consider_json),
+            procedure_steps_json = VALUES(procedure_steps_json),
+            hindi_procedure_steps_json = VALUES(hindi_procedure_steps_json),
+            faqs_json = VALUES(faqs_json),
+            internal_links_json = VALUES(internal_links_json),
+            image_seo_json = VALUES(image_seo_json),
+            schema_types_json = VALUES(schema_types_json),
+            quality_score = VALUES(quality_score),
+            ideal_for = VALUES(ideal_for),
+            hindi_ideal_for = VALUES(hindi_ideal_for),
+            auspicious_days = VALUES(auspicious_days),
+            hindi_auspicious_days = VALUES(hindi_auspicious_days),
+            mantra = VALUES(mantra),
+            hindi_mantra = VALUES(hindi_mantra),
+            is_popular = VALUES(is_popular),
+            is_published = VALUES(is_published),
+            meta_title = VALUES(meta_title)`,
+          [
+            p.id,
+            p.name,
+            p.hindiName || "",
+            p.slug,
+            p.categoryId || "",
+            p.categoryName || "",
+            p.hindiCategoryName || "",
+            p.pageType || p.categoryName || "",
+            p.primaryKeyword || p.focusKeyword || "",
+            JSON.stringify(p.secondaryKeywords || []),
+            p.searchIntent || "",
+            p.seoTitle || p.metaTitle || "",
+            p.metaDescription || "",
+            p.urlSlug || `/pooja/${p.slug}`,
+            p.h1 || p.name,
+            p.quickAnswer || "",
+            p.shortDescription || "",
+            p.hindiShortDescription || "",
+            p.description || "",
+            p.hindiDescription || "",
+            p.templeName || "",
+            p.hindiTempleName || "",
+            p.location || "",
+            p.hindiLocation || "",
+            p.city || "",
+            p.hindiCity || "",
+            p.price || 0,
+            p.originalPrice || null,
+            p.advanceBookingAmount || null,
+            p.duration || "",
+            p.hindiDuration || "",
+            p.timing || "",
+            p.hindiTiming || "",
+            p.samagriIncluded ? 1 : 0,
+            p.prasadHomeDelivery ? 1 : 0,
+            p.liveVideoAvailable ? 1 : 0,
+            p.vipEntryPass ? 1 : 0,
+            p.panditCount || 1,
+            p.featuredImage || p.image || p.ogImage || "",
+            JSON.stringify(p.gallery || p.galleryImages || []),
+            JSON.stringify(p.whatWeOffer || []),
+            JSON.stringify(p.benefits || []),
+            JSON.stringify(p.hindiBenefits || []),
+            JSON.stringify(p.whoCanConsider || p.whoIsItFor || []),
+            JSON.stringify(p.procedureSteps || p.preparation || []),
+            JSON.stringify(p.hindiProcedureSteps || p.hindiPreparation || []),
+            JSON.stringify(p.faqs || p.aeoQuestions || []),
+            JSON.stringify(p.internalLinks || []),
+            JSON.stringify(p.imageSeo || {}),
+            JSON.stringify(p.schemaTypes || []),
+            p.qualityScore || 95,
+            p.idealFor || "",
+            p.hindiIdealFor || "",
+            p.auspiciousDays || "",
+            p.hindiAuspiciousDays || "",
+            p.mantra || "",
+            p.hindiMantra || "",
+            p.isFeatured ? 1 : 0,
+            p.isPublished !== false ? 1 : 0,
+            p.seoTitle || p.metaTitle || ""
+          ]
+        );
+        return res.json({ success: true, message: "Pooja saved to MySQL", data: p });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save pooja:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Pooja saved in-memory (DB not connected)", data: p });
+  });
+  app.delete("/api/poojas/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM poojas WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Pooja ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Pooja ${id} deleted (in-memory)` });
+  });
+  function formatTourRow(t) {
+    return {
+      id: t.id,
+      name: t.title || t.name,
+      title: t.title,
+      hindiName: t.hindi_title || t.hindiName,
+      hindiTitle: t.hindi_title,
+      slug: t.slug,
+      duration: t.duration,
+      hindiDuration: t.hindi_duration,
+      price: Number(t.price),
+      originalPrice: t.original_price ? Number(t.original_price) : null,
+      badge: t.badge,
+      hindiBadge: t.hindi_badge,
+      image: t.image,
+      featuredImage: t.image,
+      gallery: t.gallery_images_json ? JSON.parse(t.gallery_images_json) : [],
+      galleryImages: t.gallery_images_json ? JSON.parse(t.gallery_images_json) : [],
+      startingPoint: t.pickup_location,
+      pickupLocation: t.pickup_location,
+      hindiStartingPoint: t.hindi_pickup_location,
+      hindiPickupLocation: t.hindi_pickup_location,
+      endingPoint: t.drop_location,
+      dropLocation: t.drop_location,
+      hindiEndingPoint: t.hindi_drop_location,
+      hindiDropLocation: t.hindi_drop_location,
+      vehicleOptions: t.vehicle_options_json ? JSON.parse(t.vehicle_options_json) : [],
+      description: t.overview,
+      overview: t.overview,
+      shortDescription: t.overview ? t.overview.substring(0, 150) + "..." : "",
+      hindiDescription: t.hindi_overview,
+      hindiOverview: t.hindi_overview,
+      itinerary: t.itinerary_json ? JSON.parse(t.itinerary_json) : [],
+      keyHighlights: t.key_highlights_json ? JSON.parse(t.key_highlights_json) : [],
+      hindiKeyHighlights: t.hindi_key_highlights_json ? JSON.parse(t.hindi_key_highlights_json) : [],
+      included: t.inclusions_json ? JSON.parse(t.inclusions_json) : [],
+      hindiIncluded: t.hindi_inclusions_json ? JSON.parse(t.hindi_inclusions_json) : [],
+      excluded: t.exclusions_json ? JSON.parse(t.exclusions_json) : [],
+      hindiExcluded: t.hindi_exclusions_json ? JSON.parse(t.hindi_exclusions_json) : [],
+      faqs: t.faqs_json ? JSON.parse(t.faqs_json) : [],
+      isFeatured: Boolean(t.is_popular),
+      isPublished: Boolean(t.is_published),
+      metaTitle: t.meta_title,
+      seoTitle: t.meta_title,
+      metaDescription: t.meta_description,
+      quickAnswer: t.quick_answer,
+      whyChoose: t.why_choose_json ? JSON.parse(t.why_choose_json) : [],
+      whatWeOffer: t.what_we_offer_json ? JSON.parse(t.what_we_offer_json) : [],
+      howToReach: t.how_to_reach,
+      travelTips: t.travel_tips_json ? JSON.parse(t.travel_tips_json) : [],
+      category: t.category,
+      focusKeyword: t.focus_keyword,
+      secondaryKeywords: t.secondary_keywords_json ? JSON.parse(t.secondary_keywords_json) : [],
+      canonicalUrl: t.canonical_url,
+      ogTitle: t.og_title,
+      ogDescription: t.og_description,
+      ogImage: t.og_image,
+      destinations: [t.pickup_location || "Ujjain"],
+      placesCovered: [],
+      templesCovered: []
+    };
+  }
   app.get("/api/tours", async (req, res) => {
     if (isDbConnected()) {
       try {
         const rows = await query("SELECT * FROM tours WHERE is_published = 1 ORDER BY created_at DESC");
-        const formatted = rows.map((t) => ({
-          id: t.id,
-          title: t.title,
-          hindiTitle: t.hindi_title,
-          slug: t.slug,
-          duration: t.duration,
-          hindiDuration: t.hindi_duration,
-          price: Number(t.price),
-          originalPrice: t.original_price ? Number(t.original_price) : null,
-          badge: t.badge,
-          hindiBadge: t.hindi_badge,
-          image: t.image,
-          galleryImages: t.gallery_images_json ? JSON.parse(t.gallery_images_json) : [],
-          pickupLocation: t.pickup_location,
-          hindiPickupLocation: t.hindi_pickup_location,
-          dropLocation: t.drop_location,
-          hindiDropLocation: t.hindi_drop_location,
-          vehicleOptions: t.vehicle_options_json ? JSON.parse(t.vehicle_options_json) : [],
-          overview: t.overview,
-          hindiOverview: t.hindi_overview,
-          itinerary: t.itinerary_json ? JSON.parse(t.itinerary_json) : [],
-          keyHighlights: t.key_highlights_json ? JSON.parse(t.key_highlights_json) : [],
-          hindiKeyHighlights: t.hindi_key_highlights_json ? JSON.parse(t.hindi_key_highlights_json) : [],
-          inclusions: t.inclusions_json ? JSON.parse(t.inclusions_json) : [],
-          hindiInclusions: t.hindi_inclusions_json ? JSON.parse(t.hindi_inclusions_json) : [],
-          exclusions: t.exclusions_json ? JSON.parse(t.exclusions_json) : [],
-          hindiExclusions: t.hindi_exclusions_json ? JSON.parse(t.hindi_exclusions_json) : [],
-          faqs: t.faqs_json ? JSON.parse(t.faqs_json) : [],
-          isPopular: Boolean(t.is_popular),
-          isPublished: Boolean(t.is_published),
-          metaTitle: t.meta_title,
-          metaDescription: t.meta_description,
-          quickAnswer: t.quick_answer || "",
-          whyChoose: t.why_choose_json ? JSON.parse(t.why_choose_json) : [],
-          whatWeOffer: t.what_we_offer_json ? JSON.parse(t.what_we_offer_json) : [],
-          howToReach: t.how_to_reach || "",
-          travelTips: t.travel_tips_json ? JSON.parse(t.travel_tips_json) : [],
-          category: t.category || "",
-          focusKeyword: t.focus_keyword || "",
-          secondaryKeywords: t.secondary_keywords_json ? JSON.parse(t.secondary_keywords_json) : [],
-          canonicalUrl: t.canonical_url || "",
-          ogTitle: t.og_title || "",
-          ogDescription: t.og_description || "",
-          ogImage: t.og_image || ""
-        }));
+        const formatted = rows.map(formatTourRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error("[DB ERROR] Failed to fetch tours:", err);
@@ -6199,65 +6801,148 @@ async function startServer() {
     res.json({ success: true, data: initialTours.filter((t) => t.isPublished) });
   });
   app.get("/api/tours/:slug", async (req, res) => {
+    const slug = req.params.slug;
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM tours WHERE slug = ?", [req.params.slug]);
+        const rows = await query("SELECT * FROM tours WHERE slug = ?", [slug]);
         if (rows.length > 0) {
-          const t = rows[0];
-          const formatted = {
-            id: t.id,
-            title: t.title,
-            hindiTitle: t.hindi_title,
-            slug: t.slug,
-            duration: t.duration,
-            hindiDuration: t.hindi_duration,
-            price: Number(t.price),
-            originalPrice: t.original_price ? Number(t.original_price) : null,
-            badge: t.badge,
-            hindiBadge: t.hindi_badge,
-            image: t.image,
-            galleryImages: t.gallery_images_json ? JSON.parse(t.gallery_images_json) : [],
-            pickupLocation: t.pickup_location,
-            hindiPickupLocation: t.hindi_pickup_location,
-            dropLocation: t.drop_location,
-            hindiDropLocation: t.hindi_drop_location,
-            vehicleOptions: t.vehicle_options_json ? JSON.parse(t.vehicle_options_json) : [],
-            overview: t.overview,
-            hindiOverview: t.hindi_overview,
-            itinerary: t.itinerary_json ? JSON.parse(t.itinerary_json) : [],
-            keyHighlights: t.key_highlights_json ? JSON.parse(t.key_highlights_json) : [],
-            hindiKeyHighlights: t.hindi_key_highlights_json ? JSON.parse(t.hindi_key_highlights_json) : [],
-            inclusions: t.inclusions_json ? JSON.parse(t.inclusions_json) : [],
-            hindiInclusions: t.hindi_inclusions_json ? JSON.parse(t.hindi_inclusions_json) : [],
-            exclusions: t.exclusions_json ? JSON.parse(t.exclusions_json) : [],
-            hindiExclusions: t.hindi_exclusions_json ? JSON.parse(t.hindi_exclusions_json) : [],
-            faqs: t.faqs_json ? JSON.parse(t.faqs_json) : [],
-            isPopular: Boolean(t.is_popular),
-            isPublished: Boolean(t.is_published),
-            metaTitle: t.meta_title,
-            metaDescription: t.meta_description,
-            quickAnswer: t.quick_answer || "",
-            whyChoose: t.why_choose_json ? JSON.parse(t.why_choose_json) : [],
-            whatWeOffer: t.what_we_offer_json ? JSON.parse(t.what_we_offer_json) : [],
-            howToReach: t.how_to_reach || "",
-            travelTips: t.travel_tips_json ? JSON.parse(t.travel_tips_json) : [],
-            category: t.category || "",
-            focusKeyword: t.focus_keyword || "",
-            secondaryKeywords: t.secondary_keywords_json ? JSON.parse(t.secondary_keywords_json) : [],
-            canonicalUrl: t.canonical_url || "",
-            ogTitle: t.og_title || "",
-            ogDescription: t.og_description || "",
-            ogImage: t.og_image || ""
-          };
-          return res.json({ success: true, data: formatted });
+          return res.json({ success: true, data: formatTourRow(rows[0]) });
         }
       } catch (err) {
         console.error("[DB ERROR] Failed to fetch tour detail:", err);
       }
     }
-    const item = initialTours.find((t) => t.slug === req.params.slug);
+    const item = initialTours.find((t) => t.slug === slug || t.id === slug);
     if (!item) return res.status(404).json({ success: false, message: "Tour not found" });
     res.json({ success: true, data: item });
+  });
+  app.post("/api/tours", async (req, res) => {
+    const t = req.body;
+    if (!t.id || !t.slug) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, slug)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO tours (
+            id, title, hindi_title, slug, duration, hindi_duration, price, original_price,
+            badge, hindi_badge, image, gallery_images_json, pickup_location, hindi_pickup_location,
+            drop_location, hindi_drop_location, vehicle_options_json, overview, hindi_overview,
+            itinerary_json, key_highlights_json, hindi_key_highlights_json, inclusions_json,
+            hindi_inclusions_json, exclusions_json, hindi_exclusions_json, faqs_json,
+            is_popular, is_published, meta_title, meta_description,
+            quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
+            category, focus_keyword, secondary_keywords_json, canonical_url,
+            og_title, og_description, og_image
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            title = VALUES(title),
+            hindi_title = VALUES(hindi_title),
+            slug = VALUES(slug),
+            duration = VALUES(duration),
+            hindi_duration = VALUES(hindi_duration),
+            price = VALUES(price),
+            original_price = VALUES(original_price),
+            badge = VALUES(badge),
+            hindi_badge = VALUES(hindi_badge),
+            image = VALUES(image),
+            gallery_images_json = VALUES(gallery_images_json),
+            pickup_location = VALUES(pickup_location),
+            hindi_pickup_location = VALUES(hindi_pickup_location),
+            drop_location = VALUES(drop_location),
+            hindi_drop_location = VALUES(hindi_drop_location),
+            vehicle_options_json = VALUES(vehicle_options_json),
+            overview = VALUES(overview),
+            hindi_overview = VALUES(hindi_overview),
+            itinerary_json = VALUES(itinerary_json),
+            key_highlights_json = VALUES(key_highlights_json),
+            hindi_key_highlights_json = VALUES(hindi_key_highlights_json),
+            inclusions_json = VALUES(inclusions_json),
+            hindi_inclusions_json = VALUES(hindi_inclusions_json),
+            exclusions_json = VALUES(exclusions_json),
+            hindi_exclusions_json = VALUES(hindi_exclusions_json),
+            faqs_json = VALUES(faqs_json),
+            is_popular = VALUES(is_popular),
+            is_published = VALUES(is_published),
+            meta_title = VALUES(meta_title),
+            meta_description = VALUES(meta_description),
+            quick_answer = VALUES(quick_answer),
+            why_choose_json = VALUES(why_choose_json),
+            what_we_offer_json = VALUES(what_we_offer_json),
+            how_to_reach = VALUES(how_to_reach),
+            travel_tips_json = VALUES(travel_tips_json),
+            category = VALUES(category),
+            focus_keyword = VALUES(focus_keyword),
+            secondary_keywords_json = VALUES(secondary_keywords_json),
+            canonical_url = VALUES(canonical_url),
+            og_title = VALUES(og_title),
+            og_description = VALUES(og_description),
+            og_image = VALUES(og_image)`,
+          [
+            t.id,
+            t.name || t.title || "",
+            t.hindiName || t.hindiTitle || "",
+            t.slug,
+            t.duration || "",
+            t.hindiDuration || "",
+            t.price || 0,
+            t.originalPrice || null,
+            t.badge || "",
+            t.hindiBadge || "",
+            t.featuredImage || t.image || "",
+            JSON.stringify(t.gallery || t.galleryImages || []),
+            t.pickupLocation || t.startingPoint || "",
+            t.hindiPickupLocation || t.hindiStartingPoint || "",
+            t.dropLocation || t.endingPoint || "",
+            t.hindiDropLocation || t.hindiEndingPoint || "",
+            JSON.stringify(t.vehicleOptions || []),
+            t.description || t.overview || "",
+            t.hindiDescription || t.hindiOverview || "",
+            JSON.stringify(t.itinerary || []),
+            JSON.stringify(t.keyHighlights || []),
+            JSON.stringify(t.hindiKeyHighlights || []),
+            JSON.stringify(t.included || t.inclusions || []),
+            JSON.stringify(t.hindiIncluded || t.hindiInclusions || []),
+            JSON.stringify(t.excluded || t.exclusions || []),
+            JSON.stringify(t.hindiExcluded || t.hindiExclusions || []),
+            JSON.stringify(t.faqs || []),
+            t.isFeatured ? 1 : 0,
+            t.isPublished !== false ? 1 : 0,
+            t.seoTitle || t.metaTitle || "",
+            t.metaDescription || "",
+            t.quickAnswer || "",
+            JSON.stringify(t.whyChoose || []),
+            JSON.stringify(t.whatWeOffer || []),
+            t.howToReach || "",
+            JSON.stringify(t.travelTips || []),
+            t.category || "",
+            t.focusKeyword || "",
+            JSON.stringify(t.secondaryKeywords || []),
+            t.canonicalUrl || "",
+            t.ogTitle || "",
+            t.ogDescription || "",
+            t.ogImage || ""
+          ]
+        );
+        return res.json({ success: true, message: "Tour saved to MySQL", data: t });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save tour:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Tour saved in-memory (DB not connected)", data: t });
+  });
+  app.delete("/api/tours/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM tours WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Tour ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Tour ${id} deleted (in-memory)` });
   });
   app.get("/api/destinations", async (req, res) => {
     if (isDbConnected()) {
@@ -6265,13 +6950,17 @@ async function startServer() {
         const rows = await query("SELECT * FROM destinations WHERE is_published = 1 ORDER BY created_at DESC");
         const formatted = rows.map((d) => ({
           id: d.id,
+          name: d.title || d.name,
           title: d.title,
+          hindiName: d.hindi_title || d.hindiName,
           hindiTitle: d.hindi_title,
           slug: d.slug,
           city: d.city,
           hindiCity: d.hindi_city,
           state: d.state,
           image: d.image,
+          heroImage: d.image,
+          gallery: d.gallery_images_json ? JSON.parse(d.gallery_images_json) : [],
           galleryImages: d.gallery_images_json ? JSON.parse(d.gallery_images_json) : [],
           distanceFromCenter: d.distance_from_center,
           hindiDistanceFromCenter: d.hindi_distance_from_center,
@@ -6280,16 +6969,21 @@ async function startServer() {
           bestTimeToVisit: d.best_time_to_visit,
           hindiBestTimeToVisit: d.hindi_best_time_to_visit,
           description: d.description,
+          shortDescription: d.description ? d.description.substring(0, 150) + "..." : "",
           hindiDescription: d.hindi_description,
           spiritualSignificance: d.spiritual_significance,
           hindiSpiritualSignificance: d.hindi_spiritual_significance,
+          placesToVisit: d.key_attractions_json ? JSON.parse(d.key_attractions_json) : [],
+          temples: d.nearby_temples_json ? JSON.parse(d.nearby_temples_json) : [],
           keyAttractions: d.key_attractions_json ? JSON.parse(d.key_attractions_json) : [],
           hindiKeyAttractions: d.hindi_key_attractions_json ? JSON.parse(d.hindi_key_attractions_json) : [],
           howToReach: d.how_to_reach_json ? JSON.parse(d.how_to_reach_json) : {},
           nearbyTemples: d.nearby_temples_json ? JSON.parse(d.nearby_temples_json) : [],
           mapCoordinates: d.map_coordinates_json ? JSON.parse(d.map_coordinates_json) : {},
+          isFeatured: true,
           isPublished: Boolean(d.is_published),
           metaTitle: d.meta_title,
+          seoTitle: d.meta_title,
           metaDescription: d.meta_description
         }));
         return res.json({ success: true, data: formatted });
@@ -6298,6 +6992,99 @@ async function startServer() {
       }
     }
     res.json({ success: true, data: initialDestinations.filter((d) => d.isPublished) });
+  });
+  app.post("/api/destinations", async (req, res) => {
+    const d = req.body;
+    if (!d.id || !d.slug) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, slug)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO destinations (
+            id, title, hindi_title, slug, city, hindi_city, state, image, gallery_images_json,
+            distance_from_center, hindi_distance_from_center, timings, hindi_timings,
+            best_time_to_visit, hindi_best_time_to_visit, description, hindi_description,
+            spiritual_significance, hindi_spiritual_significance, key_attractions_json,
+            hindi_key_attractions_json, how_to_reach_json, nearby_temples_json, map_coordinates_json,
+            is_published, meta_title, meta_description
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            title = VALUES(title),
+            hindi_title = VALUES(hindi_title),
+            slug = VALUES(slug),
+            city = VALUES(city),
+            hindi_city = VALUES(hindi_city),
+            state = VALUES(state),
+            image = VALUES(image),
+            gallery_images_json = VALUES(gallery_images_json),
+            distance_from_center = VALUES(distance_from_center),
+            hindi_distance_from_center = VALUES(hindi_distance_from_center),
+            timings = VALUES(timings),
+            hindi_timings = VALUES(hindi_timings),
+            best_time_to_visit = VALUES(best_time_to_visit),
+            hindi_best_time_to_visit = VALUES(hindi_best_time_to_visit),
+            description = VALUES(description),
+            hindi_description = VALUES(hindi_description),
+            spiritual_significance = VALUES(spiritual_significance),
+            hindi_spiritual_significance = VALUES(hindi_spiritual_significance),
+            key_attractions_json = VALUES(key_attractions_json),
+            hindi_key_attractions_json = VALUES(hindi_key_attractions_json),
+            how_to_reach_json = VALUES(how_to_reach_json),
+            nearby_temples_json = VALUES(nearby_temples_json),
+            map_coordinates_json = VALUES(map_coordinates_json),
+            is_published = VALUES(is_published),
+            meta_title = VALUES(meta_title),
+            meta_description = VALUES(meta_description)`,
+          [
+            d.id,
+            d.name || d.title || "",
+            d.hindiName || d.hindiTitle || "",
+            d.slug,
+            d.city || "",
+            d.hindiCity || "",
+            d.state || "",
+            d.image || d.heroImage || "",
+            JSON.stringify(d.gallery || d.galleryImages || []),
+            d.distanceFromCenter || "",
+            d.hindiDistanceFromCenter || "",
+            d.timings || "",
+            d.hindiTimings || "",
+            d.bestTimeToVisit || "",
+            d.hindiBestTimeToVisit || "",
+            d.description || "",
+            d.hindiDescription || "",
+            d.spiritualSignificance || "",
+            d.hindiSpiritualSignificance || "",
+            JSON.stringify(d.placesToVisit || d.keyAttractions || []),
+            JSON.stringify(d.hindiPlacesToVisit || d.hindiKeyAttractions || []),
+            JSON.stringify(d.howToReach || {}),
+            JSON.stringify(d.temples || d.nearbyTemples || []),
+            JSON.stringify(d.mapCoordinates || {}),
+            d.isPublished !== false ? 1 : 0,
+            d.seoTitle || d.metaTitle || "",
+            d.metaDescription || ""
+          ]
+        );
+        return res.json({ success: true, message: "Destination saved to MySQL", data: d });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save destination:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Destination saved in-memory (DB not connected)", data: d });
+  });
+  app.delete("/api/destinations/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM destinations WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Destination ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Destination ${id} deleted (in-memory)` });
   });
   app.get("/api/blogs", async (req, res) => {
     if (isDbConnected()) {
@@ -6313,6 +7100,7 @@ async function startServer() {
           category: b.category,
           hindiCategory: b.hindi_category,
           image: b.image,
+          featuredImage: b.image,
           excerpt: b.excerpt,
           hindiExcerpt: b.hindi_excerpt,
           content: b.content,
@@ -6320,6 +7108,7 @@ async function startServer() {
           readTime: b.read_time,
           hindiReadTime: b.hindi_read_time,
           tags: b.tags_json ? JSON.parse(b.tags_json) : [],
+          isFeatured: false,
           isPublished: Boolean(b.is_published),
           metaTitle: b.meta_title,
           metaDescription: b.meta_description
@@ -6330,6 +7119,80 @@ async function startServer() {
       }
     }
     res.json({ success: true, data: initialBlogPosts.filter((b) => b.isPublished) });
+  });
+  app.post("/api/blogs", async (req, res) => {
+    const b = req.body;
+    if (!b.id || !b.slug || !b.title) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, slug, title)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO blog_posts (
+            id, title, hindi_title, slug, author, date, category, hindi_category,
+            image, excerpt, hindi_excerpt, content, hindi_content, read_time, hindi_read_time,
+            tags_json, is_published, meta_title, meta_description
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            title = VALUES(title),
+            hindi_title = VALUES(hindi_title),
+            slug = VALUES(slug),
+            author = VALUES(author),
+            date = VALUES(date),
+            category = VALUES(category),
+            hindi_category = VALUES(hindi_category),
+            image = VALUES(image),
+            excerpt = VALUES(excerpt),
+            hindi_excerpt = VALUES(hindi_excerpt),
+            content = VALUES(content),
+            hindi_content = VALUES(hindi_content),
+            read_time = VALUES(read_time),
+            hindi_read_time = VALUES(hindi_read_time),
+            tags_json = VALUES(tags_json),
+            is_published = VALUES(is_published),
+            meta_title = VALUES(meta_title),
+            meta_description = VALUES(meta_description)`,
+          [
+            b.id,
+            b.title,
+            b.hindiTitle || "",
+            b.slug,
+            b.author || "Vaidik Acharya",
+            b.date || (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+            b.category || "Guides",
+            b.hindiCategory || "",
+            b.featuredImage || b.image || "",
+            b.excerpt || "",
+            b.hindiExcerpt || "",
+            b.content || "",
+            b.hindiContent || "",
+            b.readTime || b.readingTime || "5 min",
+            b.hindiReadTime || b.hindiReadingTime || "",
+            JSON.stringify(b.tags || []),
+            b.isPublished !== false ? 1 : 0,
+            b.seoTitle || b.metaTitle || "",
+            b.metaDescription || ""
+          ]
+        );
+        return res.json({ success: true, message: "Blog saved to MySQL", data: b });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save blog:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Blog saved in-memory (DB not connected)", data: b });
+  });
+  app.delete("/api/blogs/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM blog_posts WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Blog ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Blog ${id} deleted (in-memory)` });
   });
   app.get("/api/faqs", async (req, res) => {
     if (isDbConnected()) {
@@ -6352,6 +7215,55 @@ async function startServer() {
     }
     res.json({ success: true, data: initialFAQs.filter((f) => f.isPublished) });
   });
+  app.post("/api/faqs", async (req, res) => {
+    const f = req.body;
+    if (!f.id || !f.question || !f.answer) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, question, answer)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO faqs (id, question, hindi_question, answer, hindi_answer, category, hindi_category, is_published)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           question = VALUES(question),
+           hindi_question = VALUES(hindi_question),
+           answer = VALUES(answer),
+           hindi_answer = VALUES(hindi_answer),
+           category = VALUES(category),
+           hindi_category = VALUES(hindi_category),
+           is_published = VALUES(is_published)`,
+          [
+            f.id,
+            f.question,
+            f.hindiQuestion || "",
+            f.answer,
+            f.hindiAnswer || "",
+            f.category || "General",
+            f.hindiCategory || "",
+            f.isPublished !== false ? 1 : 0
+          ]
+        );
+        return res.json({ success: true, message: "FAQ saved to MySQL", data: f });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save FAQ:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "FAQ saved in-memory (DB not connected)", data: f });
+  });
+  app.delete("/api/faqs/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM faqs WHERE id = ?", [id]);
+        return res.json({ success: true, message: `FAQ ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `FAQ ${id} deleted (in-memory)` });
+  });
   app.get("/api/leads", async (req, res) => {
     if (isDbConnected()) {
       try {
@@ -6364,7 +7276,7 @@ async function startServer() {
     res.json({ success: true, data: serverLeads });
   });
   app.post("/api/leads", async (req, res) => {
-    const leadId = `lead-${Date.now()}`;
+    const leadId = req.body.id || `lead-${Date.now()}`;
     const createdAt = (/* @__PURE__ */ new Date()).toISOString();
     const leadData = {
       id: leadId,
@@ -6374,16 +7286,26 @@ async function startServer() {
       serviceType: req.body.serviceType || "Pooja",
       serviceName: req.body.serviceName || "",
       preferredDate: req.body.preferredDate || "",
-      guestCount: req.body.guestCount || "",
+      guestCount: String(req.body.guestCount || req.body.numberOfPeople || "1"),
       message: req.body.message || "",
-      status: "New",
+      status: req.body.status || "New",
       createdAt
     };
     if (isDbConnected()) {
       try {
         await execute(
           `INSERT INTO leads (id, name, phone, email, service_type, service_name, preferred_date, guest_count, message, status)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+             name = VALUES(name),
+             phone = VALUES(phone),
+             email = VALUES(email),
+             service_type = VALUES(service_type),
+             service_name = VALUES(service_name),
+             preferred_date = VALUES(preferred_date),
+             guest_count = VALUES(guest_count),
+             message = VALUES(message),
+             status = VALUES(status)`,
           [
             leadData.id,
             leadData.name,
@@ -6406,6 +7328,38 @@ async function startServer() {
     serverLeads.unshift(leadData);
     console.log("[LEAD RECEIVED IN-MEMORY]", leadData.name, leadData.phone, leadData.serviceType);
     res.status(201).json({ success: true, message: "Enquiry received successfully", data: leadData });
+  });
+  app.put("/api/leads/:id", async (req, res) => {
+    const { id } = req.params;
+    const { status, notes } = req.body;
+    if (isDbConnected()) {
+      try {
+        await execute("UPDATE leads SET status = ?, notes = ? WHERE id = ?", [status || "New", notes || "", id]);
+        return res.json({ success: true, message: "Lead updated in MySQL" });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    const idx = serverLeads.findIndex((l) => l.id === id);
+    if (idx !== -1) {
+      if (status) serverLeads[idx].status = status;
+      if (notes !== void 0) serverLeads[idx].notes = notes;
+    }
+    res.json({ success: true, message: "Lead updated (in-memory)" });
+  });
+  app.delete("/api/leads/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM leads WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Lead ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    const idx = serverLeads.findIndex((l) => l.id === id);
+    if (idx !== -1) serverLeads.splice(idx, 1);
+    res.json({ success: true, message: `Lead ${id} deleted (in-memory)` });
   });
   app.get("/api/admin/users", async (req, res) => {
     if (isDbConnected()) {
@@ -6431,7 +7385,7 @@ async function startServer() {
   });
   app.post("/api/admin/users", async (req, res) => {
     const { name, email, phone, role, passcode, status, permissions } = req.body;
-    const userId = `staff-${Date.now()}`;
+    const userId = req.body.id || `staff-${Date.now()}`;
     const username = email ? email.split("@")[0] : `user_${Math.floor(1e3 + Math.random() * 9e3)}`;
     const passwordHash = await import_bcryptjs2.default.hash(passcode || "pass123", 10);
     const isActive = status === "Active" ? 1 : 0;
@@ -6548,10 +7502,10 @@ async function startServer() {
         message: "Authentication successful (fallback)",
         user: {
           id: "admin-1",
-          name: "Aastha Super Admin",
-          email: "admin@aasthaserasta.com",
+          name: "Pt. Sharma",
+          email: "admin@aasthaseyraasta.com",
           role: "Admin",
-          passcode: "mahakal",
+          passcode: "admin123",
           status: "Active",
           lastLogin: (/* @__PURE__ */ new Date()).toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" }),
           permissions: {
@@ -6592,10 +7546,10 @@ Sitemap: ${baseUrl}/sitemap.xml
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = import_path3.default.join(process.cwd(), "dist");
+    const distPath = import_path2.default.join(process.cwd(), "dist");
     app.use(import_express.default.static(distPath));
     app.get("*", (req, res) => {
-      res.sendFile(import_path3.default.join(distPath, "index.html"));
+      res.sendFile(import_path2.default.join(distPath, "index.html"));
     });
   }
   app.listen(PORT, () => {
