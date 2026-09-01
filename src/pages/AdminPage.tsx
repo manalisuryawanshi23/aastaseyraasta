@@ -113,12 +113,14 @@ interface AdminPageProps {
 }
 
 export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const initialSession = StoreService.getStoredAdminSession();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => !!initialSession);
+  const [currentStaffUser, setCurrentStaffUser] = useState<StaffUser | null>(() => initialSession);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
-  const [currentStaffUser, setCurrentStaffUser] = useState<StaffUser | null>(null);
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState<string | null>(null);
 
   const resolveTabFromPath = (pathStr: string): AdminTab => {
     const p = pathStr.toLowerCase().replace(/\/$/, '');
@@ -160,14 +162,24 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   useEffect(() => {
     if (isAuthenticated && currentStaffUser) {
       if (currentStaffUser.role === 'Manager') {
-        const restrictedTabs = ['Services', 'BrandColors', 'Informative', 'Socials', 'Staff'];
+        const restrictedTabs: AdminTab[] = ['Services', 'BrandColors', 'Informative', 'Socials', 'Staff', 'SpecialOffers'];
         if (restrictedTabs.includes(activeTab)) {
           changeTab('Overview');
-          alert('Access Denied (403 Forbidden): Manager role does not have permission to access the Pooja, Yatra, or System Settings modules.');
+          setAccessDeniedMessage(`Access Denied (403 Forbidden): Manager role does not have permission to access the ${activeTab} module.`);
+          setTimeout(() => setAccessDeniedMessage(null), 5000);
         }
       }
     }
   }, [activeTab, isAuthenticated, currentStaffUser]);
+
+  const handleLogout = () => {
+    StoreService.clearStoredAdminSession();
+    setIsAuthenticated(false);
+    setCurrentStaffUser(null);
+    setEmail('');
+    setPassword('');
+    setLoginError('');
+  };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -608,28 +620,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       <span>Testimonials Management</span>
                     </div>
                   </button>
-
-                  {(userPerms?.canManageSpecialOffers || currentStaffUser?.role === 'Manager') && (
-                    <button
-                      onClick={() => {
-                        changeTab('SpecialOffers');
-                        setSidebarOpen(false);
-                      }}
-                      className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                        activeTab === 'SpecialOffers'
-                          ? 'bg-amber-600 text-white shadow-md'
-                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Megaphone className="w-4 h-4 text-amber-400" />
-                        <span>Top Offer Marquee</span>
-                      </div>
-                      <span className="px-1.5 py-0.2 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono">
-                        Live
-                      </span>
-                    </button>
-                  )}
                 </div>
               </>
             ) : (
@@ -941,10 +931,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             </div>
 
             <button
-              onClick={() => {
-                setIsAuthenticated(false);
-                setCurrentStaffUser(null);
-              }}
+              onClick={handleLogout}
               title="Sign Out"
               className="p-1.5 rounded-lg text-stone-400 hover:text-red-400 hover:bg-stone-800 transition-colors"
             >
@@ -989,10 +976,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             </div>
 
             <button
-              onClick={() => {
-                setIsAuthenticated(false);
-                setCurrentStaffUser(null);
-              }}
+              onClick={handleLogout}
               className="px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 hover:bg-red-100 text-xs font-semibold border border-red-200 dark:border-red-900 transition-colors flex items-center gap-1.5"
             >
               <LogOut className="w-3.5 h-3.5" />
@@ -1003,6 +987,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
         {/* WORKSPACE VIEW AREA */}
         <main className="p-4 md:p-8 space-y-8 flex-1">
+          {accessDeniedMessage && (
+            <div className="p-4 rounded-2xl bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 text-xs font-bold flex items-center gap-2 shadow-sm animate-pulse">
+              <ShieldAlert className="w-5 h-5 text-red-600 shrink-0" />
+              <span>{accessDeniedMessage}</span>
+            </div>
+          )}
           {/* TAB 1: OVERVIEW DASHBOARD */}
           {activeTab === 'Overview' && userPerms?.canViewOverview && (
             <AdminDashboardOverview

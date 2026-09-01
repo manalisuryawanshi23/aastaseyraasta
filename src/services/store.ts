@@ -87,6 +87,7 @@ const KEYS = {
   ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
   REDIRECTS: 'aastha_redirects',
   STAFF: 'aastha_staff',
+  SESSION: 'aastha_admin_session',
 };
 
 // Helper for localStorage
@@ -513,6 +514,16 @@ export class StoreService {
   static saveDestination(dest: Partial<Destination> & { id?: string }): Destination {
     const dests = this.getDestinations(false);
     const now = new Date().toISOString();
+    const cleanId = dest.id && dest.id.trim() ? dest.id.trim() : `dest-${Date.now()}`;
+    const cleanName = (dest.name || (dest as any).title || '').trim() || 'New Destination';
+    const fallbackSlug = cleanName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `dest-${Date.now()}`;
+    const cleanSlug = dest.slug && dest.slug.trim()
+      ? dest.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
 
     if (dest.id) {
       const idx = dests.findIndex((d) => d.id === dest.id);
@@ -520,6 +531,9 @@ export class StoreService {
         const updated = {
           ...dests[idx],
           ...dest,
+          id: cleanId,
+          name: cleanName,
+          slug: cleanSlug,
           updatedAt: now,
         } as Destination;
         dests[idx] = updated;
@@ -530,9 +544,6 @@ export class StoreService {
     }
 
     const newDest: Destination = {
-      id: `dest-${Date.now()}`,
-      name: dest.name || 'New Destination',
-      slug: dest.slug || `dest-${Date.now()}`,
       shortDescription: dest.shortDescription || '',
       description: dest.description || '',
       placesToVisit: dest.placesToVisit || [],
@@ -542,6 +553,9 @@ export class StoreService {
       createdAt: now,
       updatedAt: now,
       ...dest,
+      id: cleanId,
+      name: cleanName,
+      slug: cleanSlug,
     } as Destination;
 
     dests.unshift(newDest);
@@ -600,6 +614,16 @@ export class StoreService {
   static saveBlogPost(blog: Partial<BlogPost> & { id?: string }): BlogPost {
     const blogs = this.getBlogPosts(false);
     const now = new Date().toISOString();
+    const cleanId = blog.id && blog.id.trim() ? blog.id.trim() : `blog-${Date.now()}`;
+    const cleanTitle = (blog.title || '').trim() || 'New Blog Guide';
+    const fallbackSlug = cleanTitle
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `blog-${Date.now()}`;
+    const cleanSlug = blog.slug && blog.slug.trim()
+      ? blog.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
 
     if (blog.id) {
       const idx = blogs.findIndex((b) => b.id === blog.id);
@@ -607,6 +631,9 @@ export class StoreService {
         const updated = {
           ...blogs[idx],
           ...blog,
+          id: cleanId,
+          title: cleanTitle,
+          slug: cleanSlug,
           updatedAt: now,
         } as BlogPost;
         blogs[idx] = updated;
@@ -617,9 +644,6 @@ export class StoreService {
     }
 
     const newBlog: BlogPost = {
-      id: `blog-${Date.now()}`,
-      title: blog.title || 'New Blog Guide',
-      slug: blog.slug || `blog-${Date.now()}`,
       excerpt: blog.excerpt || '',
       content: blog.content || '',
       author: blog.author || 'Vaidik Acharya',
@@ -631,6 +655,9 @@ export class StoreService {
       updatedAt: now,
       publishedAt: now,
       ...blog,
+      id: cleanId,
+      title: cleanTitle,
+      slug: cleanSlug,
     } as BlogPost;
 
     blogs.unshift(newBlog);
@@ -739,11 +766,18 @@ export class StoreService {
   static saveTestimonial(t: Partial<Testimonial> & { id?: string }): Testimonial {
     const list = this.getTestimonials();
     const now = new Date().toISOString();
+    const cleanId = t.id && t.id.trim() ? t.id.trim() : `test-${Date.now()}`;
+    const cleanName = (t.name || '').trim() || 'Devotee Name';
 
     if (t.id) {
       const idx = list.findIndex((x) => x.id === t.id);
       if (idx !== -1) {
-        const updated = { ...list[idx], ...t } as Testimonial;
+        const updated = {
+          ...list[idx],
+          ...t,
+          id: cleanId,
+          name: cleanName,
+        } as Testimonial;
         list[idx] = updated;
         setItem(KEYS.TESTIMONIALS, list);
         syncApiPost('/api/testimonials', updated);
@@ -752,8 +786,6 @@ export class StoreService {
     }
 
     const newT: Testimonial = {
-      id: `test-${Date.now()}`,
-      name: t.name || 'Devotee Name',
       location: t.location || 'India',
       rating: t.rating || 5,
       testimonial: t.testimonial || 'Wonderful divine experience!',
@@ -761,6 +793,8 @@ export class StoreService {
       isPublished: t.isPublished ?? true,
       createdAt: now,
       ...t,
+      id: cleanId,
+      name: cleanName,
     } as Testimonial;
 
     list.unshift(newT);
@@ -815,11 +849,18 @@ export class StoreService {
   static saveGalleryItem(g: Partial<GalleryItem> & { id?: string }): GalleryItem {
     const list = this.getGallery();
     const now = new Date().toISOString();
+    const cleanId = g.id && g.id.trim() ? g.id.trim() : `gal-${Date.now()}`;
+    const cleanTitle = (g.title || '').trim() || 'Spiritual Photo';
 
     if (g.id) {
       const idx = list.findIndex((x) => x.id === g.id);
       if (idx !== -1) {
-        const updated = { ...list[idx], ...g } as GalleryItem;
+        const updated = {
+          ...list[idx],
+          ...g,
+          id: cleanId,
+          title: cleanTitle,
+        } as GalleryItem;
         list[idx] = updated;
         setItem(KEYS.GALLERY, list);
         syncApiPost('/api/gallery', updated);
@@ -828,16 +869,16 @@ export class StoreService {
     }
 
     const newG: GalleryItem = {
-      id: `gal-${Date.now()}`,
-      title: g.title || 'Spiritual Photo',
       image: g.image || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
-      altText: g.altText || 'Spiritual Image',
+      altText: g.altText || cleanTitle,
       category: g.category || 'Pooja',
       location: g.location || '',
       sortOrder: list.length + 1,
       isPublished: g.isPublished ?? true,
       createdAt: now,
       ...g,
+      id: cleanId,
+      title: cleanTitle,
     } as GalleryItem;
 
     list.unshift(newG);
@@ -961,6 +1002,26 @@ export class StoreService {
     setItem(KEYS.REDIRECTS, list);
   }
 
+  // Session Persistence
+  static getStoredAdminSession(): StaffUser | null {
+    return getItem<StaffUser | null>(KEYS.SESSION, null);
+  }
+
+  static setStoredAdminSession(user: StaffUser): void {
+    setItem(KEYS.SESSION, user);
+  }
+
+  static clearStoredAdminSession(): void {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem(KEYS.SESSION);
+        sessionStorage.removeItem(KEYS.SESSION);
+      } catch (e) {
+        console.error('Error clearing admin session:', e);
+      }
+    }
+  }
+
   // Staff Users & Permissions Management
   static getStaffUsers(): StaffUser[] {
     return getItem<StaffUser[]>(KEYS.STAFF, initialStaffUsers);
@@ -969,37 +1030,72 @@ export class StoreService {
   static saveStaffUser(user: Partial<StaffUser> & { id?: string }): StaffUser {
     const list = this.getStaffUsers();
     let resultUser: StaffUser;
+    const cleanId = user.id && user.id.trim() ? user.id.trim() : `staff-${Date.now()}`;
+    const cleanName = (user.name || '').trim() || 'Staff Member';
+    const cleanEmail = (user.email || '').trim().toLowerCase() || 'staff@aasthaseyraasta.com';
+    const cleanRole: AdminRole = user.role === 'Admin' ? 'Admin' : 'Manager';
+    const cleanPasscode = (user.passcode || '').trim() || 'pass123';
+    const cleanPhone = (user.phone || '').trim();
+    const cleanStatus: 'Active' | 'Inactive' = user.status === 'Inactive' ? 'Inactive' : 'Active';
+
+    const defaultPermissions = cleanRole === 'Admin'
+      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true }
+      : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false, canManageAstrologyConsultations: true };
 
     if (user.id) {
       const idx = list.findIndex((u) => u.id === user.id);
       if (idx !== -1) {
-        resultUser = { ...list[idx], ...user } as StaffUser;
+        resultUser = {
+          ...list[idx],
+          ...user,
+          id: cleanId,
+          name: cleanName,
+          email: cleanEmail,
+          role: cleanRole,
+          passcode: cleanPasscode,
+          phone: cleanPhone,
+          status: cleanStatus,
+          permissions: user.permissions || list[idx].permissions || defaultPermissions,
+        } as StaffUser;
         list[idx] = resultUser;
       } else {
-        resultUser = { ...user } as StaffUser;
+        resultUser = {
+          ...user,
+          id: cleanId,
+          name: cleanName,
+          email: cleanEmail,
+          role: cleanRole,
+          passcode: cleanPasscode,
+          phone: cleanPhone,
+          status: cleanStatus,
+          lastLogin: user.lastLogin || 'Never',
+          permissions: user.permissions || defaultPermissions,
+        } as StaffUser;
         list.push(resultUser);
       }
     } else {
-      const defaultPermissions = user.role === 'Admin'
-        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true }
-        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false, canManageAstrologyConsultations: true };
-
       resultUser = {
-        id: `staff-${Date.now()}`,
-        name: user.name || 'Staff Member',
-        email: user.email || 'staff@aasthaseva.com',
-        role: user.role || 'Manager',
-        passcode: user.passcode || 'pass123',
-        phone: user.phone || '',
-        status: user.status || 'Active',
         lastLogin: 'Never',
-        permissions: user.permissions || defaultPermissions,
         ...user,
+        id: cleanId,
+        name: cleanName,
+        email: cleanEmail,
+        role: cleanRole,
+        passcode: cleanPasscode,
+        phone: cleanPhone,
+        status: cleanStatus,
+        permissions: user.permissions || defaultPermissions,
       } as StaffUser;
       list.push(resultUser);
     }
 
     setItem(KEYS.STAFF, list);
+
+    // Update active session if user edited themselves
+    const currentSession = this.getStoredAdminSession();
+    if (currentSession && currentSession.id === resultUser.id) {
+      this.setStoredAdminSession(resultUser);
+    }
 
     // Sync with MySQL Backend API
     if (typeof window !== 'undefined') {
@@ -1009,7 +1105,11 @@ export class StoreService {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(resultUser),
-      }).catch((err) => console.log('[API SYNC NOTICE] MySQL sync notice:', err));
+      })
+        .then(() => {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        })
+        .catch((err) => console.log('[API SYNC NOTICE] MySQL sync notice:', err));
     }
 
     return resultUser;
@@ -1021,6 +1121,9 @@ export class StoreService {
 
     if (typeof window !== 'undefined') {
       fetch(`/api/admin/users/${id}`, { method: 'DELETE' })
+        .then(() => {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        })
         .catch((err) => console.log('[API SYNC NOTICE] MySQL sync notice:', err));
     }
   }
@@ -1045,30 +1148,36 @@ export class StoreService {
         dateStyle: 'short',
         timeStyle: 'short',
       });
+      const updated = { ...found, lastLogin: nowFormatted };
       this.saveStaffUser({ id: found.id, lastLogin: nowFormatted });
-      return { ...found, lastLogin: nowFormatted };
+      this.setStoredAdminSession(updated);
+      return updated;
     }
 
     // Master fallback credentials for Admin
     if (
-      (cleanEmail === 'admin@aasthaseva.com' || cleanEmail === 'admin@aasthaserasta.com' || cleanEmail === 'admin') &&
+      (cleanEmail === 'admin@aasthaseva.com' || cleanEmail === 'admin@aasthaseyraasta.com' || cleanEmail === 'admin') &&
       (cleanPass === 'admin123' || cleanPass === 'mahakal')
     ) {
       const adminUser = users.find((u) => u.role === 'Admin') || users[0];
       const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+      const updated = { ...adminUser, lastLogin: nowFormatted };
       this.saveStaffUser({ id: adminUser.id, lastLogin: nowFormatted });
-      return { ...adminUser, lastLogin: nowFormatted };
+      this.setStoredAdminSession(updated);
+      return updated;
     }
 
     // Master fallback credentials for Manager
     if (
-      (cleanEmail === 'manager@aasthaseva.com' || cleanEmail === 'manager@aasthaserasta.com' || cleanEmail === 'manager') &&
+      (cleanEmail === 'manager@aasthaseva.com' || cleanEmail === 'manager@aasthaseyraasta.com' || cleanEmail === 'manager') &&
       (cleanPass === 'manager123')
     ) {
       const managerUser = users.find((u) => u.role === 'Manager') || users[1] || users[0];
       const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+      const updated = { ...managerUser, lastLogin: nowFormatted };
       this.saveStaffUser({ id: managerUser.id, lastLogin: nowFormatted });
-      return { ...managerUser, lastLogin: nowFormatted };
+      this.setStoredAdminSession(updated);
+      return updated;
     }
 
     return null;

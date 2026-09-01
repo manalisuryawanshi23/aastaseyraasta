@@ -179,7 +179,7 @@ export default function App() {
       return <HTMLSitemapPage />;
     }
 
-    if (path.startsWith('/admin')) {
+    if (path.startsWith('/admin') || path.startsWith('/dashboard')) {
       return <AdminPage defaultPath={path} />;
     }
 
@@ -192,49 +192,58 @@ export default function App() {
     );
   };
 
+  const isAdminRoute = currentPath.startsWith('/admin') || currentPath.startsWith('/dashboard');
+
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen bg-[#F9F8F6] dark:bg-[#121110] text-[#121212] dark:text-[#F4F1EA] flex flex-col font-sans selection:bg-amber-200 dark:selection:bg-amber-900/60 selection:text-stone-900 dark:selection:text-amber-100 transition-colors duration-300">
-          
-          {/* Sticky Top Header Navigation */}
-          <Navbar
-            onOpenBooking={() => handleOpenBooking('General')}
-            onOpenSearch={() => setSearchModalOpen(true)}
-          />
+        {isAdminRoute ? (
+          // DEDICATED ADMIN WORKSPACE (No Public Header, Footer, Audio Player, or Chat Widget)
+          <div className="min-h-screen bg-stone-100 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-sans selection:bg-amber-200 dark:selection:bg-amber-900/60 selection:text-stone-900 dark:selection:text-amber-100">
+            {renderCurrentView()}
+          </div>
+        ) : (
+          // PUBLIC WEBSITE LAYOUT (Navbar + Main Content + Footer + Interactive Modals)
+          <div className="min-h-screen bg-[#F9F8F6] dark:bg-[#121110] text-[#121212] dark:text-[#F4F1EA] flex flex-col font-sans selection:bg-amber-200 dark:selection:bg-amber-900/60 selection:text-stone-900 dark:selection:text-amber-100 transition-colors duration-300">
+            {/* Sticky Top Header Navigation */}
+            <Navbar
+              onOpenBooking={() => handleOpenBooking('General')}
+              onOpenSearch={() => setSearchModalOpen(true)}
+            />
 
-          {/* Main Page Body */}
-          <main className="flex-1 pb-16 lg:pb-0 overflow-x-hidden">
-            <PageTransition routeKey={currentPath}>
-              {renderCurrentView()}
-            </PageTransition>
-          </main>
+            {/* Main Page Body */}
+            <main className="flex-1 pb-16 lg:pb-0 overflow-x-hidden">
+              <PageTransition routeKey={currentPath}>
+                {renderCurrentView()}
+              </PageTransition>
+            </main>
 
-          {/* Footer */}
-          <Footer />
+            {/* Footer */}
+            <Footer />
 
-          {/* Sticky Mobile Navigation CTA bar */}
-          <MobileStickyCTA onOpenBooking={() => handleOpenBooking('General')} />
+            {/* Sticky Mobile Navigation CTA bar */}
+            <MobileStickyCTA onOpenBooking={() => handleOpenBooking('General')} />
 
-          {/* Audio Atmosphere Player */}
-          <AmbientAudioPlayer />
+            {/* Audio Atmosphere Player */}
+            <AmbientAudioPlayer />
 
-          {/* Modals */}
-          <BookingModal
-            isOpen={bookingModalOpen}
-            onClose={() => setBookingModalOpen(false)}
-            defaultServiceType={bookingDefaultType}
-            defaultServiceName={bookingDefaultName}
-          />
+            {/* Modals */}
+            <BookingModal
+              isOpen={bookingModalOpen}
+              onClose={() => setBookingModalOpen(false)}
+              defaultServiceType={bookingDefaultType}
+              defaultServiceName={bookingDefaultName}
+            />
 
-          <SearchModal
-            isOpen={searchModalOpen}
-            onClose={() => setSearchModalOpen(false)}
-          />
+            <SearchModal
+              isOpen={searchModalOpen}
+              onClose={() => setSearchModalOpen(false)}
+            />
 
-          {/* Floating Support Chat Widget */}
-          <SupportChatWidget onOpenBooking={handleOpenBooking} />
-        </div>
+            {/* Floating Support Chat Widget */}
+            <SupportChatWidget onOpenBooking={handleOpenBooking} />
+          </div>
+        )}
       </LanguageProvider>
     </ThemeProvider>
   );

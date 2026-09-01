@@ -13,10 +13,13 @@ const KEYS = {
   POOJAS: 'aastha_poojas',
   TOURS: 'aastha_tours',
   DESTINATIONS: 'aastha_destinations',
+  BLOGS: 'aastha_blogs',
   FAQS: 'aastha_faqs',
   SETTINGS: 'aastha_settings',
   GALLERY: 'aastha_gallery',
   TESTIMONIALS: 'aastha_testimonials',
+  LEADS: 'aastha_leads',
+  STAFF: 'aastha_staff',
   ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
 };
 
@@ -45,7 +48,9 @@ async function fetchAndCache(endpoint: string, storageKey: string): Promise<bool
  * will pick up localStorage changes.
  */
 function dispatchSyncEvent() {
-  window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+  }
 }
 
 export function useApiSync() {
@@ -55,35 +60,47 @@ export function useApiSync() {
     async function syncAll() {
       let anyUpdated = false;
 
-      // Sync poojas
+      // 1. Sync poojas
       const poojaOk = await fetchAndCache('/api/poojas', KEYS.POOJAS);
       if (poojaOk) anyUpdated = true;
 
-      // Sync tours
+      // 2. Sync tours
       const tourOk = await fetchAndCache('/api/tours', KEYS.TOURS);
       if (tourOk) anyUpdated = true;
 
-      // Sync destinations
+      // 3. Sync destinations
       const destOk = await fetchAndCache('/api/destinations', KEYS.DESTINATIONS);
       if (destOk) anyUpdated = true;
 
-      // Sync FAQs
+      // 4. Sync blogs
+      const blogOk = await fetchAndCache('/api/blogs', KEYS.BLOGS);
+      if (blogOk) anyUpdated = true;
+
+      // 5. Sync FAQs
       const faqOk = await fetchAndCache('/api/faqs', KEYS.FAQS);
       if (faqOk) anyUpdated = true;
 
-      // Sync site settings
+      // 6. Sync site settings
       const settingsOk = await fetchAndCache('/api/settings', KEYS.SETTINGS);
       if (settingsOk) anyUpdated = true;
 
-      // Sync gallery
+      // 7. Sync gallery
       const galleryOk = await fetchAndCache('/api/gallery', KEYS.GALLERY);
       if (galleryOk) anyUpdated = true;
 
-      // Sync testimonials
+      // 8. Sync testimonials
       const testimonialsOk = await fetchAndCache('/api/testimonials', KEYS.TESTIMONIALS);
       if (testimonialsOk) anyUpdated = true;
 
-      // Sync astrology consultations
+      // 9. Sync staff users
+      const staffOk = await fetchAndCache('/api/admin/users', KEYS.STAFF);
+      if (staffOk) anyUpdated = true;
+
+      // 10. Sync devotee leads
+      const leadsOk = await fetchAndCache('/api/leads', KEYS.LEADS);
+      if (leadsOk) anyUpdated = true;
+
+      // 11. Sync astrology consultations
       const astroOk = await fetchAndCache('/api/astrology-consultations', KEYS.ASTROLOGY_CONSULTATIONS);
       if (astroOk) anyUpdated = true;
 

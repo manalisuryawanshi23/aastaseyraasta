@@ -41,6 +41,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffUser | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
+
+  // Delete Confirmation State
+  const [staffToDelete, setStaffToDelete] = useState<StaffUser | null>(null);
 
   // Form Fields
   const [name, setName] = useState('');
@@ -54,15 +60,20 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   // Granular Permissions State
   const [permissions, setPermissions] = useState<AdminPermission>({
     canViewOverview: true,
-    canManageLeads: false,
+    canManageLeads: true,
     canManageBlogs: true,
-    canManageServices: true,
+    canManageServices: false,
     canManageSettings: false,
     canManageSocials: false,
     canManageStaff: false,
     canManageSpecialOffers: false,
     canManageAstrologyConsultations: true,
   });
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(''), 4000);
+  };
 
   const refreshList = () => {
     const updated = StoreService.getStaffUsers();
@@ -78,11 +89,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     setRole('Manager');
     setPasscode(`pass${Math.floor(1000 + Math.random() * 9000)}`);
     setStatus('Active');
+    setValidationError('');
     setPermissions({
       canViewOverview: true,
-      canManageLeads: false,
+      canManageLeads: true,
       canManageBlogs: true,
-      canManageServices: true,
+      canManageServices: false,
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
@@ -100,6 +112,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     setRole(staff.role);
     setPasscode(staff.passcode);
     setStatus(staff.status);
+    setValidationError('');
     setPermissions(staff.permissions);
     setIsModalOpen(true);
   };
@@ -128,49 +141,90 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canManageSettings: false,
         canManageSocials: false,
         canManageStaff: false,
-        canManageSpecialOffers: true,
+        canManageSpecialOffers: false,
         canManageAstrologyConsultations: true,
       });
     }
   };
 
-  const handleSaveStaff = (e: React.FormEvent) => {
+  const handleSaveStaff = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !passcode.trim()) {
-      alert('Please fill in all required fields (Name, Email, Passcode).');
+    setValidationError('');
+
+    const cleanName = name.trim();
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPasscode = passcode.trim();
+
+    if (cleanName.length < 2) {
+      setValidationError('Please enter a valid staff full name (minimum 2 characters).');
       return;
     }
 
-    StoreService.saveStaffUser({
-      id: editingStaff?.id,
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      role,
-      passcode: passcode.trim(),
-      status,
-      permissions,
-    });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      setValidationError('Please enter a valid email address format (e.g., staff@aasthaseyraasta.com).');
+      return;
+    }
 
-    setIsModalOpen(false);
-    refreshList();
+    if (cleanPasscode.length < 4) {
+      setValidationError('Staff passcode must be at least 4 characters long.');
+      return;
+    }
+
+    // Check duplicate email
+    const duplicate = staffList.find(
+      (s) => s.email.toLowerCase() === cleanEmail && s.id !== editingStaff?.id
+    );
+    if (duplicate) {
+      setValidationError(`Email "${cleanEmail}" is already assigned to staff member "${duplicate.name}". Please use a distinct email address.`);
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      StoreService.saveStaffUser({
+        id: editingStaff?.id,
+        name: cleanName,
+        email: cleanEmail,
+        phone: phone.trim(),
+        role,
+        passcode: cleanPasscode,
+        status,
+        permissions,
+      });
+
+      setIsModalOpen(false);
+      refreshList();
+      showToast(editingStaff ? `Staff permissions for "${cleanName}" updated and synced to database!` : `New staff member "${cleanName}" added and synced to database!`);
+    } catch (err: any) {
+      setValidationError(err.message || 'Failed to save staff user. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleDeleteStaff = (id: string, staffName: string) => {
+  const handleDeleteStaff = (staff: StaffUser) => {
     if (staffList.length <= 1) {
       alert('Cannot delete the last remaining staff member.');
       return;
     }
-    if (window.confirm(`Are you sure you want to revoke access and delete "${staffName}"?`)) {
-      StoreService.deleteStaffUser(id);
-      refreshList();
-    }
+    setStaffToDelete(staff);
+  };
+
+  const confirmDeleteStaff = () => {
+    if (!staffToDelete) return;
+    const nameDeleted = staffToDelete.name;
+    StoreService.deleteStaffUser(staffToDelete.id);
+    setStaffToDelete(null);
+    refreshList();
+    showToast(`Staff member "${nameDeleted}" revoked and deleted from database.`);
   };
 
   const toggleStatus = (staff: StaffUser) => {
     const newStatus = staff.status === 'Active' ? 'Inactive' : 'Active';
     StoreService.saveStaffUser({ id: staff.id, status: newStatus });
     refreshList();
+    showToast(`Staff member "${staff.name}" status changed to ${newStatus}.`);
   };
 
   const togglePasscodeVisibility = (id: string) => {
@@ -212,24 +266,32 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         </button>
       </div>
 
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-emerald-600 text-white font-bold text-xs shadow-2xl flex items-center gap-2 border border-emerald-400/40 animate-bounce">
+          <CheckCircle2 className="w-5 h-5 text-white" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Role Preset Cards Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Role 1: Admin */}
         <div className="p-5 rounded-2xl bg-white dark:bg-stone-900 border border-amber-200 dark:border-amber-900/40 shadow-sm space-y-3 relative overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-red-600" />
-              <span className="font-serif font-bold text-stone-900 dark:text-stone-100">Admin (Super User)</span>
+              <span className="font-serif font-bold text-stone-900 dark:text-stone-100">Admin (Full Access Super User)</span>
             </div>
             <span className="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 text-[10px] font-mono font-bold">
               Full Access
             </span>
           </div>
           <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-            Has unrestricted access to all tabs including CRM, Blog publishing, Service prices, Site banners, and Staff permissions.
+            Full administrative control over all modules: Devotee CRM, Astrology, Blogs, Pooja & Yatra Services, Gallery, Testimonials, Staff & RBAC Management, Brand Colors, and System Settings.
           </p>
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
-            Demo Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">admin123</span> or <span className="font-bold text-amber-600">mahakal</span>
+            Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">admin123</span> or <span className="font-bold text-amber-600">mahakal</span>
           </div>
         </div>
 
@@ -238,20 +300,19 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-amber-500" />
-              <span className="font-serif font-bold text-stone-900 dark:text-stone-100">Manager (Operations)</span>
+              <span className="font-serif font-bold text-stone-900 dark:text-stone-100">Manager (Operations & Content)</span>
             </div>
             <span className="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[10px] font-mono font-bold">
               CRM & Content
             </span>
           </div>
           <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-            Can view devotee inquiries, update lead status, post blog articles, and edit pooja offering details. No access to staff settings.
+            Focused operational role. Permitted access strictly to Overview & KPIs, Devotee CRM leads, Astrology consultations, Data Export, WordPress Blog CMS, Gallery, and Testimonials.
           </p>
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
-            Demo Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">manager123</span>
+            Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">manager123</span>
           </div>
         </div>
-
       </div>
 
       {/* Search & Role Filters Bar */}
@@ -302,7 +363,6 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                 <th className="p-3">Staff Name</th>
                 <th className="p-3">Role</th>
                 <th className="p-3">Passcode</th>
-                <th className="p-3">Permissions Breakdown</th>
                 <th className="p-3">Status</th>
                 <th className="p-3">Last Active</th>
                 <th className="p-3 text-right">Actions</th>
@@ -356,12 +416,10 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       </span>
                     </td>
 
-                    {/* Passcode Toggle */}
+                    {/* Passcode with toggle */}
                     <td className="p-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-stone-800 dark:text-stone-200">
-                          {isPassVisible ? staff.passcode : '••••••••'}
-                        </span>
+                      <div className="inline-flex items-center gap-1.5 bg-stone-100 dark:bg-stone-800 px-2.5 py-1 rounded-lg font-mono text-[11px]">
+                        <span>{isPassVisible ? staff.passcode : '••••••••'}</span>
                         <button
                           type="button"
                           onClick={() => togglePasscodeVisibility(staff.id)}
@@ -372,48 +430,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       </div>
                     </td>
 
-                    {/* Permissions Badges */}
-                    <td className="p-3">
-                      <div className="flex flex-wrap gap-1 max-w-xs">
-                        {staff.permissions.canManageLeads && (
-                          <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-medium">
-                            CRM Leads
-                          </span>
-                        )}
-                        {staff.permissions.canManageBlogs && (
-                          <span className="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[9px] font-medium">
-                            Blog CMS
-                          </span>
-                        )}
-                        {staff.permissions.canManageServices && (
-                          <span className="px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[9px] font-medium">
-                            Services
-                          </span>
-                        )}
-                        {staff.permissions.canManageSettings && (
-                          <span className="px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 text-[9px] font-medium">
-                            Settings
-                          </span>
-                        )}
-                        {staff.permissions.canManageSpecialOffers && (
-                          <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-medium">
-                            Offers Marquee
-                          </span>
-                        )}
-                        {staff.permissions.canManageAstrologyConsultations && (
-                          <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-medium">
-                            Astrology CRM
-                          </span>
-                        )}
-                        {staff.permissions.canManageStaff && (
-                          <span className="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 text-[9px] font-medium">
-                            Staff RBAC
-                          </span>
-                        )}
-                      </div>
-                    </td>
-
-                    {/* Status Toggle */}
+                    {/* Status */}
                     <td className="p-3">
                       <button
                         onClick={() => toggleStatus(staff)}
@@ -444,7 +461,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                         <button
-                          onClick={() => handleDeleteStaff(staff.id, staff.name)}
+                          onClick={() => handleDeleteStaff(staff)}
                           className="p-1.5 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-red-100 dark:hover:bg-red-950 text-stone-700 dark:text-stone-300 hover:text-red-600 transition-colors"
                           title="Revoke Access"
                         >
@@ -459,6 +476,42 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
           </table>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {staffToDelete && (
+        <div className="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-stone-900 border border-red-200 dark:border-red-900/50 rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div className="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-950 text-red-600 flex items-center justify-center mx-auto">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-stone-100">
+                Revoke Staff Access?
+              </h3>
+              <p className="text-xs text-stone-600 dark:text-stone-400">
+                Are you sure you want to permanently delete <strong className="text-stone-900 dark:text-stone-100">{staffToDelete.name}</strong> ({staffToDelete.email})? This action will remove their access to the admin portal and cannot be undone.
+              </p>
+            </div>
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setStaffToDelete(null)}
+                className="px-4 py-2 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-bold hover:bg-stone-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteStaff}
+                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-colors shadow-md flex items-center gap-1.5"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Delete Staff Account</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal: Add or Edit Staff Member */}
       {isModalOpen && (
@@ -480,6 +533,13 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                 <XCircle className="w-5 h-5" />
               </button>
             </div>
+
+            {validationError && (
+              <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/70 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs font-medium flex items-start gap-2">
+                <ShieldAlert className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
+                <span>{validationError}</span>
+              </div>
+            )}
 
             <form onSubmit={handleSaveStaff} className="space-y-4 text-xs">
               {/* Full Name */}
@@ -504,7 +564,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="sharma@aasthaseva.com"
+                    placeholder="sharma@aasthaseyraasta.com"
                     className="w-full p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 focus:ring-2 focus:ring-amber-500 outline-none text-stone-900 dark:text-stone-100"
                   />
                 </div>
@@ -522,20 +582,20 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
 
               {/* Role Preset Selector */}
               <div className="space-y-1">
-                <label className="font-bold text-stone-700 dark:text-stone-300">Assigned Role Preset</label>
-                <div className="grid grid-cols-3 gap-2">
+                <label className="font-bold text-stone-700 dark:text-stone-300">Assigned Role</label>
+                <div className="grid grid-cols-2 gap-2">
                   {(['Admin', 'Manager'] as const).map((r) => (
                     <button
                       type="button"
                       key={r}
                       onClick={() => handleRoleChange(r)}
-                      className={`p-2.5 rounded-xl border text-center transition-all ${
+                      className={`p-2.5 rounded-xl border text-center font-bold transition-all ${
                         role === r
-                          ? 'border-amber-600 bg-amber-50 dark:bg-amber-950/60 font-bold text-amber-900 dark:text-amber-200 shadow-sm'
+                          ? 'border-amber-600 bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 shadow-sm'
                           : 'border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300'
                       }`}
                     >
-                      {r}
+                      {r === 'Admin' ? '👑 Admin (Full Access)' : '🛡️ Manager (CRM & Content)'}
                     </button>
                   ))}
                 </div>
@@ -550,7 +610,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                     required
                     value={passcode}
                     onChange={(e) => setPasscode(e.target.value)}
-                    placeholder="e.g. sharma99"
+                    placeholder="e.g. pass123"
                     className="w-full p-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 focus:ring-2 focus:ring-amber-500 outline-none font-mono text-stone-900 dark:text-stone-100 font-bold"
                   />
                 </div>
@@ -571,8 +631,8 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
               {/* Granular Checkboxes Permission Matrix */}
               <div className="space-y-2 pt-2 border-t border-stone-100 dark:border-stone-800">
                 <div className="font-bold text-stone-900 dark:text-stone-100 flex items-center justify-between">
-                  <span>Granular Admin Module Permissions</span>
-                  <span className="text-[10px] text-amber-600 font-mono">Custom overrides enabled</span>
+                  <span>Module Access Permissions</span>
+                  <span className="text-[10px] text-amber-600 font-mono">Custom overrides</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-stone-50 dark:bg-stone-800/60 p-3 rounded-2xl border border-stone-200/80 dark:border-stone-700/80">
@@ -643,7 +703,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       onChange={(e) => setPermissions({ ...permissions, canManageSpecialOffers: e.target.checked })}
                       className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
                     />
-                    <span className="font-medium">Top Offer Marquee (Special Offers)</span>
+                    <span className="font-medium">Top Offer Marquee</span>
                   </label>
 
                   <label className="flex items-center gap-2 cursor-pointer select-none">
@@ -653,7 +713,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       onChange={(e) => setPermissions({ ...permissions, canManageAstrologyConsultations: e.target.checked })}
                       className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
                     />
-                    <span className="font-medium">Astrology Consultations (Devotee CRM)</span>
+                    <span className="font-medium">Astrology Consultations</span>
                   </label>
 
                   <label className="flex items-center gap-2 cursor-pointer select-none sm:col-span-2 text-red-700 dark:text-red-400 font-bold">
@@ -679,9 +739,11 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-md transition-all"
+                  disabled={isSaving}
+                  className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white font-bold shadow-md transition-all flex items-center gap-2"
                 >
-                  {editingStaff ? 'Update Permissions' : 'Save Staff Account'}
+                  {isSaving && <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />}
+                  <span>{editingStaff ? 'Update Staff Permissions' : 'Save Staff Account'}</span>
                 </button>
               </div>
             </form>
