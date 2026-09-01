@@ -13,6 +13,7 @@ import { Lead, StaffUser, AdminRole } from '../types';
 import { AdminGalleryManager } from '../components/admin/AdminGalleryManager';
 import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsManager';
 import { AdminSpecialOffersManager } from '../components/admin/AdminSpecialOffersManager';
+import { AdminAstrologyConsultations } from '../components/admin/AdminAstrologyConsultations';
 import {
   Lock,
   Users,
@@ -102,7 +103,7 @@ const initialSampleLeads: Lead[] = [
   },
 ];
 
-type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials' | 'SpecialOffers';
+type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials' | 'SpecialOffers' | 'AstrologyConsultations';
 
 interface AdminPageProps {
   defaultPath?: string;
@@ -128,6 +129,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     if (p.endsWith('/gallery')) return 'Gallery';
     if (p.endsWith('/testimonials')) return 'Testimonials';
     if (p.endsWith('/specialoffers') || p.endsWith('/offers') || p.endsWith('/marquee')) return 'SpecialOffers';
+    if (p.endsWith('/astrology') || p.endsWith('/astrology-consultations') || p.endsWith('/astrologyconsultations')) return 'AstrologyConsultations';
     return 'Overview';
   };
 
@@ -451,6 +453,26 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
                   <button
                     onClick={() => {
+                      changeTab('AstrologyConsultations');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'AstrologyConsultations'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                      <span>Astrology Consultations</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
+                      {StoreService.getAstrologyConsultations().length}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => {
                       changeTab('DataExport');
                       setSidebarOpen(false);
                     }}
@@ -590,6 +612,26 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       </div>
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
                         {leads.length}
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        changeTab('AstrologyConsultations');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'AstrologyConsultations'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="w-4 h-4 text-amber-400" />
+                        <span>Astrology Consultations</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
+                        {StoreService.getAstrologyConsultations().length}
                       </span>
                     </button>
 
@@ -869,6 +911,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                 {activeTab === 'Gallery' && 'Homepage Gallery Manager'}
                 {activeTab === 'Testimonials' && 'Customer Testimonials Manager'}
                 {activeTab === 'SpecialOffers' && 'Top Navigation Offer Marquee (Special Offers)'}
+                {activeTab === 'AstrologyConsultations' && 'Free Astrology Consultations (Devotee CRM)'}
               </h1>
             </div>
           </div>
@@ -1187,6 +1230,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             <AdminSpecialOffersManager />
           )}
 
+          {/* TAB 11: ASTROLOGY CONSULTATIONS (DEVOTEE CRM) */}
+          {activeTab === 'AstrologyConsultations' && (userPerms?.canManageAstrologyConsultations || userPerms?.canManageLeads || currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
+            <AdminAstrologyConsultations currentStaffUser={currentStaffUser} />
+          )}
+
           {/* PERMISSION DENIED FALLBACK */}
           {((activeTab === 'Leads' && !userPerms?.canManageLeads) ||
             (activeTab === 'Blog' && !userPerms?.canManageBlogs) ||
@@ -1197,7 +1245,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             (activeTab === 'Staff' && !userPerms?.canManageStaff) ||
             (activeTab === 'Gallery' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
             (activeTab === 'Testimonials' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
-            (activeTab === 'SpecialOffers' && !userPerms?.canManageSpecialOffers && !userPerms?.canManageSettings && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (
+            (activeTab === 'SpecialOffers' && !userPerms?.canManageSpecialOffers && !userPerms?.canManageSettings && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
+            (activeTab === 'AstrologyConsultations' && !userPerms?.canManageAstrologyConsultations && !userPerms?.canManageLeads && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (
             <div className="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-center space-y-4 max-w-lg mx-auto my-12">
               <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300 flex items-center justify-center mx-auto">
                 <ShieldAlert className="w-8 h-8" />

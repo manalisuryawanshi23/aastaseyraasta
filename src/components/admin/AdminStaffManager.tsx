@@ -61,6 +61,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     canManageSocials: false,
     canManageStaff: false,
     canManageSpecialOffers: false,
+    canManageAstrologyConsultations: true,
   });
 
   const refreshList = () => {
@@ -86,6 +87,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
       canManageSocials: false,
       canManageStaff: false,
       canManageSpecialOffers: false,
+      canManageAstrologyConsultations: true,
     });
     setIsModalOpen(true);
   };
@@ -115,6 +117,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canManageSocials: true,
         canManageStaff: true,
         canManageSpecialOffers: true,
+        canManageAstrologyConsultations: true,
       });
     } else if (newRole === 'Manager') {
       setPermissions({
@@ -126,6 +129,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canManageSocials: false,
         canManageStaff: false,
         canManageSpecialOffers: true,
+        canManageAstrologyConsultations: true,
       });
     }
   };
@@ -396,6 +400,11 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                             Offers Marquee
                           </span>
                         )}
+                        {staff.permissions.canManageAstrologyConsultations && (
+                          <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-medium">
+                            Astrology CRM
+                          </span>
+                        )}
                         {staff.permissions.canManageStaff && (
                           <span className="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 text-[9px] font-medium">
                             Staff RBAC
@@ -635,6 +644,16 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
                     />
                     <span className="font-medium">Top Offer Marquee (Special Offers)</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={permissions.canManageAstrologyConsultations ?? true}
+                      onChange={(e) => setPermissions({ ...permissions, canManageAstrologyConsultations: e.target.checked })}
+                      className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                    />
+                    <span className="font-medium">Astrology Consultations (Devotee CRM)</span>
                   </label>
 
                   <label className="flex items-center gap-2 cursor-pointer select-none sm:col-span-2 text-red-700 dark:text-red-400 font-bold">

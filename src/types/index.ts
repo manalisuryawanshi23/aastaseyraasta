@@ -426,6 +426,7 @@ export interface AdminPermission {
   canManageSocials: boolean;
   canManageStaff: boolean;
   canManageSpecialOffers?: boolean;
+  canManageAstrologyConsultations?: boolean;
   canManageDevotionalSound?: boolean;
 }
 
@@ -440,4 +441,38 @@ export interface StaffUser {
   status: 'Active' | 'Inactive';
   lastLogin?: string;
   permissions: AdminPermission;
+}
+
+export type AstrologyConsultationStatus =
+  | 'New'
+  | 'Contacted'
+  | 'Consultation Scheduled'
+  | 'Completed'
+  | 'Closed';
+
+export type PreferredCallbackTime =
+  | 'Morning'
+  | 'Afternoon'
+  | 'Evening'
+  | 'Anytime';
+
+export interface AstrologyConsultation {
+  id: string;
+  fullName: string;
+  age: number | string;
+  mobile: string;
+  dob: string;
+  birthTime: string;
+  birthPlace: string;
+  concern: string;
+  preferredCallbackTime: PreferredCallbackTime;
+  status: AstrologyConsultationStatus;
+  notes?: string;
+  followUpHistory?: Array<{
+    date: string;
+    note: string;
+    updatedBy?: string;
+  }>;
+  createdAt: string;
+  updatedAt?: string;
 }

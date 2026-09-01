@@ -17,6 +17,7 @@ const KEYS = {
   SETTINGS: 'aastha_settings',
   GALLERY: 'aastha_gallery',
   TESTIMONIALS: 'aastha_testimonials',
+  ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
 };
 
 const API_BASE = ''; // same origin — Vite proxies to Express on :3001
@@ -81,6 +82,10 @@ export function useApiSync() {
       // Sync testimonials
       const testimonialsOk = await fetchAndCache('/api/testimonials', KEYS.TESTIMONIALS);
       if (testimonialsOk) anyUpdated = true;
+
+      // Sync astrology consultations
+      const astroOk = await fetchAndCache('/api/astrology-consultations', KEYS.ASTROLOGY_CONSULTATIONS);
+      if (astroOk) anyUpdated = true;
 
       if (!cancelled && anyUpdated) {
         dispatchSyncEvent();

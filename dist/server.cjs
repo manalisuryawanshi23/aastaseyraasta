@@ -6229,6 +6229,22 @@ var TABLE_SCHEMAS = [
     is_published TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS astrology_consultations (
+    id VARCHAR(100) PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    age VARCHAR(50) NOT NULL,
+    mobile VARCHAR(50) NOT NULL,
+    dob VARCHAR(100) NOT NULL,
+    birth_time VARCHAR(100) NOT NULL,
+    birth_place VARCHAR(255) NOT NULL,
+    concern TEXT NOT NULL,
+    preferred_callback_time VARCHAR(100) DEFAULT 'Anytime',
+    status VARCHAR(50) DEFAULT 'New',
+    notes TEXT,
+    follow_up_json LONGTEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
 ];
 async function autoInitializeDatabase() {
@@ -8165,6 +8181,151 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `Testimonial ${id} deleted (in-memory)` });
+  });
+  const serverAstrologyConsultations = [];
+  app.get("/api/astrology-consultations", async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query("SELECT * FROM astrology_consultations ORDER BY created_at DESC");
+        const formatted = rows.map((r) => {
+          let followUpHistory = [];
+          if (r.follow_up_json) {
+            try {
+              followUpHistory = typeof r.follow_up_json === "string" ? JSON.parse(r.follow_up_json) : r.follow_up_json;
+            } catch (e) {
+            }
+          }
+          return {
+            id: r.id,
+            fullName: r.full_name,
+            age: r.age,
+            mobile: r.mobile,
+            dob: r.dob,
+            birthTime: r.birth_time,
+            birthPlace: r.birth_place,
+            concern: r.concern,
+            preferredCallbackTime: r.preferred_callback_time || "Anytime",
+            status: r.status || "New",
+            notes: r.notes || "",
+            followUpHistory,
+            createdAt: r.created_at ? new Date(r.created_at).toISOString() : (/* @__PURE__ */ new Date()).toISOString(),
+            updatedAt: r.updated_at ? new Date(r.updated_at).toISOString() : void 0
+          };
+        });
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to fetch astrology consultations:", err);
+      }
+    }
+    res.json({ success: true, data: serverAstrologyConsultations });
+  });
+  app.post("/api/astrology-consultations", async (req, res) => {
+    const item = req.body;
+    if (!item.fullName || !item.mobile || !item.concern) {
+      return res.status(400).json({ success: false, error: "Missing required consultation details (fullName, mobile, concern)" });
+    }
+    const id = item.id || `astro-${Date.now()}-${Math.floor(Math.random() * 1e3)}`;
+    const fullItem = {
+      id,
+      fullName: item.fullName,
+      age: item.age || "",
+      mobile: item.mobile,
+      dob: item.dob || "",
+      birthTime: item.birthTime || "",
+      birthPlace: item.birthPlace || "",
+      concern: item.concern,
+      preferredCallbackTime: item.preferredCallbackTime || "Anytime",
+      status: item.status || "New",
+      notes: item.notes || "",
+      followUpHistory: item.followUpHistory || [],
+      createdAt: item.createdAt || (/* @__PURE__ */ new Date()).toISOString()
+    };
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO astrology_consultations (
+            id, full_name, age, mobile, dob, birth_time, birth_place, concern, preferred_callback_time, status, notes, follow_up_json
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            full_name = VALUES(full_name),
+            age = VALUES(age),
+            mobile = VALUES(mobile),
+            dob = VALUES(dob),
+            birth_time = VALUES(birth_time),
+            birth_place = VALUES(birth_place),
+            concern = VALUES(concern),
+            preferred_callback_time = VALUES(preferred_callback_time),
+            status = VALUES(status),
+            notes = VALUES(notes),
+            follow_up_json = VALUES(follow_up_json)`,
+          [
+            fullItem.id,
+            fullItem.fullName,
+            String(fullItem.age),
+            fullItem.mobile,
+            fullItem.dob,
+            fullItem.birthTime,
+            fullItem.birthPlace,
+            fullItem.concern,
+            fullItem.preferredCallbackTime,
+            fullItem.status,
+            fullItem.notes,
+            JSON.stringify(fullItem.followUpHistory)
+          ]
+        );
+        return res.json({ success: true, message: "Astrology consultation request saved to MySQL", data: fullItem });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save astrology consultation:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    serverAstrologyConsultations.unshift(fullItem);
+    res.json({ success: true, message: "Astrology consultation saved in-memory (DB not connected)", data: fullItem });
+  });
+  app.put("/api/astrology-consultations/:id", async (req, res) => {
+    const { id } = req.params;
+    const { status, notes, followUpHistory } = req.body;
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `UPDATE astrology_consultations 
+           SET status = COALESCE(?, status), 
+               notes = COALESCE(?, notes), 
+               follow_up_json = COALESCE(?, follow_up_json) 
+           WHERE id = ?`,
+          [
+            status || null,
+            notes !== void 0 ? notes : null,
+            followUpHistory ? JSON.stringify(followUpHistory) : null,
+            id
+          ]
+        );
+        return res.json({ success: true, message: `Astrology consultation ${id} updated` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    const match = serverAstrologyConsultations.find((c) => c.id === id);
+    if (match) {
+      if (status) match.status = status;
+      if (notes !== void 0) match.notes = notes;
+      if (followUpHistory) match.followUpHistory = followUpHistory;
+    }
+    res.json({ success: true, message: `Astrology consultation ${id} updated (in-memory)` });
+  });
+  app.delete("/api/astrology-consultations/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM astrology_consultations WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Astrology consultation ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    const idx = serverAstrologyConsultations.findIndex((c) => c.id === id);
+    if (idx !== -1) serverAstrologyConsultations.splice(idx, 1);
+    res.json({ success: true, message: `Astrology consultation ${id} deleted (in-memory)` });
   });
   app.get("/api/leads", async (req, res) => {
     if (isDbConnected()) {

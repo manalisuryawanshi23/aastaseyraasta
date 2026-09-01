@@ -130,6 +130,8 @@ import { SEOHead } from '../components/SEOHead';
 import { FadeIn } from '../components/FadeIn';
 import { buildFAQSchema } from '../utils/seoSchemas';
 import { DarshanCarousel } from '../components/DarshanCarousel';
+import { FreeAstrologyBanner } from '../components/FreeAstrologyBanner';
+import { AstrologyConsultationModal } from '../components/AstrologyConsultationModal';
 
 interface HomePageProps {
   onOpenBooking: (type?: 'Pooja' | 'Tour', name?: string) => void;
@@ -139,6 +141,7 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch }) => {
   const { language, t } = useLanguage();
 
+  const [isAstrologyModalOpen, setIsAstrologyModalOpen] = useState(false);
   const [syncVersion, setSyncVersion] = useState(0);
   useEffect(() => {
     const handleSync = () => setSyncVersion((v) => v + 1);
@@ -421,6 +424,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
         </div>
       </section>
+
+      {/* Free Astrological Services Compact Banner (Directly Below Hero) */}
+      <FreeAstrologyBanner
+        onOpenAstrologyModal={() => setIsAstrologyModalOpen(true)}
+      />
 
       {/* Featured Pooja Services Section */}
       <section className="bg-[#FFFDF8] dark:bg-[#151312] py-16 border-b border-stone-200/80 dark:border-stone-850">
@@ -1104,6 +1112,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           </FadeIn>
         </div>
       </section>
+
+      {/* Free Astrology Consultation Modal */}
+      <AstrologyConsultationModal
+        isOpen={isAstrologyModalOpen}
+        onClose={() => setIsAstrologyModalOpen(false)}
+      />
 
     </div>
   );

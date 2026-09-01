@@ -11,6 +11,8 @@ import {
   Redirect,
   PoojaCategory,
   StaffUser,
+  AdminRole,
+  AstrologyConsultation,
 } from '../types';
 
 import {
@@ -45,6 +47,7 @@ export const initialStaffUsers: StaffUser[] = [
       canManageSocials: true,
       canManageStaff: true,
       canManageSpecialOffers: true,
+      canManageAstrologyConsultations: true,
     },
   },
   {
@@ -65,6 +68,7 @@ export const initialStaffUsers: StaffUser[] = [
       canManageSocials: false,
       canManageStaff: false,
       canManageSpecialOffers: false,
+      canManageAstrologyConsultations: true,
     },
   },
 ];
@@ -80,6 +84,7 @@ const KEYS = {
   TESTIMONIALS: 'aastha_testimonials',
   GALLERY: 'aastha_gallery',
   LEADS: 'aastha_leads',
+  ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
   REDIRECTS: 'aastha_redirects',
   STAFF: 'aastha_staff',
 };
@@ -916,8 +921,8 @@ export class StoreService {
       }
     } else {
       const defaultPermissions = user.role === 'Admin'
-        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true }
-        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false };
+        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true }
+        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false, canManageAstrologyConsultations: true };
 
       resultUser = {
         id: `staff-${Date.now()}`,
@@ -983,6 +988,73 @@ export class StoreService {
     return null;
   }
 
+  // Astrology Consultations Management
+  static getAstrologyConsultations(): AstrologyConsultation[] {
+    return getItem<AstrologyConsultation[]>(KEYS.ASTROLOGY_CONSULTATIONS, []);
+  }
+
+  static saveAstrologyConsultation(c: Partial<AstrologyConsultation>): AstrologyConsultation {
+    const list = this.getAstrologyConsultations();
+    const id = c.id || `astro-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const fullItem: AstrologyConsultation = {
+      id,
+      fullName: c.fullName || '',
+      age: c.age || '',
+      mobile: c.mobile || '',
+      dob: c.dob || '',
+      birthTime: c.birthTime || '',
+      birthPlace: c.birthPlace || '',
+      concern: c.concern || '',
+      preferredCallbackTime: c.preferredCallbackTime || 'Anytime',
+      status: c.status || 'New',
+      notes: c.notes || '',
+      followUpHistory: c.followUpHistory || [],
+      createdAt: c.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const existingIdx = list.findIndex((item) => item.id === id);
+    if (existingIdx !== -1) {
+      list[existingIdx] = fullItem;
+    } else {
+      list.unshift(fullItem);
+    }
+
+    setItem(KEYS.ASTROLOGY_CONSULTATIONS, list);
+    syncApiPost('/api/astrology-consultations', fullItem);
+    window.dispatchEvent(new CustomEvent('aastha:astrology-updated', { detail: fullItem }));
+    return fullItem;
+  }
+
+  static updateAstrologyConsultation(id: string, updates: Partial<AstrologyConsultation>): AstrologyConsultation | null {
+    const list = this.getAstrologyConsultations();
+    const idx = list.findIndex((item) => item.id === id);
+    if (idx === -1) return null;
+
+    const updated = {
+      ...list[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    list[idx] = updated;
+    setItem(KEYS.ASTROLOGY_CONSULTATIONS, list);
+
+    if (typeof window !== 'undefined') {
+      fetch(`/api/astrology-consultations/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      }).catch((err) => console.warn('[StoreService] Failed to update astrology consultation via API:', err));
+    }
+    return updated;
+  }
+
+  static deleteAstrologyConsultation(id: string): void {
+    const list = this.getAstrologyConsultations().filter((item) => item.id !== id);
+    setItem(KEYS.ASTROLOGY_CONSULTATIONS, list);
+    syncApiDelete(`/api/astrology-consultations/${id}`);
+  }
+
   static resetToInitialData(): void {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(KEYS.POOJAS);
@@ -991,6 +1063,7 @@ export class StoreService {
       localStorage.removeItem(KEYS.FAQS);
       localStorage.removeItem(KEYS.SETTINGS);
       localStorage.removeItem(KEYS.BLOGS);
+      localStorage.removeItem(KEYS.ASTROLOGY_CONSULTATIONS);
     }
   }
 }
