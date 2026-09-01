@@ -425,6 +425,7 @@ export interface AdminPermission {
   canManageSettings: boolean;
   canManageSocials: boolean;
   canManageStaff: boolean;
+  canManageSpecialOffers?: boolean;
   canManageDevotionalSound?: boolean;
 }
 

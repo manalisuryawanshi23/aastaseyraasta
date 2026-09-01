@@ -12,6 +12,7 @@ import { AdminDataExportManager } from '../components/admin/AdminDataExportManag
 import { Lead, StaffUser, AdminRole } from '../types';
 import { AdminGalleryManager } from '../components/admin/AdminGalleryManager';
 import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsManager';
+import { AdminSpecialOffersManager } from '../components/admin/AdminSpecialOffersManager';
 import {
   Lock,
   Users,
@@ -21,6 +22,7 @@ import {
   Share2,
   LogOut,
   Sparkles,
+  Megaphone,
   LayoutDashboard,
   Search,
   Download,
@@ -100,7 +102,7 @@ const initialSampleLeads: Lead[] = [
   },
 ];
 
-type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials';
+type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials' | 'SpecialOffers';
 
 interface AdminPageProps {
   defaultPath?: string;
@@ -125,6 +127,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     if (p.endsWith('/staff')) return 'Staff';
     if (p.endsWith('/gallery')) return 'Gallery';
     if (p.endsWith('/testimonials')) return 'Testimonials';
+    if (p.endsWith('/specialoffers') || p.endsWith('/offers') || p.endsWith('/marquee')) return 'SpecialOffers';
     return 'Overview';
   };
 
@@ -518,6 +521,28 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       <span>Testimonials Management</span>
                     </div>
                   </button>
+
+                  {(userPerms?.canManageSpecialOffers || currentStaffUser?.role === 'Manager') && (
+                    <button
+                      onClick={() => {
+                        changeTab('SpecialOffers');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'SpecialOffers'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Megaphone className="w-4 h-4 text-amber-400" />
+                        <span>Top Offer Marquee</span>
+                      </div>
+                      <span className="px-1.5 py-0.2 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono">
+                        Live
+                      </span>
+                    </button>
+                  )}
                 </div>
               </>
             ) : (
@@ -732,6 +757,28 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                           </div>
                         </button>
                       )}
+
+                      {(userPerms?.canManageSpecialOffers || userPerms?.canManageSettings || currentStaffUser?.role === 'Admin') && (
+                        <button
+                          onClick={() => {
+                            changeTab('SpecialOffers');
+                            setSidebarOpen(false);
+                          }}
+                          className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                            activeTab === 'SpecialOffers'
+                              ? 'bg-amber-600 text-white shadow-md'
+                              : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <Megaphone className="w-4 h-4 text-amber-400" />
+                            <span>Top Offer Marquee (Special Offers)</span>
+                          </div>
+                          <span className="px-1.5 py-0.2 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono">
+                            Live
+                          </span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}
@@ -821,6 +868,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                 {activeTab === 'Staff' && 'Staff Access & Roles (RBAC)'}
                 {activeTab === 'Gallery' && 'Homepage Gallery Manager'}
                 {activeTab === 'Testimonials' && 'Customer Testimonials Manager'}
+                {activeTab === 'SpecialOffers' && 'Top Navigation Offer Marquee (Special Offers)'}
               </h1>
             </div>
           </div>
@@ -1134,6 +1182,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             <AdminTestimonialsManager />
           )}
 
+          {/* TAB 10: SPECIAL OFFERS MARQUEE */}
+          {activeTab === 'SpecialOffers' && (userPerms?.canManageSpecialOffers || userPerms?.canManageSettings || currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
+            <AdminSpecialOffersManager />
+          )}
+
           {/* PERMISSION DENIED FALLBACK */}
           {((activeTab === 'Leads' && !userPerms?.canManageLeads) ||
             (activeTab === 'Blog' && !userPerms?.canManageBlogs) ||
@@ -1143,7 +1196,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             (activeTab === 'Socials' && !userPerms?.canManageSocials) ||
             (activeTab === 'Staff' && !userPerms?.canManageStaff) ||
             (activeTab === 'Gallery' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
-            (activeTab === 'Testimonials' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (
+            (activeTab === 'Testimonials' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
+            (activeTab === 'SpecialOffers' && !userPerms?.canManageSpecialOffers && !userPerms?.canManageSettings && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (
             <div className="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-center space-y-4 max-w-lg mx-auto my-12">
               <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300 flex items-center justify-center mx-auto">
                 <ShieldAlert className="w-8 h-8" />

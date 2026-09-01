@@ -154,7 +154,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
   const destinations = StoreService.getDestinations().filter((d) => d.isFeatured);
   const faqs = StoreService.getFAQs();
   const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
-  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished);
+  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished && item.category !== 'Darshan');
   
   const [activeTourTab, setActiveTourTab] = useState<'spiritual-tours' | 'ujjain-yatra' | 'himalayan' | 'trekking'>('spiritual-tours');
 
@@ -186,12 +186,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
     .filter(Boolean) as typeof allTours;
 
   const [selectedCatId, setSelectedCatId] = useState<string>('all');
-  const [galleryFilter, setGalleryFilter] = useState<'All Photos' | 'Pooja' | 'Darshan' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking'>('All Photos');
+  const [galleryFilter, setGalleryFilter] = useState<'All Photos' | 'Pooja' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking'>('All Photos');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Mix images naturally across all categories when 'All Photos' is active
   const mixedAllPhotos = React.useMemo(() => {
-    const categoriesList = ['Pooja', 'Darshan', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const;
+    const categoriesList = ['Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const;
     const groups: Record<string, typeof galleryItems> = {};
     categoriesList.forEach((cat) => {
       groups[cat] = galleryItems.filter((item) => item.category === cat);
@@ -831,8 +831,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
               </h2>
               <p className="text-stone-600 dark:text-stone-350 text-xs sm:text-sm mt-1 max-w-[800px] leading-relaxed">
                 {language === 'hi'
-                  ? 'पूजा, दर्शन, यात्रा, टूर और ट्रेकिंग यात्राओं के क्षणों का अन्वेषण करें।'
-                  : 'Explore moments from Pooja, Darshan, Yatra, Tours and Trekking journeys.'}
+                  ? 'पूजा, यात्रा, टूर और ट्रेकिंग यात्राओं के क्षणों का अन्वेषण करें।'
+                  : 'Explore moments from Pooja, Yatra, Tours and Trekking journeys.'}
               </p>
             </div>
           </FadeIn>
@@ -840,10 +840,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           {/* Category Navigation Tabs */}
           <FadeIn delay={50} direction="up">
             <div className="flex justify-start md:justify-center overflow-x-auto pb-2 -mx-4 px-4 scrollbar-none whitespace-nowrap md:mx-0 md:px-0 gap-8 border-b border-stone-200/60 dark:border-stone-800 max-w-4xl mx-auto">
-              {(['All Photos', 'Pooja', 'Darshan', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
+              {(['All Photos', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
                 const isActive = galleryFilter === cat;
                 const displayLabel = language === 'hi'
-                  ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Pooja' ? 'पूजा' : cat === 'Darshan' ? 'दर्शन' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
+                  ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Pooja' ? 'पूजा' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
                   : cat.toUpperCase();
                 return (
                   <button

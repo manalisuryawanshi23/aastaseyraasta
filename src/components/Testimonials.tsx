@@ -72,7 +72,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
   const [location, setLocation] = useState('');
   const [rating, setRating] = useState(5);
   const [testimonialText, setTestimonialText] = useState('');
-  const [serviceType, setServiceType] = useState<'Pooja' | 'Tour' | 'Bhat Pooja' | 'General'>('Pooja');
+  const [serviceType, setServiceType] = useState<'Pooja' | 'Tour' | 'General'>('Pooja');
   const [serviceName, setServiceName] = useState('');
   const [reviewPhotoUrl, setReviewPhotoUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,14 +113,12 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
     if (activeCategory === 'All') return true;
     if (activeCategory === 'Pooja') return t.category === 'Pooja' || Boolean(t.service);
     if (activeCategory === 'Tour') return t.category === 'Tour' || Boolean(t.tour);
-    if (activeCategory === 'Bhat Pooja') return t.category === 'Bhat Pooja' || (t.service && t.service.toLowerCase().includes('bhat'));
     return true;
   });
 
   const categories = [
     { id: 'All', label: language === 'hi' ? 'सभी समीक्षाएं' : 'All Reviews', icon: Users },
     { id: 'Pooja', label: language === 'hi' ? 'पूजा अनुष्ठान' : 'Pooja Rituals', icon: Flame },
-    { id: 'Bhat Pooja', label: language === 'hi' ? 'भात व मंगल पूजा' : 'Bhat & Mangal Pooja', icon: Sparkles },
     { id: 'Tour', label: language === 'hi' ? 'तीर्थ यात्राएं' : 'Yatra & Tours', icon: Compass },
   ];
 
@@ -152,7 +150,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
       rating,
       testimonial: testimonialText.trim(),
       category: serviceType,
-      service: serviceType === 'Pooja' || serviceType === 'Bhat Pooja' ? serviceName : undefined,
+      service: serviceType === 'Pooja' ? serviceName : undefined,
       tour: serviceType === 'Tour' ? serviceName : undefined,
       date: language === 'hi' ? 'हाल ही का दर्शन' : 'Recent Visit',
       verified: true,
@@ -521,7 +519,6 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs focus:ring-2 focus:ring-amber-500 outline-none"
                     >
                       <option value="Pooja">{language === 'hi' ? 'रुद्राभिषेक / पूजा' : 'Rudrabhishek / Pooja'}</option>
-                      <option value="Bhat Pooja">{language === 'hi' ? 'भात पूजा (अंगारेश्वर/मंगलनाथ)' : 'Bhat Pooja (Angareshwar)'}</option>
                       <option value="Tour">{language === 'hi' ? 'आध्यात्मिक यात्रा / टूर' : 'Spiritual Yatra / Tour'}</option>
                       <option value="General">{language === 'hi' ? 'सामान्य अनुभव' : 'General Experience'}</option>
                     </select>

@@ -60,6 +60,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     canManageSettings: false,
     canManageSocials: false,
     canManageStaff: false,
+    canManageSpecialOffers: false,
   });
 
   const refreshList = () => {
@@ -84,6 +85,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
+      canManageSpecialOffers: false,
     });
     setIsModalOpen(true);
   };
@@ -112,6 +114,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canManageSettings: true,
         canManageSocials: true,
         canManageStaff: true,
+        canManageSpecialOffers: true,
       });
     } else if (newRole === 'Manager') {
       setPermissions({
@@ -122,6 +125,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         canManageSettings: false,
         canManageSocials: false,
         canManageStaff: false,
+        canManageSpecialOffers: true,
       });
     }
   };
@@ -387,6 +391,11 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                             Settings
                           </span>
                         )}
+                        {staff.permissions.canManageSpecialOffers && (
+                          <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-medium">
+                            Offers Marquee
+                          </span>
+                        )}
                         {staff.permissions.canManageStaff && (
                           <span className="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 text-[9px] font-medium">
                             Staff RBAC
@@ -616,6 +625,16 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                       className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
                     />
                     <span className="font-medium">Social Media Handles</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={permissions.canManageSpecialOffers ?? false}
+                      onChange={(e) => setPermissions({ ...permissions, canManageSpecialOffers: e.target.checked })}
+                      className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                    />
+                    <span className="font-medium">Top Offer Marquee (Special Offers)</span>
                   </label>
 
                   <label className="flex items-center gap-2 cursor-pointer select-none sm:col-span-2 text-red-700 dark:text-red-400 font-bold">

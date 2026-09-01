@@ -373,7 +373,6 @@ export const AdminTestimonialsManager: React.FC = () => {
                     className="w-full px-3 py-2 border border-stone-300 dark:border-stone-700 rounded-xl bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs outline-hidden focus:ring-2 focus:ring-amber-600 font-bold"
                   >
                     <option value="Pooja">Pooja Services</option>
-                    <option value="Bhat Pooja">Bhat Pooja Services</option>
                     <option value="Tour">Yatra & Tours</option>
                     <option value="General">General / Other</option>
                   </select>

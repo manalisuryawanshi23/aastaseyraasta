@@ -44,6 +44,7 @@ export const initialStaffUsers: StaffUser[] = [
       canManageSettings: true,
       canManageSocials: true,
       canManageStaff: true,
+      canManageSpecialOffers: true,
     },
   },
   {
@@ -63,6 +64,7 @@ export const initialStaffUsers: StaffUser[] = [
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
+      canManageSpecialOffers: false,
     },
   },
 ];
@@ -914,8 +916,8 @@ export class StoreService {
       }
     } else {
       const defaultPermissions = user.role === 'Admin'
-        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true }
-        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false };
+        ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true }
+        : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false };
 
       resultUser = {
         id: `staff-${Date.now()}`,

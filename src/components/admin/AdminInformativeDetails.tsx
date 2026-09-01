@@ -415,231 +415,28 @@ export const AdminInformativeDetails: React.FC = () => {
         </div>
       </div>
 
-      {/* SECTION 5: Top Scrolling Marquee Offer Manager */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-2">
-          <h3 className="font-serif font-bold text-sm text-stone-900 dark:text-amber-100 flex items-center gap-2">
-            <Megaphone className="w-4 h-4 text-amber-700" />
-            <span>4. Top Navigation Offer Marquee (Special Offers)</span>
-          </h3>
-          <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/60 px-2.5 py-0.5 rounded-full border border-amber-300 dark:border-amber-800">
-            Live Marquee Control
-          </span>
-        </div>
-
-        {/* Live Admin Interactive Marquee Preview */}
-        <div className="rounded-xl border border-amber-300 dark:border-amber-800/60 overflow-hidden bg-stone-900 shadow-sm space-y-1">
-          <div className="bg-stone-950 px-3 py-1.5 flex items-center justify-between text-[11px] text-stone-300 border-b border-stone-800">
-            <span className="flex items-center gap-1.5 font-mono font-bold text-amber-400">
-              <Eye className="w-3.5 h-3.5" />
-              <span>LIVE WEBSITE MARQUEE PREVIEW</span>
-            </span>
-            <span className="text-[10px] text-stone-400">
-              {settings.announcementBanner?.isActive ? (
-                <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
-                  Status: ACTIVE ON WEBSITE
-                </span>
-              ) : (
-                <span className="text-red-400 font-semibold">Status: DISABLED BY ADMIN</span>
-              )}
-            </span>
+      {/* Dedicated Offer Marquee Notice Card */}
+      <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-amber-100/60 dark:from-stone-900 dark:to-amber-950/30 border border-amber-300 dark:border-amber-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-md">
+            <Megaphone className="w-5 h-5" />
           </div>
-          
-          <SpecialOfferMarquee
-            banner={settings.announcementBanner}
-            isAdminPreview={true}
-          />
-        </div>
-
-        <div className="p-5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/50 space-y-5 text-xs">
-          
-          {/* Main Toggle Switch */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-xs">
-            <div>
-              <span className="font-bold text-stone-900 dark:text-stone-100 text-sm flex items-center gap-2">
-                <Power className={`w-4 h-4 ${settings.announcementBanner?.isActive ? 'text-emerald-600' : 'text-stone-400'}`} />
-                <span>Enable Top Scrolling Offer Marquee</span>
-              </span>
-              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
-                Toggle ON to showcase special discount offers across all site pages. Toggle OFF anytime to stop displaying.
-              </p>
-            </div>
-
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={settings.announcementBanner?.isActive ?? true}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      text: settings.announcementBanner?.text || '🚩 SPECIAL OFFER: 15% OFF on Mahakaleshwar Rudrabhishek Pooja & Spiritual Tours!',
-                      secondaryText: settings.announcementBanner?.secondaryText || '🕉️ Free Gotra Sankalp & Prasad Delivery Included',
-                      link: settings.announcementBanner?.link || '/pooja-services',
-                      buttonText: settings.announcementBanner?.buttonText || 'Claim Offer',
-                      badgeText: settings.announcementBanner?.badgeText || 'SPECIAL OFFER',
-                      isActive: e.target.checked,
-                      isMarquee: settings.announcementBanner?.isMarquee ?? true,
-                      speed: settings.announcementBanner?.speed || 'medium',
-                      themeColor: settings.announcementBanner?.themeColor || 'amber',
-                      pauseOnHover: settings.announcementBanner?.pauseOnHover ?? true,
-                    },
-                  })
-                }
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:peer-focus:ring-amber-800 peer-checked:bg-amber-600"></div>
-            </label>
-          </div>
-
-          {/* Marquee Configuration Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="sm:col-span-2">
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Primary Special Offer Text
-              </label>
-              <input
-                type="text"
-                value={settings.announcementBanner?.text || ''}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      text: e.target.value,
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                placeholder="🚩 SPECIAL OFFER: 15% OFF on Mahakaleshwar Rudrabhishek & Char Dham Tours!"
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-medium"
-              />
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Secondary Subtext / Perks
-              </label>
-              <input
-                type="text"
-                value={settings.announcementBanner?.secondaryText || ''}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      secondaryText: e.target.value,
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                placeholder="🕉️ Free Gotra Sankalp & Prasad Delivery Included • 🛺 VIP Transport"
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Badge Label
-              </label>
-              <input
-                type="text"
-                value={settings.announcementBanner?.badgeText || ''}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      badgeText: e.target.value,
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                placeholder="SPECIAL OFFER"
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 uppercase"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Button Text
-              </label>
-              <input
-                type="text"
-                value={settings.announcementBanner?.buttonText || ''}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      buttonText: e.target.value,
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                placeholder="Claim Offer / Book Pooja"
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Target Offer Page Link
-              </label>
-              <select
-                value={settings.announcementBanner?.link || '/pooja-services'}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      link: e.target.value,
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-medium"
-              >
-                <option value="/pooja-services">Pooja Services Page (/pooja-services)</option>
-                <option value="/spiritual-tours">Spiritual Tours Page (/spiritual-tours)</option>
-                <option value="/destinations">Destinations Page (/destinations)</option>
-                <option value="/contact">Contact & Enquiry (/contact)</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block font-semibold text-stone-800 dark:text-stone-200 mb-1">
-                Marquee Scroll Speed
-              </label>
-              <select
-                value={settings.announcementBanner?.speed || 'medium'}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    announcementBanner: {
-                      ...settings.announcementBanner,
-                      speed: e.target.value as 'slow' | 'medium' | 'fast',
-                      isActive: settings.announcementBanner?.isActive ?? true,
-                    },
-                  })
-                }
-                className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-medium"
-              >
-                <option value="slow">Slow (40s loop) - Ideal for detailed text</option>
-                <option value="medium">Medium (25s loop) - Standard smooth scroll</option>
-                <option value="fast">Fast (15s loop) - High energy announcement</option>
-              </select>
-            </div>
+          <div>
+            <h4 className="font-serif font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+              Top Navigation Offer Marquee (Special Offers)
+            </h4>
+            <p className="text-[11px] text-stone-600 dark:text-stone-400">
+              The Top Offer Marquee now has its own dedicated menu tab in the admin sidebar with live preview and staff role access permissions.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* SECTION 6: Trust Statistics & Footer Bio */}
+      {/* SECTION 5: Trust Statistics & Footer Bio */}
       <div className="space-y-4">
         <h3 className="font-serif font-bold text-sm text-stone-900 dark:text-amber-100 flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 pb-2">
           <Award className="w-4 h-4 text-amber-700" />
-          <span>5. Trust Statistics & Footer Bio</span>
+          <span>4. Trust Statistics & Footer Bio</span>
         </h3>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
