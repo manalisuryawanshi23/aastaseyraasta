@@ -29,9 +29,17 @@ const darshanItems = [
 ];
 
 export const DarshanCarousel: React.FC = () => {
-  const [galleryItems] = useState(() =>
+  const [galleryItems, setGalleryItems] = useState(() =>
     StoreService.getGallery().filter((g) => g.category === 'Darshan' && g.isPublished)
   );
+
+  useEffect(() => {
+    const handleSync = () => {
+      setGalleryItems(StoreService.getGallery().filter((g) => g.category === 'Darshan' && g.isPublished));
+    };
+    window.addEventListener('aastha:data-synced', handleSync);
+    return () => window.removeEventListener('aastha:data-synced', handleSync);
+  }, []);
 
   const displayItems = galleryItems.length > 0
     ? galleryItems.map((g) => ({

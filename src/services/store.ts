@@ -700,7 +700,26 @@ export class StoreService {
 
   // Gallery
   static getGallery(): GalleryItem[] {
-    return getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems);
+    const saved = getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems);
+    const savedIds = new Set(saved.map((g) => g.id));
+    const missing = initialGalleryItems.filter((g) => !savedIds.has(g.id));
+
+    let list = saved.map((g) => {
+      const init = initialGalleryItems.find((ig) => ig.id === g.id);
+      if (init) {
+        return {
+          ...init,
+          ...g,
+        };
+      }
+      return g;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.GALLERY, list);
+    }
+    return list;
   }
 
   static saveGalleryItem(g: Partial<GalleryItem> & { id?: string }): GalleryItem {
@@ -713,6 +732,7 @@ export class StoreService {
         const updated = { ...list[idx], ...g } as GalleryItem;
         list[idx] = updated;
         setItem(KEYS.GALLERY, list);
+        syncApiPost('/api/gallery', updated);
         return updated;
       }
     }
@@ -723,6 +743,7 @@ export class StoreService {
       image: g.image || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
       altText: g.altText || 'Spiritual Image',
       category: g.category || 'Pooja',
+      location: g.location || '',
       sortOrder: list.length + 1,
       isPublished: g.isPublished ?? true,
       createdAt: now,
@@ -731,12 +752,14 @@ export class StoreService {
 
     list.unshift(newG);
     setItem(KEYS.GALLERY, list);
+    syncApiPost('/api/gallery', newG);
     return newG;
   }
 
   static deleteGalleryItem(id: string): void {
     const list = this.getGallery().filter((g) => g.id !== id);
     setItem(KEYS.GALLERY, list);
+    syncApiDelete(`/api/gallery/${id}`);
   }
 
   // Leads CRM

@@ -6,6 +6,7 @@ import {
   initialTours,
   initialDestinations,
   initialFAQs,
+  initialGalleryItems,
 } from '../data/initialData';
 
 const TABLE_SCHEMAS = [
@@ -265,6 +266,20 @@ const TABLE_SCHEMAS = [
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  `CREATE TABLE IF NOT EXISTS gallery_items (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image VARCHAR(550) NOT NULL,
+    alt_text VARCHAR(255),
+    category VARCHAR(100) NOT NULL DEFAULT 'Pooja',
+    location VARCHAR(100),
+    sort_order INT DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 ];
 
 export async function autoInitializeDatabase() {
@@ -277,6 +292,7 @@ export async function autoInitializeDatabase() {
       tours: 0,
       destinations: 0,
       faqs: 0,
+      gallery: 0,
       adminUsers: 0,
     },
     error: null as string | null,
@@ -694,6 +710,32 @@ export async function autoInitializeDatabase() {
         ]
       );
       result.seeded.adminUsers++;
+    }
+
+    // 8. Safe Auto-Seeding: Gallery Items
+    const galleryCount = await query('SELECT COUNT(*) as count FROM gallery_items');
+    if (galleryCount[0].count === 0) {
+      console.log('[AUTO-DB] Seeding default gallery items...');
+      for (const item of initialGalleryItems) {
+        const g = item as any;
+        await execute(
+          `INSERT INTO gallery_items (
+            id, title, description, image, alt_text, category, location, sort_order, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            g.id,
+            g.title,
+            g.description || '',
+            g.image,
+            g.altText || g.title || '',
+            g.category || 'Pooja',
+            g.location || '',
+            g.sortOrder || 0,
+            g.isPublished !== false ? 1 : 0,
+          ]
+        );
+        result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
     }
 
     // Sapt Sagar Name Migration Update Statement

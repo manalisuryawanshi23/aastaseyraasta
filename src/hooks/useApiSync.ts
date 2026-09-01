@@ -15,6 +15,7 @@ const KEYS = {
   DESTINATIONS: 'aastha_destinations',
   FAQS: 'aastha_faqs',
   SETTINGS: 'aastha_settings',
+  GALLERY: 'aastha_gallery',
 };
 
 const API_BASE = ''; // same origin — Vite proxies to Express on :3001
@@ -71,6 +72,10 @@ export function useApiSync() {
       // Sync site settings
       const settingsOk = await fetchAndCache('/api/settings', KEYS.SETTINGS);
       if (settingsOk) anyUpdated = true;
+
+      // Sync gallery
+      const galleryOk = await fetchAndCache('/api/gallery', KEYS.GALLERY);
+      if (galleryOk) anyUpdated = true;
 
       if (!cancelled && anyUpdated) {
         dispatchSyncEvent();

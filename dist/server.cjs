@@ -5577,6 +5577,128 @@ var initialFAQs = [
     createdAt: "2026-08-01T10:00:00Z"
   }
 ];
+var initialGalleryItems = [
+  {
+    id: "gal-1",
+    title: "Mahakaleshwar Temple Sunrise Shringar Ujjain",
+    description: "Devotees gathering at Kshipra Ramghat sunrise in Ujjain.",
+    image: "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    altText: "Mahakaleshwar Temple Ujjain Ramghat Sunrise",
+    category: "Ujjain Yatra",
+    location: "Ujjain",
+    sortOrder: 1,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-2",
+    title: "Vedic Rudrabhishek Pooja",
+    description: "Brahmins performing Vedic Rudrabhishek Pooja in Ujjain.",
+    image: "/public/assets/images/rudrabhishek-pooja-ujjain.webp",
+    altText: "Rudrabhishek Pooja in Ujjain",
+    category: "Pooja",
+    location: "Ujjain",
+    sortOrder: 2,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-3",
+    title: "Mangalnath Bhat Pooja",
+    description: "Manglik Dosh Shanti Bhat Pooja ritual at Mangalnath Temple Ujjain.",
+    image: "/public/assets/images/bhat-pooja-mangalnath-ujjain.webp",
+    altText: "Bhat Pooja ritual at Mangalnath Temple Ujjain",
+    category: "Pooja",
+    location: "Ujjain",
+    sortOrder: 3,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-4",
+    title: "Kaal Sarp Dosh Pooja",
+    description: "Kaal Sarp Dosh Nivaran Shanti Pooja being performed at Ramghat.",
+    image: "/public/assets/images/kaal-sarp-dosh-pooja-ujjain.webp",
+    altText: "Kaal Sarp Dosh Pooja on banks of River Shipra",
+    category: "Pooja",
+    location: "Ujjain",
+    sortOrder: 4,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-5",
+    title: "Mahakaleshwar Jyotirlinga Darshan",
+    description: "Mahakaleshwar Jyotirlinga Temple view in Ujjain.",
+    image: "/src/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg",
+    altText: "Mahakaleshwar Jyotirlinga Darshan in Ujjain",
+    category: "Darshan",
+    location: "Ujjain",
+    sortOrder: 5,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-6",
+    title: "Omkareshwar Temple Jyotirlinga Yatra",
+    description: "Holy pilgrimage visits to Omkareshwar Jyotirlinga Temple on Mandhata island.",
+    image: "/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
+    altText: "Omkareshwar Jyotirlinga Yatra",
+    category: "Omkareshwar",
+    location: "Omkareshwar",
+    sortOrder: 6,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-7",
+    title: "Ujjain Omkareshwar Spiritual Tour",
+    description: "Guided spiritual tour arrangements covering Ujjain and Omkareshwar.",
+    image: "/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
+    altText: "Ujjain Omkareshwar Tour",
+    category: "Omkareshwar",
+    location: "Ujjain",
+    sortOrder: 7,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-8",
+    title: "Himalayan Char Dham Tour",
+    description: "Scenic pilgrimage group journey to Yamunotri, Gangotri, Kedarnath, and Badrinath.",
+    image: "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    altText: "Himalayan Char Dham Tour Trail",
+    category: "Himalayan Yatra",
+    location: "Uttarakhand",
+    sortOrder: 8,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-9",
+    title: "Himalayan Trekking Expedition",
+    description: "Trekking trails and scenic snowclad mountains in Uttarakhand Himalayas.",
+    image: "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    altText: "Trekking trail in Himalayas",
+    category: "Trekking",
+    location: "Himalayas",
+    sortOrder: 9,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  },
+  {
+    id: "gal-10",
+    title: "Pitru Shanti Pooja",
+    description: "Shraddh and Pitru Tarpan ritual being performed in Ujjain.",
+    image: "/public/assets/images/pitru-shanti-pooja-ujjain.webp",
+    altText: "Pitru Shanti Pooja being performed in Ujjain",
+    category: "Pooja",
+    location: "Ujjain",
+    sortOrder: 10,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  }
+];
 
 // scripts/generateSitemap.ts
 var import_fs = __toESM(require("fs"), 1);
@@ -6052,6 +6174,19 @@ var TABLE_SCHEMAS = [
     last_login VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS gallery_items (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image VARCHAR(550) NOT NULL,
+    alt_text VARCHAR(255),
+    category VARCHAR(100) NOT NULL DEFAULT 'Pooja',
+    location VARCHAR(100),
+    sort_order INT DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
 ];
 async function autoInitializeDatabase() {
@@ -6064,6 +6199,7 @@ async function autoInitializeDatabase() {
       tours: 0,
       destinations: 0,
       faqs: 0,
+      gallery: 0,
       adminUsers: 0
     },
     error: null
@@ -6451,6 +6587,30 @@ async function autoInitializeDatabase() {
       );
       result.seeded.adminUsers++;
     }
+    const galleryCount = await query("SELECT COUNT(*) as count FROM gallery_items");
+    if (galleryCount[0].count === 0) {
+      console.log("[AUTO-DB] Seeding default gallery items...");
+      for (const item of initialGalleryItems) {
+        const g = item;
+        await execute(
+          `INSERT INTO gallery_items (
+            id, title, description, image, alt_text, category, location, sort_order, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            g.id,
+            g.title,
+            g.description || "",
+            g.image,
+            g.altText || g.title || "",
+            g.category || "Pooja",
+            g.location || "",
+            g.sortOrder || 0,
+            g.isPublished !== false ? 1 : 0
+          ]
+        );
+        result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
+    }
     console.log("[AUTO-DB] Migrating Sapt Sagar water body names in database...");
     await execute(
       `UPDATE tours 
@@ -6678,13 +6838,14 @@ async function autoInitializeDatabase() {
 
 // server.ts
 var import_meta2 = {};
-var __filename = (0, import_url2.fileURLToPath)(import_meta2.url);
-var __dirname2 = import_path2.default.dirname(__filename);
+var metaUrl = typeof import_meta2 !== "undefined" ? import_meta2.url : void 0;
+var resolvedFilename = typeof __filename !== "undefined" ? __filename : metaUrl ? (0, import_url2.fileURLToPath)(metaUrl) : "";
+var resolvedDirname = typeof __dirname !== "undefined" ? __dirname : import_path2.default.dirname(resolvedFilename);
 var envPaths = [
   import_path2.default.resolve(process.cwd(), ".env"),
-  import_path2.default.resolve(__dirname2, ".env"),
-  import_path2.default.resolve(__dirname2, "..", ".env"),
-  import_path2.default.resolve(__dirname2, "../..", ".env")
+  import_path2.default.resolve(resolvedDirname, ".env"),
+  import_path2.default.resolve(resolvedDirname, "..", ".env"),
+  import_path2.default.resolve(resolvedDirname, "../..", ".env")
 ];
 for (const envPath of envPaths) {
   if (import_fs2.default.existsSync(envPath)) {
@@ -7724,6 +7885,80 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `FAQ ${id} deleted (in-memory)` });
+  });
+  app.get("/api/gallery", async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query("SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC");
+        const formatted = rows.map((g) => ({
+          id: g.id,
+          title: g.title,
+          description: g.description || "",
+          image: g.image,
+          altText: g.alt_text || g.title,
+          category: g.category || "Pooja",
+          location: g.location || "",
+          sortOrder: g.sort_order || 0,
+          isPublished: Boolean(g.is_published),
+          createdAt: g.created_at ? new Date(g.created_at).toISOString() : (/* @__PURE__ */ new Date()).toISOString()
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to fetch gallery items:", err);
+      }
+    }
+    res.json({ success: true, data: initialGalleryItems });
+  });
+  app.post("/api/gallery", async (req, res) => {
+    const g = req.body;
+    if (!g.id || !g.title || !g.image) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, title, image)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO gallery_items (id, title, description, image, alt_text, category, location, sort_order, is_published)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           title = VALUES(title),
+           description = VALUES(description),
+           image = VALUES(image),
+           alt_text = VALUES(alt_text),
+           category = VALUES(category),
+           location = VALUES(location),
+           sort_order = VALUES(sort_order),
+           is_published = VALUES(is_published)`,
+          [
+            g.id,
+            g.title,
+            g.description || "",
+            g.image,
+            g.altText || g.title || "",
+            g.category || "Pooja",
+            g.location || "",
+            g.sortOrder || 0,
+            g.isPublished !== false ? 1 : 0
+          ]
+        );
+        return res.json({ success: true, message: "Gallery item saved to MySQL", data: g });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save gallery item:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Gallery item saved in-memory (DB not connected)", data: g });
+  });
+  app.delete("/api/gallery/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM gallery_items WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Gallery item ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
   });
   app.get("/api/leads", async (req, res) => {
     if (isDbConnected()) {

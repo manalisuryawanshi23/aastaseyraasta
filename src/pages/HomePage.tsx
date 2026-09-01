@@ -137,10 +137,24 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch }) => {
+  const { language, t } = useLanguage();
+
+  const [syncVersion, setSyncVersion] = useState(0);
+  useEffect(() => {
+    const handleSync = () => setSyncVersion((v) => v + 1);
+    window.addEventListener('aastha:data-synced', handleSync);
+    return () => window.removeEventListener('aastha:data-synced', handleSync);
+  }, []);
+
   const settings = StoreService.getSettings();
   const categories = StoreService.getCategories();
-  const poojas = StoreService.getPoojas().filter((p) => p.isFeatured);
+  const allPoojas = StoreService.getPoojas();
+  const poojas = allPoojas.filter((p) => p.isFeatured);
   const allTours = StoreService.getTours();
+  const destinations = StoreService.getDestinations().filter((d) => d.isFeatured);
+  const faqs = StoreService.getFAQs();
+  const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
+  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished);
   
   const [activeTourTab, setActiveTourTab] = useState<'spiritual-tours' | 'ujjain-yatra' | 'himalayan' | 'trekking'>('spiritual-tours');
 
@@ -170,12 +184,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
   const filteredTours = featuredYatraKeywords
     .map(kw => allTours.find(t => t.slug.includes(kw) || t.id.includes(kw)))
     .filter(Boolean) as typeof allTours;
-  const destinations = StoreService.getDestinations().filter((d) => d.isFeatured);
-  const faqs = StoreService.getFAQs();
-  const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
-  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished);
-
-  const { language, t } = useLanguage();
 
   const [selectedCatId, setSelectedCatId] = useState<string>('all');
   const [galleryFilter, setGalleryFilter] = useState<'All Photos' | 'Pooja' | 'Darshan' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking'>('All Photos');
@@ -276,10 +284,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [lightboxIndex, filteredGalleryItems]);
-
-  // Fetch all poojas directly to ensure we find the specifically requested ones
-  // even if their isFeatured flag was toggled off in the CMS.
-  const allPoojas = StoreService.getPoojas();
 
   // Use a resilient keyword matcher to prevent localStorage/DB sync ID mismatches
   const featuredKeywords = [

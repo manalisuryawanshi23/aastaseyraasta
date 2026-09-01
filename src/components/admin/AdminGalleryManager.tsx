@@ -21,6 +21,12 @@ export const AdminGalleryManager: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [isUploading, setIsUploading] = useState(false);
 
+  React.useEffect(() => {
+    const handleSync = () => setGallery(StoreService.getGallery());
+    window.addEventListener('aastha:data-synced', handleSync);
+    return () => window.removeEventListener('aastha:data-synced', handleSync);
+  }, []);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3000);

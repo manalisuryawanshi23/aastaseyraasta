@@ -7,15 +7,20 @@ import fs from 'fs';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const metaUrl = typeof import.meta !== 'undefined' ? import.meta.url : undefined;
+const resolvedFilename = typeof __filename !== 'undefined' 
+  ? __filename 
+  : (metaUrl ? fileURLToPath(metaUrl) : '');
+const resolvedDirname = typeof __dirname !== 'undefined' 
+  ? __dirname 
+  : path.dirname(resolvedFilename);
 
 // Comprehensive multi-path .env loader for Hostinger / Passenger / local environments
 const envPaths = [
   path.resolve(process.cwd(), '.env'),
-  path.resolve(__dirname, '.env'),
-  path.resolve(__dirname, '..', '.env'),
-  path.resolve(__dirname, '../..', '.env'),
+  path.resolve(resolvedDirname, '.env'),
+  path.resolve(resolvedDirname, '..', '.env'),
+  path.resolve(resolvedDirname, '../..', '.env'),
 ];
 for (const envPath of envPaths) {
   if (fs.existsSync(envPath)) {
@@ -53,6 +58,7 @@ import {
   initialDestinations,
   initialBlogPosts,
   initialFAQs,
+  initialGalleryItems,
 } from './src/data/initialData';
 import { generateSitemapXml } from './scripts/generateSitemap';
 import { testConnection, query, execute, isDbConnected, getDbConfigDetails, getLastDbError } from './src/db/mysql';
@@ -1117,6 +1123,84 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `FAQ ${id} deleted (in-memory)` });
+  });
+
+  // 7.5. Gallery (GET, POST, DELETE)
+  app.get('/api/gallery', async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query('SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC');
+        const formatted = rows.map((g: any) => ({
+          id: g.id,
+          title: g.title,
+          description: g.description || '',
+          image: g.image,
+          altText: g.alt_text || g.title,
+          category: g.category || 'Pooja',
+          location: g.location || '',
+          sortOrder: g.sort_order || 0,
+          isPublished: Boolean(g.is_published),
+          createdAt: g.created_at ? new Date(g.created_at).toISOString() : new Date().toISOString(),
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to fetch gallery items:', err);
+      }
+    }
+    res.json({ success: true, data: initialGalleryItems });
+  });
+
+  app.post('/api/gallery', async (req, res) => {
+    const g = req.body;
+    if (!g.id || !g.title || !g.image) {
+      return res.status(400).json({ success: false, error: 'Missing required fields (id, title, image)' });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO gallery_items (id, title, description, image, alt_text, category, location, sort_order, is_published)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           title = VALUES(title),
+           description = VALUES(description),
+           image = VALUES(image),
+           alt_text = VALUES(alt_text),
+           category = VALUES(category),
+           location = VALUES(location),
+           sort_order = VALUES(sort_order),
+           is_published = VALUES(is_published)`,
+          [
+            g.id,
+            g.title,
+            g.description || '',
+            g.image,
+            g.altText || g.title || '',
+            g.category || 'Pooja',
+            g.location || '',
+            g.sortOrder || 0,
+            g.isPublished !== false ? 1 : 0,
+          ]
+        );
+        return res.json({ success: true, message: 'Gallery item saved to MySQL', data: g });
+      } catch (err: any) {
+        console.error('[DB ERROR] Failed to save gallery item:', err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: 'Gallery item saved in-memory (DB not connected)', data: g });
+  });
+
+  app.delete('/api/gallery/:id', async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute('DELETE FROM gallery_items WHERE id = ?', [id]);
+        return res.json({ success: true, message: `Gallery item ${id} deleted from MySQL` });
+      } catch (err: any) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
   });
 
   // 8. Leads (GET, POST, PUT, DELETE)
