@@ -72,9 +72,17 @@ async function startServer() {
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
   // Static Asset Serving — supports both /assets/images (uploaded), /assets/audio, and /src/assets/images (bundled source)
-  app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images')));
-  app.use('/assets/audio', express.static(path.join(process.cwd(), 'public/assets/audio')));
-  app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images')));
+  const staticCacheOptions = {
+    maxAge: '30d',
+    etag: true,
+    lastModified: true,
+    setHeaders: (res: any) => {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400');
+    }
+  };
+  app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images'), staticCacheOptions));
+  app.use('/assets/audio', express.static(path.join(process.cwd(), 'public/assets/audio'), staticCacheOptions));
+  app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images'), staticCacheOptions));
 
   // Store in-memory leads array for non-DB fallback
   const serverLeads: any[] = [];
@@ -1517,7 +1525,16 @@ Sitemap: ${baseUrl}/sitemap.xml
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, {
+      maxAge: '30d',
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        } else if (filePath.includes('/assets/') || filePath.includes('\\assets\\')) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+      }
+    }));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });

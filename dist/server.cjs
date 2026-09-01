@@ -6877,9 +6877,17 @@ async function startServer() {
   const PORT = process.env.PORT || 3001;
   app.use(import_express.default.json({ limit: "10mb" }));
   app.use(import_express.default.urlencoded({ extended: true, limit: "10mb" }));
-  app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images")));
-  app.use("/assets/audio", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/audio")));
-  app.use("/src/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "src/assets/images")));
+  const staticCacheOptions = {
+    maxAge: "30d",
+    etag: true,
+    lastModified: true,
+    setHeaders: (res) => {
+      res.setHeader("Cache-Control", "public, max-age=2592000, stale-while-revalidate=86400");
+    }
+  };
+  app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images"), staticCacheOptions));
+  app.use("/assets/audio", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/audio"), staticCacheOptions));
+  app.use("/src/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "src/assets/images"), staticCacheOptions));
   const serverLeads = [];
   app.get("/api/health", async (req, res) => {
     const dbStatus = isDbConnected();
@@ -8243,7 +8251,16 @@ Sitemap: ${baseUrl}/sitemap.xml
     app.use(vite.middlewares);
   } else {
     const distPath = import_path2.default.join(process.cwd(), "dist");
-    app.use(import_express.default.static(distPath));
+    app.use(import_express.default.static(distPath, {
+      maxAge: "30d",
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith(".html")) {
+          res.setHeader("Cache-Control", "no-cache");
+        } else if (filePath.includes("/assets/") || filePath.includes("\\assets\\")) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        }
+      }
+    }));
     app.get("*", (req, res) => {
       res.sendFile(import_path2.default.join(distPath, "index.html"));
     });
