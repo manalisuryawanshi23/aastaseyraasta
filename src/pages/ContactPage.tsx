@@ -40,7 +40,7 @@ export const ContactPage: React.FC = () => {
         description={`Reach out to ${settings.businessName} at Mahakal Marg Ujjain for pooja reservations, gotra sankalp, and yatra guidance.`}
         keywords="Contact Ujjain Pandits, Mahakaleshwar Pooja Enquiry, Seva Kendra Ujjain Phone Number"
         canonicalUrl="https://aasthaserasta.com/contact"
-        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt={`Contact ${settings.businessName} Seva Kendra Ujjain`}
       />
 

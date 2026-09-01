@@ -20,7 +20,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenBooking }) => {
         description="Learn about our lineage of Vedic Brahmins in Ujjain, authentic gotra sankalp pooja management, and dedicated pilgrimage arrangements."
         keywords="Vedic Pandits Ujjain, Gurukul Acharyas Mahakaleshwar, Aastha Sey Raasta Seva Foundation, Sanatan Dharma Seva"
         canonicalUrl="https://aasthaserasta.com/about-us"
-        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt={`About ${settings.businessName} - Vedic Acharyas in Ujjain`}
       />
 

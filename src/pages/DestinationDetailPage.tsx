@@ -254,7 +254,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
   };
 
   const heroStyle = {
-    backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.91), rgba(58, 21, 24, 0.93)), url("${dest.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}")`,
+    backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.91), rgba(58, 21, 24, 0.93)), url("${(dest.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")`,
   };
   const whatsappMsg = encodeURIComponent(
     language === 'hi'
@@ -348,9 +348,15 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
           <div className="lg:col-span-5">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-500/20 aspect-[4/3] bg-stone-950">
               <img
-                src={dest.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}
+                src={(dest.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
                 alt={destName}
                 loading="eager"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('header_bg_spiritual')) {
+                    target.src = '/assets/images/header_bg_spiritual_1786196057015.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 to-transparent pointer-events-none" />
@@ -414,7 +420,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
       {destDesc && (
         <section
           className="relative text-[#F5EBE6] py-20 border-b border-white/10 bg-cover bg-center"
-          style={{ backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.96), rgba(58, 21, 24, 0.97)), url("${dest.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}")` }}
+          style={{ backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.96), rgba(58, 21, 24, 0.97)), url("${(dest.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")` }}
         >
           <div className="max-w-4xl mx-auto px-4 relative z-10">
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-100 border-b border-white/10 pb-2 mb-6">
@@ -606,7 +612,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
       {/* ── 13. SOCIAL SHARE + FINAL DARK CTA FOOTER ── */}
       <footer
         className="relative text-white py-20 text-center space-y-6 overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.92), rgba(58, 21, 24, 0.95)), url("${dest.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}")` }}
+        style={{ backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.92), rgba(58, 21, 24, 0.95)), url("${(dest.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")` }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(217,119,6,0.1),transparent)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 space-y-4 relative z-10">

@@ -824,6 +824,7 @@ export class StoreService {
 
   // Gallery
   static getGallery(): GalleryItem[] {
+    const normalizeImg = (img?: string) => (img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg');
     const saved = getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems);
     const savedIds = new Set(saved.map((g) => g.id));
     const missing = initialGalleryItems.filter((g) => !savedIds.has(g.id));
@@ -834,13 +835,17 @@ export class StoreService {
         return {
           ...init,
           ...g,
+          image: normalizeImg(g.image || init.image),
         };
       }
-      return g;
+      return {
+        ...g,
+        image: normalizeImg(g.image),
+      };
     });
 
     if (missing.length > 0) {
-      list = [...list, ...missing];
+      list = [...list, ...missing.map((m) => ({ ...m, image: normalizeImg(m.image) }))];
       setItem(KEYS.GALLERY, list);
     }
     return list;
@@ -851,6 +856,7 @@ export class StoreService {
     const now = new Date().toISOString();
     const cleanId = g.id && g.id.trim() ? g.id.trim() : `gal-${Date.now()}`;
     const cleanTitle = (g.title || '').trim() || 'Spiritual Photo';
+    const cleanImage = (g.image || '').replace(/^\/(?:src|public)\/assets\//, '/assets/') || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
 
     if (g.id) {
       const idx = list.findIndex((x) => x.id === g.id);
@@ -860,6 +866,7 @@ export class StoreService {
           ...g,
           id: cleanId,
           title: cleanTitle,
+          image: cleanImage,
         } as GalleryItem;
         list[idx] = updated;
         setItem(KEYS.GALLERY, list);
@@ -869,7 +876,7 @@ export class StoreService {
     }
 
     const newG: GalleryItem = {
-      image: g.image || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
+      image: cleanImage,
       altText: g.altText || cleanTitle,
       category: g.category || 'Pooja',
       location: g.location || '',

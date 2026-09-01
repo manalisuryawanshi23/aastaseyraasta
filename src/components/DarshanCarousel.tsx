@@ -14,18 +14,69 @@ import {
 } from 'lucide-react';
 import { StoreService } from '../services/store';
 
-const darshanItems = [
-  { name: 'Mahakaleshwar Darshan', Icon: Flame },
-  { name: 'Harsiddhi Shaktipeeth Darshan', Icon: Sparkles },
-  { name: 'Kalbhairav Darshan', Icon: ShieldCheck },
-  { name: 'Garhkalika Shaktipeeth Darshan', Icon: Sparkles },
-  { name: 'Mangalnath Darshan', Icon: Sun },
-  { name: 'Angareshwar Darshan', Icon: Flame },
-  { name: 'Sthirman Ganesh Darshan', Icon: Bell },
-  { name: 'Vikrant Bhairav Darshan', Icon: Flame },
-  { name: 'Siddhvat Darshan', Icon: Flower2 },
-  { name: 'Sandipani Ashram Darshan', Icon: BookOpen },
-  { name: 'Kshipra Ramghat Visit', Icon: Waves },
+const DEFAULT_DARSHAN_FALLBACK = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+
+const defaultDarshanItems = [
+  { 
+    name: 'Mahakaleshwar Jyotirlinga Darshan', 
+    image: '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
+    Icon: Flame 
+  },
+  { 
+    name: 'Omkareshwar Jyotirlinga Darshan', 
+    image: '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg',
+    Icon: Compass 
+  },
+  { 
+    name: 'Harsiddhi Shaktipeeth Darshan', 
+    image: '/assets/images/navchandi-path-havan-ujjain.webp',
+    Icon: Sparkles 
+  },
+  { 
+    name: 'Kaal Bhairav Mandir Darshan', 
+    image: '/assets/images/mirchi-havan-vikrant-bhairav-ujjain.webp',
+    Icon: ShieldCheck 
+  },
+  { 
+    name: 'Garhkalika Shaktipeeth Darshan', 
+    image: '/assets/images/shatchandi-path-havan-ujjain.webp',
+    Icon: Sparkles 
+  },
+  { 
+    name: 'Mangalnath Mandir Darshan', 
+    image: '/assets/images/bhat-pooja-mangalnath-ujjain.webp',
+    Icon: Sun 
+  },
+  { 
+    name: 'Angareshwar Mahadev Darshan', 
+    image: '/assets/images/bhat-pooja-angareshwar-ujjain.webp',
+    Icon: Flame 
+  },
+  { 
+    name: 'Chintaman Ganesh Mandir Darshan', 
+    image: '/assets/images/108-ganesh-atharvashirsha-path-ujjain.webp',
+    Icon: Bell 
+  },
+  { 
+    name: 'Vikrant Bhairav Darshan', 
+    image: '/assets/images/mirchi-havan-vikrant-bhairav-ujjain.webp',
+    Icon: Flame 
+  },
+  { 
+    name: 'Siddhavat Mandir Darshan', 
+    image: '/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
+    Icon: Flower2 
+  },
+  { 
+    name: 'Sandipani Ashram Darshan', 
+    image: '/assets/images/108-vishnu-sahastranama-path-ujjain.webp',
+    Icon: BookOpen 
+  },
+  { 
+    name: 'Kshipra Ramghat Evening Aarti', 
+    image: '/assets/images/header_bg_spiritual_1786196057015.jpg',
+    Icon: Waves 
+  },
 ];
 
 export const DarshanCarousel: React.FC = () => {
@@ -41,17 +92,20 @@ export const DarshanCarousel: React.FC = () => {
     return () => window.removeEventListener('aastha:data-synced', handleSync);
   }, []);
 
-  const displayItems = galleryItems.length > 0
-    ? galleryItems.map((g) => ({
-        name: g.title,
-        image: g.image,
-        isCustom: true,
-      }))
-    : darshanItems.map((d) => ({
-        name: d.name,
-        Icon: d.Icon,
-        isCustom: false,
-      }));
+  // Merge custom darshan items from gallery with default items
+  const customItems = galleryItems.map((g) => {
+    const cleanImg = g.image.replace(/^\/(?:src|public)\/assets\//, '/assets/');
+    return {
+      name: g.title,
+      image: cleanImg || DEFAULT_DARSHAN_FALLBACK,
+      Icon: Flame,
+    };
+  });
+
+  const displayItems = customItems.length >= 4 
+    ? customItems 
+    : [...customItems, ...defaultDarshanItems.filter(d => !customItems.some(c => c.name.toLowerCase() === d.name.toLowerCase()))];
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -172,36 +226,29 @@ export const DarshanCarousel: React.FC = () => {
               key={index}
               className="shrink-0 w-[220px]"
             >
-              <div className={`h-36 rounded-xl overflow-hidden border border-orange-200/60 dark:border-orange-900/40 shadow-sm hover:shadow-md hover:border-rose-400/50 dark:hover:border-rose-700/50 transition-all cursor-pointer relative group ${!item.isCustom ? 'bg-white dark:bg-[#1C1917]' : ''}`}>
-                {item.isCustom ? (
-                  <a
-                    href="/tour/ujjain-spiritual-tour"
-                    className="w-full h-full block relative"
-                  >
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                    <span className="absolute bottom-3 left-3 right-3 text-xs font-semibold text-white drop-shadow-md text-left line-clamp-2 leading-snug">
-                      {item.name}
-                    </span>
-                  </a>
-                ) : (
-                  <a
-                    href="/tour/ujjain-spiritual-tour"
-                    className="w-full h-full flex flex-col items-center justify-center text-center px-4 py-6"
-                  >
-                    {item.Icon && <item.Icon className="w-6 h-6 text-rose-600 dark:text-rose-500 mb-3" />}
-                    <div className="w-8 h-px bg-rose-200 dark:bg-rose-900/50 mb-3 rounded-full"></div>
-                    <span className="text-sm font-semibold text-stone-800 dark:text-stone-200 leading-snug">
-                      {item.name}
-                    </span>
-                  </a>
-                )}
+              <div className="h-36 rounded-xl overflow-hidden border border-orange-200/60 dark:border-orange-900/40 shadow-sm hover:shadow-md hover:border-rose-400/50 dark:hover:border-rose-700/50 transition-all cursor-pointer relative group bg-stone-900">
+                <a
+                  href="/tour/ujjain-spiritual-tour"
+                  className="w-full h-full block relative"
+                >
+                  <img 
+                    src={item.image || DEFAULT_DARSHAN_FALLBACK} 
+                    alt={item.name} 
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== window.location.origin + DEFAULT_DARSHAN_FALLBACK) {
+                        target.src = DEFAULT_DARSHAN_FALLBACK;
+                      }
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
+                  <span className="absolute bottom-3 left-3 right-3 text-xs font-semibold text-white drop-shadow-md text-left line-clamp-2 leading-snug">
+                    {item.name}
+                  </span>
+                </a>
               </div>
             </div>
           );

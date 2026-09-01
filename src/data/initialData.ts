@@ -39,7 +39,7 @@ export const initialSiteSettings: SiteSettings = {
   ],
   defaultSeoTitle: 'Aastha Sey Raasta Seva | Authentic Pooja Services & Spiritual Tours Ujjain',
   defaultMetaDescription: 'Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja, Jaap & Havan and Spiritual Pilgrimage Tours in Ujjain, Omkareshwar, Nalkheda & Char Dham with experienced Pandits.',
-  defaultOgImage: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+  defaultOgImage: '/assets/images/header_bg_spiritual_1786196057015.jpg',
   googleAnalyticsId: 'G-XXXXXXXXXX',
   businessHours: 'Open 24/7 for Spiritual Enquiries & Pooja Arrangements',
   footerDescription: 'Aastha Sey Raasta Seva provides authentic Vedic rituals, temple poojas, and guided spiritual pilgrimage tours across Ujjain, Omkareshwar, Baglamukhi Nalkheda, and major Dham yatras with complete devotion, transparency, and qualified Vedic Pandits.',
@@ -2832,7 +2832,7 @@ const rawTours: Tour[] = [
       "Darshan Assistance"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Ujjain Spiritual Tour is a comprehensive single-day pilgrimage circuit in Ujjain, Madhya Pradesh. Designed for devotees visiting the ancient holy city, it covers the iconic Mahakaleshwar Jyotirlinga, Harsiddhi Shaktipeeth, Kalbhairav Temple, Mangalnath Temple, and concludes with the evening Shipra River Ramghat Aarti.",
@@ -2866,7 +2866,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-spiritual-tour",
     "ogTitle": "Ujjain Spiritual Tour | Local Sightseeing & Temple Darshan",
     "ogDescription": "Complete Ujjain temple parikrama including Mahakaleshwar, Harsiddhi Shaktipeeth, Kalbhairav, Mangalnath, Angareshwar, and Shipra Ramghat Aarti.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "What is the Ujjain Spiritual Tour?",
@@ -2932,7 +2932,7 @@ const rawTours: Tour[] = [
       "Hotel Stay with Breakfast"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
+    "featuredImage": "/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Ujjain – Omkareshwar Tour is a 2-day pilgrimage package covering the twin Jyotirlingas of Madhya Pradesh: Mahakaleshwar in Ujjain and Omkareshwar on Mandhata Island. The tour includes temple Darshans, local sightseeing, Mamleshwar Darshan, and a scenic boat ride on the Narmada River.",
@@ -2964,7 +2964,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-tour",
     "ogTitle": "Ujjain Omkareshwar Tour Package | Twin Jyotirlinga",
     "ogDescription": "2 Days spiritual package covering Mahakaleshwar and Omkareshwar Jyotirlingas with boat rides on Narmada.",
-    "ogImage": "/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
+    "ogImage": "/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
     "faqs": [
       {
         "question": "How far is Omkareshwar from Ujjain?",
@@ -3036,7 +3036,7 @@ const rawTours: Tour[] = [
       "Indore local guide support"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
+    "featuredImage": "/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Ujjain – Omkareshwar – Indore Tour is a 3-day spiritual and heritage circuit. It covers the Mahakaleshwar Jyotirlinga in Ujjain, the Omkareshwar & Mamleshwar Jyotirlingas on the Narmada River, and Indore's main attractions: the historic Lal Bagh Palace, wish-fulfilling Khajrana Ganesh Temple, and the monumental Pitreshwar Hanuman at Pitra Parvat.",
@@ -3068,7 +3068,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-indore-tour",
     "ogTitle": "Ujjain Omkareshwar Indore Tour Package | 3 Days",
     "ogDescription": "Combined Jyotirlinga & Indore heritage tour package covering Mahakaleshwar, Omkareshwar, Khajrana, Pitra Parvat, and Lal Bagh.",
-    "ogImage": "/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
+    "ogImage": "/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
     "faqs": [
       {
         "question": "Where is the pickup point?",
@@ -3137,7 +3137,7 @@ const rawTours: Tour[] = [
       "Nalkheda Havan coordination"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "This is a 3-day power pilgrimage circuit covering the two Jyotirlingas (Mahakaleshwar in Ujjain, Omkareshwar on the Narmada River) and the highly revered Maa Baglamukhi Shakti Temple in Nalkheda, known for victory and protection rituals.",
@@ -3168,7 +3168,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-baglamukhi-nalkheda-tour",
     "ogTitle": "Ujjain Omkareshwar Baglamukhi Nalkheda Tour",
     "ogDescription": "Combined Jyotirlinga and Maa Baglamukhi Nalkheda Shaktipeeth yatra package with Havan arrangements.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "What is special about Nalkheda Baglamukhi Temple?",
@@ -3228,7 +3228,7 @@ const rawTours: Tour[] = [
       "Pandit booking assistance"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Ujjain – Baglamukhi Nalkheda Tour is a 2-day religious circuit connecting Ujjain's Mahakaleshwar Jyotirlinga and Harsiddhi Temple with the ancient Maa Baglamukhi Temple in Nalkheda, located on the banks of Lakhunder River.",
@@ -3258,7 +3258,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-baglamukhi-nalkheda-tour",
     "ogTitle": "Ujjain Baglamukhi Nalkheda Tour | 2 Days",
     "ogDescription": "2-Day pilgrimage connecting Ujjain Mahakaleshwar and Maa Baglamukhi Temple in Nalkheda.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "Is Nalkheda open for Havan all day?",
@@ -3326,7 +3326,7 @@ const rawTours: Tour[] = [
       "Border tax & permits"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "A 3-day spiritual journey linking Ujjain (Mahakaleshwar) with the unique 8-faced Lord Pashupatinath Temple in Mandsaur and the famous Sanwariya Seth (Lord Krishna) Temple in Mandaphiya near Chittorgarh, Rajasthan.",
@@ -3357,7 +3357,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-pashupatinath-sanwariya-seth-tour",
     "ogTitle": "Ujjain Mandsaur Sanwariya Seth Tour | 3 Days",
     "ogDescription": "Combined pilgrimage connecting Ujjain, Mandsaur Pashupatinath, and Chittorgarh Sanwariya Seth.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "Is border tax included in the cab price?",
@@ -3462,7 +3462,7 @@ const rawTours: Tour[] = [
       "Veg Breakfast & Dinner"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Uttarakhand Char Dham Yatra is a sacred 10-day Himalayan pilgrimage covering Yamunotri, Gangotri, Kedarnath, and Badrinath. Starting from Haridwar or Dehradun, it takes devotees through scenic valleys, mountain passes, and holy river confluences.",
@@ -3494,7 +3494,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/char-dham-yatra-uttarakhand",
     "ogTitle": "Char Dham Yatra Uttarakhand | 10 Days Pilgrimage",
     "ogDescription": "Sacred Himalayan pilgrimage to Gangotri, Yamunotri, Badrinath, and Kedarnath starting from Haridwar.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is the biometric registration mandatory?",
@@ -3602,7 +3602,7 @@ const rawTours: Tour[] = [
       "All meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Panch Kedar Yatra is a demanding 10-day spiritual pilgrimage in Uttarakhand. It covers the five sacred temples of Lord Shiva where his diverse body parts are worshipped: Kedarnath (hump), Madmaheshwar (navel), Tungnath (arms), Rudranath (face), and Kalpeshwar (hair).",
@@ -3633,7 +3633,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/panch-kedar-yatra-uttarakhand",
     "ogTitle": "Panch Kedar Yatra Uttarakhand | 5 Sacred Shiva Shrines",
     "ogDescription": "Trekking yatra covering all five Kedar temples in Garhwal Himalayas with guides and stays.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is the Panch Kedar Yatra difficult?",
@@ -3710,7 +3710,7 @@ const rawTours: Tour[] = [
       "Special Badrinath Darshan pass"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Panch Badri Yatra is a 4-day sacred circuit covering the five holy Vishnu temples in Uttarakhand's Garhwal region: Badrinath (Vishal Badri), Yogdhyan Badri (Pandukeshwar), Bhavishya Badri (Subain), Vridha Badri (Animath), and Adi Badri (near Karnaprayag).",
@@ -3741,7 +3741,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/panch-badri-yatra-uttarakhand",
     "ogTitle": "Panch Badri Yatra Uttarakhand | 4 Days",
     "ogDescription": "Sacred Vaishnava yatra covering all five Badri temples in Garhwal hills.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Where is Adi Badri located?",
@@ -3811,7 +3811,7 @@ const rawTours: Tour[] = [
       "Pandit Seva"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The 84 Mahadev Yatra is a sacred pilgrimage circuit in Ujjain, Madhya Pradesh, visiting the 84 temples representing the 84 forms of Lord Shiva in the ancient Mahakal Van. Devotees perform this parikrama to seek spiritual alignment, cleanse past sins, and invoke divine blessings.",
@@ -3843,7 +3843,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/84-mahadev-yatra-pooja-ujjain",
     "ogTitle": "84 Mahadev Yatra & Pooja Ujjain",
     "ogDescription": "Full Chaurasi Mahadev parikrama circuit and abhishek ritual services in Ujjain.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "How long does the 84 Mahadev Yatra take?",
@@ -3894,7 +3894,7 @@ const rawTours: Tour[] = [
       "Pandit guidance"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The 9 Narayan Yatra is a traditional pilgrimage circuit covering nine ancient Vishnu temples in Ujjain, Madhya Pradesh: Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan. Devotees believe this yatra balances planetary influences.",
@@ -3925,7 +3925,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/9-narayana-yatra-pooja-ujjain",
     "ogTitle": "9 Narayana Yatra & Pooja Ujjain",
     "ogDescription": "Sacred parikrama of nine ancient Vishnu temples in Ujjain with puja and transport.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "Can this yatra be completed in one day?",
@@ -3981,7 +3981,7 @@ const rawTours: Tour[] = [
       "Pandit guidance"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Sapt Sagar Yatra is an ancient pilgrimage circuit visiting the seven holy water bodies (Sagars/Kunds) of Ujjain: Rudra Sagar, Pushkar Sagar, Ksheer Sagar, Govardhan Sagar, Purushottam Sagar, Ratnakar Sagar, and Vishnu Sagar. Cleansing rituals here are believed to purify past karma.",
@@ -4012,7 +4012,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/sapt-sagar-yatra-pooja-ujjain",
     "ogTitle": "Sapt Sagar Yatra & Pooja Ujjain",
     "ogDescription": "Holy water-body pilgrimage circuit and purification rituals in Ujjain.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "What are the names of the seven Sagars?",
@@ -4062,7 +4062,7 @@ const rawTours: Tour[] = [
       "Pandit seva"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "featuredImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The 6 Vinayak Yatra covers the six ancient Ganesha temples in Ujjain consecrated by Lord Shri Rama: Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak. Devotees perform this yatra to invoke wisdom and remove obstacles.",
@@ -4093,7 +4093,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/6-vinayak-yatra-pooja-ujjain",
     "ogTitle": "6 Vinayak Yatra & Pooja Ujjain",
     "ogDescription": "Sacred parikrama of 6 ancient Ganesha temples in Ujjain with modak offerings.",
-    "ogImage": "/src/assets/images/header_bg_spiritual_1786196057015.jpg",
+    "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
     "faqs": [
       {
         "question": "Who consecrated the 6 Vinayaks of Ujjain?",
@@ -4162,7 +4162,7 @@ const rawTours: Tour[] = [
       "All Meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Kedarkantha Trek is a highly popular 4-day winter snow trekking expedition starting from Sankri village in Uttarakhand. Trekking up to the 12,500 ft summit, adventurers pass through frozen pine forests and the picturesque Juda Ka Talab lake campsite.",
@@ -4193,7 +4193,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/sankri-kedarkantha-trek",
     "ogTitle": "Kedarkantha Winter Snow Trek | 4 Days",
     "ogDescription": "Fabulous snow trekking expedition in Garhwal Himalayas with campsites at Juda Ka Talab.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is the trek suitable for beginners?",
@@ -4268,7 +4268,7 @@ const rawTours: Tour[] = [
       "Trek meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Pangarchulla Trek is a challenging 5-day summit climb in Uttarakhand starting from Joshimath. Scaling up to 15,069 ft, it offers spectacular views of Nanda Devi, Dronagiri, and Hathi Parbat, passing through lush meadows of Gorson Bugyal.",
@@ -4299,7 +4299,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/joshimath-pangarchulla-trek",
     "ogTitle": "Pangarchulla Peak Summit Trek | Uttarakhand",
     "ogDescription": "Climb Pangarchulla Peak (15,069 ft) for ultimate Himalayan snow vistas.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is prior trekking experience required?",
@@ -4374,7 +4374,7 @@ const rawTours: Tour[] = [
       "All meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Kuari Pass Trek (also known as Lord Curzon's Trail) is a famous 5-day trekking route in Uttarakhand starting from Joshimath. Scaling up to 12,516 ft, it features stunning vistas of Mt. Nanda Devi, beautiful oak forests, and alpine meadows of Gorson Bugyal.",
@@ -4405,7 +4405,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/joshimath-kuari-pass-trek",
     "ogTitle": "Kuari Pass Trek | Uttarakhand Himalayas",
     "ogDescription": "5-Day trekking circuit to Kuari Pass with panoramic Nanda Devi views.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is Kuari Pass safe for beginners?",
@@ -4474,7 +4474,7 @@ const rawTours: Tour[] = [
       "High calorie meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Kagbhusundi Tal Trek is a rare and difficult 4-day trek in Uttarakhand's Chamoli district. It leads to the emerald-green Kagbhusundi Lake, situated at 15,500 ft near Hathi Parbat, known for its mythological association with Crow (Kaga) Bhusundi.",
@@ -4505,7 +4505,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-kagbhusundi-trek",
     "ogTitle": "Kagbhusundi Tal Trek | Chamoli Garhwal",
     "ogDescription": "Explore the legendary emerald triangular lake beneath Hathi Parbat.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "What is the spiritual significance of Kagbhusundi?",
@@ -4575,7 +4575,7 @@ const rawTours: Tour[] = [
       "Nutritious meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Roopkund Trek is a legendary 4-day trekking trail in Uttarakhand's Chamoli district leading to the mysterious Roopkund Lake (Skeleton Lake) at 15,750 ft. The trail passes through the breathtaking alpine meadows of Ali Bugyal and Bedni Bugyal.",
@@ -4606,7 +4606,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-roopkund-trek",
     "ogTitle": "Roopkund Skeleton Lake Trek | Chamoli",
     "ogDescription": "Climb to Roopkund Lake (15,750 ft) via Ali and Bedni Bugyal meadows.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Why are there skeletons in Roopkund?",
@@ -4687,7 +4687,7 @@ const rawTours: Tour[] = [
       "Kumaoni local cuisine"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Pindari Glacier Trek is a classic 6-day trekking route in Uttarakhand's Bageshwar district. Reaching Zero Point at 12,010 ft, it takes trekkers along the Pindar River through beautiful village culture, rhododendron forests, and massive glacier views.",
@@ -4718,7 +4718,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/bageshwar-pindari-glacier-trek",
     "ogTitle": "Pindari Glacier Trek | Kumaon Himalayas",
     "ogDescription": "Venture to the snout of Pindari Glacier in Uttarakhand's scenic Kumaon hills.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is Pindari Glacier difficult?",
@@ -4793,7 +4793,7 @@ const rawTours: Tour[] = [
       "Vegetarian meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Dayara Bugyal Trek is a spectacular 5-day alpine meadow trek in Uttarakhand's district of Uttarkashi. Reaching 12,100 ft, it offers vast undulating green meadows in summer and deep snowfields in winter, with panoramic views of the Gangotri range.",
@@ -4824,7 +4824,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/uttarkashi-dayara-bugyal-trek",
     "ogTitle": "Dayara Bugyal Trek | Uttarkashi Uttarakhand",
     "ogDescription": "Vast rolling alpine meadows of Garhwal with clear views of Mt. Bandarpoonch.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is Dayara Bugyal suitable for families?",
@@ -4913,7 +4913,7 @@ const rawTours: Tour[] = [
       "Nutritious warm meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Satopanth Tal Trek is a highly holy and challenging 8-day trekking expedition in Uttarakhand's Chamoli district. Trekkers walk past Badrinath and Mana village, navigating the glacier trail to reach the triangular Satopanth Lake at 14,300 ft, believed to be the holy bathing place of the Trinity.",
@@ -4944,7 +4944,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-satopanth-trek",
     "ogTitle": "Satopanth Tal Trek | Badrinath Garhwal",
     "ogDescription": "Sacred high-altitude triangular lake trek beneath Swargarohini and Neelkanth peaks.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "Is Satopanth Tal associated with Swargarohini?",
@@ -5025,7 +5025,7 @@ const rawTours: Tour[] = [
       "Experienced local guides"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Valley of Flowers Trek is a world-famous 6-day monsoon trekking tour in Uttarakhand's Chamoli district. Walking up to 14,400 ft, it takes visitors to the UNESCO World Heritage site filled with hundreds of species of wild alpine flowers, and includes a visit to the holy Hemkund Sahib Lake.",
@@ -5056,7 +5056,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-valley-of-flowers-trek",
     "ogTitle": "Valley of Flowers & Hemkund Sahib Trek",
     "ogDescription": "6-Day monsoon trekking to the UNESCO flower valley and Hemkund Sahib lake.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "When are the flowers in full bloom?",
@@ -5135,7 +5135,7 @@ const rawTours: Tour[] = [
       "All meals"
     ],
     "priceType": "On Request",
-    "featuredImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "featuredImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "isFeatured": true,
     "isPublished": true,
     "quickAnswer": "The Gaumukh Trek is a holy 6-day trekking circuit in Uttarakhand starting from Gangotri. Hiking through the Gangotri National Park to 13,200 ft, devotees reach the Gaumukh snout of the Gangotri Glacier, the mythological source of the holy Bhagirathi (Ganga) River.",
@@ -5166,7 +5166,7 @@ const rawTours: Tour[] = [
     "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/gangotri-gaumukh-trek",
     "ogTitle": "Gaumukh Snout Trek | Uttarakhand Himalayas",
     "ogDescription": "Venture to the source of Ganga at Gaumukh glacier snout.",
-    "ogImage": "/src/assets/images/tour_char_dham_1786196121631.jpg",
+    "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
     "faqs": [
       {
         "question": "How far is Gaumukh from Gangotri?",
@@ -5228,7 +5228,7 @@ export const initialDestinations: Destination[] = [
     slug: 'ujjain',
     shortDescription: 'The ancient sacred city of Lord Mahakaleshwar, Shipra River, and Kumbh Mela on the Tropic of Cancer.',
     description: 'Ujjain is one of Hinduism\'s seven sacred cities (Sapta Puri) and home to Shri Mahakaleshwar, the Dakshinamurti Jyotirlinga. Situated on the sacred banks of River Kshipra, Ujjain is renowned for Vedic astrology, Simhastha Kumbh Mela, and ancient spiritual heritage.',
-    heroImage: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+    heroImage: '/assets/images/header_bg_spiritual_1786196057015.jpg',
     placesToVisit: ['Mahakaleshwar Jyotirlinga', 'Harsiddhi Mata Shaktipeeth', 'Kalbhairav Temple', 'Mangalnath Temple', 'Sandipani Ashram', 'Ramghat Kshipra', 'Siddhvat'],
     temples: ['Mahakaleshwar', 'Harsiddhi', 'Kalbhairav', 'Garhkalika', 'Mangalnath', 'Angareshwar', 'Chintaman Ganesh', 'Rin Mukteshwar'],
     travelInformation: 'Ujjain Junction (UDN/UJN) is well connected by trains across India. Nearest airport is Devi Ahilya Bai Holkar Airport, Indore (55 km away, 1 hour drive via super corridor).',
@@ -5247,7 +5247,7 @@ export const initialDestinations: Destination[] = [
     slug: 'omkareshwar',
     shortDescription: 'The holy island shaped like the sacred symbol "OM" housing Omkareshwar and Mamleshwar Jyotirlingas on Narmada River.',
     description: 'Omkareshwar is situated on Mandhata island in the Narmada River, naturally shaped like the sacred "OM" symbol. It houses the 4th Jyotirlinga along with Mamleshwar temple on the south bank.',
-    heroImage: '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
+    heroImage: '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
     placesToVisit: ['Omkareshwar Jyotirlinga Temple', 'Mamleshwar Temple', 'Narmada River Sangam & Boat Ghats', 'Siddhanath Temple', 'Parikrama Marg'],
     temples: ['Omkareshwar', 'Mamleshwar', 'Siddhanath', 'Rinn Mukteshwar Omkareshwar'],
     travelInformation: 'Located 130 km from Ujjain and 75 km from Indore airport. Easily accessible via state highway cabs and buses.',
@@ -5266,7 +5266,7 @@ export const initialDestinations: Destination[] = [
     slug: 'nalkheda',
     shortDescription: 'Sacred Siddh Peeth of Goddess Baglamukhi on Lakhundar riverbank, renowned for yellow mustard Havan and Mahavidya rituals.',
     description: 'Nalkheda in Agar Malwa district near Ujjain is home to the ancient Trishakti Maa Baglamukhi temple. It is a revered center for Tantra Shanti, Havan, and Mahavidya Anushthan.',
-    heroImage: '/src/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
+    heroImage: '/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
     placesToVisit: ['Maa Baglamukhi Temple', 'Lakhundar River Ghat', 'Havan Shala'],
     temples: ['Maa Baglamukhi Siddh Peeth'],
     travelInformation: 'Located approximately 100 km from Ujjain (2.5 hours drive via Agar). Direct private cabs readily available.',
@@ -5431,7 +5431,7 @@ export const initialBlogPosts: BlogPost[] = [
     slug: 'mangalnath-bhat-pooja-mangal-dosh-remedy-guide',
     excerpt: 'Detailed astrological insight into Manglik Dosh, why Ujjain is the birth center of Mars, and how Bhat Pooja pacifies planet Mars.',
     content: `# Manglik Dosh Remedies in the Holy City of Mars\n\nIn Vedic astrology, Mars (Mangal Dev) represents fire, energy, courage, and passion.`,
-    featuredImage: '/src/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
+    featuredImage: '/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
     author: 'Jyotish Acharya Pandit Ji',
     category: 'Astrology & Dosh Remedies',
     tags: ['Bhat Pooja', 'Mangalnath', 'Angareshwar', 'Manglik Dosh', 'Ujjain'],
@@ -5584,7 +5584,7 @@ export const initialTestimonials: Testimonial[] = [
     date: 'Shravan Somwar 2026',
     verified: true,
     helpfulCount: 42,
-    reviewImage: '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+    reviewImage: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
     isFeatured: true,
     isPublished: true,
     createdAt: '2026-08-01T10:00:00Z',
@@ -5596,7 +5596,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-1',
     title: 'Mahakaleshwar Temple Sunrise Shringar Ujjain',
     description: 'Devotees gathering at Kshipra Ramghat sunrise in Ujjain.',
-    image: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+    image: '/assets/images/header_bg_spiritual_1786196057015.jpg',
     altText: 'Mahakaleshwar Temple Ujjain Ramghat Sunrise',
     category: 'Ujjain Yatra',
     location: 'Ujjain',
@@ -5608,7 +5608,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-2',
     title: 'Vedic Rudrabhishek Pooja',
     description: 'Brahmins performing Vedic Rudrabhishek Pooja in Ujjain.',
-    image: '/public/assets/images/rudrabhishek-pooja-ujjain.webp',
+    image: '/assets/images/rudrabhishek-pooja-ujjain.webp',
     altText: 'Rudrabhishek Pooja in Ujjain',
     category: 'Pooja',
     location: 'Ujjain',
@@ -5620,7 +5620,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-3',
     title: 'Mangalnath Bhat Pooja',
     description: 'Manglik Dosh Shanti Bhat Pooja ritual at Mangalnath Temple Ujjain.',
-    image: '/public/assets/images/bhat-pooja-mangalnath-ujjain.webp',
+    image: '/assets/images/bhat-pooja-mangalnath-ujjain.webp',
     altText: 'Bhat Pooja ritual at Mangalnath Temple Ujjain',
     category: 'Pooja',
     location: 'Ujjain',
@@ -5632,7 +5632,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-4',
     title: 'Kaal Sarp Dosh Pooja',
     description: 'Kaal Sarp Dosh Nivaran Shanti Pooja being performed at Ramghat.',
-    image: '/public/assets/images/kaal-sarp-dosh-pooja-ujjain.webp',
+    image: '/assets/images/kaal-sarp-dosh-pooja-ujjain.webp',
     altText: 'Kaal Sarp Dosh Pooja on banks of River Shipra',
     category: 'Pooja',
     location: 'Ujjain',
@@ -5644,7 +5644,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-5',
     title: 'Mahakaleshwar Jyotirlinga Darshan',
     description: 'Mahakaleshwar Jyotirlinga Temple view in Ujjain.',
-    image: '/src/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
+    image: '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg',
     altText: 'Mahakaleshwar Jyotirlinga Darshan in Ujjain',
     category: 'Darshan',
     location: 'Ujjain',
@@ -5656,7 +5656,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-6',
     title: 'Omkareshwar Temple Jyotirlinga Yatra',
     description: 'Holy pilgrimage visits to Omkareshwar Jyotirlinga Temple on Mandhata island.',
-    image: '/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg',
+    image: '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg',
     altText: 'Omkareshwar Jyotirlinga Yatra',
     category: 'Omkareshwar',
     location: 'Omkareshwar',
@@ -5668,7 +5668,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-7',
     title: 'Ujjain Omkareshwar Spiritual Tour',
     description: 'Guided spiritual tour arrangements covering Ujjain and Omkareshwar.',
-    image: '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
+    image: '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
     altText: 'Ujjain Omkareshwar Tour',
     category: 'Omkareshwar',
     location: 'Ujjain',
@@ -5680,7 +5680,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-8',
     title: 'Himalayan Char Dham Tour',
     description: 'Scenic pilgrimage group journey to Yamunotri, Gangotri, Kedarnath, and Badrinath.',
-    image: '/src/assets/images/tour_char_dham_1786196121631.jpg',
+    image: '/assets/images/tour_char_dham_1786196121631.jpg',
     altText: 'Himalayan Char Dham Tour Trail',
     category: 'Himalayan Yatra',
     location: 'Uttarakhand',
@@ -5692,7 +5692,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-9',
     title: 'Himalayan Trekking Expedition',
     description: 'Trekking trails and scenic snowclad mountains in Uttarakhand Himalayas.',
-    image: '/src/assets/images/tour_char_dham_1786196121631.jpg',
+    image: '/assets/images/tour_char_dham_1786196121631.jpg',
     altText: 'Trekking trail in Himalayas',
     category: 'Trekking',
     location: 'Himalayas',
@@ -5704,7 +5704,7 @@ export const initialGalleryItems: GalleryItem[] = [
     id: 'gal-10',
     title: 'Pitru Shanti Pooja',
     description: 'Shraddh and Pitru Tarpan ritual being performed in Ujjain.',
-    image: '/public/assets/images/pitru-shanti-pooja-ujjain.webp',
+    image: '/assets/images/pitru-shanti-pooja-ujjain.webp',
     altText: 'Pitru Shanti Pooja being performed in Ujjain',
     category: 'Pooja',
     location: 'Ujjain',
@@ -5712,4 +5712,65 @@ export const initialGalleryItems: GalleryItem[] = [
     isPublished: true,
     createdAt: '2026-08-01T10:00:00Z',
   },
+  {
+    id: 'gal-11',
+    title: 'Maa Baglamukhi Tantra Havan',
+    description: 'Powerful Shatru Badha Nivaran Havan at Siddh Peeth Nalkheda.',
+    image: '/assets/images/baglamukhi-havan-nalkheda.webp',
+    altText: 'Maa Baglamukhi Havan Nalkheda',
+    category: 'Pooja',
+    location: 'Nalkheda',
+    sortOrder: 11,
+    isPublished: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
+  {
+    id: 'gal-12',
+    title: 'Mahamrityunjaya Jaap Anushthan',
+    description: 'Vedic Mahamrityunjaya Jaap performed by learned Vedic Pandits.',
+    image: '/assets/images/mahamrityunjaya-jaap-ujjain.webp',
+    altText: 'Mahamrityunjaya Jaap Ujjain',
+    category: 'Pooja',
+    location: 'Ujjain',
+    sortOrder: 12,
+    isPublished: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
+  {
+    id: 'gal-13',
+    title: 'Kaal Bhairav & Vikrant Bhairav Darshan',
+    description: 'Sacred blessings and darshan at Kaal Bhairav and Vikrant Bhairav temples in Ujjain.',
+    image: '/assets/images/mirchi-havan-vikrant-bhairav-ujjain.webp',
+    altText: 'Kaal Bhairav Darshan Ujjain',
+    category: 'Darshan',
+    location: 'Ujjain',
+    sortOrder: 13,
+    isPublished: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
+  {
+    id: 'gal-14',
+    title: 'Maa Harsiddhi Shaktipeeth Darshan',
+    description: 'Divine Deepmalika lighting and blessings at Harsiddhi Mata Temple.',
+    image: '/assets/images/navchandi-path-havan-ujjain.webp',
+    altText: 'Harsiddhi Shaktipeeth Darshan',
+    category: 'Darshan',
+    location: 'Ujjain',
+    sortOrder: 14,
+    isPublished: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
+  {
+    id: 'gal-15',
+    title: 'Navgraha Shanti Havan Ujjain',
+    description: 'Nine planetary dosha pacification havan ritual in Ujjain.',
+    image: '/assets/images/navgraha-shanti-pooja-ujjain.webp',
+    altText: 'Navgraha Shanti Pooja Ujjain',
+    category: 'Pooja',
+    location: 'Ujjain',
+    sortOrder: 15,
+    isPublished: true,
+    createdAt: '2026-08-01T10:00:00Z',
+  },
 ];
+

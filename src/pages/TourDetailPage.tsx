@@ -312,7 +312,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       <header 
         className="relative text-white py-16 sm:py-24 overflow-hidden bg-cover bg-center"
         style={{ 
-          backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.93), rgba(58, 21, 24, 0.95)), url("${tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}")` 
+          backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.93), rgba(58, 21, 24, 0.95)), url("${(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")` 
         }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(217,119,6,0.15),transparent)] pointer-events-none" />
@@ -377,9 +377,15 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-emerald-500/20 aspect-[4/3] bg-stone-950">
               <img
-                src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
+                src={(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
                 alt={tourName}
                 loading="eager"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('tour_ujjain_omkareshwar')) {
+                    target.src = '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-955/40 to-transparent pointer-events-none" />
@@ -509,7 +515,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         <section 
           className="relative text-[#F5EBE6] py-20 border-b border-white/10 bg-cover bg-center"
           style={{ 
-            backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.96), rgba(58, 21, 24, 0.97)), url("${tour.featuredImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}")` 
+            backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.96), rgba(58, 21, 24, 0.97)), url("${(tour.featuredImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")` 
           }}
         >
           <div className="max-w-4xl mx-auto px-4 text-left relative z-10">
@@ -807,7 +813,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       <footer 
         className="relative text-white py-20 text-center space-y-6 overflow-hidden bg-cover bg-center"
         style={{ 
-          backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.92), rgba(58, 21, 24, 0.95)), url("${tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}")` 
+          backgroundImage: `linear-gradient(rgba(58, 21, 24, 0.92), rgba(58, 21, 24, 0.95)), url("${(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}")` 
         }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(217,119,6,0.1),transparent)] pointer-events-none" />

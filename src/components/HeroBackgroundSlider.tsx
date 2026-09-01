@@ -9,32 +9,32 @@ export interface BackgroundSlide {
 
 export const DEFAULT_HEADER_SLIDES: BackgroundSlide[] = [
   {
-    url: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+    url: '/assets/images/header_bg_spiritual_1786196057015.jpg',
     title: 'Shri Mahakaleshwar Corridor & Sanctum',
     location: 'Ujjain, Madhya Pradesh',
   },
   {
-    url: '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+    url: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
     title: 'Panchamrit Rudrabhishek Ritual',
     location: 'Consecrated Shivlinga Vidhi',
   },
   {
-    url: '/src/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
+    url: '/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
     title: 'Bhat Pooja & Mangal Dosh Remedy',
     location: 'Mangalnath & Angareshwar Shrines',
   },
   {
-    url: '/src/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
+    url: '/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
     title: 'Maa Baglamukhi Anushthan Yajna',
     location: 'Nalkheda Siddh Peeth',
   },
   {
-    url: '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
+    url: '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
     title: 'Omkareshwar Narmada Island Sanctuary',
     location: 'Mandhata Island, Omkareshwar',
   },
   {
-    url: '/src/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
+    url: '/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
     title: 'Evening Kshipra Aarti & Deepdan',
     location: 'Ramghat Riverbank, Ujjain',
   },

@@ -68,8 +68,14 @@ const TourDiscoveryCard: React.FC<{ tour: Tour; index: number; onBook: (name: st
       {/* Image */}
       <div className="relative aspect-video w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
-          src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
+          src={(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
           alt={tourName}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes('tour_ujjain_omkareshwar')) {
+              target.src = '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg';
+            }
+          }}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {tourDuration && (
@@ -157,7 +163,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
   const destinations = StoreService.getDestinations().filter((d) => d.isFeatured);
   const faqs = StoreService.getFAQs();
   const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
-  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished && item.category !== 'Darshan');
+  const galleryItems = StoreService.getGallery().filter((item) => item.isPublished);
   
   const [activeTourTab, setActiveTourTab] = useState<'spiritual-tours' | 'ujjain-yatra' | 'himalayan' | 'trekking'>('spiritual-tours');
 
@@ -189,12 +195,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
     .filter(Boolean) as typeof allTours;
 
   const [selectedCatId, setSelectedCatId] = useState<string>('all');
-  const [galleryFilter, setGalleryFilter] = useState<'All Photos' | 'Pooja' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking'>('All Photos');
+  const [galleryFilter, setGalleryFilter] = useState<'All Photos' | 'Darshan' | 'Pooja' | 'Ujjain Yatra' | 'Omkareshwar' | 'Himalayan Yatra' | 'Trekking'>('All Photos');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Mix images naturally across all categories when 'All Photos' is active
   const mixedAllPhotos = React.useMemo(() => {
-    const categoriesList = ['Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const;
+    const categoriesList = ['Darshan', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const;
     const groups: Record<string, typeof galleryItems> = {};
     categoriesList.forEach((cat) => {
       groups[cat] = galleryItems.filter((item) => item.category === cat);
@@ -318,7 +324,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
       <SEOHead
         title="Official Vedic Pooja Booking & Spiritual Tours in Ujjain"
         canonicalUrl="https://aasthaserasta.com/"
-        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt="Aastha Sey Raasta Seva - Official Pooja Services & Spiritual Tours Ujjain"
         jsonLd={[faqSchema]}
       />
@@ -482,7 +488,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         {/* Background Image with transparency overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
-          style={{ backgroundImage: `url('/src/assets/images/header_bg_spiritual_1786196057015.jpg')` }}
+          style={{ backgroundImage: `url('/assets/images/header_bg_spiritual_1786196057015.jpg')` }}
         />
         {/* Deep maroon gradient overlay (65-75%) */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#3A1518]/70 via-[#3A1518]/75 to-[#3A1518]/70 dark:from-[#1A0A0B]/70 dark:via-[#1A0A0B]/75 dark:to-[#1A0A0B]/70 pointer-events-none" />
@@ -602,7 +608,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         {/* Background Image with transparency overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-25 pointer-events-none"
-          style={{ backgroundImage: `url('/src/assets/images/yatra_omkareshwar_temple_1786193903123.jpg')` }}
+          style={{ backgroundImage: `url('/assets/images/yatra_omkareshwar_temple_1786193903123.jpg')` }}
         />
         {/* 70-80% deep maroon overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#3A1518]/75 via-[#3A1518]/80 to-[#3A1518]/75 dark:from-[#1A0A0B]/75 dark:via-[#1A0A0B]/80 dark:to-[#1A0A0B]/75 pointer-events-none" />
@@ -848,11 +854,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           {/* Category Navigation Tabs */}
           <FadeIn delay={50} direction="up">
             <div className="w-full overflow-x-auto scrollbar-none touch-pan-x pb-1">
-              <div className="flex items-center justify-start md:justify-center flex-nowrap gap-4 sm:gap-6 md:gap-8 px-4 sm:px-0 border-b border-stone-200/60 dark:border-stone-800 max-w-4xl mx-auto min-w-max md:min-w-0">
-                {(['All Photos', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
+              <div className="flex items-center justify-start md:justify-center flex-nowrap gap-4 sm:gap-6 md:gap-8 px-4 sm:px-0 border-b border-stone-200/60 dark:border-stone-800 max-w-5xl mx-auto min-w-max md:min-w-0">
+                {(['All Photos', 'Darshan', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
                   const isActive = galleryFilter === cat;
                   const displayLabel = language === 'hi'
-                    ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Pooja' ? 'पूजा' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
+                    ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Darshan' ? 'दर्शन' : cat === 'Pooja' ? 'पूजा' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
                     : cat.toUpperCase();
                   return (
                     <button
@@ -913,11 +919,17 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                     className="bg-[#FFFDF8] dark:bg-[#1C1917] rounded-3xl overflow-hidden border border-[#E6DBC8] dark:border-stone-800 flex-shrink-0 flex flex-col snap-start hover:-translate-y-1 transition-all duration-300 group cursor-pointer w-[82vw] xs:w-[290px] sm:w-[320px] md:w-[340px] relative"
                   >
                     {/* Photograph Container */}
-                    <div className="relative overflow-hidden aspect-[4/3] w-full">
+                    <div className="relative overflow-hidden aspect-[4/3] w-full bg-stone-900">
                       <img
-                        src={item.image}
+                        src={(item.image || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
                         alt={item.altText}
                         loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (!target.src.includes('hero_mahakaleshwar')) {
+                            target.src = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+                          }
+                        }}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-104"
                       />
                       {/* Subtle hover overlay (Desktop only) */}
@@ -1051,8 +1063,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={filteredGalleryItems[lightboxIndex].image}
+              src={(filteredGalleryItems[lightboxIndex].image || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
               alt={filteredGalleryItems[lightboxIndex].altText}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (!target.src.includes('hero_mahakaleshwar')) {
+                  target.src = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+                }
+              }}
               className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
             />
             {/* Title / Description */}
@@ -1078,7 +1096,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
         {/* Background Image with transparency overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-25 pointer-events-none"
-          style={{ backgroundImage: `url('/src/assets/images/tour_char_dham_1786196121631.jpg')` }}
+          style={{ backgroundImage: `url('/assets/images/tour_char_dham_1786196121631.jpg')` }}
         />
         {/* 70-80% deep maroon overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#3A1518]/75 via-[#3A1518]/80 to-[#3A1518]/75 dark:from-[#1A0A0B]/75 dark:via-[#1A0A0B]/80 dark:to-[#1A0A0B]/75 pointer-events-none" />

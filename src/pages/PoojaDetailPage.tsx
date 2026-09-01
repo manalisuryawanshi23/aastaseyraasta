@@ -343,10 +343,16 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
             <FadeIn direction="right" delay={100}>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-500/20 aspect-[4/3] bg-stone-900">
                 <img
-                  src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
+                  src={(pooja.featuredImage || '/assets/images/pooja_rudrabhishek_1786196070818.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
                   alt={`${poojaName} - ${templeName || pooja.templeName}, ${city || pooja.city}`}
                   loading="eager"
                   decoding="async"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.includes('pooja_rudrabhishek')) {
+                      target.src = '/assets/images/pooja_rudrabhishek_1786196070818.jpg';
+                    }
+                  }}
                   {...({ fetchPriority: 'high' } as any)}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover brightness-90"

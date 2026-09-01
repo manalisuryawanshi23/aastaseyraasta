@@ -24,6 +24,7 @@ import { ContactPage } from './pages/ContactPage';
 import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
 import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
+import { GalleryPage } from './pages/GalleryPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
 import { useApiSync } from './hooks/useApiSync';
@@ -173,6 +174,10 @@ export default function App() {
 
     if (path === '/saved-items') {
       return <SavedItemsPage onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/gallery' || path === '/photos' || path === '/photo-gallery') {
+      return <GalleryPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/site-map' || path === '/sitemap') {

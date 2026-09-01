@@ -30,10 +30,16 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ destination, i
     >
       <div className="relative h-48 w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
-          src={destination.heroImage || '/src/assets/images/header_bg_spiritual_1786196057015.jpg'}
+          src={(destination.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
           alt={destName}
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes('header_bg_spiritual')) {
+              target.src = '/assets/images/header_bg_spiritual_1786196057015.jpg';
+            }
+          }}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

@@ -37,10 +37,16 @@ export const PoojaCard: React.FC<PoojaCardProps> = ({ pooja, onBook, index = 0 }
       {/* Image Thumbnail Header */}
       <div className="relative aspect-video w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
-          src={pooja.featuredImage || '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg'}
+          src={(pooja.featuredImage || '/assets/images/pooja_rudrabhishek_1786196070818.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
           alt={pooja.name}
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes('pooja_rudrabhishek')) {
+              target.src = '/assets/images/pooja_rudrabhishek_1786196070818.jpg';
+            }
+          }}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

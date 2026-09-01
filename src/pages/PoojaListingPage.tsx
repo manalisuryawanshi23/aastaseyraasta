@@ -17,32 +17,32 @@ interface PoojaListingPageProps {
 
 const poojaHeaderSlides = [
   {
-    url: '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+    url: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
     title: 'Panchamrit Rudrabhishek Ritual',
     location: 'Sacred Shivlinga Abhishekam',
   },
   {
-    url: '/src/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
+    url: '/assets/images/pooja_bhat_mangalnath_1786196085583.jpg',
     title: 'Bhat Pooja Shringar',
     location: 'Mangalnath & Angareshwar Shrines',
   },
   {
-    url: '/src/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
+    url: '/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
     title: 'Maa Baglamukhi Anushthan Yajna',
     location: 'Nalkheda Siddh Peeth',
   },
   {
-    url: '/src/assets/images/pooja_mahamrityunjaya_1786196166868.jpg',
+    url: '/assets/images/pooja_mahamrityunjaya_1786196166868.jpg',
     title: 'Vedic Mahamrityunjaya Jaap',
     location: 'Conducted by Gurukul Brahmins',
   },
   {
-    url: '/src/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
+    url: '/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
     title: 'Pitru Dosh Shanti & Kshipra Aarti',
     location: 'Ramghat Holy Riverbank',
   },
   {
-    url: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+    url: '/assets/images/header_bg_spiritual_1786196057015.jpg',
     title: 'Mahakaleshwar Temple Corridor',
     location: 'Ujjain Nagari',
   },
@@ -96,7 +96,7 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
         description="Book authentic Vedic Poojas in Ujjain including Rudrabhishek, Bhat Pooja at Angareshwar & Mangalnath, Mahamrityunjaya Jaap, Baglamukhi Havan, and Pitru Dosh Shanti."
         keywords="Ujjain Pooja Services, Mahakaleshwar Rudrabhishek, Bhat Pooja Mangalnath, Baglamukhi Havan Nalkheda, Pitru Dosh Shanti"
         canonicalUrl="https://aasthaserasta.com/pooja-services"
-        ogImage="/src/assets/images/pooja_rudrabhishek_1786196070818.jpg"
+        ogImage="/assets/images/pooja_rudrabhishek_1786196070818.jpg"
         ogImageAlt="Vedic Pooja Services in Ujjain Mahakaleshwar"
       />
 

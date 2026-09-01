@@ -48,7 +48,7 @@ export const MoolShantiPoojaPage: React.FC<MoolShantiPoojaPageProps> = ({ onOpen
     slug: 'mool-shanti-pooja-ujjain',
     shortDescription: 'Mool Shanti Pooja is a Vedic ritual performed for children born under Mool Nakshatra (birth star) to pray for the well-being of the child and family.',
     description: 'Mool Shanti Pooja is a Vedic ritual performed for children born under Mool Nakshatra. According to Vedic tradition, the ritual is performed to pacify traditionally believed negative effects of Mool Nakshatra and to pray for the well-being and long life of the child, as well as peace, harmony and prosperity in the family.',
-    featuredImage: '/src/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg',
+    featuredImage: '/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg',
     templeName: 'Ujjain Temple',
     city: 'Ujjain',
     price: null,
@@ -654,7 +654,7 @@ export const MoolShantiPoojaPage: React.FC<MoolShantiPoojaPageProps> = ({ onOpen
         {/* Background Image with opacity overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"
-          style={{ backgroundImage: `url('/src/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg')` }}
+          style={{ backgroundImage: `url('/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#3A1518]/80 to-[#3A1518]/90 dark:from-[#1A0A0B]/80 dark:to-[#1A0A0B]/90 pointer-events-none" />
 

@@ -64,7 +64,7 @@ export const HTMLSitemapPage: React.FC = () => {
         description="Comprehensive Site Map of all Ujjain Pooja services, Spiritual Yatra packages, Temple destination guides, and Vedic blog articles."
         keywords="Ujjain Sitemap, Aastha Sey Raasta Site Map, All Ujjain Poojas, All Spiritual Tours"
         canonicalUrl="https://aasthaserasta.com/site-map"
-        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt="Aastha Sey Raasta Seva Site Map & Index"
         jsonLd={[breadcrumbSchema]}
       />

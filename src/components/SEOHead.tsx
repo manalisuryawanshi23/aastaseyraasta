@@ -51,12 +51,13 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     // Resolve absolute image URL for Social Media previews (WhatsApp, Facebook, Twitter, LinkedIn, iMessage)
     const resolveImageUrl = (img?: string): string => {
       if (!img) {
-        return `${origin}/src/assets/images/header_bg_spiritual_1786196057015.jpg`;
+        return `${origin}/assets/images/header_bg_spiritual_1786196057015.jpg`;
       }
       if (img.startsWith('http://') || img.startsWith('https://')) {
         return img;
       }
-      const cleanPath = img.startsWith('/') ? img : `/${img}`;
+      const normalized = img.replace(/^\/(?:src|public)\/assets\//, '/assets/');
+      const cleanPath = normalized.startsWith('/') ? normalized : `/${normalized}`;
       return `${origin}${cleanPath}`;
     };
 

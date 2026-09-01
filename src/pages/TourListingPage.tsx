@@ -17,32 +17,32 @@ interface TourListingPageProps {
 
 const tourHeaderSlides = [
   {
-    url: '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
+    url: '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg',
     title: 'Omkareshwar Narmada Island Sanctuary',
     location: 'Mandhata Island, Narmada River',
   },
   {
-    url: '/src/assets/images/tour_char_dham_1786196121631.jpg',
+    url: '/assets/images/tour_char_dham_1786196121631.jpg',
     title: 'Char Dham Kedarnath Shrine',
     location: 'Himalayan Garhwal Peaks',
   },
   {
-    url: '/src/assets/images/header_bg_spiritual_1786196057015.jpg',
+    url: '/assets/images/header_bg_spiritual_1786196057015.jpg',
     title: 'Shri Mahakaleshwar Corridor',
     location: 'Ujjain Nagari',
   },
   {
-    url: '/src/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
+    url: '/assets/images/pooja_pitru_ramghat_1786196153062.jpg',
     title: 'Shipra Ramghat Twilight Aarti',
     location: 'Holy Riverbank, Ujjain',
   },
   {
-    url: '/src/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
+    url: '/assets/images/pooja_baglamukhi_havan_1786196097113.jpg',
     title: 'Maa Baglamukhi Peeth Yatra',
     location: 'Nalkheda, Madhya Pradesh',
   },
   {
-    url: '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+    url: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
     title: 'Sacred Jyotirlinga Abhishekam',
     location: 'Temple Sanctum',
   },
@@ -112,7 +112,7 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
         description="Book customized spiritual pilgrimage tours in Ujjain, Omkareshwar, Baglamukhi Nalkheda, Indore, and Char Dham Uttarakhand with private AC transport and hotel stays."
         keywords="Spiritual Tours Ujjain, Omkareshwar Yatra, Char Dham Yatra Package, 84 Mahadev Yatra, Ujjain Pilgrimage Tour"
         canonicalUrl="https://aasthaserasta.com/spiritual-tours"
-        ogImage="/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg"
+        ogImage="/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg"
         ogImageAlt="Spiritual Tours & Yatra Packages in Ujjain & Central India"
       />
 

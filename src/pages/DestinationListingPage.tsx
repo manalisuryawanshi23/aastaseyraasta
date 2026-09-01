@@ -16,11 +16,11 @@ interface DestinationListingPageProps {
 }
 
 const destinationHeaderSlides = [
-  { url: '/src/assets/images/header_bg_spiritual_1786196057015.jpg', title: 'Shri Mahakaleshwar Corridor', location: 'Ujjain, Madhya Pradesh' },
-  { url: '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg', title: 'Omkareshwar OM-Shaped Island', location: 'Narmada River, Madhya Pradesh' },
-  { url: '/src/assets/images/pooja_baglamukhi_havan_1786196097113.jpg', title: 'Maa Baglamukhi Siddh Peeth', location: 'Nalkheda, Madhya Pradesh' },
-  { url: '/src/assets/images/pooja_pitru_ramghat_1786196153062.jpg', title: 'Ramghat Kshipra Aarti', location: 'Ujjain Sacred Riverbank' },
-  { url: '/src/assets/images/tour_char_dham_1786196121631.jpg', title: 'Himalayan Char Dham Shrines', location: 'Uttarakhand Garhwal' },
+  { url: '/assets/images/header_bg_spiritual_1786196057015.jpg', title: 'Shri Mahakaleshwar Corridor', location: 'Ujjain, Madhya Pradesh' },
+  { url: '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg', title: 'Omkareshwar OM-Shaped Island', location: 'Narmada River, Madhya Pradesh' },
+  { url: '/assets/images/pooja_baglamukhi_havan_1786196097113.jpg', title: 'Maa Baglamukhi Siddh Peeth', location: 'Nalkheda, Madhya Pradesh' },
+  { url: '/assets/images/pooja_pitru_ramghat_1786196153062.jpg', title: 'Ramghat Kshipra Aarti', location: 'Ujjain Sacred Riverbank' },
+  { url: '/assets/images/tour_char_dham_1786196121631.jpg', title: 'Himalayan Char Dham Shrines', location: 'Uttarakhand Garhwal' },
 ];
 
 const regionFilters = [
@@ -95,7 +95,7 @@ export const DestinationListingPage: React.FC<DestinationListingPageProps> = ({ 
         description="Explore sacred pilgrimage destinations in Madhya Pradesh and Uttarakhand. Complete travel guides for Ujjain Mahakaleshwar, Omkareshwar Jyotirlinga, Maa Baglamukhi Nalkheda, and Indore with Aastha Sey Raasta."
         keywords="Sacred Shrines Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, Pilgrimage Destinations Madhya Pradesh, Char Dham Yatra, Mahakaleshwar Temple Guide"
         canonicalUrl="https://aasthaserasta.com/destinations"
-        ogImage="/src/assets/images/header_bg_spiritual_1786196057015.jpg"
+        ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt="Sacred Pilgrimage Destinations — Ujjain, Omkareshwar, Nalkheda"
       />
 

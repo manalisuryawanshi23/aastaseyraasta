@@ -38,10 +38,16 @@ export const TourCard: React.FC<TourCardProps> = ({ tour, onBook, index = 0 }) =
       {/* Thumbnail */}
       <div className="relative aspect-video w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <img
-          src={tour.featuredImage || '/src/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}
+          src={(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
           alt={tourName}
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes('tour_ujjain_omkareshwar')) {
+              target.src = '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg';
+            }
+          }}
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out brightness-95 group-hover:brightness-105"
         />

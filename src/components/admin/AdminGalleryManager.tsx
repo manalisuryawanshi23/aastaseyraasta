@@ -81,7 +81,7 @@ export const AdminGalleryManager: React.FC = () => {
       id: `gal-${Date.now()}`,
       title: 'A Journey in Moments',
       description: '',
-      image: '/src/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+      image: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
       altText: 'Spiritual pilgrims in Ujjain temple',
       category: 'Pooja',
       location: 'Ujjain',
