@@ -263,15 +263,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 <span className="hidden xs:inline">हिंदी</span>
               </button>
             </div>
-
-            <a
-              href="/admin"
-              className="hidden lg:flex items-center gap-1 text-amber-300/80 hover:text-amber-200 transition-colors pl-2 border-l border-amber-800/60"
-              aria-label="Admin Portal"
-            >
-              <Lock className="w-2.5 h-2.5" />
-              <span>{t('nav.admin', 'Admin')}</span>
-            </a>
           </div>
         </div>
       </div>
@@ -1045,16 +1036,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                   ) : (
                     <ChevronRight className="w-4 h-4 text-stone-500" />
                   )}
-                </a>
-
-                {/* Admin Portal Shortcut */}
-                <a
-                  href="/admin"
-                  onClick={handleCloseDrawer}
-                  className="py-2.5 px-3.5 rounded-xl hover:bg-stone-800/60 text-amber-400/90 hover:text-amber-300 transition-colors flex items-center gap-2.5 text-xs font-medium min-h-[44px]"
-                >
-                  <Lock className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Admin & Priest Portal (व्यवस्थापक)</span>
                 </a>
               </nav>
 

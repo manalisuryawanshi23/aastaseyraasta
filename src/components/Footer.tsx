@@ -392,9 +392,13 @@ export const Footer: React.FC = () => {
             <a href="/site-map" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors">
               {language === 'hi' ? '🗺️ साइट मैप' : '🗺️ Site Map'}
             </a>
-            <a href="/admin" className="hover:text-amber-400 transition-colors inline-flex items-center gap-1">
-              <Lock className="w-3 h-3" />
-              <span>{language === 'hi' ? 'एडमिन' : 'Admin'}</span>
+            <a
+              href="/admin"
+              className="text-stone-400 hover:text-amber-400 transition-colors inline-flex items-center gap-1 font-medium"
+              title="Staff & Administrator Portal"
+            >
+              <Lock className="w-3 h-3 text-amber-500/80" />
+              <span>{language === 'hi' ? 'एडमिन लॉगिन' : 'Admin Login'}</span>
             </a>
           </div>
         </div>

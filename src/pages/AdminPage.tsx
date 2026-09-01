@@ -47,6 +47,9 @@ import {
   Palette,
   Phone,
   MapPin,
+  Mail,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 
 const initialSampleLeads: Lead[] = [
@@ -111,7 +114,9 @@ interface AdminPageProps {
 
 export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [currentStaffUser, setCurrentStaffUser] = useState<StaffUser | null>(null);
 
@@ -194,11 +199,21 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
   const poojaCategories = useMemo(() => StoreService.getCategories(), []);
 
-  const handleLogin = (e?: React.FormEvent, customPass?: string) => {
+  const handleLogin = (e?: React.FormEvent, customEmail?: string, customPass?: string) => {
     if (e) e.preventDefault();
-    const passToTry = customPass || password;
+    const emailToTry = (customEmail || email).trim();
+    const passToTry = (customPass || password).trim();
 
-    const staffUser = StoreService.authenticateStaffPasscode(passToTry);
+    if (!emailToTry) {
+      setLoginError('Please enter your staff or admin Email ID.');
+      return;
+    }
+    if (!passToTry) {
+      setLoginError('Please enter your staff passcode.');
+      return;
+    }
+
+    const staffUser = StoreService.authenticateStaff(emailToTry, passToTry);
 
     if (staffUser) {
       setCurrentStaffUser(staffUser);
@@ -223,7 +238,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
         else if (p.canManageStaff) changeTab('Staff');
       }
     } else {
-      setLoginError('Invalid passcode. Use "admin123" (Admin) or "manager123" (Manager)');
+      setLoginError('Invalid Email ID or Passcode. Please check your login credentials.');
     }
   };
 
@@ -300,48 +315,103 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     });
   }, [leads, leadSearch, leadStatusFilter, leadCategoryFilter]);
 
-  // LOGIN SCREEN WITH QUICK ROLE BUTTONS
+  // LOGIN SCREEN (EMAIL ID + PASSCODE)
   if (!isAuthenticated) {
     return (
       <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-stone-100 dark:bg-stone-950">
         <SEOHead title="Admin CMS Portal Login | Aastha Sey Raasta Seva" />
-        <div className="w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-xl overflow-hidden">
+        <div className="w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-2xl overflow-hidden">
           {/* Header Banner */}
-          <div className="bg-gradient-to-r from-red-950 via-amber-950 to-stone-900 p-8 text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl" />
+          <div className="bg-gradient-to-br from-red-950 via-amber-950 to-stone-900 p-8 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
             <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto mb-3 shadow-inner">
               <Lock className="w-7 h-7" />
             </div>
             <h1 className="text-2xl font-serif italic font-bold text-amber-100">Admin Control Portal</h1>
-            <p className="text-xs text-amber-200/80 mt-1 font-medium">Role-Based Access Control (RBAC) Enabled</p>
+            <p className="text-xs text-amber-200/80 mt-1 font-medium">Authorized Staff & Administrator Login</p>
           </div>
 
-          <div className="p-8 space-y-6">
+          <div className="p-7 sm:p-8 space-y-6">
             <form onSubmit={(e) => handleLogin(e)} className="space-y-4">
+              {/* Email ID Field */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (loginError) setLoginError('');
+                    }}
+                    placeholder="e.g. admin@aasthaseva.com"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-600 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Passcode Field */}
+              <div>
+                <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5">
                   Staff Passcode
                 </label>
                 <div className="relative">
+                  <Lock className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
+                    required
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (loginError) setLoginError('');
+                    }}
                     placeholder="Enter staff passcode..."
-                    className="w-full px-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-600 transition-all font-mono"
+                    className="w-full pl-10 pr-11 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-600 transition-all font-mono"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 p-1 transition-colors"
+                    aria-label={showPassword ? 'Hide passcode' : 'Show passcode'}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
-                {loginError && <p className="text-xs text-red-600 dark:text-red-400 font-medium mt-2">{loginError}</p>}
+
+                {loginError && (
+                  <div className="mt-2.5 p-2.5 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800/50 flex items-start gap-2 text-xs text-red-700 dark:text-red-300 font-medium">
+                    <ShieldAlert className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
+                    <span>{loginError}</span>
+                  </div>
+                )}
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-700 to-amber-800 text-white font-bold text-sm hover:from-amber-800 hover:to-amber-900 transition-all shadow-md flex items-center justify-center gap-2"
+                className="w-full mt-2 py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 hover:from-amber-800 hover:to-amber-950 text-white font-bold text-sm transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
               >
-                <ShieldCheck className="w-4 h-4" />
+                <ShieldCheck className="w-4 h-4 text-amber-300" />
                 <span>Sign In to Admin Panel</span>
               </button>
             </form>
+
+            {/* Quick Demo Credentials Help */}
+            <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-800 text-[11px] text-stone-500 dark:text-stone-400 space-y-1.5">
+              <div className="font-semibold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
+                <Info className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <span>Default Portal Access Credentials:</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] font-mono pt-1">
+                <span className="text-amber-700 dark:text-amber-400">Admin: admin@aasthaseva.com (admin123)</span>
+                <span className="text-stone-600 dark:text-stone-400">Manager: manager@aasthaseva.com (manager123)</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

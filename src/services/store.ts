@@ -965,6 +965,55 @@ export class StoreService {
     }
   }
 
+  static authenticateStaff(email: string, passcode: string): StaffUser | null {
+    const users = this.getStaffUsers();
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPass = passcode.trim();
+
+    if (!cleanEmail || !cleanPass) return null;
+
+    // Find staff user by email & passcode
+    const found = users.find(
+      (u) =>
+        u.email.toLowerCase() === cleanEmail &&
+        u.passcode === cleanPass &&
+        u.status === 'Active'
+    );
+
+    if (found) {
+      const nowFormatted = new Date().toLocaleString('en-IN', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+      });
+      this.saveStaffUser({ id: found.id, lastLogin: nowFormatted });
+      return { ...found, lastLogin: nowFormatted };
+    }
+
+    // Master fallback credentials for Admin
+    if (
+      (cleanEmail === 'admin@aasthaseva.com' || cleanEmail === 'admin@aasthaserasta.com' || cleanEmail === 'admin') &&
+      (cleanPass === 'admin123' || cleanPass === 'mahakal')
+    ) {
+      const adminUser = users.find((u) => u.role === 'Admin') || users[0];
+      const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+      this.saveStaffUser({ id: adminUser.id, lastLogin: nowFormatted });
+      return { ...adminUser, lastLogin: nowFormatted };
+    }
+
+    // Master fallback credentials for Manager
+    if (
+      (cleanEmail === 'manager@aasthaseva.com' || cleanEmail === 'manager@aasthaserasta.com' || cleanEmail === 'manager') &&
+      (cleanPass === 'manager123')
+    ) {
+      const managerUser = users.find((u) => u.role === 'Manager') || users[1] || users[0];
+      const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+      this.saveStaffUser({ id: managerUser.id, lastLogin: nowFormatted });
+      return { ...managerUser, lastLogin: nowFormatted };
+    }
+
+    return null;
+  }
+
   static authenticateStaffPasscode(passcode: string): StaffUser | null {
     const users = this.getStaffUsers();
     const cleanPass = passcode.trim().toLowerCase();
