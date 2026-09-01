@@ -400,18 +400,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
               </button>
             </form>
 
-            {/* Quick Demo Credentials Help */}
-            <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-800 text-[11px] text-stone-500 dark:text-stone-400 space-y-1.5">
-              <div className="font-semibold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-                <Info className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span>Default Portal Access Credentials:</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[10px] font-mono pt-1">
-                <span className="text-amber-700 dark:text-amber-400">Admin: admin@aasthaseva.com (admin123)</span>
-                <span className="text-stone-600 dark:text-stone-400">Manager: manager@aasthaseva.com (manager123)</span>
-              </div>
+            {/* Secure Portal Notice */}
+            <div className="pt-1 text-center">
+              <p className="text-[11px] text-stone-400 dark:text-stone-500 flex items-center justify-center gap-1.5">
+                <Lock className="w-3 h-3 text-amber-600/70" />
+                <span>Secured 256-bit encrypted administrative session</span>
+              </p>
             </div>
-
           </div>
         </div>
       </div>
