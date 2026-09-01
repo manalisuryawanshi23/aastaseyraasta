@@ -114,7 +114,16 @@ function syncApiPost(endpoint: string, data: any) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    }).catch((err) => console.log(`[API SYNC NOTICE] POST ${endpoint} notice:`, err));
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          console.error(`[API SYNC ERROR] POST ${endpoint} failed (${res.status}):`, errData);
+        } else {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        }
+      })
+      .catch((err) => console.log(`[API SYNC NOTICE] POST ${endpoint} notice:`, err));
   }
 }
 
@@ -122,7 +131,11 @@ function syncApiDelete(endpoint: string) {
   if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
     fetch(endpoint, {
       method: 'DELETE',
-    }).catch((err) => console.log(`[API SYNC NOTICE] DELETE ${endpoint} notice:`, err));
+    })
+      .then(() => {
+        window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+      })
+      .catch((err) => console.log(`[API SYNC NOTICE] DELETE ${endpoint} notice:`, err));
   }
 }
 
@@ -140,40 +153,29 @@ export class StoreService {
     return this.getSettings();
   }
 
-  static updateSettings(settings: SiteSettings): SiteSettings {
-    setItem(KEYS.SETTINGS, settings);
-    if (settings.brandPalette) {
-      applyBrandColorPalette(settings.brandPalette);
+  static saveSettings(settings: Partial<SiteSettings>): SiteSettings {
+    const current = this.getSettings();
+    const updated = { ...current, ...settings };
+    setItem(KEYS.SETTINGS, updated);
+    if (updated.brandPalette) {
+      applyBrandColorPalette(updated.brandPalette);
     }
-    window.dispatchEvent(new CustomEvent('settings-updated', { detail: settings }));
-    syncApiPost('/api/settings', settings);
-    return settings;
+    syncApiPost('/api/settings', updated);
+    return updated;
+  }
+
+  static updateSettings(settings: SiteSettings): SiteSettings {
+    return this.saveSettings(settings);
   }
 
   // Categories
   static getCategories(): PoojaCategory[] {
-    const saved = getItem<PoojaCategory[]>(KEYS.CATEGORIES, initialPoojaCategories);
-    const savedIds = new Set(saved.map((c) => c.id));
-    const missing = initialPoojaCategories.filter((c) => !savedIds.has(c.id));
-    let list = saved.map((c) => {
-      const init = initialPoojaCategories.find((ic) => ic.id === c.id);
-      if (init) {
-        return {
-          ...init,
-          ...c,
-          name: c.name || init.name,
-          hindiName: c.hindiName || init.hindiName,
-          description: c.description || init.description,
-          hindiDescription: c.hindiDescription || init.hindiDescription,
-        };
-      }
-      return c;
-    });
-    if (missing.length > 0) {
-      list = [...list, ...missing];
-      setItem(KEYS.CATEGORIES, list);
-    }
-    return list;
+    return getItem<PoojaCategory[]>(KEYS.CATEGORIES, initialPoojaCategories);
+  }
+
+  static getCategoryBySlug(slug: string): PoojaCategory | undefined {
+    const cats = this.getCategories();
+    return cats.find((c) => c.slug === slug || c.id === slug);
   }
 
   // Poojas
@@ -183,20 +185,32 @@ export class StoreService {
     const missing = initialPoojas.filter((p) => !savedIds.has(p.id));
 
     let list = saved.map((p) => {
-      const init = initialPoojas.find((i) => i.id === p.id || i.slug === p.slug);
+      const init = initialPoojas.find((ip) => ip.id === p.id);
       if (init) {
         return {
-          ...init,
           ...p,
+          ...init,
           name: p.name || init.name,
           hindiName: p.hindiName || init.hindiName,
+          slug: p.slug || init.slug,
+          categoryId: p.categoryId || init.categoryId,
+          categoryName: p.categoryName || init.categoryName,
+          hindiCategoryName: p.hindiCategoryName || init.hindiCategoryName,
           shortDescription: p.shortDescription || init.shortDescription,
+          hindiShortDescription: p.hindiShortDescription || init.hindiShortDescription,
           description: p.description || init.description,
+          hindiDescription: p.hindiDescription || init.hindiDescription,
           templeName: p.templeName || init.templeName,
+          hindiTempleName: p.hindiTempleName || init.hindiTempleName,
           location: p.location || init.location,
+          hindiLocation: p.hindiLocation || init.hindiLocation,
           city: p.city || init.city,
-          state: p.state || init.state,
+          hindiCity: p.hindiCity || init.hindiCity,
           duration: p.duration || init.duration,
+          hindiDuration: p.hindiDuration || init.hindiDuration,
+          price: p.price ?? init.price,
+          featuredImage: p.featuredImage || init.featuredImage,
+          gallery: p.gallery && p.gallery.length > 0 ? p.gallery : init.gallery,
           whatWeOffer: p.whatWeOffer && p.whatWeOffer.length > 0 ? p.whatWeOffer : init.whatWeOffer,
           hindiWhatWeOffer: p.hindiWhatWeOffer && p.hindiWhatWeOffer.length > 0 ? p.hindiWhatWeOffer : init.hindiWhatWeOffer,
           benefits: p.benefits && p.benefits.length > 0 ? p.benefits : init.benefits,
@@ -205,6 +219,9 @@ export class StoreService {
           faqs: p.faqs && p.faqs.length > 0 ? p.faqs : init.faqs,
           quickAnswer: p.quickAnswer || init.quickAnswer,
           h1: p.h1 || init.h1,
+          isPublished: p.isPublished !== undefined ? p.isPublished : init.isPublished,
+          isFeatured: p.isFeatured !== undefined ? p.isFeatured : init.isFeatured,
+          sortOrder: p.sortOrder !== undefined ? p.sortOrder : init.sortOrder,
         };
       }
       return p;
@@ -219,9 +236,7 @@ export class StoreService {
       const orderA = a.sortOrder ?? 9999;
       const orderB = b.sortOrder ?? 9999;
       if (orderA !== orderB) return orderA - orderB;
-      const idxA = initialPoojas.findIndex((x) => x.id === a.id);
-      const idxB = initialPoojas.findIndex((x) => x.id === b.id);
-      return idxA - idxB;
+      return 0;
     });
 
     if (publishedOnly) {
@@ -231,20 +246,43 @@ export class StoreService {
   }
 
   static getPoojaBySlug(slug: string): PoojaService | undefined {
+    if (!slug) return undefined;
     const poojas = this.getPoojas(false);
-    return poojas.find((p) => p.slug === slug);
+    const cleanSlug = slug.toLowerCase().trim();
+    return poojas.find(
+      (p) =>
+        p.slug === slug ||
+        p.id === slug ||
+        p.slug.toLowerCase() === cleanSlug ||
+        p.urlSlug === `/pooja/${slug}` ||
+        p.urlSlug === `/${slug}`
+    );
   }
 
   static savePooja(pooja: Partial<PoojaService> & { id?: string }): PoojaService {
     const poojas = this.getPoojas(false);
     const now = new Date().toISOString();
 
-    if (pooja.id) {
+    const cleanId = pooja.id && pooja.id.trim() ? pooja.id.trim() : `pooja-${Date.now()}`;
+    const cleanName = pooja.name && pooja.name.trim() ? pooja.name.trim() : 'New Pooja Ritual';
+    const fallbackSlug = cleanName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
+    const cleanSlug = pooja.slug && pooja.slug.trim()
+      ? pooja.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
+
+    if (pooja.id && pooja.id.trim()) {
       const idx = poojas.findIndex((p) => p.id === pooja.id);
       if (idx !== -1) {
         const updated = {
           ...poojas[idx],
           ...pooja,
+          id: cleanId,
+          name: cleanName,
+          slug: cleanSlug,
           updatedAt: now,
         } as PoojaService;
         poojas[idx] = updated;
@@ -256,20 +294,28 @@ export class StoreService {
 
     // New item
     const newPooja: PoojaService = {
-      id: `pooja-${Date.now()}`,
-      name: pooja.name || 'New Pooja Ritual',
-      slug: pooja.slug || `pooja-${Date.now()}`,
-      categoryId: pooja.categoryId || 'cat-temple',
-      shortDescription: pooja.shortDescription || '',
-      city: pooja.city || 'Ujjain',
-      state: pooja.state || 'Madhya Pradesh',
+      categoryId: 'cat-temple',
+      categoryName: 'Temple Pooja Services',
+      shortDescription: '',
+      description: '',
+      templeName: 'Mahakaleshwar Temple',
+      location: 'Mahakal Marg, Ujjain',
+      city: 'Ujjain',
+      state: 'Madhya Pradesh',
       country: 'India',
-      isFeatured: pooja.isFeatured || false,
-      isPublished: pooja.isPublished ?? true,
+      duration: '2 Hours',
+      price: null,
+      priceType: 'Custom / On Request',
+      featuredImage: '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
+      isFeatured: false,
+      isPublished: true,
       createdAt: now,
       updatedAt: now,
       publishedAt: now,
       ...pooja,
+      id: cleanId,
+      name: cleanName,
+      slug: cleanSlug,
     } as PoojaService;
 
     poojas.unshift(newPooja);
@@ -341,9 +387,7 @@ export class StoreService {
       const orderA = a.sortOrder ?? 9999;
       const orderB = b.sortOrder ?? 9999;
       if (orderA !== orderB) return orderA - orderB;
-      const idxA = initialTours.findIndex((x) => x.id === a.id);
-      const idxB = initialTours.findIndex((x) => x.id === b.id);
-      return idxA - idxB;
+      return 0;
     });
 
     if (publishedOnly) {
@@ -353,20 +397,36 @@ export class StoreService {
   }
 
   static getTourBySlug(slug: string): Tour | undefined {
+    if (!slug) return undefined;
     const tours = this.getTours(false);
-    return tours.find((t) => t.slug === slug);
+    const cleanSlug = slug.toLowerCase().trim();
+    return tours.find((t) => t.slug === slug || t.id === slug || t.slug.toLowerCase() === cleanSlug);
   }
 
   static saveTour(tour: Partial<Tour> & { id?: string }): Tour {
     const tours = this.getTours(false);
     const now = new Date().toISOString();
 
-    if (tour.id) {
+    const cleanId = tour.id && tour.id.trim() ? tour.id.trim() : `tour-${Date.now()}`;
+    const cleanName = (tour.name || (tour as any).title || '').trim() || 'New Spiritual Tour';
+    const fallbackSlug = cleanName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
+    const cleanSlug = tour.slug && tour.slug.trim()
+      ? tour.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
+
+    if (tour.id && tour.id.trim()) {
       const idx = tours.findIndex((t) => t.id === tour.id);
       if (idx !== -1) {
         const updated = {
           ...tours[idx],
           ...tour,
+          id: cleanId,
+          name: cleanName,
+          slug: cleanSlug,
           updatedAt: now,
         } as Tour;
         tours[idx] = updated;
@@ -377,22 +437,22 @@ export class StoreService {
     }
 
     const newTour: Tour = {
-      id: `tour-${Date.now()}`,
-      name: tour.name || 'New Spiritual Tour',
-      slug: tour.slug || `tour-${Date.now()}`,
-      shortDescription: tour.shortDescription || '',
-      startingPoint: tour.startingPoint || 'Ujjain',
-      endingPoint: tour.endingPoint || 'Ujjain',
-      destinations: tour.destinations || ['Ujjain'],
-      placesCovered: tour.placesCovered || [],
-      templesCovered: tour.templesCovered || [],
-      itinerary: tour.itinerary || [],
-      isFeatured: tour.isFeatured || false,
-      isPublished: tour.isPublished ?? true,
+      shortDescription: '',
+      startingPoint: 'Ujjain',
+      endingPoint: 'Ujjain',
+      destinations: ['Ujjain'],
+      placesCovered: [],
+      templesCovered: [],
+      itinerary: [],
+      isFeatured: false,
+      isPublished: true,
       createdAt: now,
       updatedAt: now,
       publishedAt: now,
       ...tour,
+      id: cleanId,
+      name: cleanName,
+      slug: cleanSlug,
     } as Tour;
 
     tours.unshift(newTour);

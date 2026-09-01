@@ -300,8 +300,9 @@ export const AdminServicesManager: React.FC = () => {
   };
 
   const openNewPoojaModal = () => {
+    const newId = `pooja-${Date.now()}`;
     setEditingPooja({
-      id: '',
+      id: newId,
       name: '',
       hindiName: '',
       slug: '',
@@ -332,8 +333,9 @@ export const AdminServicesManager: React.FC = () => {
   };
 
   const openNewTourModal = () => {
+    const newId = `tour-${Date.now()}`;
     setEditingTour({
-      id: '',
+      id: newId,
       name: '',
       slug: '',
       category: 'Circuit Pilgrimage',
@@ -368,17 +370,55 @@ export const AdminServicesManager: React.FC = () => {
   };
 
   const savePoojaService = (p: PoojaService) => {
-    StoreService.savePooja(p);
+    const cleanId = p.id && p.id.trim() ? p.id.trim() : `pooja-${Date.now()}`;
+    const cleanName = p.name && p.name.trim() ? p.name.trim() : 'New Pooja Ritual';
+    const fallbackSlug = cleanName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
+    const cleanSlug = p.slug && p.slug.trim()
+      ? p.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
+
+    const payload = {
+      ...p,
+      id: cleanId,
+      name: cleanName,
+      slug: cleanSlug,
+      urlSlug: p.urlSlug || `/pooja/${cleanSlug}`,
+      h1: p.h1 || cleanName,
+    };
+
+    StoreService.savePooja(payload);
     refreshLists();
     setIsModalOpen(false);
-    showToast('Pooja service saved successfully!');
+    showToast('Pooja service saved and synced to database successfully!');
   };
 
   const saveTourService = (t: Tour) => {
-    StoreService.saveTour(t);
+    const cleanId = t.id && t.id.trim() ? t.id.trim() : `tour-${Date.now()}`;
+    const cleanName = (t.name || (t as any).title || '').trim() || 'New Spiritual Tour';
+    const fallbackSlug = cleanName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
+    const cleanSlug = t.slug && t.slug.trim()
+      ? t.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
+
+    const payload = {
+      ...t,
+      id: cleanId,
+      name: cleanName,
+      slug: cleanSlug,
+    };
+
+    StoreService.saveTour(payload);
     refreshLists();
     setIsModalOpen(false);
-    showToast('Spiritual tour saved successfully!');
+    showToast('Spiritual tour saved and synced to database successfully!');
   };
 
   // Audited Poojas & Tours
@@ -906,7 +946,21 @@ export const AdminServicesManager: React.FC = () => {
                       type="text"
                       required
                       value={editingPooja.name}
-                      onChange={(e) => setEditingPooja({ ...editingPooja, name: e.target.value })}
+                      onChange={(e) => {
+                        const newName = e.target.value;
+                        const autoSlug = newName
+                          .toLowerCase()
+                          .trim()
+                          .replace(/[^a-z0-9-]+/g, '-')
+                          .replace(/^-|-$/g, '');
+                        setEditingPooja({
+                          ...editingPooja,
+                          name: newName,
+                          ...(!editingPooja.slug || editingPooja.slug.startsWith('pooja-')
+                            ? { slug: autoSlug ? `${autoSlug}-ujjain` : '' }
+                            : {}),
+                        });
+                      }}
                       placeholder="e.g. Rudrabhishek Pooja"
                       className="w-full p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
                     />

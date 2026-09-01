@@ -393,9 +393,20 @@ async function startServer() {
 
   app.post('/api/poojas', async (req, res) => {
     const p = req.body;
-    if (!p.id || !p.name || !p.slug) {
-      return res.status(400).json({ success: false, error: 'Missing required fields (id, name, slug)' });
+    if (!p) {
+      return res.status(400).json({ success: false, error: 'Missing request body' });
     }
+
+    const id = p.id && String(p.id).trim() ? String(p.id).trim() : `pooja-${Date.now()}`;
+    const name = p.name && String(p.name).trim() ? String(p.name).trim() : 'New Pooja Ritual';
+    const fallbackSlug = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
+    const slug = p.slug && String(p.slug).trim()
+      ? String(p.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
     if (isDbConnected()) {
       try {
         await execute(
@@ -473,21 +484,21 @@ async function startServer() {
             meta_title = VALUES(meta_title),
             sort_order = VALUES(sort_order)`,
           [
-            p.id,
-            p.name,
+            id,
+            name,
             p.hindiName || '',
-            p.slug,
-            p.categoryId || '',
-            p.categoryName || '',
+            slug,
+            p.categoryId || 'cat-temple',
+            p.categoryName || 'Temple Pooja Services',
             p.hindiCategoryName || '',
-            p.pageType || p.categoryName || '',
+            p.pageType || p.categoryName || 'Temple Pooja Services',
             p.primaryKeyword || p.focusKeyword || '',
             JSON.stringify(p.secondaryKeywords || []),
             p.searchIntent || '',
             p.seoTitle || p.metaTitle || '',
             p.metaDescription || '',
-            p.urlSlug || `/pooja/${p.slug}`,
-            p.h1 || p.name,
+            p.urlSlug || `/pooja/${slug}`,
+            p.h1 || name,
             p.quickAnswer || '',
             p.shortDescription || '',
             p.hindiShortDescription || '',
@@ -497,12 +508,12 @@ async function startServer() {
             p.hindiTempleName || '',
             p.location || '',
             p.hindiLocation || '',
-            p.city || '',
-            p.hindiCity || '',
-            p.price || 0,
-            p.originalPrice || null,
-            p.advanceBookingAmount || null,
-            p.duration || '',
+            p.city || 'Ujjain',
+            p.hindiCity || 'उज्जैन',
+            p.price && !isNaN(Number(p.price)) ? Number(p.price) : 0,
+            p.originalPrice && !isNaN(Number(p.originalPrice)) ? Number(p.originalPrice) : null,
+            p.advanceBookingAmount && !isNaN(Number(p.advanceBookingAmount)) ? Number(p.advanceBookingAmount) : null,
+            p.duration || '2 Hours',
             p.hindiDuration || '',
             p.timing || '',
             p.hindiTiming || '',
@@ -510,8 +521,8 @@ async function startServer() {
             p.prasadHomeDelivery ? 1 : 0,
             p.liveVideoAvailable ? 1 : 0,
             p.vipEntryPass ? 1 : 0,
-            p.panditCount || 1,
-            p.featuredImage || p.image || p.ogImage || '',
+            p.panditCount && !isNaN(Number(p.panditCount)) ? Number(p.panditCount) : 1,
+            p.featuredImage || p.image || p.ogImage || '/assets/images/pooja_rudrabhishek_1786196070818.jpg',
             JSON.stringify(p.gallery || p.galleryImages || []),
             JSON.stringify(p.whatWeOffer || []),
             JSON.stringify(p.benefits || []),
@@ -523,7 +534,7 @@ async function startServer() {
             JSON.stringify(p.internalLinks || []),
             JSON.stringify(p.imageSeo || {}),
             JSON.stringify(p.schemaTypes || []),
-            p.qualityScore || 95,
+            p.qualityScore && !isNaN(Number(p.qualityScore)) ? Number(p.qualityScore) : 95,
             p.idealFor || '',
             p.hindiIdealFor || '',
             p.auspiciousDays || '',
@@ -533,16 +544,16 @@ async function startServer() {
             p.isFeatured ? 1 : 0,
             p.isPublished !== false ? 1 : 0,
             p.seoTitle || p.metaTitle || '',
-            p.sortOrder || 0,
+            p.sortOrder && !isNaN(Number(p.sortOrder)) ? Number(p.sortOrder) : 0,
           ]
         );
-        return res.json({ success: true, message: 'Pooja saved to MySQL', data: p });
+        return res.json({ success: true, message: 'Pooja saved to MySQL', data: { ...p, id, name, slug } });
       } catch (err: any) {
         console.error('[DB ERROR] Failed to save pooja:', err);
         return res.status(500).json({ success: false, error: err?.message || String(err) });
       }
     }
-    res.json({ success: true, message: 'Pooja saved in-memory (DB not connected)', data: p });
+    res.json({ success: true, message: 'Pooja saved in-memory (DB not connected)', data: { ...p, id, name, slug } });
   });
 
   app.delete('/api/poojas/:id', async (req, res) => {
@@ -658,9 +669,20 @@ async function startServer() {
 
   app.post('/api/tours', async (req, res) => {
     const t = req.body;
-    if (!t.id || !t.slug) {
-      return res.status(400).json({ success: false, error: 'Missing required fields (id, slug)' });
+    if (!t) {
+      return res.status(400).json({ success: false, error: 'Missing request body' });
     }
+
+    const id = t.id && String(t.id).trim() ? String(t.id).trim() : `tour-${Date.now()}`;
+    const name = (t.name || t.title || '').trim() || 'New Spiritual Tour';
+    const fallbackSlug = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
+    const slug = t.slug && String(t.slug).trim()
+      ? String(t.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+      : fallbackSlug;
     if (isDbConnected()) {
       try {
         await execute(
@@ -728,17 +750,17 @@ async function startServer() {
             hindi_temples_covered_json = VALUES(hindi_temples_covered_json),
             sort_order = VALUES(sort_order)`,
           [
-            t.id,
-            t.name || t.title || '',
+            id,
+            name,
             t.hindiName || t.hindiTitle || '',
-            t.slug,
-            t.duration || '',
+            slug,
+            t.duration || '2 Days / 1 Night',
             t.hindiDuration || '',
-            t.price || 0,
-            t.originalPrice || null,
+            t.price && !isNaN(Number(t.price)) ? Number(t.price) : 0,
+            t.originalPrice && !isNaN(Number(t.originalPrice)) ? Number(t.originalPrice) : null,
             t.badge || '',
             t.hindiBadge || '',
-            t.featuredImage || t.image || '',
+            t.featuredImage || t.image || '/assets/images/header_bg_spiritual_1786196057015.jpg',
             JSON.stringify(t.gallery || t.galleryImages || []),
             t.pickupLocation || t.startingPoint || '',
             t.hindiPickupLocation || t.hindiStartingPoint || '',
