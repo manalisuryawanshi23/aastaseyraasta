@@ -249,7 +249,7 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-4">
         
         {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto flex-nowrap w-full sm:w-auto pb-2 sm:pb-0 scrollbar-none touch-pan-x">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isActive = activeCategory === cat.id;

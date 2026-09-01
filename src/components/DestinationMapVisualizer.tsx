@@ -169,7 +169,7 @@ export const DestinationMapVisualizer: React.FC<DestinationMapVisualizerProps> =
         </div>
 
         {/* Category Filters Toolbar */}
-        <div className="flex items-center gap-2 overflow-x-auto pt-2 scrollbar-none">
+        <div className="w-full flex items-center gap-2 overflow-x-auto flex-nowrap pt-2 pb-1 scrollbar-none touch-pan-x">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isActive = selectedCategory === cat.id;

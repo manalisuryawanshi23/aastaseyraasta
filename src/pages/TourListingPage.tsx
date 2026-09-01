@@ -158,14 +158,14 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
             />
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="w-full flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 pt-1 scrollbar-none touch-pan-x">
             {categories.map((cat) => {
               const active = selectedCategory === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                     active
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'

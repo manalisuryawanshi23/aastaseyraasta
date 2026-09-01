@@ -545,8 +545,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
           {/* Category Tabs — horizontally scrollable on mobile, centred on desktop */}
           <FadeIn delay={100} direction="up">
-            <div className="-mx-4 px-4 sm:mx-0 sm:px-0 flex justify-start sm:justify-center">
-              <div className="flex items-center gap-1 bg-white dark:bg-[#1C1917] p-1.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-xs overflow-x-auto scrollbar-none touch-pan-x">
+            <div className="w-full flex justify-start sm:justify-center overflow-x-auto scrollbar-none touch-pan-x pb-2">
+              <div className="flex items-center flex-nowrap gap-1 bg-white dark:bg-[#1C1917] p-1.5 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-xs">
                 {tourTabs.map((tab) => {
                   const active = activeTourTab === tab.id;
                   const labelText = language === 'hi' ? tab.hindiLabel : tab.label;
@@ -554,7 +554,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
                     <button
                       key={tab.id}
                       onClick={() => setActiveTourTab(tab.id as any)}
-                      className={`px-3 sm:px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 ${
+                      className={`px-3 sm:px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                         active
                           ? 'bg-rose-600 text-white shadow-md shadow-rose-900/20'
                           : 'text-stone-600 dark:text-stone-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-stone-50 dark:hover:bg-stone-900/60'
@@ -847,34 +847,36 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
 
           {/* Category Navigation Tabs */}
           <FadeIn delay={50} direction="up">
-            <div className="flex justify-start md:justify-center overflow-x-auto pb-2 -mx-4 px-4 scrollbar-none whitespace-nowrap md:mx-0 md:px-0 gap-8 border-b border-stone-200/60 dark:border-stone-800 max-w-4xl mx-auto">
-              {(['All Photos', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
-                const isActive = galleryFilter === cat;
-                const displayLabel = language === 'hi'
-                  ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Pooja' ? 'पूजा' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
-                  : cat.toUpperCase();
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => {
-                      setGalleryFilter(cat);
-                      setLightboxIndex(null);
-                    }}
-                    className={`pb-3 text-xs sm:text-sm font-bold transition-all border-b-2 outline-hidden ${
-                      isActive
-                        ? 'border-rose-700 text-rose-700 dark:border-rose-500 dark:text-rose-455 font-extrabold'
-                        : 'border-transparent text-stone-500 dark:text-stone-400 hover:text-rose-600 dark:hover:text-rose-450'
-                    }`}
-                  >
-                    {displayLabel}
-                  </button>
-                );
-              })}
+            <div className="w-full overflow-x-auto scrollbar-none touch-pan-x pb-1">
+              <div className="flex items-center justify-start md:justify-center flex-nowrap gap-4 sm:gap-6 md:gap-8 px-4 sm:px-0 border-b border-stone-200/60 dark:border-stone-800 max-w-4xl mx-auto min-w-max md:min-w-0">
+                {(['All Photos', 'Pooja', 'Ujjain Yatra', 'Omkareshwar', 'Himalayan Yatra', 'Trekking'] as const).map((cat) => {
+                  const isActive = galleryFilter === cat;
+                  const displayLabel = language === 'hi'
+                    ? (cat === 'All Photos' ? 'सभी तस्वीरें' : cat === 'Pooja' ? 'पूजा' : cat === 'Ujjain Yatra' ? 'उज्जैन यात्रा' : cat === 'Omkareshwar' ? 'ओंकारेश्वर' : cat === 'Himalayan Yatra' ? 'हिमालयन यात्रा' : 'ट्रेकिंग')
+                    : cat.toUpperCase();
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setGalleryFilter(cat);
+                        setLightboxIndex(null);
+                      }}
+                      className={`pb-3 text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all border-b-2 outline-hidden cursor-pointer ${
+                        isActive
+                          ? 'border-rose-700 text-rose-700 dark:border-rose-500 dark:text-rose-455 font-extrabold'
+                          : 'border-transparent text-stone-500 dark:text-stone-400 hover:text-rose-600 dark:hover:text-rose-450'
+                      }`}
+                    >
+                      {displayLabel}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </FadeIn>
 
           {/* Horizontal Image Carousel Wrapper */}
-          <div className="relative px-4 md:px-12">
+          <div className="relative px-2 sm:px-4 md:px-12 max-w-full overflow-hidden">
             
             {/* Carousel Navigation Arrow Controls (Desktop Only) */}
             {filteredGalleryItems.length > 0 && (

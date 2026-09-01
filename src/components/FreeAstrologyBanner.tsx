@@ -22,7 +22,7 @@ export const FreeAstrologyBanner: React.FC<FreeAstrologyBannerProps> = ({
   const { language } = useLanguage();
 
   return (
-    <section className="relative z-20 -mt-6 sm:-mt-8 px-4 max-w-7xl mx-auto">
+    <section className="relative z-20 py-4 sm:-mt-8 sm:mb-4 px-4 max-w-7xl mx-auto">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#2D160E] via-[#1E110A] to-[#120B07] text-white border border-amber-500/40 shadow-2xl p-5 sm:p-7 md:p-8 transition-all hover:border-amber-400/60 group">
         
         {/* Subtle Decorative Golden Glow in Corner */}
@@ -30,7 +30,7 @@ export const FreeAstrologyBanner: React.FC<FreeAstrologyBannerProps> = ({
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-700/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Decorative Celestial Zodiac / Kundli Wheel (Watermark on Right at Low Opacity) */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 sm:translate-x-4 md:translate-x-0 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 pointer-events-none opacity-20 dark:opacity-25 transition-transform duration-700 group-hover:rotate-12 group-hover:scale-105">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 sm:translate-x-4 md:translate-x-0 w-56 sm:w-80 md:w-96 h-56 sm:h-80 md:h-96 pointer-events-none opacity-10 sm:opacity-20 dark:opacity-25 transition-transform duration-700 group-hover:rotate-12 group-hover:scale-105">
           <svg
             viewBox="0 0 200 200"
             className="w-full h-full text-amber-300 fill-none stroke-current stroke-[0.75]"

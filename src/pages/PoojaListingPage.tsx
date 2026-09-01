@@ -144,12 +144,12 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
           </div>
 
           {/* Categories Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+          <div className="w-full md:w-auto flex items-center gap-2 overflow-x-auto flex-nowrap pb-2 md:pb-0 scrollbar-none touch-pan-x">
             <button
               onClick={() => setSelectedCat('all')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                 selectedCat === 'all'
-                  ? 'bg-amber-800 text-white'
+                  ? 'bg-amber-800 text-white shadow-sm'
                   : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
@@ -161,9 +161,9 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCat(cat.id)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
+                  className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                     selectedCat === cat.id
-                      ? 'bg-amber-800 text-white'
+                      ? 'bg-amber-800 text-white shadow-sm'
                       : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-700'
                   }`}
                 >
