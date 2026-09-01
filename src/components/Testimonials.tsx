@@ -40,6 +40,14 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
     return propTestimonials || StoreService.getTestimonials();
   });
 
+  useEffect(() => {
+    const handleSync = () => {
+      setAllTestimonials(propTestimonials || StoreService.getTestimonials());
+    };
+    window.addEventListener('aastha:data-synced', handleSync);
+    return () => window.removeEventListener('aastha:data-synced', handleSync);
+  }, [propTestimonials]);
+
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('carousel');
   const [carouselIndex, setCarouselIndex] = useState(0);

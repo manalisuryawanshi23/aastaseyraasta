@@ -647,7 +647,26 @@ export class StoreService {
 
   // Testimonials
   static getTestimonials(): Testimonial[] {
-    return getItem<Testimonial[]>(KEYS.TESTIMONIALS, initialTestimonials);
+    const saved = getItem<Testimonial[]>(KEYS.TESTIMONIALS, initialTestimonials);
+    const savedIds = new Set(saved.map((t) => t.id));
+    const missing = initialTestimonials.filter((t) => !savedIds.has(t.id));
+
+    let list = saved.map((t) => {
+      const init = initialTestimonials.find((it) => it.id === t.id);
+      if (init) {
+        return {
+          ...init,
+          ...t,
+        };
+      }
+      return t;
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing];
+      setItem(KEYS.TESTIMONIALS, list);
+    }
+    return list;
   }
 
   static saveTestimonial(t: Partial<Testimonial> & { id?: string }): Testimonial {
@@ -660,6 +679,7 @@ export class StoreService {
         const updated = { ...list[idx], ...t } as Testimonial;
         list[idx] = updated;
         setItem(KEYS.TESTIMONIALS, list);
+        syncApiPost('/api/testimonials', updated);
         return updated;
       }
     }
@@ -678,6 +698,7 @@ export class StoreService {
 
     list.unshift(newT);
     setItem(KEYS.TESTIMONIALS, list);
+    syncApiPost('/api/testimonials', newT);
     return newT;
   }
 
@@ -688,6 +709,7 @@ export class StoreService {
       const current = list[idx].helpfulCount || 0;
       list[idx].helpfulCount = current + 1;
       setItem(KEYS.TESTIMONIALS, list);
+      fetch(`/api/testimonials/${id}/helpful`, { method: 'POST' }).catch(() => {});
       return list[idx].helpfulCount;
     }
     return 0;
@@ -696,6 +718,7 @@ export class StoreService {
   static deleteTestimonial(id: string): void {
     const list = this.getTestimonials().filter((t) => t.id !== id);
     setItem(KEYS.TESTIMONIALS, list);
+    syncApiDelete(`/api/testimonials/${id}`);
   }
 
   // Gallery

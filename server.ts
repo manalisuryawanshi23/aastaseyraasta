@@ -59,6 +59,7 @@ import {
   initialBlogPosts,
   initialFAQs,
   initialGalleryItems,
+  initialTestimonials,
 } from './src/data/initialData';
 import { generateSitemapXml } from './scripts/generateSitemap';
 import { testConnection, query, execute, isDbConnected, getDbConfigDetails, getLastDbError } from './src/db/mysql';
@@ -1209,6 +1210,130 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
+  });
+
+  // 7.6. Testimonials (GET, POST, HELPFUL, DELETE)
+  app.get('/api/testimonials', async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query('SELECT * FROM testimonials ORDER BY created_at DESC');
+        const formatted = rows.map((t: any) => ({
+          id: t.id,
+          name: t.name,
+          hindiName: t.hindi_name || undefined,
+          location: t.location || 'India',
+          hindiLocation: t.hindi_location || undefined,
+          rating: Number(t.rating) || 5,
+          testimonial: t.testimonial,
+          hindiTestimonial: t.hindi_testimonial || undefined,
+          photo: t.photo || undefined,
+          service: t.service || undefined,
+          hindiService: t.hindi_service || undefined,
+          tour: t.tour || undefined,
+          category: t.category || 'Pooja',
+          date: t.date || undefined,
+          verified: Boolean(t.verified),
+          helpfulCount: Number(t.helpful_count) || 0,
+          reviewImage: t.review_image || undefined,
+          isFeatured: Boolean(t.is_featured),
+          isPublished: Boolean(t.is_published),
+          createdAt: t.created_at ? new Date(t.created_at).toISOString() : new Date().toISOString(),
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to fetch testimonials:', err);
+      }
+    }
+    res.json({ success: true, data: initialTestimonials });
+  });
+
+  app.post('/api/testimonials', async (req, res) => {
+    const t = req.body;
+    if (!t.id || !t.name || !t.testimonial) {
+      return res.status(400).json({ success: false, error: 'Missing required fields (id, name, testimonial)' });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO testimonials (
+            id, name, hindi_name, location, hindi_location, rating, testimonial, hindi_testimonial,
+            photo, service, hindi_service, tour, category, date, verified, helpful_count, review_image,
+            is_featured, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            name = VALUES(name),
+            hindi_name = VALUES(hindi_name),
+            location = VALUES(location),
+            hindi_location = VALUES(hindi_location),
+            rating = VALUES(rating),
+            testimonial = VALUES(testimonial),
+            hindi_testimonial = VALUES(hindi_testimonial),
+            photo = VALUES(photo),
+            service = VALUES(service),
+            hindi_service = VALUES(hindi_service),
+            tour = VALUES(tour),
+            category = VALUES(category),
+            date = VALUES(date),
+            verified = VALUES(verified),
+            helpful_count = VALUES(helpful_count),
+            review_image = VALUES(review_image),
+            is_featured = VALUES(is_featured),
+            is_published = VALUES(is_published)`,
+          [
+            t.id,
+            t.name,
+            t.hindiName || '',
+            t.location || '',
+            t.hindiLocation || '',
+            t.rating || 5,
+            t.testimonial,
+            t.hindiTestimonial || '',
+            t.photo || '',
+            t.service || '',
+            t.hindiService || '',
+            t.tour || '',
+            t.category || 'Pooja',
+            t.date || '',
+            t.verified !== false ? 1 : 0,
+            t.helpfulCount || 0,
+            t.reviewImage || '',
+            t.isFeatured !== false ? 1 : 0,
+            t.isPublished !== false ? 1 : 0,
+          ]
+        );
+        return res.json({ success: true, message: 'Testimonial saved to MySQL', data: t });
+      } catch (err: any) {
+        console.error('[DB ERROR] Failed to save testimonial:', err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: 'Testimonial saved in-memory (DB not connected)', data: t });
+  });
+
+  app.post('/api/testimonials/:id/helpful', async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute('UPDATE testimonials SET helpful_count = helpful_count + 1 WHERE id = ?', [id]);
+        return res.json({ success: true, message: 'Helpful count incremented' });
+      } catch (err: any) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: 'Helpful count incremented (in-memory)' });
+  });
+
+  app.delete('/api/testimonials/:id', async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute('DELETE FROM testimonials WHERE id = ?', [id]);
+        return res.json({ success: true, message: `Testimonial ${id} deleted from MySQL` });
+      } catch (err: any) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Testimonial ${id} deleted (in-memory)` });
   });
 
   // 8. Leads (GET, POST, PUT, DELETE)

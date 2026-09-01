@@ -270,3 +270,27 @@ CREATE TABLE IF NOT EXISTS gallery_items (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS testimonials (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    hindi_name VARCHAR(255),
+    location VARCHAR(255),
+    hindi_location VARCHAR(255),
+    rating INT DEFAULT 5,
+    testimonial TEXT NOT NULL,
+    hindi_testimonial TEXT,
+    photo VARCHAR(550),
+    service VARCHAR(255),
+    hindi_service VARCHAR(255),
+    tour VARCHAR(255),
+    category VARCHAR(100) DEFAULT 'Pooja',
+    date VARCHAR(100),
+    verified TINYINT(1) DEFAULT 1,
+    helpful_count INT DEFAULT 0,
+    review_image VARCHAR(550),
+    is_featured TINYINT(1) DEFAULT 1,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

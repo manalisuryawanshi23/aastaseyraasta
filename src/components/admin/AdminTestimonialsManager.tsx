@@ -21,6 +21,12 @@ export const AdminTestimonialsManager: React.FC = () => {
   const [editingItem, setEditingItem] = useState<Testimonial | null>(null);
   const [toastMessage, setToastMessage] = useState('');
 
+  React.useEffect(() => {
+    const handleSync = () => setTestimonials(StoreService.getTestimonials());
+    window.addEventListener('aastha:data-synced', handleSync);
+    return () => window.removeEventListener('aastha:data-synced', handleSync);
+  }, []);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3000);

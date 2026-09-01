@@ -5577,6 +5577,25 @@ var initialFAQs = [
     createdAt: "2026-08-01T10:00:00Z"
   }
 ];
+var initialTestimonials = [
+  {
+    id: "test-1",
+    name: "Rajesh Sharma",
+    location: "Mumbai, Maharashtra",
+    rating: 5,
+    testimonial: "Aastha Sey Raasta Seva made our family Rudrabhishek at Ujjain so smooth and divine! Pandit ji explained every mantra and sankalp.",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+    service: "Rudrabhishek Pooja",
+    category: "Pooja",
+    date: "Shravan Somwar 2026",
+    verified: true,
+    helpfulCount: 42,
+    reviewImage: "/src/assets/images/pooja_rudrabhishek_1786196070818.jpg",
+    isFeatured: true,
+    isPublished: true,
+    createdAt: "2026-08-01T10:00:00Z"
+  }
+];
 var initialGalleryItems = [
   {
     id: "gal-1",
@@ -6187,6 +6206,29 @@ var TABLE_SCHEMAS = [
     is_published TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS testimonials (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    hindi_name VARCHAR(255),
+    location VARCHAR(255),
+    hindi_location VARCHAR(255),
+    rating INT DEFAULT 5,
+    testimonial TEXT NOT NULL,
+    hindi_testimonial TEXT,
+    photo VARCHAR(550),
+    service VARCHAR(255),
+    hindi_service VARCHAR(255),
+    tour VARCHAR(255),
+    category VARCHAR(100) DEFAULT 'Pooja',
+    date VARCHAR(100),
+    verified TINYINT(1) DEFAULT 1,
+    helpful_count INT DEFAULT 0,
+    review_image VARCHAR(550),
+    is_featured TINYINT(1) DEFAULT 1,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`
 ];
 async function autoInitializeDatabase() {
@@ -6200,6 +6242,7 @@ async function autoInitializeDatabase() {
       destinations: 0,
       faqs: 0,
       gallery: 0,
+      testimonials: 0,
       adminUsers: 0
     },
     error: null
@@ -6609,6 +6652,42 @@ async function autoInitializeDatabase() {
           ]
         );
         result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
+    }
+    const testimonialsCount = await query("SELECT COUNT(*) as count FROM testimonials");
+    if (testimonialsCount[0].count === 0) {
+      console.log("[AUTO-DB] Seeding default testimonials...");
+      for (const item of initialTestimonials) {
+        const t = item;
+        await execute(
+          `INSERT INTO testimonials (
+            id, name, hindi_name, location, hindi_location, rating, testimonial, hindi_testimonial,
+            photo, service, hindi_service, tour, category, date, verified, helpful_count, review_image,
+            is_featured, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            t.id,
+            t.name,
+            t.hindiName || "",
+            t.location || "",
+            t.hindiLocation || "",
+            t.rating || 5,
+            t.testimonial,
+            t.hindiTestimonial || "",
+            t.photo || "",
+            t.service || "",
+            t.hindiService || "",
+            t.tour || "",
+            t.category || "Pooja",
+            t.date || "",
+            t.verified !== false ? 1 : 0,
+            t.helpfulCount || 0,
+            t.reviewImage || "",
+            t.isFeatured !== false ? 1 : 0,
+            t.isPublished !== false ? 1 : 0
+          ]
+        );
+        result.seeded.testimonials = (result.seeded.testimonials || 0) + 1;
       }
     }
     console.log("[AUTO-DB] Migrating Sapt Sagar water body names in database...");
@@ -7967,6 +8046,125 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
+  });
+  app.get("/api/testimonials", async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query("SELECT * FROM testimonials ORDER BY created_at DESC");
+        const formatted = rows.map((t) => ({
+          id: t.id,
+          name: t.name,
+          hindiName: t.hindi_name || void 0,
+          location: t.location || "India",
+          hindiLocation: t.hindi_location || void 0,
+          rating: Number(t.rating) || 5,
+          testimonial: t.testimonial,
+          hindiTestimonial: t.hindi_testimonial || void 0,
+          photo: t.photo || void 0,
+          service: t.service || void 0,
+          hindiService: t.hindi_service || void 0,
+          tour: t.tour || void 0,
+          category: t.category || "Pooja",
+          date: t.date || void 0,
+          verified: Boolean(t.verified),
+          helpfulCount: Number(t.helpful_count) || 0,
+          reviewImage: t.review_image || void 0,
+          isFeatured: Boolean(t.is_featured),
+          isPublished: Boolean(t.is_published),
+          createdAt: t.created_at ? new Date(t.created_at).toISOString() : (/* @__PURE__ */ new Date()).toISOString()
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to fetch testimonials:", err);
+      }
+    }
+    res.json({ success: true, data: initialTestimonials });
+  });
+  app.post("/api/testimonials", async (req, res) => {
+    const t = req.body;
+    if (!t.id || !t.name || !t.testimonial) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, name, testimonial)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO testimonials (
+            id, name, hindi_name, location, hindi_location, rating, testimonial, hindi_testimonial,
+            photo, service, hindi_service, tour, category, date, verified, helpful_count, review_image,
+            is_featured, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            name = VALUES(name),
+            hindi_name = VALUES(hindi_name),
+            location = VALUES(location),
+            hindi_location = VALUES(hindi_location),
+            rating = VALUES(rating),
+            testimonial = VALUES(testimonial),
+            hindi_testimonial = VALUES(hindi_testimonial),
+            photo = VALUES(photo),
+            service = VALUES(service),
+            hindi_service = VALUES(hindi_service),
+            tour = VALUES(tour),
+            category = VALUES(category),
+            date = VALUES(date),
+            verified = VALUES(verified),
+            helpful_count = VALUES(helpful_count),
+            review_image = VALUES(review_image),
+            is_featured = VALUES(is_featured),
+            is_published = VALUES(is_published)`,
+          [
+            t.id,
+            t.name,
+            t.hindiName || "",
+            t.location || "",
+            t.hindiLocation || "",
+            t.rating || 5,
+            t.testimonial,
+            t.hindiTestimonial || "",
+            t.photo || "",
+            t.service || "",
+            t.hindiService || "",
+            t.tour || "",
+            t.category || "Pooja",
+            t.date || "",
+            t.verified !== false ? 1 : 0,
+            t.helpfulCount || 0,
+            t.reviewImage || "",
+            t.isFeatured !== false ? 1 : 0,
+            t.isPublished !== false ? 1 : 0
+          ]
+        );
+        return res.json({ success: true, message: "Testimonial saved to MySQL", data: t });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save testimonial:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Testimonial saved in-memory (DB not connected)", data: t });
+  });
+  app.post("/api/testimonials/:id/helpful", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("UPDATE testimonials SET helpful_count = helpful_count + 1 WHERE id = ?", [id]);
+        return res.json({ success: true, message: "Helpful count incremented" });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Helpful count incremented (in-memory)" });
+  });
+  app.delete("/api/testimonials/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM testimonials WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Testimonial ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Testimonial ${id} deleted (in-memory)` });
   });
   app.get("/api/leads", async (req, res) => {
     if (isDbConnected()) {

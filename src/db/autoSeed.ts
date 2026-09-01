@@ -7,6 +7,7 @@ import {
   initialDestinations,
   initialFAQs,
   initialGalleryItems,
+  initialTestimonials,
 } from '../data/initialData';
 
 const TABLE_SCHEMAS = [
@@ -280,6 +281,30 @@ const TABLE_SCHEMAS = [
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  `CREATE TABLE IF NOT EXISTS testimonials (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    hindi_name VARCHAR(255),
+    location VARCHAR(255),
+    hindi_location VARCHAR(255),
+    rating INT DEFAULT 5,
+    testimonial TEXT NOT NULL,
+    hindi_testimonial TEXT,
+    photo VARCHAR(550),
+    service VARCHAR(255),
+    hindi_service VARCHAR(255),
+    tour VARCHAR(255),
+    category VARCHAR(100) DEFAULT 'Pooja',
+    date VARCHAR(100),
+    verified TINYINT(1) DEFAULT 1,
+    helpful_count INT DEFAULT 0,
+    review_image VARCHAR(550),
+    is_featured TINYINT(1) DEFAULT 1,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 ];
 
 export async function autoInitializeDatabase() {
@@ -293,6 +318,7 @@ export async function autoInitializeDatabase() {
       destinations: 0,
       faqs: 0,
       gallery: 0,
+      testimonials: 0,
       adminUsers: 0,
     },
     error: null as string | null,
@@ -735,6 +761,44 @@ export async function autoInitializeDatabase() {
           ]
         );
         result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
+    }
+
+    // 9. Safe Auto-Seeding: Testimonials
+    const testimonialsCount = await query('SELECT COUNT(*) as count FROM testimonials');
+    if (testimonialsCount[0].count === 0) {
+      console.log('[AUTO-DB] Seeding default testimonials...');
+      for (const item of initialTestimonials) {
+        const t = item as any;
+        await execute(
+          `INSERT INTO testimonials (
+            id, name, hindi_name, location, hindi_location, rating, testimonial, hindi_testimonial,
+            photo, service, hindi_service, tour, category, date, verified, helpful_count, review_image,
+            is_featured, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            t.id,
+            t.name,
+            t.hindiName || '',
+            t.location || '',
+            t.hindiLocation || '',
+            t.rating || 5,
+            t.testimonial,
+            t.hindiTestimonial || '',
+            t.photo || '',
+            t.service || '',
+            t.hindiService || '',
+            t.tour || '',
+            t.category || 'Pooja',
+            t.date || '',
+            t.verified !== false ? 1 : 0,
+            t.helpfulCount || 0,
+            t.reviewImage || '',
+            t.isFeatured !== false ? 1 : 0,
+            t.isPublished !== false ? 1 : 0,
+          ]
+        );
+        result.seeded.testimonials = (result.seeded.testimonials || 0) + 1;
       }
     }
 
