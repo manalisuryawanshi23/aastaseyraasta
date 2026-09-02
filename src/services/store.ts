@@ -253,14 +253,36 @@ export class StoreService {
   static getPoojaBySlug(slug: string): PoojaService | undefined {
     if (!slug) return undefined;
     const poojas = this.getPoojas(false);
-    const cleanSlug = slug.toLowerCase().trim();
+    const cleanSlug = slug
+      .toLowerCase()
+      .trim()
+      .replace(/^\/pooja-services\/|^\/poojas\/|^\/pooja\/|^\//, '')
+      .replace(/\/$/, '');
+
+    const aliasMap: Record<string, string> = {
+      'mool-shanti-pooja': 'mool-shanti-pooja-ujjain',
+      'vish-yog-shanti-pooja': 'vish-yog-shanti-pooja-ujjain',
+      'nakshatra-shanti-pooja': 'nakshatra-shanti-pooja-ujjain',
+      'mool-shanti-pooja-ujjain': 'mool-shanti-pooja-ujjain',
+      'vish-yog-shanti-pooja-ujjain': 'vish-yog-shanti-pooja-ujjain',
+      'nakshatra-shanti-pooja-ujjain': 'nakshatra-shanti-pooja-ujjain',
+    };
+
+    const targetSlug = aliasMap[cleanSlug] || cleanSlug;
+
     return poojas.find(
       (p) =>
+        p.slug === targetSlug ||
+        p.slug === cleanSlug ||
         p.slug === slug ||
         p.id === slug ||
+        p.id === targetSlug ||
+        p.slug.toLowerCase() === targetSlug ||
         p.slug.toLowerCase() === cleanSlug ||
-        p.urlSlug === `/pooja/${slug}` ||
-        p.urlSlug === `/${slug}`
+        p.urlSlug === `/pooja/${targetSlug}` ||
+        p.urlSlug === `/pooja/${cleanSlug}` ||
+        p.urlSlug === `/${targetSlug}` ||
+        p.urlSlug === `/${cleanSlug}`
     );
   }
 

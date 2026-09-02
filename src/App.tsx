@@ -105,8 +105,16 @@ export default function App() {
       );
     }
 
-    if (path === '/mool-shanti-pooja-ujjain') {
+    if (path === '/mool-shanti-pooja-ujjain' || path === '/pooja-services/mool-shanti-pooja' || path === '/pooja/mool-shanti-pooja') {
       return <PoojaDetailPage slug="mool-shanti-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/vish-yog-shanti-pooja-ujjain' || path === '/pooja-services/vish-yog-shanti-pooja' || path === '/pooja/vish-yog-shanti-pooja') {
+      return <PoojaDetailPage slug="vish-yog-shanti-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/nakshatra-shanti-pooja-ujjain' || path === '/pooja-services/nakshatra-shanti-pooja' || path === '/pooja/nakshatra-shanti-pooja') {
+      return <PoojaDetailPage slug="nakshatra-shanti-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/rudrabhishek-pooja-ujjain') {
@@ -115,6 +123,11 @@ export default function App() {
 
     if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {
       return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path.startsWith('/pooja-services/')) {
+      const slug = path.replace('/pooja-services/', '');
+      return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/pooja/')) {

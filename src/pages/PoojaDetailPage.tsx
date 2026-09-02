@@ -313,23 +313,27 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                   {language === 'hi' ? 'संपूर्ण सात्विक सामग्री शामिल' : 'Complete Samagri Included'}
                 </span>
+                <span className="inline-flex items-center gap-1.5 text-xs text-amber-300 bg-amber-500/15 border border-amber-400/30 px-3 py-1.5 rounded-full font-medium">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>{language === 'hi' ? 'व्यक्तिगत पूजा मार्गदर्शन उपलब्ध' : 'Personalized Pooja Guidance Available'}</span>
+                </span>
               </div>
 
               {/* CTAs */}
               <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
                 <button
                   onClick={() => onOpenBooking('Pooja', pooja.name)}
-                  className="w-full sm:w-auto py-3 px-8 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-955 font-bold text-xs sm:text-sm transition-all shadow-lg hover:-translate-y-0.5"
+                  className="w-full sm:w-auto py-3 px-8 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-955 font-bold text-xs sm:text-sm transition-all shadow-lg hover:-translate-y-0.5 cursor-pointer"
                 >
                   {language === 'hi' ? 'अभी पूछताछ करें →' : 'ENQUIRE NOW →'}
                 </button>
                 <a
                   href={`https://wa.me/${settings?.whatsappNumber || '9111099799'}?text=${encodeURIComponent(
-                    `Jai Shree Mahakal 🙏 I want to enquire about ${pooja.name} in Ujjain.`
+                    `Jai Shree Mahakal 🙏\nI would like to enquire about ${pooja.name}. Please share the available arrangements and pricing.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto py-3 px-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto py-3 px-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <MessageSquare className="w-4 h-4 fill-current" />
                   <span>{language === 'hi' ? 'व्हाट्सएप पर संपर्क करें' : 'WHATSAPP US'}</span>
@@ -344,7 +348,8 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-500/20 aspect-[4/3] bg-stone-900">
                 <img
                   src={(pooja.featuredImage || '/assets/images/pooja_rudrabhishek_1786196070818.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
-                  alt={`${poojaName} - ${templeName || pooja.templeName}, ${city || pooja.city}`}
+                  alt={pooja.imageSeo?.alt || `${poojaName} - ${templeName || pooja.templeName}, ${city || pooja.city}`}
+                  title={pooja.imageSeo?.title || `${pooja.name} in Ujjain`}
                   loading="eager"
                   decoding="async"
                   onError={(e) => {
@@ -355,7 +360,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   }}
                   {...({ fetchPriority: 'high' } as any)}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover brightness-90"
+                  className="w-full h-full object-cover brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 to-transparent pointer-events-none" />
               </div>
@@ -367,41 +372,41 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
       {/* ── 3. QUICK SERVICE SUMMARY CARDS ───────────────────────────────── */}
       <section className="bg-stone-50 dark:bg-[#1E1B19] py-8 border-b border-stone-200/80 dark:border-stone-800">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-left">
+            <div className="bg-white dark:bg-[#1C1917] p-4.5 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-2xs">
               <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
-                {language === 'hi' ? ' पूजा का प्रकार' : 'Pooja Type'}
+                {language === 'hi' ? 'पूजा का प्रकार' : 'POOJA TYPE'}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
-                {poojaCategory}
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 line-clamp-2">
+                {pooja.name}
               </span>
             </div>
 
-            {(templeName || pooja.templeName) && (
-              <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800">
-                <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
-                  {language === 'hi' ? 'स्थान' : 'Location'}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 line-clamp-2">
-                  {city || pooja.city || templeName || pooja.templeName}
-                </span>
-              </div>
-            )}
-
-            {duration && (
-              <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800">
-                <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
-                  {language === 'hi' ? 'अवधि' : 'Duration'}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
-                  {duration}
-                </span>
-              </div>
-            )}
-
-            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800">
+            <div className="bg-white dark:bg-[#1C1917] p-4.5 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-2xs">
               <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
-                {language === 'hi' ? 'आयोजक' : 'Arranged By'}
+                {language === 'hi' ? 'किनके लिए' : 'FOR'}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 line-clamp-2">
+                {whoCanConsider && whoCanConsider.length > 0
+                  ? whoCanConsider[0].replace(/\.$/, '')
+                  : (language === 'hi' ? 'श्रद्धालु एवं परिवार' : 'Devotees & Families')}
+              </span>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-4.5 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-2xs">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
+                {language === 'hi' ? 'मुख्य उद्देश्य' : 'PURPOSE'}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 line-clamp-2">
+                {pooja.primaryKeyword
+                  ? pooja.primaryKeyword.toUpperCase()
+                  : (pooja.categoryName || 'Vedic Shanti Anushthan')}
+              </span>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-4.5 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-2xs">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
+                {language === 'hi' ? 'आयोजक' : 'ARRANGED BY'}
               </span>
               <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
                 Aastha Sey Raasta Seva
@@ -424,10 +429,20 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                 {language === 'hi' ? `${poojaName} क्या है?` : `What is ${pooja.name}?`}
               </span>
             </h2>
-            <div className="p-6 sm:p-8 bg-[#F6F0E6] dark:bg-[#1C1917] rounded-3xl border border-[#E6DBC8] dark:border-stone-800 text-left shadow-sm">
+            <div className="p-6 sm:p-8 bg-[#F6F0E6] dark:bg-[#1C1917] rounded-3xl border border-[#E6DBC8] dark:border-stone-800 text-left shadow-sm space-y-4">
               <p className="text-stone-800 dark:text-stone-200 text-sm sm:text-base leading-relaxed">
                 {pooja.quickAnswer}
               </p>
+              
+              {/* Quick Facts List for AEO / Voice Search */}
+              <div className="pt-3 border-t border-[#E6DBC8] dark:border-stone-800 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Pooja Type:</strong> {pooja.name}</div>
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Purpose:</strong> {pooja.primaryKeyword || pooja.h1 || 'Vedic Shanti'}</div>
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Traditionally associated with:</strong> {pooja.categoryName || 'Dosh Shanti'}</div>
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Main Focus:</strong> Peace, Health & Well-being</div>
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Availability:</strong> Available on enquiry</div>
+                <div>• <strong className="text-stone-900 dark:text-amber-100">Arranged by:</strong> Aastha Sey Raasta Seva</div>
+              </div>
             </div>
           </div>
         </section>
@@ -597,7 +612,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                 <Users className="w-5 h-5 text-amber-700 dark:text-amber-500 shrink-0" />
                 {language === 'hi'
                   ? 'यह पूजा सेवा किसके लिए उपयुक्त है'
-                  : 'Who Can Consider This Ritual'}
+                  : 'Who May Consider This Ritual'}
               </h2>
               <ul className="space-y-3 pt-2">
                 {whoCanConsider.map((item, idx) => (
@@ -610,95 +625,257 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   </li>
                 ))}
               </ul>
+              
+              {/* Astrological Disclaimer */}
+              <div className="mt-5 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-stone-700 dark:text-stone-300 leading-relaxed">
+                <p className="font-medium text-amber-900 dark:text-amber-300">
+                  {language === 'hi'
+                    ? '⚠️ ज्योतिषीय परामर्श सूचना: पूजा की उपयुक्तता जातक की जन्म कुंडली, ग्रह स्थिति एवं पारंपरिक मार्गदर्शन पर निर्भर करती है। व्यक्तिगत परामर्श हेतु योग्य ज्योतिषाचार्य से संपर्क करें।'
+                    : 'Astrological suitability depends on an individual\'s birth chart and traditional guidance. Consult a qualified astrologer for personalized advice.'}
+                </p>
+              </div>
             </FadeIn>
           </div>
         </section>
       )}
 
-      {/* ── 10. FULL-WIDTH VEDIC BOOKING ASSISTANCE — NO SIDEBAR ─────────── */}
-      <section className="bg-[#FFFDF8] dark:bg-[#1E1B19] py-16 border-b border-stone-200/60 dark:border-stone-800">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-white dark:bg-[#1C1917] border-2 border-amber-400 dark:border-amber-500 rounded-3xl p-6 sm:p-8 shadow-xl text-center md:text-left md:grid md:grid-cols-12 md:gap-8 md:items-center">
+      {/* ── 10. POOJA & ANUSHTHAN INFORMATION PANEL ──────────────────────── */}
+      <section className="bg-[#FFFDF8] dark:bg-[#1A1816] py-16 border-b border-stone-200/60 dark:border-stone-800">
+        <div className="max-w-4xl mx-auto px-4 space-y-6 text-left">
+          <FadeIn direction="up">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 border-b border-amber-100 dark:border-stone-800 pb-2">
+              {language === 'hi' ? 'पूजा अनुष्ठान विवरण' : 'Pooja & Anushthan Information'}
+            </h2>
+            <div className="bg-white dark:bg-[#1C1917] rounded-3xl border border-stone-200/80 dark:border-stone-800 p-6 sm:p-8 shadow-xs divide-y divide-stone-100 dark:divide-stone-800/80 text-xs sm:text-sm">
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Pooja Service:</span>
+                <span className="font-semibold text-stone-900 dark:text-amber-100 text-right">{pooja.name}</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Category:</span>
+                <span className="font-medium text-stone-800 dark:text-stone-200 text-right">{poojaCategory}</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Location:</span>
+                <span className="font-medium text-stone-800 dark:text-stone-200 text-right">{templeName || pooja.templeName || 'Ujjain, Madhya Pradesh'}</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Spiritual Focus:</span>
+                <span className="font-medium text-stone-800 dark:text-stone-200 text-right">{pooja.primaryKeyword || 'Peace, Health & Well-being'}</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Arranged By:</span>
+                <span className="font-medium text-stone-800 dark:text-stone-200 text-right">Aastha Sey Raasta Seva</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Duration:</span>
+                <span className="font-medium text-stone-800 dark:text-stone-200 text-right">{duration || 'Available on enquiry'}</span>
+              </div>
+              <div className="py-3 flex justify-between items-start gap-4">
+                <span className="font-bold text-stone-500 dark:text-stone-400">Price & Offerings:</span>
+                <span className="font-bold text-amber-700 dark:text-amber-400 text-right">Available on enquiry</span>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
 
+      {/* ── 11. PRICE & AVAILABILITY ENQUIRY CARD ────────────────────────── */}
+      <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white dark:bg-[#1C1917] border-2 border-amber-400 dark:border-amber-500 rounded-3xl p-6 sm:p-10 shadow-xl text-center md:text-left md:grid md:grid-cols-12 md:gap-8 md:items-center">
             {/* Left Column */}
-            <div className="md:col-span-7 space-y-4">
+            <div className="md:col-span-7 space-y-3">
               <span className="text-amber-800 dark:text-amber-400 text-xs sm:text-sm font-bold uppercase tracking-wider block">
-                {language === 'hi' ? 'वैदिक पूजा बुकिंग सहायता' : 'VEDIC BOOKING ASSISTANCE'}
+                {language === 'hi' ? 'मूल्य एवं उपलब्धता पूछताछ' : 'PRICE & AVAILABILITY ENQUIRY'}
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 leading-tight">
-                {language === 'hi' ? 'अपनी पूजा आरक्षित करें' : 'Reserve Your Vidhi'}
+                {language === 'hi' ? 'पूजा का मूल्य जानना चाहते हैं?' : 'Want to Know the Pooja Price?'}
               </h2>
-              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm">
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
                 {language === 'hi'
-                  ? 'उज्जैन के अधिकृत पंडितों द्वारा नाम व गोत्र संकल्प।'
-                  : 'Gotra sankalp reservation with authentic Ujjain Pandits.'}
+                  ? 'पूजा की आवश्यकताएं एवं व्यवस्थाएं व्यक्तिगत प्राथमिकताओं के आधार पर भिन्न हो सकती हैं। उपलब्ध व्यवस्थाओं एवं वर्तमान मूल्य की जानकारी के लिए आस्था से रास्ता सेवा से संपर्क करें।'
+                  : 'Pooja requirements and arrangements may vary depending on individual needs. Contact Aastha Sey Raasta Seva to understand the available arrangements and current pricing.'}
               </p>
-              <div className="bg-amber-500/5 rounded-2xl border border-amber-500/20 p-5 mt-2 text-xs sm:text-sm space-y-3">
-                <div className="flex justify-between items-start gap-4">
-                  <span className="text-stone-500 dark:text-stone-400">
-                    {language === 'hi' ? 'मंदिर स्थान:' : 'Temple Location:'}
-                  </span>
-                  <span className="font-bold text-stone-800 dark:text-amber-100 text-right">
-                    {templeName || pooja.templeName}
-                    {city || pooja.city ? `, ${city || pooja.city}` : ''}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center gap-4">
-                  <span className="text-stone-500 dark:text-stone-400">
-                    {language === 'hi' ? 'पंडित दक्षिणा व सामग्री:' : 'Pandit Dakshina & Samagri:'}
-                  </span>
-                  <span className="font-bold text-emerald-700 dark:text-emerald-400">
-                    {language === 'hi' ? 'शामिल' : 'Included'}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center gap-4">
-                  <span className="text-stone-500 dark:text-stone-400">
-                    {language === 'hi' ? 'कस्टमाइजेशन:' : 'Customization:'}
-                  </span>
-                  <span className="font-bold text-stone-800 dark:text-amber-100">
-                    {language === 'hi' ? 'उपलब्ध' : 'Available'}
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* Right Column */}
-            <div className="md:col-span-5 mt-6 md:mt-0 flex flex-col justify-center">
+            <div className="md:col-span-5 mt-6 md:mt-0 flex flex-col justify-center space-y-3">
               <button
                 onClick={() => onOpenBooking('Pooja', pooja.name)}
                 className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-red-800 to-amber-900 hover:from-red-700 hover:to-amber-800 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-amber-300 fill-current" />
-                <span>{t('action.book_now', 'Book')} — {poojaName}</span>
+                <span>{language === 'hi' ? 'मूल्य हेतु पूछताछ करें' : 'ENQUIRE FOR PRICE'}</span>
               </button>
               <a
                 href={`https://wa.me/${settings?.whatsappNumber || '9111099799'}?text=${encodeURIComponent(
-                  `Jai Shree Mahakal 🙏 I want to enquire about ${pooja.name} in Ujjain.`
+                  `Jai Shree Mahakal 🙏\nI would like to enquire about ${pooja.name}. Please share the available arrangements and pricing.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer mt-3"
+                className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 fill-current" />
-                <span>{t('action.whatsapp', 'WhatsApp Direct Enquiry')}</span>
+                <span>{language === 'hi' ? 'व्हाट्सएप चैट करें' : 'CHAT ON WHATSAPP'}</span>
               </a>
-              <div className="text-center mt-6 space-y-1">
-                <span className="text-stone-500 dark:text-stone-400 text-xs block">
-                  {language === 'hi' ? 'तत्काल सहायता चाहिए?' : 'Need immediate assistance?'}
-                </span>
-                <a
-                  href={`tel:${settings?.phone1 || '+919111099799'}`}
-                  className="font-mono font-bold text-amber-800 dark:text-amber-400 hover:underline text-xs sm:text-sm block"
-                >
-                  {t('action.call_us', 'Call')} {settings?.phone1 || '+91 9111099799'}
-                </a>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 11. AUSPICIOUS COUNTDOWN TIMER ───────────────────────────────── */}
+      {/* ── 12. WHY CHOOSE AASTHA SEY RAASTA SEVA ─────────────────────────── */}
+      <section className="bg-[#FFFDF8] dark:bg-[#1A1816] py-16 border-b border-stone-200/60 dark:border-stone-800">
+        <div className="max-w-5xl mx-auto px-4 space-y-10 text-center">
+          <FadeIn direction="up">
+            <span className="text-amber-800 dark:text-amber-400 text-xs font-bold uppercase tracking-wider block">
+              {language === 'hi' ? 'हमारी विशेषताएं' : 'TRUST & EXCELLENCE'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100 mt-1">
+              {language === 'hi' ? 'आस्था से रास्ता सेवा ही क्यों चुनें?' : 'Why Choose Aastha Sey Raasta Seva'}
+            </h2>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/80 dark:border-stone-800 space-y-2 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold text-base">
+                ✓
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm sm:text-base">
+                Complete Pooja Arrangement
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                End-to-end management of all samagri, venue coordination, and ritual essentials.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/80 dark:border-stone-800 space-y-2 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold text-base">
+                ✓
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm sm:text-base">
+                Vedic-Qualified Pandits
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Experienced, hereditary Brahmins chanting authentic scriptural mantras.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/80 dark:border-stone-800 space-y-2 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold text-base">
+                ✓
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm sm:text-base">
+                Convenient Coordination
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Dedicated support team assisting with timing, reporting, and personal Gotra sankalp.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/80 dark:border-stone-800 space-y-2 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold text-base">
+                ✓
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm sm:text-base">
+                Devotional & Authentic Service
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Conducted strictly according to traditional Vedic norms with devotion and purity.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/80 dark:border-stone-800 space-y-2 shadow-2xs sm:col-span-2 lg:col-span-2">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold text-base">
+                ✓
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm sm:text-base">
+                Personalized Enquiry Assistance
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Direct phone and WhatsApp assistance to discuss your birth details and specific ritual needs before booking.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 13. HOW BOOKING WORKS (3-STEP PROCESS) ───────────────────────── */}
+      <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
+        <div className="max-w-5xl mx-auto px-4 space-y-10 text-center">
+          <FadeIn direction="up">
+            <span className="text-amber-800 dark:text-amber-400 text-xs font-bold uppercase tracking-wider block">
+              {language === 'hi' ? 'सरल प्रक्रिया' : 'EASY 3-STEP PROCESS'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100 mt-1">
+              {language === 'hi' ? 'पूजा बुकिंग कैसे करें?' : 'How Booking Works'}
+            </h2>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-3xl border border-stone-200 dark:border-stone-800 space-y-3 relative shadow-xs">
+              <div className="w-10 h-10 rounded-2xl bg-amber-800 text-white flex items-center justify-center font-mono font-bold text-sm">
+                01
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-base">
+                ENQUIRE
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Tell us which pooja you need and share relevant horoscope or birth details.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-3xl border border-stone-200 dark:border-stone-800 space-y-3 relative shadow-xs">
+              <div className="w-10 h-10 rounded-2xl bg-amber-800 text-white flex items-center justify-center font-mono font-bold text-sm">
+                02
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-base">
+                GET GUIDANCE
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Our team helps you understand the available arrangements, auspicious timings, and requirements.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-[#1C1917] p-6 rounded-3xl border border-stone-200 dark:border-stone-800 space-y-3 relative shadow-xs">
+              <div className="w-10 h-10 rounded-2xl bg-amber-800 text-white flex items-center justify-center font-mono font-bold text-sm">
+                03
+              </div>
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-base">
+                CONFIRM YOUR POOJA
+              </h3>
+              <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
+                Finalize the date and arrangement with verified Pandit allocation and booking guidance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 14. TRAVEL & VISIT GUIDANCE FOR UJJAIN ────────────────────────── */}
+      <section className="bg-[#FFFDF8] dark:bg-[#1A1816] py-16 border-b border-stone-200/60 dark:border-stone-800">
+        <div className="max-w-4xl mx-auto px-4 space-y-6 text-left">
+          <FadeIn direction="up">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 border-b border-amber-100 dark:border-stone-800 pb-2 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-amber-700 dark:text-amber-500 shrink-0" />
+              {language === 'hi' ? 'उज्जैन यात्रा एवं दर्शन मार्गदर्शन' : 'Travel & Visit Guidance for Ujjain'}
+            </h2>
+            <div className="space-y-4 text-stone-700 dark:text-stone-300 text-xs sm:text-sm leading-relaxed pt-2">
+              <p>
+                <strong>Visiting Ujjain (Avantika Puri):</strong> For devotees traveling to Ujjain from other states and cities, Ujjain is well-connected by rail (Ujjain Junction) and road from Indore Airport (approx. 55 km).
+              </p>
+              <p>
+                <strong>Ritual Reporting:</strong> Our coordination team advises devotees to report 15–20 minutes prior to the scheduled Muhurat. Complete Gotra Sankalp is conducted before starting the main Vidhi.
+              </p>
+              <p>
+                <strong>Dress Code:</strong> Traditional Indian attire (Dhoti-Kurta for men, Saree/Suit for women) is recommended for all Vedic havan and anushthan ceremonies.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── 15. AUSPICIOUS COUNTDOWN TIMER ───────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <AuspiciousCountdownTimer
           poojaName={pooja.name}
@@ -708,7 +885,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         />
       </div>
 
-      {/* ── 12. SOCIAL SHARE ─────────────────────────────────────────────── */}
+      {/* ── 16. SOCIAL SHARE ─────────────────────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-4 pb-4">
         <SocialShareButtons
           title={poojaName}
@@ -717,7 +894,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         />
       </div>
 
-      {/* ── 13. FAQ ───────────────────────────────────────────────────────── */}
+      {/* ── 17. FAQ ───────────────────────────────────────────────────────── */}
       {poojaFaqs.length > 0 && (
         <section className="bg-[#FFFDF8] dark:bg-[#1A1816] py-20 border-b border-stone-200/60 dark:border-stone-800">
           <div className="max-w-4xl mx-auto px-4 space-y-12">
@@ -736,7 +913,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         </section>
       )}
 
-      {/* ── 14. RELATED POOJA SERVICES ────────────────────────────────────── */}
+      {/* ── 18. RELATED POOJA SERVICES ────────────────────────────────────── */}
       {relatedPoojas.length > 0 && (
         <section className="bg-[#F6F0E6] dark:bg-[#151312] py-20 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-7xl mx-auto px-4 space-y-12">
@@ -762,7 +939,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         </section>
       )}
 
-      {/* ── 15. FINAL CTA ─────────────────────────────────────────────────── */}
+      {/* ── 19. FINAL CTA ─────────────────────────────────────────────────── */}
       <section className="relative bg-[#3A1518] dark:bg-[#1A0A0B] py-20 overflow-hidden">
         {pooja.featuredImage && (
           <div
@@ -775,28 +952,28 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100">
               {language === 'hi'
-                ? `${poojaName} की व्यवस्था करें`
-                : `Plan Your ${pooja.name}`}
+                ? `आस्था से रास्ता सेवा के साथ ${poojaName} की व्यवस्था करें`
+                : `Begin Your Pooja Enquiry with Aastha Sey Raasta Seva`}
             </h2>
             <p className="text-[#F4EDE4] text-xs sm:text-sm max-w-2xl mx-auto">
               {language === 'hi'
-                ? 'आस्था से रास्ता सेवा के साथ अनुभवी वैदिक पंडितों द्वारा पूजा की संपूर्ण व्यवस्था करें।'
-                : `Enquire with Aastha Sey Raasta Seva to arrange ${pooja.name} with experienced and Vedic-qualified pandits.`}
+                ? 'उज्जैन के अनुभवी एवं वैदिक-विद्वान पंडितों द्वारा संपूर्ण पूजन व्यवस्था। बुकिंग से पूर्व मार्गदर्शन के लिए हमारी टीम से संपर्क करें।'
+                : `Arrange authentic ${pooja.name} with experienced and Vedic-qualified pandits. Need guidance before booking? Speak with our team.`}
             </p>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
               <button
                 onClick={() => onOpenBooking('Pooja', pooja.name)}
-                className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-955 font-bold text-sm transition-all shadow-lg"
+                className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-955 font-bold text-sm transition-all shadow-lg cursor-pointer"
               >
                 {language === 'hi' ? 'अभी पूछताछ करें' : 'ENQUIRE NOW'}
               </button>
               <a
                 href={`https://wa.me/${settings?.whatsappNumber || '9111099799'}?text=${encodeURIComponent(
-                  `Jai Shree Mahakal 🙏 I want to enquire about ${pooja.name} in Ujjain.`
+                  `Jai Shree Mahakal 🙏\nI would like to enquire about ${pooja.name}. Please share the available arrangements and pricing.`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2"
+                className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 fill-current" />
                 <span>{language === 'hi' ? 'व्हाट्सएप चैट' : 'WHATSAPP US'}</span>

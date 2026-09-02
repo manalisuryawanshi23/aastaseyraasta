@@ -92,6 +92,485 @@ var initialSiteSettings = {
 };
 var initialPoojas = [
   {
+    "id": "pooja-nakshatra-shanti-pooja-ujjain",
+    "name": "Nakshatra Shanti Pooja in Ujjain",
+    "hindiName": "\u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E (\u091C\u0928\u094D\u092E \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928)",
+    "slug": "nakshatra-shanti-pooja-ujjain",
+    "urlSlug": "/pooja/nakshatra-shanti-pooja-ujjain",
+    "categoryId": "cat-dosh",
+    "categoryName": "Dosh Shanti & Special Poojas",
+    "hindiCategoryName": "\u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u092A\u0942\u091C\u093E",
+    "pageType": "Pooja / Dosh Shanti",
+    "primaryKeyword": "nakshatra shanti pooja",
+    "focusKeyword": "nakshatra shanti pooja in ujjain",
+    "secondaryKeywords": [
+      "nakshatra shanti pooja ujjain",
+      "nakshatra dosh shanti pooja",
+      "birth nakshatra shanti pooja",
+      "nakshatra pooja booking"
+    ],
+    "searchIntent": "Transactional & Informational (Devotees seeking authentic Vedic Nakshatra Shanti ritual in Ujjain for birth star pacification, health, and prosperity)",
+    "seoTitle": "Nakshatra Shanti Pooja in Ujjain | Aastha Sey Raasta Seva",
+    "metaDescription": "Book authentic Nakshatra Shanti Pooja in Ujjain to pacify unfavorable birth star influences. Experienced Vedic Pandits, complete arrangements, health & prosperity.",
+    "h1": "Nakshatra Shanti Pooja \u2014 Vedic Birth Star Shanti in Ujjain",
+    "quickAnswer": "Nakshatra Shanti Pooja is a sacred Vedic ritual performed to pacify the negative or unfavorable influences of one's birth star (Janma Nakshatra) or afflicted planetary constellations. According to Vedic astrology, unfavorable Nakshatra positions can create obstacles and doshas in life. This ritual is conducted by qualified pandits to neutralize malefic effects and invoke divine blessings for health, peace, family harmony, and overall well-being.",
+    "shortDescription": "Nakshatra Shanti Pooja is a Vedic ritual performed to pacify unfavorable or malefic birth star influences, invoking divine blessings for health, peace, prosperity, and obstacle removal.",
+    "description": "Nakshatra Shanti Pooja is a sacred Vedic ritual performed to pacify negative or malefic effects of one's birth star (Nakshatra). In Vedic astrology, the 27 Nakshatras exert a profound influence on an individual's destiny, personality, and life journey. According to traditional belief, when an individual is born under an unfavorable Nakshatra or when a birth star is afflicted by malefic planetary transits, it may be associated with obstacles, doshas, or difficulties in life.\n\nThe Nakshatra Shanti Pooja is performed to neutralize unfavorable Nakshatra influences and to invoke divine blessings for health, peace, and overall well-being. By conducting specific Vedic invocations to the ruling deity of the Nakshatra, devotees pray for the removal of hindrances and the restoration of auspiciousness.\n\nAt Aastha Sey Raasta Seva, we provide complete, transparent arrangements for Nakshatra Shanti Pooja in the sacred pilgrimage city of Ujjain. The ritual is performed by experienced and Vedic-qualified pandits following authentic scriptural traditions.\n\n## About Nakshatra Shanti Pooja\nNakshatra Shanti Pooja is a comprehensive Vedic anushthan dedicated to pacifying the cosmic energies of one's birth constellation. Each of the 27 Nakshatras is governed by a presiding deity and planetary lord.\n\nDuring the ritual, learned Brahmins recite the specific Nakshatra Gayatri and Suktam, perform Gotra Sankalp, establish consecrated Kalash vessels, and offer sacred oblations into the holy Havan fire. These prayers are intended to harmonize the subtle astral influences affecting the individual and bestow long-term spiritual and material blessings.\n\n## Why Nakshatra Shanti Pooja Is Performed\nDevotees traditionally arrange Nakshatra Shanti Pooja for several core reasons:\n- **Pacification of Malefic Nakshatra Influences**: Performed to neutralize the negative or unfavorable effects of one's birth star.\n- **Removal of Obstacles**: Intended to clear recurrent blockages affecting personal, educational, and professional growth.\n- **Health & General Well-Being**: Invokes divine grace for physical vitality, mental clarity, and longevity.\n- **Family Harmony**: Traditionally believed to reduce friction and nurture peace and understanding among family members.\n- **Career & Business Stability**: Performed to overcome setbacks in trade, enterprise, or employment.\n- **Protection from Misfortune**: Traditionally associated with spiritual protection against adverse astrological periods.\n\n## Who May Consider Nakshatra Shanti Pooja\n- Individuals advised by an astrologer regarding unfavorable or afflicted birth Nakshatra positions.\n- People experiencing persistent hurdles, delays, or lack of progress in key life endeavors.\n- Devotees wishing to pray for family harmony, physical health, and household stability.\n- Devotees visiting Ujjain who seek an authentic, Vedic-qualified Nakshatra Shanti Anushthan.\n\n*Disclaimer: Astrological suitability depends on an individual's birth chart and traditional guidance. Consult a qualified astrologer for personalized advice.*",
+    "templeName": "Sacred Temples & Teerth Kshetra in Ujjain",
+    "location": "Ujjain, Madhya Pradesh",
+    "city": "Ujjain",
+    "state": "Madhya Pradesh",
+    "country": "India",
+    "whatWeOffer": [
+      "We provide complete arrangements for Nakshatra Shanti Pooja Anushthan with devotion, authenticity and convenience for devotees.",
+      "The ritual is performed by experienced and Vedic-qualified pandits.",
+      "Provision of consecrated Nakshatra samagri, herbs, Navgraha wood, and sacred offerings.",
+      "Individualized Name, Gotra & Janma Nakshatra Sankalp with dedicated coordination."
+    ],
+    "hindiWhatWeOffer": [
+      "\u0936\u094D\u0930\u0926\u094D\u0927\u093E, \u092A\u094D\u0930\u093E\u092E\u093E\u0923\u093F\u0915\u0924\u093E \u0914\u0930 \u0938\u0941\u0935\u093F\u0927\u093E \u0915\u0947 \u0938\u093E\u0925 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E",
+      "\u0905\u0928\u0941\u092D\u0935\u0940 \u090F\u0935\u0902 \u0935\u0948\u0926\u093F\u0915-\u0935\u093F\u0926\u094D\u0935\u093E\u0928 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0935\u093F\u0927\u093F\u0935\u0924 \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A \u090F\u0935\u0902 \u0939\u0935\u0928",
+      "\u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u092E\u0902\u0921\u0932 \u0936\u093E\u0902\u0924\u093F \u0939\u0947\u0924\u0941 \u0936\u0941\u0926\u094D\u0927 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u092A\u0942\u091C\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940",
+      "\u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u091C\u0928\u094D\u092E \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A"
+    ],
+    "benefits": [
+      "Neutralization of Malefic Nakshatra Effects: Traditionally performed to pacify unfavorable birth star influences and neutralize astrological doshas.",
+      "Removal of Obstacles: Believed to dissolve recurrent blockages and delays in personal, educational, and professional endeavors.",
+      "Health & Holistic Well-Being: Invokes divine blessings for physical strength, mental clarity, balanced energy, and long-term health.",
+      "Prosperity & Auspicious Growth: Associated with attracting auspicious opportunities, material stability, and steady household progress.",
+      "Family Harmony & Peace: Traditionally believed to resolve domestic friction, promote understanding among relatives, and nurture peaceful home life.",
+      "Career & Business Stability: Performed to support professional growth, business consistency, and overcoming workplace challenges.",
+      "Protection from Misfortune: Traditionally believed to provide spiritual shield against sudden adversities, negative planetary transits, and distress."
+    ],
+    "hindiBenefits": [
+      "[\u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0936\u093E\u0902\u0924\u093F] \u091C\u0928\u094D\u092E \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0915\u0947 \u092A\u094D\u0930\u0924\u093F\u0915\u0942\u0932 \u0905\u0925\u0935\u093E \u0905\u0936\u0941\u092D \u092A\u094D\u0930\u092D\u093E\u0935\u094B\u0902 \u0915\u093E \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0936\u092E\u0928",
+      "[\u092C\u093E\u0927\u093E \u0928\u093F\u0935\u093E\u0930\u0923] \u0936\u093F\u0915\u094D\u0937\u093E, \u0906\u091C\u0940\u0935\u093F\u0915\u093E \u090F\u0935\u0902 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u092E\u0947\u0902 \u0906\u0928\u0947 \u0935\u093E\u0932\u0940 \u0930\u0941\u0915\u093E\u0935\u091F\u094B\u0902 \u0915\u093E \u0928\u093F\u0935\u093E\u0930\u0923",
+      "[\u0938\u094D\u0935\u093E\u0938\u094D\u0925\u094D\u092F \u0932\u093E\u092D] \u0936\u093E\u0930\u0940\u0930\u093F\u0915 \u0938\u094D\u0935\u093E\u0938\u094D\u0925\u094D\u092F, \u092E\u093E\u0928\u0938\u093F\u0915 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0926\u0940\u0930\u094D\u0918\u093E\u092F\u0941 \u0915\u093E \u0908\u0936\u094D\u0935\u0930\u0940\u092F \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926",
+      "[\u0938\u092E\u0943\u0926\u094D\u0927\u093F] \u091C\u0940\u0935\u0928 \u092E\u0947\u0902 \u0938\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u0905\u0935\u0938\u0930\u094B\u0902 \u0915\u093E \u0906\u0917\u092E\u0928, \u0938\u094D\u0925\u093F\u0930\u0924\u093E \u090F\u0935\u0902 \u0906\u0930\u094D\u0925\u093F\u0915 \u0938\u092E\u0943\u0926\u094D\u0927\u093F",
+      "[\u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u0938\u0926\u094D\u092D\u093E\u0935] \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u092E\u0924\u092D\u0947\u0926 \u0928\u093F\u0935\u093E\u0930\u0923 \u090F\u0935\u0902 \u0918\u0930 \u092E\u0947\u0902 \u0936\u093E\u0902\u0924\u093F \u0935 \u092A\u094D\u0930\u0947\u092E \u0915\u0940 \u0935\u0943\u0926\u094D\u0927\u093F",
+      "[\u0935\u094D\u092F\u093E\u092A\u093E\u0930\u093F\u0915 \u0938\u094D\u0925\u093F\u0930\u0924\u093E] \u0935\u094D\u092F\u0935\u0938\u093E\u092F \u090F\u0935\u0902 \u0928\u094C\u0915\u0930\u0940 \u092E\u0947\u0902 \u0928\u093F\u0930\u0902\u0924\u0930\u0924\u093E \u0935 \u092A\u094D\u0930\u0917\u0924\u093F",
+      "[\u0938\u0941\u0930\u0915\u094D\u0937\u093E] \u0905\u092A\u094D\u0930\u0924\u094D\u092F\u093E\u0936\u093F\u0924 \u0938\u0902\u0915\u091F\u094B\u0902 \u090F\u0935\u0902 \u0905\u0936\u0941\u092D \u0917\u094B\u091A\u0930 \u092A\u094D\u0930\u092D\u093E\u0935\u094B\u0902 \u0938\u0947 \u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915 \u0938\u0941\u0930\u0915\u094D\u0937\u093E"
+    ],
+    "whoCanConsider": [
+      "Individuals with unfavorable, afflicted, or debited Janma Nakshatra in their horoscope.",
+      "Devotees facing recurring obstacles or unexplained hurdles in education or career.",
+      "Families praying for overall peace, good health, and domestic stability.",
+      "Devotees seeking an authentic Vedic birth-star anushthan in the holy kshetra of Ujjain."
+    ],
+    "preparation": [
+      "Wear clean, traditional clothing suitable for Vedic ritual participation.",
+      "Keep your exact Janma Nakshatra, Gotra, and birth details ready for Sankalp.",
+      "Reach the Ujjain venue 15 minutes before the scheduled auspicious time."
+    ],
+    "hindiPreparation": [
+      "\u092F\u091C\u092E\u093E\u0928 \u0936\u0941\u0926\u094D\u0927 \u090F\u0935\u0902 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u0935\u0938\u094D\u0924\u094D\u0930 \u0927\u093E\u0930\u0923 \u0915\u0930\u0947\u0902\u0964",
+      "\u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u091C\u0928\u094D\u092E \u0928\u0915\u094D\u0937\u0924\u094D\u0930, \u091A\u0930\u0923, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u0928\u093E\u092E \u0935\u093F\u0935\u0930\u0923 \u0924\u0948\u092F\u093E\u0930 \u0930\u0916\u0947\u0902\u0964",
+      "\u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u092E\u0941\u0939\u0942\u0930\u094D\u0924 \u0938\u0947 15 \u092E\u093F\u0928\u091F \u092A\u0942\u0930\u094D\u0935 \u0938\u094D\u0925\u0932 \u092A\u0930 \u0909\u092A\u0938\u094D\u0925\u093F\u0924 \u0939\u094B\u0902\u0964"
+    ],
+    "ritualDetails": "Ganesh Pujan, 27 Nakshatra Mandala Sthapana, Nakshatra Sukta & Gayatri Japa, Havan Yajna with specific Samidha, Gotra Sankalp, and Ashirvachan.",
+    "hindiRitualDetails": "\u0917\u0923\u0947\u0936 \u092A\u0942\u091C\u0928, 27 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u092E\u0902\u0921\u0932 \u0938\u094D\u0925\u093E\u092A\u0928\u093E, \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0938\u0942\u0915\u094D\u0924 \u090F\u0935\u0902 \u0917\u093E\u092F\u0924\u094D\u0930\u0940 \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A, \u0935\u093F\u0936\u093F\u0937\u094D\u091F \u0938\u092E\u093F\u0927\u093E \u0938\u0947 \u0939\u0935\u0928, \u0917\u094B\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A \u090F\u0935\u0902 \u0935\u0948\u0926\u093F\u0915 \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926\u0964",
+    "duration": "Available on enquiry",
+    "hindiDuration": "\u092A\u0942\u091B\u0924\u093E\u091B \u092A\u0930 \u0909\u092A\u0932\u092C\u094D\u0927",
+    "price": null,
+    "priceType": "Custom / On Request",
+    "featuredImage": "/assets/images/nakshatra-shanti-pooja-ujjain.jpg",
+    "gallery": [
+      "/assets/images/nakshatra-shanti-pooja-ujjain.jpg",
+      "/assets/images/nakshatra_shanti_pooja_ujjain.jpg"
+    ],
+    "isFeatured": true,
+    "isPublished": true,
+    "faqs": [
+      {
+        "question": "What is Nakshatra Shanti Pooja?",
+        "answer": "Nakshatra Shanti Pooja is a Vedic ritual performed to pacify negative or malefic effects of one's birth star (Nakshatra). According to the catalogue, unfavorable Nakshatra influences may be associated with obstacles or doshas, and this ritual is intended to invoke divine blessings for health, peace, and overall well-being."
+      },
+      {
+        "question": "What is the role of the birth Nakshatra?",
+        "answer": "In Vedic astrology, the birth Nakshatra plays a vital role in determining subtle astral influences. An unfavorable or afflicted Nakshatra may cause obstacles in life, which this ritual seeks to neutralize."
+      },
+      {
+        "question": "Who may consider Nakshatra Shanti Pooja?",
+        "answer": "Individuals who have unfavorable Nakshatra influences in their horoscope or are experiencing persistent life obstacles may consider this ritual."
+      },
+      {
+        "question": "What are its traditional benefits?",
+        "answer": "Source benefits include neutralization of malefic Nakshatra effects, removal of obstacles, health and well-being, prosperity and growth, family harmony, career/business stability, and protection from misfortune."
+      },
+      {
+        "question": "Can Nakshatra-related concerns be discussed before booking?",
+        "answer": "Yes, devotees can consult and share their birth chart or Nakshatra details with our coordination team prior to scheduling the pooja."
+      },
+      {
+        "question": "How can I arrange the pooja?",
+        "answer": "You can easily arrange your pooja by submitting an enquiry on our website, calling our helpline, or contacting us directly on WhatsApp."
+      },
+      {
+        "question": "What is the price of Nakshatra Shanti Pooja?",
+        "answer": "Pooja requirements and arrangements vary depending on individual needs. Contact Aastha Sey Raasta Seva to understand the available arrangements and current pricing."
+      }
+    ],
+    "internalLinks": [
+      {
+        "anchor": "Mool Shanti Pooja",
+        "link": "/pooja/mool-shanti-pooja-ujjain",
+        "reason": "Mool Nakshatra Shanti service."
+      },
+      {
+        "anchor": "Vish Yog Shanti Pooja",
+        "link": "/pooja/vish-yog-shanti-pooja-ujjain",
+        "reason": "Planetary Vish Yoga remedy."
+      },
+      {
+        "anchor": "Navgraha Shanti Pooja",
+        "link": "/pooja/navgraha-shanti-pooja-ujjain",
+        "reason": "Nine planetary peace ritual."
+      },
+      {
+        "anchor": "Rudrabhishek Pooja in Ujjain",
+        "link": "/pooja/rudrabhishek-pooja-ujjain",
+        "reason": "Sacred Shiva abhishek."
+      }
+    ],
+    "imageSeo": {
+      "featuredImageIdea": "Vedic Brahmins chanting mantras around 27 Nakshatra mandala yantra and sacred fire in Ujjain temple courtyard.",
+      "alt": "Nakshatra Shanti Pooja in Ujjain Vedic Janma Nakshatra Anushthan",
+      "title": "Nakshatra Shanti Pooja Ujjain \u2014 Aastha Sey Raasta Seva",
+      "filename": "nakshatra-shanti-pooja-ujjain.jpg"
+    },
+    "schemaTypes": [
+      "Service",
+      "FAQPage",
+      "BreadcrumbList",
+      "LocalBusiness"
+    ],
+    "qualityScore": 99,
+    "sortOrder": 13,
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-09-02T20:00:00Z"
+  },
+  {
+    "id": "pooja-vish-yog-shanti-pooja-ujjain",
+    "name": "Vish Yog Shanti Pooja in Ujjain",
+    "hindiName": "\u0935\u093F\u0937 \u092F\u094B\u0917 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E (\u0935\u093F\u0937 \u092F\u094B\u0917 \u0926\u094B\u0937 \u0928\u093F\u0935\u093E\u0930\u0923 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928)",
+    "slug": "vish-yog-shanti-pooja-ujjain",
+    "urlSlug": "/pooja/vish-yog-shanti-pooja-ujjain",
+    "categoryId": "cat-dosh",
+    "categoryName": "Dosh Shanti & Special Poojas",
+    "hindiCategoryName": "\u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u092A\u0942\u091C\u093E",
+    "pageType": "Pooja / Dosh Shanti",
+    "primaryKeyword": "vish yog shanti pooja",
+    "focusKeyword": "vish yog shanti pooja in ujjain",
+    "secondaryKeywords": [
+      "vish yog shanti pooja ujjain",
+      "vish yoga pooja",
+      "vish yog dosh shanti",
+      "vish yog shanti pooja booking"
+    ],
+    "searchIntent": "Transactional & Informational (Devotees seeking authentic Vedic Vish Yog Shanti ritual in Ujjain for obstacle removal, mental peace, and family stability)",
+    "seoTitle": "Vish Yog Shanti Pooja in Ujjain | Aastha Sey Raasta Seva",
+    "metaDescription": "Perform authentic Vish Yog Shanti Pooja in Ujjain to neutralize Vish Yoga effects. Experienced Vedic Pandits, complete arrangements, obstacle removal & mental peace.",
+    "h1": "Vish Yog Shanti Pooja \u2014 Vedic Remedy for Vish Yoga in Ujjain",
+    "quickAnswer": "Vish Yog Shanti Pooja is a specialized Vedic ritual performed to pacify the inauspicious astrological combination known as Vish Yoga in a horoscope. Traditionally believed to cause persistent obstacles, misfortune, emotional distress, and relationship challenges, this sacred ceremony is conducted by Vedic pandits to neutralize malefic planetary influences and restore peace, health, and prosperity for the devotee and family.",
+    "shortDescription": "Vish Yog Shanti Pooja is a Vedic ritual performed to neutralize the traditionally believed negative effects of Vish Yoga in a horoscope, restoring peace, health, and prosperity for the devotee and family.",
+    "description": "Vish Yog Shanti Pooja is a Vedic ritual performed to pacify Vish Yoga. In Vedic astrology, Vish Yoga is described in the catalogue as an inauspicious astrological combination formed by certain planetary positions in a horoscope\u2014traditionally the conjunction or mutual aspect of Saturn (Shani) and the Moon (Chandra).\n\nAccording to traditional belief, the presence of Vish Yoga in a birth chart may cause persistent obstacles, misfortune, emotional turbulence, and difficulties in personal and professional spheres. The Vish Yog Shanti Pooja is performed to neutralize the traditionally believed negative effects of Vish Yoga and is intended to restore peace, health, and prosperity for the devotee and their family.\n\nAt Aastha Sey Raasta Seva, we provide complete, transparent arrangements for Vish Yog Shanti Pooja in the sacred city of Ujjain. The ceremony is conducted with full devotion and scriptural authenticity by experienced and Vedic-qualified pandits.\n\n## About Vish Yog Shanti Pooja\nVish Yog Shanti Pooja is rooted in ancient Vedic remedies designed to balance planetary energies. The planetary combination of Saturn and the Moon is traditionally associated with inner conflict, delays, and emotional heaviness.\n\nDuring the ritual, learned pandits perform specific Shanti mantras, Gotra Sankalp, Kalash Sthapana, planetary pacification prayers, and a consecrated Havan. These sacred Vedic rituals are intended to invoke divine grace, remove obstacles, and establish mental calmness and family stability.\n\n## Why Vish Yog Shanti Pooja Is Performed\nDevotees traditionally seek Vish Yog Shanti Anushthan to address specific concerns identified in their horoscope:\n- **Neutralizing Vish Yoga Influence**: Performed to mitigate the negative astrological influences attributed to Vish Yoga.\n- **Overcoming Persistent Obstacles**: Aimed at dissolving recurring hurdles in career, education, and personal goals.\n- **Relief from Emotional Stress**: Traditionally believed to bring mental peace, emotional stability, and clarity of thought.\n- **Protection from Misfortune**: Intended to invoke divine protection against unexpected setbacks and adverse circumstances.\n- **Fostering Family Harmony**: Performed to improve interpersonal relationships and minimize domestic friction.\n- **Career & Financial Stability**: Traditionally associated with steady professional progress and business growth.\n\n## Who May Consider Vish Yog Shanti Pooja\n- Devotees whose horoscopes indicate the presence of Vish Yoga (Saturn-Moon conjunction or aspect).\n- Individuals experiencing chronic mental tension, emotional restlessness, or unexplainable delays in life.\n- Devotees seeking obstacle removal, career consistency, and harmonious family relations.\n- Devotees traveling to Ujjain who wish to perform a traditional planetary Shanti ritual with Vedic pandits.\n\n*Disclaimer: Astrological suitability depends on an individual's birth chart and traditional guidance. Consult a qualified astrologer for personalized advice.*",
+    "templeName": "Sacred Temples & Teerth Kshetra in Ujjain",
+    "location": "Ujjain, Madhya Pradesh",
+    "city": "Ujjain",
+    "state": "Madhya Pradesh",
+    "country": "India",
+    "whatWeOffer": [
+      "We provide complete arrangements for Vish Yog Shanti Pooja Anushthan with devotion, authenticity and convenience for devotees.",
+      "The ritual is performed by experienced and Vedic-qualified pandits.",
+      "Provision of sacred planetary samagri, energized yantras, herbs, and pure cow ghee.",
+      "Personalized Name & Gotra Sankalp with complete step-by-step guidance for devotees."
+    ],
+    "hindiWhatWeOffer": [
+      "\u0936\u094D\u0930\u0926\u094D\u0927\u093E, \u092A\u094D\u0930\u093E\u092E\u093E\u0923\u093F\u0915\u0924\u093E \u0914\u0930 \u0938\u0941\u0935\u093F\u0927\u093E \u0915\u0947 \u0938\u093E\u0925 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u0935\u093F\u0937 \u092F\u094B\u0917 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E",
+      "\u0905\u0928\u0941\u092D\u0935\u0940 \u090F\u0935\u0902 \u0935\u0948\u0926\u093F\u0915-\u0935\u093F\u0926\u094D\u0935\u093E\u0928 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0935\u093F\u0927\u093F\u0935\u0924 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u090F\u0935\u0902 \u0939\u0935\u0928",
+      "\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F \u0939\u0947\u0924\u0941 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u092A\u0942\u091C\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u090F\u0935\u0902 \u092A\u0935\u093F\u0924\u094D\u0930 \u0938\u092E\u093F\u0927\u093E",
+      "\u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0928\u093E\u092E \u090F\u0935\u0902 \u0917\u094B\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A \u0915\u0947 \u0938\u093E\u0925 \u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0928"
+    ],
+    "benefits": [
+      "Neutralization of Vish Yoga Effects: Traditionally performed to pacify and neutralize the negative planetary influences of Vish Yoga in one's horoscope.",
+      "Removal of Obstacles: Believed to clear persistent hurdles and unexpected hindrances in personal, professional, and spiritual pursuits.",
+      "Protection from Misfortune: Performed to invoke divine protection against repeated setbacks, adverse circumstances, and unforeseen difficulties.",
+      "Health & Well-Being: Traditionally believed to promote physical vitality, mental clarity, emotional calmness, and overall well-being.",
+      "Peace & Stability: Aims to alleviate chronic mental tension, emotional turbulence, and restlessness, bringing inner peace.",
+      "Prosperity & Growth: Associated with creating favorable conditions for personal progress, financial stability, and continuous spiritual growth.",
+      "Family Harmony: Traditionally believed to reduce misunderstandings and domestic friction, fostering warmth and mutual support at home.",
+      "Improved Relationships: Helps in harmonizing strained interpersonal relations and strengthening social and familial bonds.",
+      "Career & Business Stability: Traditionally performed to overcome stagnation in profession, trade, or business endeavors and establish stability."
+    ],
+    "hindiBenefits": [
+      "[\u0926\u094B\u0937 \u0936\u092E\u0928] \u091C\u0928\u094D\u092E\u092A\u0924\u094D\u0930\u093F\u0915\u093E \u092E\u0947\u0902 \u0935\u093F\u0937 \u092F\u094B\u0917 \u0915\u0947 \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u0917\u094D\u0930\u0939 \u092A\u094D\u0930\u092D\u093E\u0935\u094B\u0902 \u0915\u093E \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0936\u092E\u0928",
+      "[\u092C\u093E\u0927\u093E \u0928\u093F\u0935\u093E\u0930\u0923] \u0915\u093E\u0930\u094D\u092F\u094B\u0902 \u092E\u0947\u0902 \u0906 \u0930\u0939\u0940 \u0928\u093F\u0930\u0902\u0924\u0930 \u0930\u0941\u0915\u093E\u0935\u091F\u094B\u0902 \u090F\u0935\u0902 \u0905\u092A\u094D\u0930\u0924\u094D\u092F\u093E\u0936\u093F\u0924 \u092C\u093E\u0927\u093E\u0913\u0902 \u0915\u093E \u0928\u093F\u0935\u093E\u0930\u0923",
+      "[\u0938\u0941\u0930\u0915\u094D\u0937\u093E] \u0926\u0941\u0930\u094D\u092D\u093E\u0917\u094D\u092F \u090F\u0935\u0902 \u0905\u0928\u092A\u0947\u0915\u094D\u0937\u093F\u0924 \u0938\u0902\u0915\u091F\u094B\u0902 \u0938\u0947 \u0908\u0936\u094D\u0935\u0930\u0940\u092F \u0930\u0915\u094D\u0937\u093E \u0915\u093E \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926",
+      "[\u0938\u094D\u0935\u093E\u0938\u094D\u0925\u094D\u092F] \u0936\u093E\u0930\u0940\u0930\u093F\u0915 \u090A\u0930\u094D\u091C\u093E, \u092E\u093E\u0928\u0938\u093F\u0915 \u0938\u094D\u092A\u0937\u094D\u091F\u0924\u093E \u090F\u0935\u0902 \u0938\u092E\u0917\u094D\u0930 \u0938\u094D\u0935\u093E\u0938\u094D\u0925\u094D\u092F \u0938\u0902\u0935\u0930\u094D\u0927\u0928",
+      "[\u0936\u093E\u0902\u0924\u093F] \u092E\u093E\u0928\u0938\u093F\u0915 \u0924\u0928\u093E\u0935, \u091A\u093F\u0902\u0924\u093E \u090F\u0935\u0902 \u092D\u093E\u0935\u0928\u093E\u0924\u094D\u092E\u0915 \u0905\u0936\u093E\u0902\u0924\u093F \u0938\u0947 \u092E\u0941\u0915\u094D\u0924\u093F \u0914\u0930 \u0906\u0902\u0924\u0930\u093F\u0915 \u0936\u093E\u0902\u0924\u093F",
+      "[\u0938\u092E\u0943\u0926\u094D\u0927\u093F] \u092A\u094D\u0930\u0917\u0924\u093F \u0915\u0947 \u0905\u0928\u0941\u0915\u0942\u0932 \u0905\u0935\u0938\u0930, \u0906\u0930\u094D\u0925\u093F\u0915 \u0938\u094D\u0925\u093F\u0930\u0924\u093E \u090F\u0935\u0902 \u0928\u093F\u0930\u0902\u0924\u0930 \u0938\u092E\u0943\u0926\u094D\u0927\u093F",
+      "[\u0938\u0926\u094D\u092D\u093E\u0935] \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u0915\u094D\u0932\u0947\u0936 \u0928\u093F\u0935\u093E\u0930\u0923 \u090F\u0935\u0902 \u0918\u0930 \u092E\u0947\u0902 \u0938\u0941\u0916\u0926 \u0935 \u0936\u093E\u0902\u0924\u093F\u092A\u0942\u0930\u094D\u0923 \u0935\u093E\u0924\u093E\u0935\u0930\u0923",
+      "[\u0938\u0902\u092C\u0902\u0927 \u0938\u0941\u0927\u093E\u0930] \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u0935 \u0938\u093E\u092E\u093E\u091C\u093F\u0915 \u0938\u0902\u092C\u0902\u0927\u094B\u0902 \u092E\u0947\u0902 \u092E\u0927\u0941\u0930\u0924\u093E \u090F\u0935\u0902 \u0906\u092A\u0938\u0940 \u0938\u093E\u092E\u0902\u091C\u0938\u094D\u092F",
+      "[\u0915\u093E\u0930\u094D\u092F\u0915\u094D\u0937\u0947\u0924\u094D\u0930 \u0938\u094D\u0925\u093F\u0930\u0924\u093E] \u0906\u091C\u0940\u0935\u093F\u0915\u093E, \u0928\u094C\u0915\u0930\u0940 \u090F\u0935\u0902 \u0935\u094D\u092F\u093E\u092A\u093E\u0930 \u092E\u0947\u0902 \u0938\u094D\u0925\u093F\u0930\u0924\u093E \u0914\u0930 \u0909\u0928\u094D\u0928\u0924\u093F"
+    ],
+    "whoCanConsider": [
+      "Individuals with Vish Yoga (Shani-Chandra conjunction/aspect) in their horoscope.",
+      "Devotees experiencing unexplained career stagnation, persistent hurdles, or financial strain.",
+      "People troubled by emotional turbulence, severe mental stress, or sleep restlessness.",
+      "Families seeking harmony, health protection, and peace of mind in Ujjain."
+    ],
+    "preparation": [
+      "Devotees are advised to wear clean, traditional clothing.",
+      "Keep your birth details (Date, Time, Place of Birth, Name, and Gotra) handy for Sankalp.",
+      "Arrive at the designated Ujjain venue 15 minutes before the scheduled time."
+    ],
+    "hindiPreparation": [
+      "\u0936\u0941\u0926\u094D\u0927 \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u092A\u0930\u093F\u0927\u093E\u0928 \u0927\u093E\u0930\u0923 \u0915\u0930\u0947\u0902\u0964",
+      "\u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u092F\u091C\u092E\u093E\u0928 \u0915\u093E \u0928\u093E\u092E, \u091C\u0928\u094D\u092E \u0938\u092E\u092F, \u091C\u0928\u094D\u092E \u0938\u094D\u0925\u093E\u0928 \u090F\u0935\u0902 \u0917\u094B\u0924\u094D\u0930 \u0935\u093F\u0935\u0930\u0923 \u0924\u0948\u092F\u093E\u0930 \u0930\u0916\u0947\u0902\u0964",
+      "\u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0938\u092E\u092F \u0938\u0947 15 \u092E\u093F\u0928\u091F \u092A\u0942\u0930\u094D\u0935 \u092A\u0942\u091C\u093E \u0938\u094D\u0925\u0932 \u092A\u0930 \u0909\u092A\u0938\u094D\u0925\u093F\u0924 \u0939\u094B\u0902\u0964"
+    ],
+    "ritualDetails": "Ganesh Pujan, Navgraha Sthapana, Shani-Chandra Shanti Japa, Specialized Vish Yog Havan Yajna, Gotra Sankalp, and Maha Aarti.",
+    "hindiRitualDetails": "\u0917\u0923\u0947\u0936 \u092A\u0942\u091C\u0928, \u0928\u0935\u0917\u094D\u0930\u0939 \u0938\u094D\u0925\u093E\u092A\u0928\u093E, \u0936\u0928\u093F-\u091A\u0902\u0926\u094D\u0930 \u0936\u093E\u0902\u0924\u093F \u091C\u093E\u092A, \u0935\u093F\u0936\u0947\u0937 \u0935\u093F\u0937 \u092F\u094B\u0917 \u0936\u093E\u0902\u0924\u093F \u0939\u0935\u0928, \u0917\u094B\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A \u090F\u0935\u0902 \u092E\u0939\u093E\u0906\u0930\u0924\u0940\u0964",
+    "duration": "Available on enquiry",
+    "hindiDuration": "\u092A\u0942\u091B\u0924\u093E\u091B \u092A\u0930 \u0909\u092A\u0932\u092C\u094D\u0927",
+    "price": null,
+    "priceType": "Custom / On Request",
+    "featuredImage": "/assets/images/vish-yog-shanti-pooja-ujjain.jpg",
+    "gallery": [
+      "/assets/images/vish-yog-shanti-pooja-ujjain.jpg",
+      "/assets/images/vish_yog_shanti_pooja_ujjain.jpg"
+    ],
+    "isFeatured": true,
+    "isPublished": true,
+    "faqs": [
+      {
+        "question": "What is Vish Yog Shanti Pooja?",
+        "answer": "Vish Yog Shanti Pooja is a Vedic ritual performed to pacify Vish Yoga, an inauspicious astrological combination in a horoscope traditionally believed to cause obstacles, misfortune, and difficulties. It is intended to restore peace, health, and prosperity for the devotee and family."
+      },
+      {
+        "question": "What is Vish Yoga according to the catalogue?",
+        "answer": "According to the catalogue, Vish Yoga is an inauspicious astrological combination formed by certain planetary positions in a horoscope, traditionally associated with obstacles, delays, and misfortune."
+      },
+      {
+        "question": "Who may consider Vish Yog Shanti Pooja?",
+        "answer": "Devotees whose horoscopes indicate Vish Yoga or those experiencing persistent obstacles, emotional stress, and life delays may consider this ritual."
+      },
+      {
+        "question": "What are the traditional benefits?",
+        "answer": "Source benefits include neutralization of Vish Yoga effects, removal of obstacles, protection from misfortune, health and well-being, peace and stability, prosperity and growth, family harmony, improved relationships, and career/business stability."
+      },
+      {
+        "question": "Can Vish Yog Shanti Pooja help with obstacles?",
+        "answer": "According to traditional Vedic belief, the ritual is specifically performed to pray for the dissolution of persistent obstacles and the restoration of harmony and prosperity."
+      },
+      {
+        "question": "How can I book the pooja?",
+        "answer": "Contact Aastha Sey Raasta Seva via website enquiry, direct phone call, or WhatsApp to receive guidance and finalize your booking arrangements."
+      },
+      {
+        "question": "What is the price of Vish Yog Shanti Pooja?",
+        "answer": "Pooja requirements and arrangements vary depending on individual needs. Contact Aastha Sey Raasta Seva to understand available arrangements and current pricing."
+      }
+    ],
+    "internalLinks": [
+      {
+        "anchor": "Nakshatra Shanti Pooja",
+        "link": "/pooja/nakshatra-shanti-pooja-ujjain",
+        "reason": "Vedic birth star Shanti service."
+      },
+      {
+        "anchor": "Navgraha Shanti Pooja",
+        "link": "/pooja/navgraha-shanti-pooja-ujjain",
+        "reason": "Nine planetary peace ritual."
+      },
+      {
+        "anchor": "Mool Shanti Pooja",
+        "link": "/pooja/mool-shanti-pooja-ujjain",
+        "reason": "Mool Nakshatra Shanti ritual."
+      },
+      {
+        "anchor": "Kaal Sarp Dosh Pooja",
+        "link": "/pooja/kaal-sarp-dosh-shanti-ujjain",
+        "reason": "Planetary node dosh remedy."
+      }
+    ],
+    "imageSeo": {
+      "featuredImageIdea": "Vedic Pandits in saffron robes performing sacred havan fire ritual for Vish Yog Shanti with horoscope chart in Ujjain.",
+      "alt": "Vish Yog Shanti Pooja in Ujjain Vedic Anushthan with Pandits and Sacred Havan",
+      "title": "Vish Yog Shanti Pooja Ujjain \u2014 Aastha Sey Raasta Seva",
+      "filename": "vish-yog-shanti-pooja-ujjain.jpg"
+    },
+    "schemaTypes": [
+      "Service",
+      "FAQPage",
+      "BreadcrumbList",
+      "LocalBusiness"
+    ],
+    "qualityScore": 99,
+    "sortOrder": 12,
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-09-02T20:00:00Z"
+  },
+  {
+    "id": "pooja-mool-shanti-pooja-ujjain",
+    "name": "Mool Shanti Pooja in Ujjain",
+    "hindiName": "\u092E\u0942\u0932 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E (\u092E\u0942\u0932 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0936\u093E\u0902\u0924\u093F \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928)",
+    "slug": "mool-shanti-pooja-ujjain",
+    "urlSlug": "/pooja/mool-shanti-pooja-ujjain",
+    "categoryId": "cat-dosh",
+    "categoryName": "Dosh Shanti & Special Poojas",
+    "hindiCategoryName": "\u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u092A\u0942\u091C\u093E",
+    "pageType": "Pooja / Dosh Shanti",
+    "primaryKeyword": "mool shanti pooja",
+    "focusKeyword": "mool shanti pooja in ujjain",
+    "secondaryKeywords": [
+      "mool shanti pooja in ujjain",
+      "mool nakshatra shanti pooja",
+      "mool shanti pooja for child",
+      "mool nakshatra pooja",
+      "mool shanti pooja booking"
+    ],
+    "searchIntent": "Transactional & Informational (Parents seeking authentic Vedic Mool Nakshatra Shanti ritual in Ujjain for child and family well-being)",
+    "seoTitle": "Mool Shanti Pooja in Ujjain | Aastha Sey Raasta Seva",
+    "metaDescription": "Arrange authentic Mool Shanti Pooja in Ujjain for children born under Mool Nakshatra. Complete Vedic ritual arrangements with experienced Pandits for family peace & child's well-being.",
+    "h1": "Mool Shanti Pooja in Ujjain \u2014 Vedic Nakshatra Shanti for Child & Family",
+    "quickAnswer": "Mool Shanti Pooja is a Vedic ritual performed for children born under Mool Nakshatra. According to Vedic tradition, the ritual is performed to pacify traditionally believed negative effects of Mool Nakshatra and to pray for the well-being and long life of the child, as well as peace, harmony and prosperity in the family.",
+    "shortDescription": "Mool Shanti Pooja is a sacred Vedic ritual performed for children born under Mool Nakshatra (birth star) to pray for the well-being and long life of the child and peace, harmony, and prosperity in the family.",
+    "description": "Mool Shanti Pooja is a sacred Vedic ritual performed for children born under the Mool Nakshatra (birth star). In Hindu astrological traditions, the birth Nakshatra plays a fundamental role in shaping an individual's life path, temperament, and family dynamics. According to traditional belief, birth under certain quarters (Padas) of Mool Nakshatra is associated with specific astrological challenges or doshas that may affect the child and create concern for the parents and extended family.\n\nTo address these traditional beliefs, Vedic scriptures prescribe the Mool Shanti Anushthan. The ritual is performed with sincere prayers to pacify the traditionally believed negative influences of Mool Nakshatra, seek divine protection for the child, and foster harmony, health, and prosperity across the entire family. At Aastha Sey Raasta Seva, we provide complete, authentic arrangements for Mool Shanti Pooja in Ujjain, conducted by experienced and Vedic-qualified pandits with complete ritual devotion.\n\n## About Mool Shanti Pooja\nMool Shanti Pooja is an ancient Vedic ceremony designed to bring spiritual tranquility and positive planetary alignment. According to Vedic tradition, the ritual is performed to pacify the negative effects of Mool Nakshatra, ensure the well-being and long life of the child, and bring peace, harmony, and prosperity to the family.\n\nDuring the ceremony, qualified pandits establish sacred Kalash representations, invoke the presiding deities of the Nakshatra, and chant specific Vedic mantras from scriptural traditions. The ritual incorporates traditional Vedic prayers, Gotra Sankalp, havan (sacred fire offerings), and peace invocations (Shanti Path) to invoke divine benevolence and blessings for the newborn and their household.\n\n## Why Mool Shanti Pooja Is Performed\nIn traditional Vedic astrology, devotees organize Mool Shanti Pooja for several core devotional intentions:\n- **Pacification of Mool Nakshatra**: Traditionally believed to neutralize the negative influences associated with Mool Nakshatra birth.\n- **Child's Health & Longevity**: Performed to invoke divine grace for the child's physical vitality, mental well-being, and long, auspicious life.\n- **Protection of Parents**: Believed to safeguard parents from difficulties traditionally associated with the birth star.\n- **Family Harmony & Unity**: Traditionally associated with reducing domestic tensions and establishing understanding within the household.\n- **Clearing Growth Hurdles**: Performed to remove subtle obstacles that may affect the child's early development and learning milestones.\n- **Prosperity & Household Stability**: Intended to foster an auspicious and stable atmosphere for the entire family.\n\n## Who May Consider Mool Shanti Pooja\n- Parents of children born under the Mool Nakshatra (or Gandmool Nakshatras as identified in their Janam Kundali).\n- Families seeking traditional Nakshatra pacification and peace for the household following a child's birth.\n- Devotees wishing to arrange an authentic Vedic Shanti ritual in the holy city of Ujjain with qualified Brahmins.\n\n*Disclaimer: Astrological suitability depends on an individual's birth chart and traditional guidance. Consult a qualified astrologer for personalized advice.*",
+    "templeName": "Sacred Temples & Teerth Kshetra in Ujjain",
+    "location": "Ujjain, Madhya Pradesh",
+    "city": "Ujjain",
+    "state": "Madhya Pradesh",
+    "country": "India",
+    "whatWeOffer": [
+      "We provide complete arrangements for Mool Shanti Pooja Anushthan with devotion, authenticity and convenience for devotees.",
+      "The ritual is performed by experienced and Vedic-qualified pandits.",
+      "Provision of pure, satvik ritual materials, sacred herbs, pure cow ghee, and havan samagri.",
+      "Personalized Gotra Sankalp for parents and child with dedicated coordination support."
+    ],
+    "hindiWhatWeOffer": [
+      "\u0936\u094D\u0930\u0926\u094D\u0927\u093E, \u092A\u094D\u0930\u093E\u092E\u093E\u0923\u093F\u0915\u0924\u093E \u0914\u0930 \u0938\u0941\u0935\u093F\u0927\u093E \u0915\u0947 \u0938\u093E\u0925 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u092E\u0942\u0932 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E",
+      "\u0905\u0928\u0941\u092D\u0935\u0940 \u090F\u0935\u0902 \u0935\u0948\u0926\u093F\u0915-\u0935\u093F\u0926\u094D\u0935\u093E\u0928 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0935\u093F\u0927\u093F\u0935\u0924 \u092A\u0942\u091C\u093E \u090F\u0935\u0902 \u0939\u0935\u0928",
+      "\u0936\u0941\u0926\u094D\u0927 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u092A\u0942\u091C\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940, \u0914\u0937\u0927\u0940\u092F \u0938\u092E\u093F\u0927\u093E \u090F\u0935\u0902 \u0939\u0935\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940",
+      "\u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0928\u093E\u092E \u090F\u0935\u0902 \u0917\u094B\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A \u0915\u0947 \u0938\u093E\u0925 \u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0928"
+    ],
+    "benefits": [
+      "Pacification of Mool Nakshatra Effects: Traditionally believed to neutralize the negative influences of Mool Nakshatra on the child and family.",
+      "Well-being & Long Life of the Child: Invokes divine blessings for the child's health, vitality, and longevity according to traditional belief.",
+      "Protection of Parents: Believed to safeguard parents from difficulties traditionally associated with Mool Nakshatra birth.",
+      "Family Harmony & Peace: Traditionally associated with reducing conflicts and tension within the family, fostering unity and understanding.",
+      "Support for Child's Growth: Traditionally associated with clearing hurdles that may affect the child's physical, mental, and emotional development.",
+      "Prosperity & Stability: Traditionally associated with overall stability and prosperity in the family after the birth of a child under this nakshatra.",
+      "Auspicious Beginning for the Child's Life: Traditionally associated with a positive and blessed start to the child's journey in life."
+    ],
+    "hindiBenefits": [
+      "[\u0936\u093E\u0902\u0924\u093F] \u092E\u0942\u0932 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0915\u0947 \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u0930\u0942\u092A \u0938\u0947 \u092E\u093E\u0928\u0947 \u091C\u093E\u0928\u0947 \u0935\u093E\u0932\u0947 \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u092A\u094D\u0930\u092D\u093E\u0935\u094B\u0902 \u0915\u093E \u0936\u092E\u0928",
+      "[\u0915\u0932\u094D\u092F\u093E\u0923] \u092C\u091A\u094D\u091A\u0947 \u0915\u0947 \u0909\u0924\u094D\u0924\u092E \u0938\u094D\u0935\u093E\u0938\u094D\u0925\u094D\u092F, \u0926\u0940\u0930\u094D\u0918\u093E\u092F\u0941 \u090F\u0935\u0902 \u0938\u0930\u094D\u0935\u093E\u0902\u0917\u0940\u0923 \u0915\u0932\u094D\u092F\u093E\u0923 \u0939\u0947\u0924\u0941 \u0908\u0936\u094D\u0935\u0930\u0940\u092F \u0915\u0943\u092A\u093E",
+      "[\u0938\u0941\u0930\u0915\u094D\u0937\u093E] \u092E\u093E\u0924\u093E-\u092A\u093F\u0924\u093E \u0915\u0940 \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u0930\u0942\u092A \u0938\u0947 \u092E\u093E\u0928\u0940 \u091C\u093E\u0928\u0947 \u0935\u093E\u0932\u0940 \u0915\u0920\u093F\u0928\u093E\u0907\u092F\u094B\u0902 \u0938\u0947 \u0930\u0915\u094D\u0937\u093E",
+      "[\u0938\u0926\u094D\u092D\u093E\u0935] \u092A\u0930\u093F\u0935\u093E\u0930 \u092E\u0947\u0902 \u0906\u092A\u0938\u0940 \u0938\u092E\u091D, \u0936\u093E\u0902\u0924\u093F \u0914\u0930 \u0917\u0943\u0939 \u0915\u094D\u0932\u0947\u0936 \u0928\u093F\u0935\u093E\u0930\u0923",
+      "[\u0935\u093F\u0915\u093E\u0938] \u092C\u091A\u094D\u091A\u0947 \u0915\u0947 \u0936\u093E\u0930\u0940\u0930\u093F\u0915, \u092E\u093E\u0928\u0938\u093F\u0915 \u090F\u0935\u0902 \u092C\u094C\u0926\u094D\u0927\u093F\u0915 \u0935\u093F\u0915\u093E\u0938 \u092E\u0947\u0902 \u0906\u0928\u0947 \u0935\u093E\u0932\u0940 \u092C\u093E\u0927\u093E\u0913\u0902 \u0915\u093E \u0928\u093F\u0935\u093E\u0930\u0923",
+      "[\u0938\u092E\u0943\u0926\u094D\u0927\u093F] \u0917\u0943\u0939-\u092A\u0930\u093F\u0935\u093E\u0930 \u092E\u0947\u0902 \u0938\u0941\u0916, \u0938\u094D\u0925\u093F\u0930\u0924\u093E \u0914\u0930 \u0906\u0930\u094D\u0925\u093F\u0915 \u090F\u0935\u0902 \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u0938\u092E\u0943\u0926\u094D\u0927\u093F",
+      "[\u0936\u0941\u092D \u0906\u0930\u0902\u092D] \u092C\u093E\u0932\u0915 \u0915\u0947 \u091C\u0940\u0935\u0928 \u0915\u0947 \u0928\u0935 \u0906\u0930\u0902\u092D \u0939\u0947\u0924\u0941 \u0936\u0941\u092D \u090F\u0935\u0902 \u092E\u0902\u0917\u0932\u092E\u092F \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926"
+    ],
+    "whoCanConsider": [
+      "Parents of children born under Mool Nakshatra (birth star).",
+      "Families seeking Vedic remedies for Gandmool Nakshatra dosha.",
+      "Devotees wishing to pray for child's longevity, health, and parent protection.",
+      "Devotees seeking peace, domestic harmony, and removal of developmental hurdles."
+    ],
+    "preparation": [
+      "Devotees are requested to wear clean, traditional attire for the ritual.",
+      "Keep child's birth details (Date, Time, Place of Birth, Name & Gotra) available for Sankalp.",
+      "Arrive at the designated Ujjain venue 15 minutes before the scheduled auspicious Muhurat."
+    ],
+    "hindiPreparation": [
+      "\u092F\u091C\u092E\u093E\u0928 \u090F\u0935\u0902 \u092A\u0930\u093F\u0935\u093E\u0930 \u0936\u0941\u0926\u094D\u0927 \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u0935\u0938\u094D\u0924\u094D\u0930 \u0927\u093E\u0930\u0923 \u0915\u0930\u0947\u0902\u0964",
+      "\u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u092C\u093E\u0932\u0915 \u0915\u093E \u0928\u093E\u092E, \u091C\u0928\u094D\u092E \u0938\u092E\u092F, \u091C\u0928\u094D\u092E \u0938\u094D\u0925\u093E\u0928, \u092E\u093E\u0924\u093E-\u092A\u093F\u0924\u093E \u0915\u093E \u0928\u093E\u092E \u090F\u0935\u0902 \u0917\u094B\u0924\u094D\u0930 \u0935\u093F\u0935\u0930\u0923 \u0924\u0948\u092F\u093E\u0930 \u0930\u0916\u0947\u0902\u0964",
+      "\u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0936\u0941\u092D \u092E\u0941\u0939\u0942\u0930\u094D\u0924 \u0938\u0947 15 \u092E\u093F\u0928\u091F \u092A\u0942\u0930\u094D\u0935 \u092A\u0942\u091C\u093E \u0938\u094D\u0925\u0932 \u092A\u0930 \u0909\u092A\u0938\u094D\u0925\u093F\u0924 \u0939\u094B\u0902\u0964"
+    ],
+    "ritualDetails": "Ganesh Pujan, Kalash Sthapana, Mool Nakshatra Presiding Deity Avahan, Vedic Mantra Japa, Havan Yajna with sacred herbs, Gotra Sankalp, and Shanti Paath.",
+    "hindiRitualDetails": "\u0917\u0923\u0947\u0936 \u092A\u0942\u091C\u0928, \u0915\u0932\u0936 \u0938\u094D\u0925\u093E\u092A\u0928\u093E, \u092E\u0942\u0932 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0905\u0927\u093F\u0937\u094D\u0920\u093E\u0924\u093E \u0926\u0947\u0935\u0924\u093E \u0906\u0935\u093E\u0939\u0928, \u0935\u0948\u0926\u093F\u0915 \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A, \u0914\u0937\u0927\u0940\u092F \u0938\u092E\u093F\u0927\u093E \u0938\u0947 \u0939\u0935\u0928, \u0917\u094B\u0924\u094D\u0930 \u0938\u0902\u0915\u0932\u094D\u092A \u090F\u0935\u0902 \u0936\u093E\u0902\u0924\u093F \u092A\u093E\u0920\u0964",
+    "duration": "Available on enquiry",
+    "hindiDuration": "\u092A\u0942\u091B\u0924\u093E\u091B \u092A\u0930 \u0909\u092A\u0932\u092C\u094D\u0927",
+    "price": null,
+    "priceType": "Custom / On Request",
+    "featuredImage": "/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg",
+    "gallery": [
+      "/assets/images/mool_shanti_pooja_ujjain_1787114840814.jpg",
+      "/assets/images/mool-shanti-pooja-ujjain.jpg"
+    ],
+    "isFeatured": true,
+    "isPublished": true,
+    "faqs": [
+      {
+        "question": "What is Mool Shanti Pooja?",
+        "answer": "Mool Shanti Pooja is a Vedic ritual performed for children born under Mool Nakshatra. According to Vedic tradition, the ritual is performed to pacify traditionally believed negative effects of Mool Nakshatra and to pray for the well-being and long life of the child, as well as peace, harmony and prosperity in the family."
+      },
+      {
+        "question": "Who is Mool Shanti Pooja traditionally performed for?",
+        "answer": "This Pooja is performed for children born under the Mool Nakshatra (birth star)."
+      },
+      {
+        "question": "Why is Mool Nakshatra associated with this pooja?",
+        "answer": "According to traditional belief, the ritual is performed to pacify the negative effects of Mool Nakshatra, safeguard parents from difficulties traditionally associated with Mool Nakshatra birth, clear hurdles in the child's growth, and invoke blessings for longevity, peace, harmony, and prosperity."
+      },
+      {
+        "question": "What are the traditional benefits of Mool Shanti Pooja?",
+        "answer": "The traditional benefits associated with the Pooja include pacification of Mool Nakshatra effects, child's health and longevity, protection of parents, reduced conflicts and family harmony, removal of growth obstacles, family stability, and an auspicious beginning for the child's journey."
+      },
+      {
+        "question": "Can parents arrange Mool Shanti Pooja for their child?",
+        "answer": "Yes, parents can organize and participate in this sacred anushthan on behalf of their child with personalized Name and Gotra Sankalp."
+      },
+      {
+        "question": "How can I enquire about Mool Shanti Pooja in Ujjain?",
+        "answer": "Contact Aastha Sey Raasta Seva via our online form, phone call, or WhatsApp to enquire about available arrangements and schedule your pooja."
+      },
+      {
+        "question": "How much does Mool Shanti Pooja cost?",
+        "answer": "Pooja requirements and arrangements may vary depending on individual needs. Contact Aastha Sey Raasta Seva to understand the available arrangements and current pricing."
+      }
+    ],
+    "internalLinks": [
+      {
+        "anchor": "Nakshatra Shanti Pooja",
+        "link": "/pooja/nakshatra-shanti-pooja-ujjain",
+        "reason": "Vedic birth star Shanti service."
+      },
+      {
+        "anchor": "Vish Yog Shanti Pooja",
+        "link": "/pooja/vish-yog-shanti-pooja-ujjain",
+        "reason": "Planetary Vish Yoga Shanti."
+      },
+      {
+        "anchor": "Navgraha Shanti Pooja",
+        "link": "/pooja/navgraha-shanti-pooja-ujjain",
+        "reason": "Nine planetary peace ritual."
+      },
+      {
+        "anchor": "Rudrabhishek Pooja in Ujjain",
+        "link": "/pooja/rudrabhishek-pooja-ujjain",
+        "reason": "Lord Shiva sacred abhishek."
+      }
+    ],
+    "imageSeo": {
+      "featuredImageIdea": "Vedic pandits in traditional attire performing sacred havan fire ritual for Mool Nakshatra Shanti in Ujjain.",
+      "alt": "Mool Shanti Pooja in Ujjain Vedic Nakshatra Shanti for Child and Family",
+      "title": "Mool Shanti Pooja in Ujjain \u2014 Aastha Sey Raasta Seva",
+      "filename": "mool_shanti_pooja_ujjain_1787114840814.jpg"
+    },
+    "schemaTypes": [
+      "Service",
+      "FAQPage",
+      "BreadcrumbList",
+      "LocalBusiness"
+    ],
+    "qualityScore": 99,
+    "sortOrder": 11,
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-09-02T20:00:00Z"
+  },
+  {
     id: "pooja-rudrabhishek",
     name: "Rudrabhishek Pooja in Ujjain",
     hindiName: "\u0930\u0941\u0926\u094D\u0930\u093E\u092D\u093F\u0937\u0947\u0915 \u092A\u0942\u091C\u093E \u2014 \u0936\u093F\u0935 \u092E\u0902\u0926\u093F\u0930, \u0909\u091C\u094D\u091C\u0948\u0928",
