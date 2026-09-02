@@ -327,7 +327,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     });
   }, [leads, leadSearch, leadStatusFilter, leadCategoryFilter]);
 
-  // LOGIN SCREEN (EMAIL ID + PASSCODE)
+  // LOGIN SCREEN (EMAIL ID / USERNAME + PASSCODE)
   if (!isAuthenticated) {
     return (
       <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-stone-100 dark:bg-stone-950">
@@ -345,22 +345,22 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
           <div className="p-7 sm:p-8 space-y-6">
             <form onSubmit={(e) => handleLogin(e)} className="space-y-4">
-              {/* Email ID Field */}
+              {/* Email / Username Field */}
               <div>
                 <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-1.5">
-                  Email Address
+                  User ID / Email Address
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
-                    type="email"
+                    type="text"
                     required
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                       if (loginError) setLoginError('');
                     }}
-                    placeholder="e.g. admin@aasthaseva.com"
+                    placeholder="e.g. admin or admin@aasthaseyraasta.com"
                     className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-600 transition-all"
                   />
                 </div>
@@ -411,6 +411,39 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                 <span>Sign In to Admin Panel</span>
               </button>
             </form>
+
+            {/* Quick Fill Credentials Bar */}
+            <div className="p-3 bg-stone-50 dark:bg-stone-800/50 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 text-center">
+                Quick Sign-In Credentials
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('admin');
+                    setPassword('admin123');
+                    handleLogin(undefined, 'admin', 'admin123');
+                  }}
+                  className="p-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold text-center transition-all cursor-pointer flex flex-col items-center justify-center"
+                >
+                  <span className="font-bold flex items-center gap-1">👑 Super Admin</span>
+                  <span className="text-[10px] font-mono opacity-80">admin / admin123</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('manager');
+                    setPassword('manager123');
+                    handleLogin(undefined, 'manager', 'manager123');
+                  }}
+                  className="p-2 rounded-xl bg-stone-200/50 hover:bg-stone-200 dark:bg-stone-700/50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-600 text-stone-800 dark:text-stone-200 text-xs font-semibold text-center transition-all cursor-pointer flex flex-col items-center justify-center"
+                >
+                  <span className="font-bold flex items-center gap-1">👔 Manager</span>
+                  <span className="text-[10px] font-mono opacity-80">manager / manager123</span>
+                </button>
+              </div>
+            </div>
 
             {/* Secure Portal Notice */}
             <div className="pt-1 text-center">
@@ -970,14 +1003,34 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
           <div className="flex items-center gap-3 ml-auto">
             {/* Role Indicator Badge */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs font-mono font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
-              <span>Logged in as {currentStaffUser?.role}</span>
-            </div>
+            {currentStaffUser?.role === 'Manager' ? (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs font-mono font-bold">
+                  <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+                  <span>👔 Manager (Restricted)</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                  className="px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1"
+                  title="Log in as Administrator for full access"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Switch to Admin</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-mono font-bold">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>👑 Super Administrator</span>
+              </div>
+            )}
 
             <button
               onClick={handleLogout}
-              className="px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 hover:bg-red-100 text-xs font-semibold border border-red-200 dark:border-red-900 transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 hover:bg-red-100 text-xs font-semibold border border-red-200 dark:border-red-900 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Sign Out</span>
