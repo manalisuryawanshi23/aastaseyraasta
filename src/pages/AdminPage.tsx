@@ -412,39 +412,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
               </button>
             </form>
 
-            {/* Quick Fill Credentials Bar */}
-            <div className="p-3 bg-stone-50 dark:bg-stone-800/50 rounded-2xl border border-stone-200 dark:border-stone-800 space-y-2">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 text-center">
-                Quick Sign-In Credentials
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmail('admin');
-                    setPassword('admin123');
-                    handleLogin(undefined, 'admin', 'admin123');
-                  }}
-                  className="p-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold text-center transition-all cursor-pointer flex flex-col items-center justify-center"
-                >
-                  <span className="font-bold flex items-center gap-1">👑 Super Admin</span>
-                  <span className="text-[10px] font-mono opacity-80">admin / admin123</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmail('manager');
-                    setPassword('manager123');
-                    handleLogin(undefined, 'manager', 'manager123');
-                  }}
-                  className="p-2 rounded-xl bg-stone-200/50 hover:bg-stone-200 dark:bg-stone-700/50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-600 text-stone-800 dark:text-stone-200 text-xs font-semibold text-center transition-all cursor-pointer flex flex-col items-center justify-center"
-                >
-                  <span className="font-bold flex items-center gap-1">👔 Manager</span>
-                  <span className="text-[10px] font-mono opacity-80">manager / manager123</span>
-                </button>
-              </div>
-            </div>
-
             {/* Secure Portal Notice */}
             <div className="pt-1 text-center">
               <p className="text-[11px] text-stone-400 dark:text-stone-500 flex items-center justify-center gap-1.5">
