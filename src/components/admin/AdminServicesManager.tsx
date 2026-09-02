@@ -242,7 +242,7 @@ export const AdminServicesManager: React.FC = () => {
   const togglePoojaPublish = (id: string) => {
     const item = poojas.find((p) => p.id === id);
     if (!item) return;
-    const updated = StoreService.savePooja({ id, isPublished: !item.isPublished });
+    const updated = StoreService.savePooja({ ...item, isPublished: !item.isPublished });
     setPoojas((prev) => prev.map((p) => (p.id === id ? updated : p)));
     showToast(`Pooja "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
   };
@@ -262,7 +262,7 @@ export const AdminServicesManager: React.FC = () => {
     // Reassign sort orders
     newList.forEach((item, idx) => {
       item.sortOrder = idx + 1;
-      StoreService.savePooja({ id: item.id, sortOrder: item.sortOrder });
+      StoreService.savePooja({ ...item, sortOrder: item.sortOrder });
     });
 
     setPoojas(newList);
@@ -272,7 +272,7 @@ export const AdminServicesManager: React.FC = () => {
   const toggleTourPublish = (id: string) => {
     const item = tours.find((t) => t.id === id);
     if (!item) return;
-    const updated = StoreService.saveTour({ id, isPublished: !item.isPublished });
+    const updated = StoreService.saveTour({ ...item, isPublished: !item.isPublished });
     setTours((prev) => prev.map((t) => (t.id === id ? updated : t)));
     showToast(`Tour "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
   };
@@ -292,7 +292,7 @@ export const AdminServicesManager: React.FC = () => {
     // Reassign sort orders
     newList.forEach((item, idx) => {
       item.sortOrder = idx + 1;
-      StoreService.saveTour({ id: item.id, sortOrder: item.sortOrder });
+      StoreService.saveTour({ ...item, sortOrder: item.sortOrder });
     });
 
     setTours(newList);
@@ -370,8 +370,12 @@ export const AdminServicesManager: React.FC = () => {
   };
 
   const savePoojaService = (p: PoojaService) => {
+    if (!p.name || !p.name.trim()) {
+      alert('Pooja name is required.');
+      return;
+    }
     const cleanId = p.id && p.id.trim() ? p.id.trim() : `pooja-${Date.now()}`;
-    const cleanName = p.name && p.name.trim() ? p.name.trim() : 'New Pooja Ritual';
+    const cleanName = p.name.trim();
     const fallbackSlug = cleanName
       .toLowerCase()
       .trim()
@@ -397,8 +401,12 @@ export const AdminServicesManager: React.FC = () => {
   };
 
   const saveTourService = (t: Tour) => {
+    const cleanName = (t.name || (t as any).title || '').trim();
+    if (!cleanName) {
+      alert('Tour name is required.');
+      return;
+    }
     const cleanId = t.id && t.id.trim() ? t.id.trim() : `tour-${Date.now()}`;
-    const cleanName = (t.name || (t as any).title || '').trim() || 'New Spiritual Tour';
     const fallbackSlug = cleanName
       .toLowerCase()
       .trim()
@@ -418,7 +426,7 @@ export const AdminServicesManager: React.FC = () => {
     StoreService.saveTour(payload);
     refreshLists();
     setIsModalOpen(false);
-    showToast('Spiritual tour saved and synced to database successfully!');
+    showToast('Tour service saved and synced to database successfully!');
   };
 
   // Audited Poojas & Tours

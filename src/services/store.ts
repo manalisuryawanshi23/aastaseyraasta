@@ -188,12 +188,17 @@ export class StoreService {
     let list = saved.map((p) => {
       const init = initialPoojas.find((ip) => ip.id === p.id);
       if (init) {
+        // Auto-heal check: If saved data has corrupted/placeholder names/slugs, restore canonical definition
+        const isNameCorrupted = !p.name || p.name === 'New Pooja Ritual' || p.name.trim() === '';
+        const isSlugCorrupted = !p.slug || p.slug === 'new-pooja-ritual' || p.slug.trim() === '';
         return {
-          ...p,
           ...init,
-          name: p.name || init.name,
+          ...p,
+          name: isNameCorrupted ? init.name : p.name,
           hindiName: p.hindiName || init.hindiName,
-          slug: p.slug || init.slug,
+          slug: isSlugCorrupted ? init.slug : p.slug,
+          urlSlug: isSlugCorrupted ? (init.urlSlug || `/pooja/${init.slug}`) : (p.urlSlug || `/pooja/${p.slug}`),
+          h1: isNameCorrupted ? (init.h1 || init.name) : (p.h1 || p.name),
           categoryId: p.categoryId || init.categoryId,
           categoryName: p.categoryName || init.categoryName,
           hindiCategoryName: p.hindiCategoryName || init.hindiCategoryName,
@@ -219,7 +224,6 @@ export class StoreService {
           whoCanConsider: p.whoCanConsider && p.whoCanConsider.length > 0 ? p.whoCanConsider : init.whoCanConsider,
           faqs: p.faqs && p.faqs.length > 0 ? p.faqs : init.faqs,
           quickAnswer: p.quickAnswer || init.quickAnswer,
-          h1: p.h1 || init.h1,
           isPublished: p.isPublished !== undefined ? p.isPublished : init.isPublished,
           isFeatured: p.isFeatured !== undefined ? p.isFeatured : init.isFeatured,
           sortOrder: p.sortOrder !== undefined ? p.sortOrder : init.sortOrder,
@@ -264,28 +268,34 @@ export class StoreService {
     const poojas = this.getPoojas(false);
     const now = new Date().toISOString();
 
-    const cleanId = pooja.id && pooja.id.trim() ? pooja.id.trim() : `pooja-${Date.now()}`;
-    const cleanName = pooja.name && pooja.name.trim() ? pooja.name.trim() : 'New Pooja Ritual';
-    const fallbackSlug = cleanName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
-    const cleanSlug = pooja.slug && pooja.slug.trim()
-      ? pooja.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
-      : fallbackSlug;
-
+    // 1. UPDATE EXISTING POOJA
     if (pooja.id && pooja.id.trim()) {
       const idx = poojas.findIndex((p) => p.id === pooja.id);
       if (idx !== -1) {
-        const updated = {
-          ...poojas[idx],
+        const existing = poojas[idx];
+        const updatedName =
+          pooja.name !== undefined && pooja.name.trim() && pooja.name.trim() !== 'New Pooja Ritual'
+            ? pooja.name.trim()
+            : existing.name;
+        const updatedSlug =
+          pooja.slug !== undefined && pooja.slug.trim() && pooja.slug.trim() !== 'new-pooja-ritual'
+            ? pooja.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+            : existing.slug;
+        const updatedUrlSlug =
+          pooja.urlSlug !== undefined && pooja.urlSlug.trim()
+            ? pooja.urlSlug.trim()
+            : (existing.urlSlug || `/pooja/${updatedSlug}`);
+
+        const updated: PoojaService = {
+          ...existing,
           ...pooja,
-          id: cleanId,
-          name: cleanName,
-          slug: cleanSlug,
+          id: existing.id,
+          name: updatedName,
+          slug: updatedSlug,
+          urlSlug: updatedUrlSlug,
+          h1: pooja.h1 !== undefined && pooja.h1.trim() ? pooja.h1.trim() : (existing.h1 || updatedName),
           updatedAt: now,
-        } as PoojaService;
+        };
         poojas[idx] = updated;
         setItem(KEYS.POOJAS, poojas);
         syncApiPost('/api/poojas', updated);
@@ -293,7 +303,22 @@ export class StoreService {
       }
     }
 
-    // New item
+    // 2. CREATE NEW POOJA (DO NOT MUTATE ANY EXISTING ENTRIES)
+    const cleanId = pooja.id && pooja.id.trim() ? pooja.id.trim() : `pooja-${Date.now()}`;
+    const cleanName = pooja.name && pooja.name.trim() ? pooja.name.trim() : 'New Pooja Ritual';
+    const fallbackSlug =
+      cleanName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9-]+/g, '-')
+        .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
+    const cleanSlug =
+      pooja.slug && pooja.slug.trim()
+        ? pooja.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+        : fallbackSlug;
+    const cleanUrlSlug =
+      pooja.urlSlug && pooja.urlSlug.trim() ? pooja.urlSlug.trim() : `/pooja/${cleanSlug}`;
+
     const newPooja: PoojaService = {
       categoryId: 'cat-temple',
       categoryName: 'Temple Pooja Services',
@@ -317,6 +342,8 @@ export class StoreService {
       id: cleanId,
       name: cleanName,
       slug: cleanSlug,
+      urlSlug: cleanUrlSlug,
+      h1: pooja.h1 || cleanName,
     } as PoojaService;
 
     poojas.unshift(newPooja);
@@ -340,23 +367,26 @@ export class StoreService {
     let list = saved.map((t) => {
       const init = initialTours.find((it) => it.id === t.id);
       if (init) {
+        const isNameCorrupted = !t.name || t.name === 'New Spiritual Tour' || t.name.trim() === '';
+        const isSlugCorrupted = !t.slug || t.slug === 'new-spiritual-tour' || t.slug.trim() === '';
         return {
-          ...t,
           ...init,
-          name: init.name || t.name,
-          hindiName: init.hindiName || t.hindiName,
-          category: init.category || t.category,
-          hindiCategory: init.hindiCategory || t.hindiCategory,
-          shortDescription: init.shortDescription || t.shortDescription,
-          hindiShortDescription: init.hindiShortDescription || t.hindiShortDescription,
-          description: init.description || t.description,
-          hindiDescription: init.hindiDescription || t.hindiDescription,
-          startingPoint: init.startingPoint || t.startingPoint,
-          hindiStartingPoint: init.hindiStartingPoint || t.hindiStartingPoint,
-          endingPoint: init.endingPoint || t.endingPoint,
-          hindiEndingPoint: init.hindiEndingPoint || t.hindiEndingPoint,
-          duration: init.duration || t.duration,
-          hindiDuration: init.hindiDuration || t.hindiDuration,
+          ...t,
+          name: isNameCorrupted ? init.name : t.name,
+          hindiName: t.hindiName || init.hindiName,
+          slug: isSlugCorrupted ? init.slug : t.slug,
+          category: t.category || init.category,
+          hindiCategory: t.hindiCategory || init.hindiCategory,
+          shortDescription: t.shortDescription || init.shortDescription,
+          hindiShortDescription: t.hindiShortDescription || init.hindiShortDescription,
+          description: t.description || init.description,
+          hindiDescription: t.hindiDescription || init.hindiDescription,
+          startingPoint: t.startingPoint || init.startingPoint,
+          hindiStartingPoint: t.hindiStartingPoint || init.hindiStartingPoint,
+          endingPoint: t.endingPoint || init.endingPoint,
+          hindiEndingPoint: t.hindiEndingPoint || init.hindiEndingPoint,
+          duration: t.duration || init.duration,
+          hindiDuration: t.hindiDuration || init.hindiDuration,
           destinations: init.destinations && init.destinations.length > 0 ? init.destinations : t.destinations,
           hindiDestinations: init.hindiDestinations && init.hindiDestinations.length > 0 ? init.hindiDestinations : t.hindiDestinations,
           placesCovered: init.placesCovered && init.placesCovered.length > 0 ? init.placesCovered : t.placesCovered,
@@ -408,34 +438,48 @@ export class StoreService {
     const tours = this.getTours(false);
     const now = new Date().toISOString();
 
-    const cleanId = tour.id && tour.id.trim() ? tour.id.trim() : `tour-${Date.now()}`;
-    const cleanName = (tour.name || (tour as any).title || '').trim() || 'New Spiritual Tour';
-    const fallbackSlug = cleanName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
-    const cleanSlug = tour.slug && tour.slug.trim()
-      ? tour.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
-      : fallbackSlug;
-
     if (tour.id && tour.id.trim()) {
       const idx = tours.findIndex((t) => t.id === tour.id);
       if (idx !== -1) {
-        const updated = {
-          ...tours[idx],
+        const existing = tours[idx];
+        const updatedName =
+          tour.name !== undefined && tour.name.trim() && tour.name.trim() !== 'New Spiritual Tour'
+            ? tour.name.trim()
+            : ((tour as any).title !== undefined && (tour as any).title.trim()
+                ? (tour as any).title.trim()
+                : existing.name);
+        const updatedSlug =
+          tour.slug !== undefined && tour.slug.trim() && tour.slug.trim() !== 'new-spiritual-tour'
+            ? tour.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+            : existing.slug;
+
+        const updated: Tour = {
+          ...existing,
           ...tour,
-          id: cleanId,
-          name: cleanName,
-          slug: cleanSlug,
+          id: existing.id,
+          name: updatedName,
+          slug: updatedSlug,
           updatedAt: now,
-        } as Tour;
+        };
         tours[idx] = updated;
         setItem(KEYS.TOURS, tours);
         syncApiPost('/api/tours', updated);
         return updated;
       }
     }
+
+    const cleanId = tour.id && tour.id.trim() ? tour.id.trim() : `tour-${Date.now()}`;
+    const cleanName = (tour.name || (tour as any).title || '').trim() || 'New Spiritual Tour';
+    const fallbackSlug =
+      cleanName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9-]+/g, '-')
+        .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
+    const cleanSlug =
+      tour.slug && tour.slug.trim()
+        ? tour.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+        : fallbackSlug;
 
     const newTour: Tour = {
       shortDescription: '',
@@ -477,11 +521,14 @@ export class StoreService {
     let list = saved.map((d) => {
       const init = initialDestinations.find((id) => id.id === d.id);
       if (init) {
+        const isNameCorrupted = !d.name || d.name === 'New Destination' || d.name.trim() === '';
+        const isSlugCorrupted = !d.slug || d.slug === 'new-destination' || d.slug.trim() === '';
         return {
           ...init,
           ...d,
-          name: d.name || init.name,
+          name: isNameCorrupted ? init.name : d.name,
           hindiName: d.hindiName || init.hindiName,
+          slug: isSlugCorrupted ? init.slug : d.slug,
           shortDescription: d.shortDescription || init.shortDescription,
           hindiShortDescription: d.hindiShortDescription || init.hindiShortDescription,
           description: d.description || init.description,
@@ -514,26 +561,28 @@ export class StoreService {
   static saveDestination(dest: Partial<Destination> & { id?: string }): Destination {
     const dests = this.getDestinations(false);
     const now = new Date().toISOString();
-    const cleanId = dest.id && dest.id.trim() ? dest.id.trim() : `dest-${Date.now()}`;
-    const cleanName = (dest.name || (dest as any).title || '').trim() || 'New Destination';
-    const fallbackSlug = cleanName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `dest-${Date.now()}`;
-    const cleanSlug = dest.slug && dest.slug.trim()
-      ? dest.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
-      : fallbackSlug;
 
-    if (dest.id) {
+    if (dest.id && dest.id.trim()) {
       const idx = dests.findIndex((d) => d.id === dest.id);
       if (idx !== -1) {
+        const existing = dests[idx];
+        const updatedName =
+          dest.name !== undefined && dest.name.trim() && dest.name.trim() !== 'New Destination'
+            ? dest.name.trim()
+            : ((dest as any).title !== undefined && (dest as any).title.trim()
+                ? (dest as any).title.trim()
+                : existing.name);
+        const updatedSlug =
+          dest.slug !== undefined && dest.slug.trim() && dest.slug.trim() !== 'new-destination'
+            ? dest.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+            : existing.slug;
+
         const updated = {
-          ...dests[idx],
+          ...existing,
           ...dest,
-          id: cleanId,
-          name: cleanName,
-          slug: cleanSlug,
+          id: existing.id,
+          name: updatedName,
+          slug: updatedSlug,
           updatedAt: now,
         } as Destination;
         dests[idx] = updated;
@@ -542,6 +591,19 @@ export class StoreService {
         return updated;
       }
     }
+
+    const cleanId = dest.id && dest.id.trim() ? dest.id.trim() : `dest-${Date.now()}`;
+    const cleanName = (dest.name || (dest as any).title || '').trim() || 'New Destination';
+    const fallbackSlug =
+      cleanName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9-]+/g, '-')
+        .replace(/^-|-$/g, '') || `dest-${Date.now()}`;
+    const cleanSlug =
+      dest.slug && dest.slug.trim()
+        ? dest.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+        : fallbackSlug;
 
     const newDest: Destination = {
       shortDescription: dest.shortDescription || '',
@@ -579,11 +641,14 @@ export class StoreService {
     let list = saved.map((b) => {
       const init = initialBlogPosts.find((ib) => ib.id === b.id);
       if (init) {
+        const isTitleCorrupted = !b.title || b.title === 'New Blog Guide' || b.title.trim() === '';
+        const isSlugCorrupted = !b.slug || b.slug === 'new-blog-guide' || b.slug.trim() === '';
         return {
           ...init,
           ...b,
-          title: b.title || init.title,
+          title: isTitleCorrupted ? init.title : b.title,
           hindiTitle: b.hindiTitle || init.hindiTitle,
+          slug: isSlugCorrupted ? init.slug : b.slug,
           excerpt: b.excerpt || init.excerpt,
           hindiExcerpt: b.hindiExcerpt || init.hindiExcerpt,
           content: b.content || init.content,
@@ -614,26 +679,26 @@ export class StoreService {
   static saveBlogPost(blog: Partial<BlogPost> & { id?: string }): BlogPost {
     const blogs = this.getBlogPosts(false);
     const now = new Date().toISOString();
-    const cleanId = blog.id && blog.id.trim() ? blog.id.trim() : `blog-${Date.now()}`;
-    const cleanTitle = (blog.title || '').trim() || 'New Blog Guide';
-    const fallbackSlug = cleanTitle
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `blog-${Date.now()}`;
-    const cleanSlug = blog.slug && blog.slug.trim()
-      ? blog.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
-      : fallbackSlug;
 
-    if (blog.id) {
+    if (blog.id && blog.id.trim()) {
       const idx = blogs.findIndex((b) => b.id === blog.id);
       if (idx !== -1) {
+        const existing = blogs[idx];
+        const updatedTitle =
+          blog.title !== undefined && blog.title.trim() && blog.title.trim() !== 'New Blog Guide'
+            ? blog.title.trim()
+            : existing.title;
+        const updatedSlug =
+          blog.slug !== undefined && blog.slug.trim() && blog.slug.trim() !== 'new-blog-guide'
+            ? blog.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+            : existing.slug;
+
         const updated = {
-          ...blogs[idx],
+          ...existing,
           ...blog,
-          id: cleanId,
-          title: cleanTitle,
-          slug: cleanSlug,
+          id: existing.id,
+          title: updatedTitle,
+          slug: updatedSlug,
           updatedAt: now,
         } as BlogPost;
         blogs[idx] = updated;
@@ -642,6 +707,19 @@ export class StoreService {
         return updated;
       }
     }
+
+    const cleanId = blog.id && blog.id.trim() ? blog.id.trim() : `blog-${Date.now()}`;
+    const cleanTitle = (blog.title || '').trim() || 'New Blog Guide';
+    const fallbackSlug =
+      cleanTitle
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9-]+/g, '-')
+        .replace(/^-|-$/g, '') || `blog-${Date.now()}`;
+    const cleanSlug =
+      blog.slug && blog.slug.trim()
+        ? blog.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
+        : fallbackSlug;
 
     const newBlog: BlogPost = {
       excerpt: blog.excerpt || '',

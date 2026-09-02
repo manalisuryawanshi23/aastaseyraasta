@@ -7331,10 +7331,76 @@ async function startServer() {
     if (!p) {
       return res.status(400).json({ success: false, error: "Missing request body" });
     }
-    const id = p.id && String(p.id).trim() ? String(p.id).trim() : `pooja-${Date.now()}`;
-    const name = p.name && String(p.name).trim() ? String(p.name).trim() : "New Pooja Ritual";
+    const cleanId = p.id && String(p.id).trim() ? String(p.id).trim() : `pooja-${Date.now()}`;
+    let existingRow = null;
+    if (isDbConnected() && p.id) {
+      try {
+        const rows = await query("SELECT * FROM poojas WHERE id = ?", [cleanId]);
+        if (rows.length > 0) existingRow = rows[0];
+      } catch (e) {
+      }
+    }
+    const initPooja = initialPoojas.find((ip) => ip.id === cleanId);
+    const name = p.name && String(p.name).trim() && String(p.name).trim() !== "New Pooja Ritual" ? String(p.name).trim() : existingRow && existingRow.name && existingRow.name !== "New Pooja Ritual" ? existingRow.name : initPooja ? initPooja.name : "New Pooja Ritual";
     const fallbackSlug = name.toLowerCase().trim().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") || `pooja-${Date.now()}`;
-    const slug = p.slug && String(p.slug).trim() ? String(p.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") : fallbackSlug;
+    const slug = p.slug && String(p.slug).trim() && String(p.slug).trim() !== "new-pooja-ritual" ? String(p.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") : existingRow && existingRow.slug && existingRow.slug !== "new-pooja-ritual" ? existingRow.slug : initPooja ? initPooja.slug : fallbackSlug;
+    const hindiName = p.hindiName !== void 0 ? String(p.hindiName) : existingRow ? existingRow.hindi_name || "" : initPooja ? initPooja.hindiName || "" : "";
+    const urlSlug = p.urlSlug && String(p.urlSlug).trim() ? String(p.urlSlug).trim() : existingRow && existingRow.url_slug ? existingRow.url_slug : initPooja && initPooja.urlSlug ? initPooja.urlSlug : `/pooja/${slug}`;
+    const h1 = p.h1 && String(p.h1).trim() ? String(p.h1).trim() : existingRow && existingRow.h1 ? existingRow.h1 : initPooja && initPooja.h1 ? initPooja.h1 : name;
+    const categoryId = p.categoryId || (existingRow ? existingRow.category_id : initPooja ? initPooja.categoryId : "cat-temple");
+    const categoryName = p.categoryName || (existingRow ? existingRow.category_name : initPooja ? initPooja.categoryName : "Temple Pooja Services");
+    const hindiCategoryName = p.hindiCategoryName || (existingRow ? existingRow.hindi_category_name : initPooja ? initPooja.hindiCategoryName : "");
+    const pageType = p.pageType || (existingRow ? existingRow.page_type : initPooja ? initPooja.pageType : categoryName);
+    const primaryKeyword = p.primaryKeyword !== void 0 ? p.primaryKeyword : p.focusKeyword !== void 0 ? p.focusKeyword : existingRow ? existingRow.primary_keyword : initPooja ? initPooja.primaryKeyword || "" : "";
+    const secondaryKeywords = p.secondaryKeywords || (existingRow && existingRow.secondary_keywords_json ? JSON.parse(existingRow.secondary_keywords_json) : initPooja ? initPooja.secondaryKeywords || [] : []);
+    const searchIntent = p.searchIntent || (existingRow ? existingRow.search_intent : initPooja ? initPooja.searchIntent || "" : "");
+    const seoTitle = p.seoTitle || p.metaTitle || (existingRow ? existingRow.seo_title || existingRow.meta_title : initPooja ? initPooja.seoTitle || "" : "");
+    const metaDescription = p.metaDescription !== void 0 ? p.metaDescription : existingRow ? existingRow.meta_description : initPooja ? initPooja.metaDescription || "" : "";
+    const quickAnswer = p.quickAnswer !== void 0 ? p.quickAnswer : existingRow ? existingRow.quick_answer : initPooja ? initPooja.quickAnswer || "" : "";
+    const shortDescription = p.shortDescription !== void 0 ? p.shortDescription : existingRow ? existingRow.short_description : initPooja ? initPooja.shortDescription || "" : "";
+    const hindiShortDescription = p.hindiShortDescription !== void 0 ? p.hindiShortDescription : existingRow ? existingRow.hindi_short_description : initPooja ? initPooja.hindiShortDescription || "" : "";
+    const description = p.description !== void 0 ? p.description : existingRow ? existingRow.description : initPooja ? initPooja.description || "" : "";
+    const hindiDescription = p.hindiDescription !== void 0 ? p.hindiDescription : existingRow ? existingRow.hindi_description : initPooja ? initPooja.hindiDescription || "" : "";
+    const templeName = p.templeName !== void 0 ? p.templeName : existingRow ? existingRow.temple_name : initPooja ? initPooja.templeName || "" : "";
+    const hindiTempleName = p.hindiTempleName !== void 0 ? p.hindiTempleName : existingRow ? existingRow.hindi_temple_name : initPooja ? initPooja.hindiTempleName || "" : "";
+    const location = p.location !== void 0 ? p.location : existingRow ? existingRow.location : initPooja ? initPooja.location || "" : "";
+    const hindiLocation = p.hindiLocation !== void 0 ? p.hindiLocation : existingRow ? existingRow.hindi_location : initPooja ? initPooja.hindiLocation || "" : "";
+    const city = p.city !== void 0 ? p.city : existingRow ? existingRow.city : initPooja ? initPooja.city || "Ujjain" : "Ujjain";
+    const hindiCity = p.hindiCity !== void 0 ? p.hindiCity : existingRow ? existingRow.hindi_city : initPooja ? initPooja.hindiCity || "\u0909\u091C\u094D\u091C\u0948\u0928" : "\u0909\u091C\u094D\u091C\u0948\u0928";
+    const price = p.price !== void 0 && !isNaN(Number(p.price)) ? Number(p.price) : existingRow ? Number(existingRow.price || 0) : initPooja ? Number(initPooja.price || 0) : 0;
+    const originalPrice = p.originalPrice !== void 0 && !isNaN(Number(p.originalPrice)) ? Number(p.originalPrice) : existingRow && existingRow.original_price ? Number(existingRow.original_price) : null;
+    const advanceBookingAmount = p.advanceBookingAmount !== void 0 && !isNaN(Number(p.advanceBookingAmount)) ? Number(p.advanceBookingAmount) : existingRow && existingRow.advance_booking_amount ? Number(existingRow.advance_booking_amount) : null;
+    const duration = p.duration || (existingRow ? existingRow.duration : initPooja ? initPooja.duration || "2 Hours" : "2 Hours");
+    const hindiDuration = p.hindiDuration || (existingRow ? existingRow.hindi_duration : initPooja ? initPooja.hindiDuration || "" : "");
+    const timing = p.timing || (existingRow ? existingRow.timing : "");
+    const hindiTiming = p.hindiTiming || (existingRow ? existingRow.hindi_timing : "");
+    const samagriIncluded = p.samagriIncluded !== void 0 ? p.samagriIncluded ? 1 : 0 : existingRow ? existingRow.samagri_included : 1;
+    const prasadHomeDelivery = p.prasadHomeDelivery !== void 0 ? p.prasadHomeDelivery ? 1 : 0 : existingRow ? existingRow.prasad_home_delivery : 1;
+    const liveVideoAvailable = p.liveVideoAvailable !== void 0 ? p.liveVideoAvailable ? 1 : 0 : existingRow ? existingRow.live_video_available : 1;
+    const vipEntryPass = p.vipEntryPass !== void 0 ? p.vipEntryPass ? 1 : 0 : existingRow ? existingRow.vip_entry_pass : 0;
+    const panditCount = p.panditCount !== void 0 && !isNaN(Number(p.panditCount)) ? Number(p.panditCount) : existingRow ? existingRow.pandit_count || 1 : 1;
+    const featuredImage = p.featuredImage || p.image || p.ogImage || (existingRow ? existingRow.image : initPooja ? initPooja.featuredImage || "/assets/images/pooja_rudrabhishek_1786196070818.jpg" : "/assets/images/pooja_rudrabhishek_1786196070818.jpg");
+    const gallery = p.gallery || p.galleryImages || (existingRow && existingRow.gallery_images_json ? JSON.parse(existingRow.gallery_images_json) : initPooja ? initPooja.gallery || [] : []);
+    const whatWeOffer = p.whatWeOffer || (existingRow && existingRow.what_we_offer_json ? JSON.parse(existingRow.what_we_offer_json) : initPooja ? initPooja.whatWeOffer || [] : []);
+    const benefits = p.benefits || (existingRow && existingRow.benefits_json ? JSON.parse(existingRow.benefits_json) : initPooja ? initPooja.benefits || [] : []);
+    const hindiBenefits = p.hindiBenefits || (existingRow && existingRow.hindi_benefits_json ? JSON.parse(existingRow.hindi_benefits_json) : initPooja ? initPooja.hindiBenefits || [] : []);
+    const whoCanConsider = p.whoCanConsider || p.whoIsItFor || (existingRow && existingRow.who_can_consider_json ? JSON.parse(existingRow.who_can_consider_json) : initPooja ? initPooja.whoCanConsider || [] : []);
+    const procedureSteps = p.procedureSteps || p.preparation || (existingRow && existingRow.procedure_steps_json ? JSON.parse(existingRow.procedure_steps_json) : []);
+    const hindiProcedureSteps = p.hindiProcedureSteps || p.hindiPreparation || (existingRow && existingRow.hindi_procedure_steps_json ? JSON.parse(existingRow.hindi_procedure_steps_json) : []);
+    const faqs = p.faqs || p.aeoQuestions || (existingRow && existingRow.faqs_json ? JSON.parse(existingRow.faqs_json) : initPooja ? initPooja.faqs || [] : []);
+    const internalLinks = p.internalLinks || (existingRow && existingRow.internal_links_json ? JSON.parse(existingRow.internal_links_json) : initPooja ? initPooja.internalLinks || [] : []);
+    const imageSeo = p.imageSeo || (existingRow && existingRow.image_seo_json ? JSON.parse(existingRow.image_seo_json) : initPooja ? initPooja.imageSeo || {} : {});
+    const schemaTypes = p.schemaTypes || (existingRow && existingRow.schema_types_json ? JSON.parse(existingRow.schema_types_json) : []);
+    const qualityScore = p.qualityScore && !isNaN(Number(p.qualityScore)) ? Number(p.qualityScore) : existingRow ? existingRow.quality_score || 95 : 95;
+    const idealFor = p.idealFor || (existingRow ? existingRow.ideal_for : "");
+    const hindiIdealFor = p.hindiIdealFor || (existingRow ? existingRow.hindi_ideal_for : "");
+    const auspiciousDays = p.auspiciousDays || (existingRow ? existingRow.auspicious_days : "");
+    const hindiAuspiciousDays = p.hindiAuspiciousDays || (existingRow ? existingRow.hindi_auspicious_days : "");
+    const mantra = p.mantra || (existingRow ? existingRow.mantra : "");
+    const hindiMantra = p.hindiMantra || (existingRow ? existingRow.hindi_mantra : "");
+    const isFeatured = p.isFeatured !== void 0 ? p.isFeatured ? 1 : 0 : existingRow ? existingRow.is_popular || 0 : 0;
+    const isPublished = p.isPublished !== void 0 ? p.isPublished ? 1 : 0 : existingRow ? existingRow.is_published : 1;
+    const sortOrder = p.sortOrder !== void 0 && !isNaN(Number(p.sortOrder)) ? Number(p.sortOrder) : existingRow ? existingRow.sort_order || 0 : 0;
     if (isDbConnected()) {
       try {
         await execute(
@@ -7407,81 +7473,81 @@ async function startServer() {
             hindi_auspicious_days = VALUES(hindi_auspicious_days),
             mantra = VALUES(mantra),
             hindi_mantra = VALUES(hindi_mantra),
-             is_popular = VALUES(is_popular),
+            is_popular = VALUES(is_popular),
             is_published = VALUES(is_published),
             meta_title = VALUES(meta_title),
             sort_order = VALUES(sort_order)`,
           [
-            id,
+            cleanId,
             name,
-            p.hindiName || "",
+            hindiName,
             slug,
-            p.categoryId || "cat-temple",
-            p.categoryName || "Temple Pooja Services",
-            p.hindiCategoryName || "",
-            p.pageType || p.categoryName || "Temple Pooja Services",
-            p.primaryKeyword || p.focusKeyword || "",
-            JSON.stringify(p.secondaryKeywords || []),
-            p.searchIntent || "",
-            p.seoTitle || p.metaTitle || "",
-            p.metaDescription || "",
-            p.urlSlug || `/pooja/${slug}`,
-            p.h1 || name,
-            p.quickAnswer || "",
-            p.shortDescription || "",
-            p.hindiShortDescription || "",
-            p.description || "",
-            p.hindiDescription || "",
-            p.templeName || "",
-            p.hindiTempleName || "",
-            p.location || "",
-            p.hindiLocation || "",
-            p.city || "Ujjain",
-            p.hindiCity || "\u0909\u091C\u094D\u091C\u0948\u0928",
-            p.price && !isNaN(Number(p.price)) ? Number(p.price) : 0,
-            p.originalPrice && !isNaN(Number(p.originalPrice)) ? Number(p.originalPrice) : null,
-            p.advanceBookingAmount && !isNaN(Number(p.advanceBookingAmount)) ? Number(p.advanceBookingAmount) : null,
-            p.duration || "2 Hours",
-            p.hindiDuration || "",
-            p.timing || "",
-            p.hindiTiming || "",
-            p.samagriIncluded ? 1 : 0,
-            p.prasadHomeDelivery ? 1 : 0,
-            p.liveVideoAvailable ? 1 : 0,
-            p.vipEntryPass ? 1 : 0,
-            p.panditCount && !isNaN(Number(p.panditCount)) ? Number(p.panditCount) : 1,
-            p.featuredImage || p.image || p.ogImage || "/assets/images/pooja_rudrabhishek_1786196070818.jpg",
-            JSON.stringify(p.gallery || p.galleryImages || []),
-            JSON.stringify(p.whatWeOffer || []),
-            JSON.stringify(p.benefits || []),
-            JSON.stringify(p.hindiBenefits || []),
-            JSON.stringify(p.whoCanConsider || p.whoIsItFor || []),
-            JSON.stringify(p.procedureSteps || p.preparation || []),
-            JSON.stringify(p.hindiProcedureSteps || p.hindiPreparation || []),
-            JSON.stringify(p.faqs || p.aeoQuestions || []),
-            JSON.stringify(p.internalLinks || []),
-            JSON.stringify(p.imageSeo || {}),
-            JSON.stringify(p.schemaTypes || []),
-            p.qualityScore && !isNaN(Number(p.qualityScore)) ? Number(p.qualityScore) : 95,
-            p.idealFor || "",
-            p.hindiIdealFor || "",
-            p.auspiciousDays || "",
-            p.hindiAuspiciousDays || "",
-            p.mantra || "",
-            p.hindiMantra || "",
-            p.isFeatured ? 1 : 0,
-            p.isPublished !== false ? 1 : 0,
-            p.seoTitle || p.metaTitle || "",
-            p.sortOrder && !isNaN(Number(p.sortOrder)) ? Number(p.sortOrder) : 0
+            categoryId,
+            categoryName,
+            hindiCategoryName,
+            pageType,
+            primaryKeyword,
+            JSON.stringify(secondaryKeywords),
+            searchIntent,
+            seoTitle,
+            metaDescription,
+            urlSlug,
+            h1,
+            quickAnswer,
+            shortDescription,
+            hindiShortDescription,
+            description,
+            hindiDescription,
+            templeName,
+            hindiTempleName,
+            location,
+            hindiLocation,
+            city,
+            hindiCity,
+            price,
+            originalPrice,
+            advanceBookingAmount,
+            duration,
+            hindiDuration,
+            timing,
+            hindiTiming,
+            samagriIncluded,
+            prasadHomeDelivery,
+            liveVideoAvailable,
+            vipEntryPass,
+            panditCount,
+            featuredImage,
+            JSON.stringify(gallery),
+            JSON.stringify(whatWeOffer),
+            JSON.stringify(benefits),
+            JSON.stringify(hindiBenefits),
+            JSON.stringify(whoCanConsider),
+            JSON.stringify(procedureSteps),
+            JSON.stringify(hindiProcedureSteps),
+            JSON.stringify(faqs),
+            JSON.stringify(internalLinks),
+            JSON.stringify(imageSeo),
+            JSON.stringify(schemaTypes),
+            qualityScore,
+            idealFor,
+            hindiIdealFor,
+            auspiciousDays,
+            hindiAuspiciousDays,
+            mantra,
+            hindiMantra,
+            isFeatured,
+            isPublished,
+            seoTitle,
+            sortOrder
           ]
         );
-        return res.json({ success: true, message: "Pooja saved to MySQL", data: { ...p, id, name, slug } });
+        return res.json({ success: true, message: "Pooja saved to MySQL", data: { ...p, id: cleanId, name, slug, urlSlug, h1 } });
       } catch (err) {
         console.error("[DB ERROR] Failed to save pooja:", err);
         return res.status(500).json({ success: false, error: err?.message || String(err) });
       }
     }
-    res.json({ success: true, message: "Pooja saved in-memory (DB not connected)", data: { ...p, id, name, slug } });
+    res.json({ success: true, message: "Pooja saved in-memory (DB not connected)", data: { ...p, id: cleanId, name, slug, urlSlug, h1 } });
   });
   app.delete("/api/poojas/:id", async (req, res) => {
     const { id } = req.params;
@@ -7594,10 +7660,66 @@ async function startServer() {
     if (!t) {
       return res.status(400).json({ success: false, error: "Missing request body" });
     }
-    const id = t.id && String(t.id).trim() ? String(t.id).trim() : `tour-${Date.now()}`;
-    const name = (t.name || t.title || "").trim() || "New Spiritual Tour";
+    const cleanId = t.id && String(t.id).trim() ? String(t.id).trim() : `tour-${Date.now()}`;
+    let existingRow = null;
+    if (isDbConnected() && t.id) {
+      try {
+        const rows = await query("SELECT * FROM tours WHERE id = ?", [cleanId]);
+        if (rows.length > 0) existingRow = rows[0];
+      } catch (e) {
+      }
+    }
+    const initTour = initialTours.find((it) => it.id === cleanId);
+    const name = (t.name || t.title) && String(t.name || t.title).trim() && String(t.name || t.title).trim() !== "New Spiritual Tour" ? String(t.name || t.title).trim() : existingRow && (existingRow.title || existingRow.name) && existingRow.title !== "New Spiritual Tour" ? existingRow.title || existingRow.name : initTour ? initTour.name || initTour.title : "New Spiritual Tour";
     const fallbackSlug = name.toLowerCase().trim().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") || `tour-${Date.now()}`;
-    const slug = t.slug && String(t.slug).trim() ? String(t.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") : fallbackSlug;
+    const slug = t.slug && String(t.slug).trim() && String(t.slug).trim() !== "new-spiritual-tour" ? String(t.slug).trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-|-$/g, "") : existingRow && existingRow.slug && existingRow.slug !== "new-spiritual-tour" ? existingRow.slug : initTour ? initTour.slug : fallbackSlug;
+    const hindiTitle = t.hindiName || t.hindiTitle || (existingRow ? existingRow.hindi_title : initTour ? initTour.hindiName : "");
+    const duration = t.duration || (existingRow ? existingRow.duration : initTour ? initTour.duration : "2 Days / 1 Night");
+    const hindiDuration = t.hindiDuration || (existingRow ? existingRow.hindi_duration : initTour ? initTour.hindiDuration : "");
+    const price = t.price !== void 0 && !isNaN(Number(t.price)) ? Number(t.price) : existingRow ? Number(existingRow.price || 0) : initTour ? Number(initTour.price || 0) : 0;
+    const originalPrice = t.originalPrice !== void 0 && !isNaN(Number(t.originalPrice)) ? Number(t.originalPrice) : existingRow && existingRow.original_price ? Number(existingRow.original_price) : null;
+    const badge = t.badge || (existingRow ? existingRow.badge : "");
+    const hindiBadge = t.hindiBadge || (existingRow ? existingRow.hindi_badge : "");
+    const featuredImage = t.featuredImage || t.image || (existingRow ? existingRow.image : initTour ? initTour.featuredImage : "/assets/images/header_bg_spiritual_1786196057015.jpg");
+    const gallery = t.gallery || t.galleryImages || (existingRow && existingRow.gallery_images_json ? JSON.parse(existingRow.gallery_images_json) : initTour ? initTour.gallery || [] : []);
+    const pickupLocation = t.pickupLocation || t.startingPoint || (existingRow ? existingRow.pickup_location : initTour ? initTour.startingPoint : "Ujjain");
+    const hindiPickupLocation = t.hindiPickupLocation || t.hindiStartingPoint || (existingRow ? existingRow.hindi_pickup_location : initTour ? initTour.hindiStartingPoint : "");
+    const dropLocation = t.dropLocation || t.endingPoint || (existingRow ? existingRow.drop_location : initTour ? initTour.endingPoint : "Ujjain");
+    const hindiDropLocation = t.hindiDropLocation || t.hindiEndingPoint || (existingRow ? existingRow.hindi_drop_location : initTour ? initTour.hindiEndingPoint : "");
+    const vehicleOptions = t.vehicleOptions || (existingRow && existingRow.vehicle_options_json ? JSON.parse(existingRow.vehicle_options_json) : []);
+    const description = t.description !== void 0 ? t.description : t.overview !== void 0 ? t.overview : existingRow ? existingRow.overview : initTour ? initTour.description : "";
+    const hindiDescription = t.hindiDescription !== void 0 ? t.hindiDescription : t.hindiOverview !== void 0 ? t.hindiOverview : existingRow ? existingRow.hindi_overview : initTour ? initTour.hindiDescription : "";
+    const itinerary = t.itinerary || (existingRow && existingRow.itinerary_json ? JSON.parse(existingRow.itinerary_json) : initTour ? initTour.itinerary || [] : []);
+    const keyHighlights = t.keyHighlights || (existingRow && existingRow.key_highlights_json ? JSON.parse(existingRow.key_highlights_json) : []);
+    const hindiKeyHighlights = t.hindiKeyHighlights || (existingRow && existingRow.hindi_key_highlights_json ? JSON.parse(existingRow.hindi_key_highlights_json) : []);
+    const inclusions = t.included || t.inclusions || (existingRow && existingRow.inclusions_json ? JSON.parse(existingRow.inclusions_json) : initTour ? initTour.included || [] : []);
+    const hindiInclusions = t.hindiIncluded || t.hindiInclusions || (existingRow && existingRow.hindi_inclusions_json ? JSON.parse(existingRow.hindi_inclusions_json) : initTour ? initTour.hindiIncluded || [] : []);
+    const exclusions = t.excluded || t.exclusions || (existingRow && existingRow.exclusions_json ? JSON.parse(existingRow.exclusions_json) : initTour ? initTour.excluded || [] : []);
+    const hindiExclusions = t.hindiExcluded || t.hindiExclusions || (existingRow && existingRow.hindi_exclusions_json ? JSON.parse(existingRow.hindi_exclusions_json) : initTour ? initTour.hindiExcluded || [] : []);
+    const faqs = t.faqs || (existingRow && existingRow.faqs_json ? JSON.parse(existingRow.faqs_json) : initTour ? initTour.faqs || [] : []);
+    const isFeatured = t.isFeatured !== void 0 ? t.isFeatured ? 1 : 0 : existingRow ? existingRow.is_popular : 0;
+    const isPublished = t.isPublished !== void 0 ? t.isPublished ? 1 : 0 : existingRow ? existingRow.is_published : 1;
+    const metaTitle = t.seoTitle || t.metaTitle || (existingRow ? existingRow.meta_title : initTour ? initTour.seoTitle : "");
+    const metaDescription = t.metaDescription || (existingRow ? existingRow.meta_description : initTour ? initTour.metaDescription : "");
+    const quickAnswer = t.quickAnswer || (existingRow ? existingRow.quick_answer : initTour ? initTour.quickAnswer : "");
+    const whyChoose = t.whyChoose || (existingRow && existingRow.why_choose_json ? JSON.parse(existingRow.why_choose_json) : initTour ? initTour.whyChoose || [] : []);
+    const whatWeOffer = t.whatWeOffer || (existingRow && existingRow.what_we_offer_json ? JSON.parse(existingRow.what_we_offer_json) : initTour ? initTour.whatWeOffer || [] : []);
+    const howToReach = t.howToReach || (existingRow ? existingRow.how_to_reach : initTour ? initTour.howToReach : "");
+    const travelTips = t.travelTips || (existingRow && existingRow.travel_tips_json ? JSON.parse(existingRow.travel_tips_json) : initTour ? initTour.travelTips || [] : []);
+    const category = t.category || (existingRow ? existingRow.category : initTour ? initTour.category : "");
+    const focusKeyword = t.focusKeyword || (existingRow ? existingRow.focus_keyword : initTour ? initTour.focusKeyword : "");
+    const secondaryKeywords = t.secondaryKeywords || (existingRow && existingRow.secondary_keywords_json ? JSON.parse(existingRow.secondary_keywords_json) : initTour ? initTour.secondaryKeywords || [] : []);
+    const canonicalUrl = t.canonicalUrl || (existingRow ? existingRow.canonical_url : "");
+    const ogTitle = t.ogTitle || (existingRow ? existingRow.og_title : "");
+    const ogDescription = t.ogDescription || (existingRow ? existingRow.og_description : "");
+    const ogImage = t.ogImage || (existingRow ? existingRow.og_image : "");
+    const destinations = t.destinations || (existingRow && existingRow.destinations_json ? JSON.parse(existingRow.destinations_json) : initTour ? initTour.destinations || [] : []);
+    const placesCovered = t.placesCovered || (existingRow && existingRow.places_covered_json ? JSON.parse(existingRow.places_covered_json) : initTour ? initTour.placesCovered || [] : []);
+    const templesCovered = t.templesCovered || (existingRow && existingRow.temples_covered_json ? JSON.parse(existingRow.temples_covered_json) : initTour ? initTour.templesCovered || [] : []);
+    const hindiDestinations = t.hindiDestinations || (existingRow && existingRow.hindi_destinations_json ? JSON.parse(existingRow.hindi_destinations_json) : initTour ? initTour.hindiDestinations || [] : []);
+    const hindiPlacesCovered = t.hindiPlacesCovered || (existingRow && existingRow.hindi_places_covered_json ? JSON.parse(existingRow.hindi_places_covered_json) : initTour ? initTour.hindiPlacesCovered || [] : []);
+    const hindiTemplesCovered = t.hindiTemplesCovered || (existingRow && existingRow.hindi_temples_covered_json ? JSON.parse(existingRow.hindi_temples_covered_json) : initTour ? initTour.hindiTemplesCovered || [] : []);
+    const sortOrder = t.sortOrder !== void 0 && !isNaN(Number(t.sortOrder)) ? Number(t.sortOrder) : existingRow ? existingRow.sort_order || 0 : 0;
     if (isDbConnected()) {
       try {
         await execute(
@@ -7657,7 +7779,7 @@ async function startServer() {
             og_title = VALUES(og_title),
             og_description = VALUES(og_description),
             og_image = VALUES(og_image),
-             destinations_json = VALUES(destinations_json),
+            destinations_json = VALUES(destinations_json),
             places_covered_json = VALUES(places_covered_json),
             temples_covered_json = VALUES(temples_covered_json),
             hindi_destinations_json = VALUES(hindi_destinations_json),
@@ -7665,65 +7787,65 @@ async function startServer() {
             hindi_temples_covered_json = VALUES(hindi_temples_covered_json),
             sort_order = VALUES(sort_order)`,
           [
-            id,
+            cleanId,
             name,
-            t.hindiName || t.hindiTitle || "",
+            hindiTitle,
             slug,
-            t.duration || "2 Days / 1 Night",
-            t.hindiDuration || "",
-            t.price && !isNaN(Number(t.price)) ? Number(t.price) : 0,
-            t.originalPrice && !isNaN(Number(t.originalPrice)) ? Number(t.originalPrice) : null,
-            t.badge || "",
-            t.hindiBadge || "",
-            t.featuredImage || t.image || "/assets/images/header_bg_spiritual_1786196057015.jpg",
-            JSON.stringify(t.gallery || t.galleryImages || []),
-            t.pickupLocation || t.startingPoint || "",
-            t.hindiPickupLocation || t.hindiStartingPoint || "",
-            t.dropLocation || t.endingPoint || "",
-            t.hindiDropLocation || t.hindiEndingPoint || "",
-            JSON.stringify(t.vehicleOptions || []),
-            t.description || t.overview || "",
-            t.hindiDescription || t.hindiOverview || "",
-            JSON.stringify(t.itinerary || []),
-            JSON.stringify(t.keyHighlights || []),
-            JSON.stringify(t.hindiKeyHighlights || []),
-            JSON.stringify(t.included || t.inclusions || []),
-            JSON.stringify(t.hindiIncluded || t.hindiInclusions || []),
-            JSON.stringify(t.excluded || t.exclusions || []),
-            JSON.stringify(t.hindiExcluded || t.hindiExclusions || []),
-            JSON.stringify(t.faqs || []),
-            t.isFeatured ? 1 : 0,
-            t.isPublished !== false ? 1 : 0,
-            t.seoTitle || t.metaTitle || "",
-            t.metaDescription || "",
-            t.quickAnswer || "",
-            JSON.stringify(t.whyChoose || []),
-            JSON.stringify(t.whatWeOffer || []),
-            t.howToReach || "",
-            JSON.stringify(t.travelTips || []),
-            t.category || "",
-            t.focusKeyword || "",
-            JSON.stringify(t.secondaryKeywords || []),
-            t.canonicalUrl || "",
-            t.ogTitle || "",
-            t.ogDescription || "",
-            t.ogImage || "",
-            JSON.stringify(t.destinations || []),
-            JSON.stringify(t.placesCovered || []),
-            JSON.stringify(t.templesCovered || []),
-            JSON.stringify(t.hindiDestinations || []),
-            JSON.stringify(t.hindiPlacesCovered || []),
-            JSON.stringify(t.hindiTemplesCovered || []),
-            t.sortOrder || 0
+            duration,
+            hindiDuration,
+            price,
+            originalPrice,
+            badge,
+            hindiBadge,
+            featuredImage,
+            JSON.stringify(gallery),
+            pickupLocation,
+            hindiPickupLocation,
+            dropLocation,
+            hindiDropLocation,
+            JSON.stringify(vehicleOptions),
+            description,
+            hindiDescription,
+            JSON.stringify(itinerary),
+            JSON.stringify(keyHighlights),
+            JSON.stringify(hindiKeyHighlights),
+            JSON.stringify(inclusions),
+            JSON.stringify(hindiInclusions),
+            JSON.stringify(exclusions),
+            JSON.stringify(hindiExclusions),
+            JSON.stringify(faqs),
+            isFeatured,
+            isPublished,
+            metaTitle,
+            metaDescription,
+            quickAnswer,
+            JSON.stringify(whyChoose),
+            JSON.stringify(whatWeOffer),
+            howToReach,
+            JSON.stringify(travelTips),
+            category,
+            focusKeyword,
+            JSON.stringify(secondaryKeywords),
+            canonicalUrl,
+            ogTitle,
+            ogDescription,
+            ogImage,
+            JSON.stringify(destinations),
+            JSON.stringify(placesCovered),
+            JSON.stringify(templesCovered),
+            JSON.stringify(hindiDestinations),
+            JSON.stringify(hindiPlacesCovered),
+            JSON.stringify(hindiTemplesCovered),
+            sortOrder
           ]
         );
-        return res.json({ success: true, message: "Tour saved to MySQL", data: t });
+        return res.json({ success: true, message: "Tour saved to MySQL", data: { ...t, id: cleanId, name, title: name, slug } });
       } catch (err) {
         console.error("[DB ERROR] Failed to save tour:", err);
         return res.status(500).json({ success: false, error: err?.message || String(err) });
       }
     }
-    res.json({ success: true, message: "Tour saved in-memory (DB not connected)", data: t });
+    res.json({ success: true, message: "Tour saved in-memory (DB not connected)", data: { ...t, id: cleanId, name, title: name, slug } });
   });
   app.delete("/api/tours/:id", async (req, res) => {
     const { id } = req.params;
