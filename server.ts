@@ -84,6 +84,16 @@ async function startServer() {
   app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images'), staticCacheOptions));
   app.use('/assets/audio', express.static(path.join(process.cwd(), 'public/assets/audio'), staticCacheOptions));
   app.use('/src/assets/images', express.static(path.join(process.cwd(), 'src/assets/images'), staticCacheOptions));
+  app.use(express.static(path.join(process.cwd(), 'public'), staticCacheOptions));
+
+  // Explicit Favicon routes for Googlebot and search crawlers
+  app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'public/favicon.ico'));
+  });
+  app.get('/favicon.svg', (req, res) => {
+    res.type('image/svg+xml');
+    res.sendFile(path.join(process.cwd(), 'public/favicon.svg'));
+  });
 
   // Store in-memory leads array for non-DB fallback
   const serverLeads: any[] = [];

@@ -7522,6 +7522,14 @@ async function startServer() {
   app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images"), staticCacheOptions));
   app.use("/assets/audio", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/audio"), staticCacheOptions));
   app.use("/src/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "src/assets/images"), staticCacheOptions));
+  app.use(import_express.default.static(import_path2.default.join(process.cwd(), "public"), staticCacheOptions));
+  app.get("/favicon.ico", (req, res) => {
+    res.sendFile(import_path2.default.join(process.cwd(), "public/favicon.ico"));
+  });
+  app.get("/favicon.svg", (req, res) => {
+    res.type("image/svg+xml");
+    res.sendFile(import_path2.default.join(process.cwd(), "public/favicon.svg"));
+  });
   const serverLeads = [];
   app.get("/api/health", async (req, res) => {
     const dbStatus = isDbConnected();

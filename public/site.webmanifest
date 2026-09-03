@@ -1,0 +1,26 @@
+{
+  "name": "Aastha Sey Raasta Seva",
+  "short_name": "Aastha Seva",
+  "description": "Official Ujjain Pooja Booking & Spiritual Pilgrimage Yatras",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#3A1518",
+  "theme_color": "#3A1518",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
