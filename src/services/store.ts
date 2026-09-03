@@ -85,7 +85,9 @@ const KEYS = {
   FAQS: 'aastha_faqs',
   TESTIMONIALS: 'aastha_testimonials',
   GALLERY: 'aastha_gallery',
+  GALLERY_DELETED: 'aastha_gallery_deleted',
   DARSHAN: 'aastha_darshan_items',
+  DARSHAN_DELETED: 'aastha_darshan_deleted',
   LEADS: 'aastha_leads',
   ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
   REDIRECTS: 'aastha_redirects',
@@ -928,9 +930,10 @@ export class StoreService {
   // Gallery
   static getGallery(): GalleryItem[] {
     const normalizeImg = (img?: string) => (img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg');
-    const saved = getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems);
+    const deletedIds = new Set(getItem<string[]>(KEYS.GALLERY_DELETED, []));
+    const saved = getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems).filter((g) => !deletedIds.has(g.id));
     const savedIds = new Set(saved.map((g) => g.id));
-    const missing = initialGalleryItems.filter((g) => !savedIds.has(g.id));
+    const missing = initialGalleryItems.filter((g) => !savedIds.has(g.id) && !deletedIds.has(g.id));
 
     let list = saved.map((g) => {
       const init = initialGalleryItems.find((ig) => ig.id === g.id);
@@ -960,6 +963,11 @@ export class StoreService {
     const cleanId = g.id && g.id.trim() ? g.id.trim() : `gal-${Date.now()}`;
     const cleanTitle = (g.title || '').trim() || 'Spiritual Photo';
     const cleanImage = (g.image || '').replace(/^\/(?:src|public)\/assets\//, '/assets/') || '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+
+    const deletedList = getItem<string[]>(KEYS.GALLERY_DELETED, []);
+    if (deletedList.includes(cleanId)) {
+      setItem(KEYS.GALLERY_DELETED, deletedList.filter((x) => x !== cleanId));
+    }
 
     if (g.id) {
       const idx = list.findIndex((x) => x.id === g.id);
@@ -998,9 +1006,16 @@ export class StoreService {
   }
 
   static deleteGalleryItem(id: string): void {
+    const deletedList = getItem<string[]>(KEYS.GALLERY_DELETED, []);
+    if (!deletedList.includes(id)) {
+      deletedList.push(id);
+      setItem(KEYS.GALLERY_DELETED, deletedList);
+    }
+
     const list = this.getGallery().filter((g) => g.id !== id);
     setItem(KEYS.GALLERY, list);
     syncApiDelete(`/api/gallery/${id}`);
+    window.dispatchEvent(new CustomEvent('aastha:data-synced'));
   }
 
   // Dedicated Darshan Items Section
@@ -1008,9 +1023,10 @@ export class StoreService {
     const normalizeImg = (img?: string) =>
       img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
 
-    const saved = getItem<DarshanItem[]>(KEYS.DARSHAN, initialDarshanItems);
+    const deletedIds = new Set(getItem<string[]>(KEYS.DARSHAN_DELETED, []));
+    const saved = getItem<DarshanItem[]>(KEYS.DARSHAN, initialDarshanItems).filter((d) => !deletedIds.has(d.id));
     const savedIds = new Set(saved.map((d) => d.id));
-    const missing = initialDarshanItems.filter((d) => !savedIds.has(d.id));
+    const missing = initialDarshanItems.filter((d) => !savedIds.has(d.id) && !deletedIds.has(d.id));
 
     let list = saved.map((d) => {
       const init = initialDarshanItems.find((id) => id.id === d.id);
@@ -1045,6 +1061,11 @@ export class StoreService {
       (d.image || '').replace(/^\/(?:src|public)\/assets\//, '/assets/') ||
       '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
 
+    const deletedList = getItem<string[]>(KEYS.DARSHAN_DELETED, []);
+    if (deletedList.includes(cleanId)) {
+      setItem(KEYS.DARSHAN_DELETED, deletedList.filter((x) => x !== cleanId));
+    }
+
     if (d.id) {
       const idx = list.findIndex((x) => x.id === d.id);
       if (idx !== -1) {
@@ -1061,6 +1082,7 @@ export class StoreService {
         setItem(KEYS.DARSHAN, list);
         syncApiPost('/api/darshan', updated);
         window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+        window.dispatchEvent(new CustomEvent('aastha:data-synced'));
         return updated;
       }
     }
@@ -1087,14 +1109,22 @@ export class StoreService {
     setItem(KEYS.DARSHAN, list);
     syncApiPost('/api/darshan', newD);
     window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+    window.dispatchEvent(new CustomEvent('aastha:data-synced'));
     return newD;
   }
 
   static deleteDarshanItem(id: string): void {
+    const deletedList = getItem<string[]>(KEYS.DARSHAN_DELETED, []);
+    if (!deletedList.includes(id)) {
+      deletedList.push(id);
+      setItem(KEYS.DARSHAN_DELETED, deletedList);
+    }
+
     const list = this.getDarshanItems().filter((d) => d.id !== id);
     setItem(KEYS.DARSHAN, list);
     syncApiDelete(`/api/darshan/${id}`);
     window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+    window.dispatchEvent(new CustomEvent('aastha:data-synced'));
   }
 
   static reorderDarshanItems(items: DarshanItem[]): void {

@@ -26,6 +26,7 @@ export const AdminDarshanManager: React.FC = () => {
   const [darshanList, setDarshanList] = useState<DarshanItem[]>(() => StoreService.getDarshanItems());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<DarshanItem | null>(null);
+  const [deletingItem, setDeletingItem] = useState<DarshanItem | null>(null);
   const [toastMessage, setToastMessage] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [filterLocation, setFilterLocation] = useState<string>('All');
@@ -80,16 +81,17 @@ export const AdminDarshanManager: React.FC = () => {
     const item = darshanList.find((d) => d.id === id);
     if (!item) return;
     const updated = StoreService.saveDarshanItem({ id, isPublished: !item.isPublished });
-    setDarshanList((prev) => prev.map((d) => (d.id === id ? updated : d)));
+    setDarshanList(StoreService.getDarshanItems());
     showToast(`Darshan card ${updated.isPublished ? 'published' : 'hidden'} on live website.`);
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to permanently delete the Darshan card "${title}" from the database?`)) {
-      StoreService.deleteDarshanItem(id);
-      setDarshanList((prev) => prev.filter((d) => d.id !== id));
-      showToast('Darshan card deleted permanently from database.');
-    }
+  const confirmDelete = () => {
+    if (!deletingItem) return;
+    const title = deletingItem.title;
+    StoreService.deleteDarshanItem(deletingItem.id);
+    setDarshanList(StoreService.getDarshanItems());
+    setDeletingItem(null);
+    showToast(`"${title}" deleted permanently from database.`);
   };
 
   const handleMoveOrder = (index: number, direction: 'up' | 'down') => {
@@ -370,7 +372,7 @@ export const AdminDarshanManager: React.FC = () => {
                       <span>Edit</span>
                     </button>
                     <button
-                      onClick={() => handleDelete(item.id, item.title)}
+                      onClick={() => setDeletingItem(item)}
                       className="p-1.5 rounded-xl bg-red-50 dark:bg-red-950/50 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 transition-all cursor-pointer"
                       title="Delete from Database"
                     >
@@ -588,6 +590,77 @@ export const AdminDarshanManager: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Custom In-App Delete Confirmation Modal */}
+      {deletingItem && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 my-8">
+            <div className="p-6 text-center space-y-4">
+              <div className="w-14 h-14 rounded-2xl bg-red-100 dark:bg-red-950/80 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto shadow-inner">
+                <Trash2 className="w-7 h-7" />
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="font-serif font-bold text-lg text-stone-900 dark:text-stone-100">
+                  Delete Darshan Card?
+                </h3>
+                <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+                  Are you sure you want to permanently delete{' '}
+                  <span className="font-bold text-stone-900 dark:text-stone-100">
+                    "{deletingItem.title}"
+                  </span>{' '}
+                  from the MySQL database and website?
+                </p>
+              </div>
+
+              {/* Thumbnail preview */}
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-left">
+                <img
+                  src={deletingItem.image.replace(/^\/(?:src|public)\/assets\//, '/assets/')}
+                  alt={deletingItem.title}
+                  className="w-14 h-14 rounded-xl object-cover border border-stone-300 dark:border-stone-600 shrink-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+                  }}
+                />
+                <div className="min-w-0">
+                  <div className="text-xs font-bold text-stone-900 dark:text-stone-100 truncate">
+                    {deletingItem.title}
+                  </div>
+                  {deletingItem.location && (
+                    <div className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+                      📍 {deletingItem.location}
+                    </div>
+                  )}
+                  {deletingItem.subtitle && (
+                    <div className="text-[10px] text-stone-500 truncate">
+                      {deletingItem.subtitle}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-2 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDeletingItem(null)}
+                  className="w-full py-2.5 px-4 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold text-xs transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmDelete}
+                  className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Yes, Delete</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
