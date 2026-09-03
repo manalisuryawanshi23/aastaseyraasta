@@ -6257,6 +6257,164 @@ var initialGalleryItems = [
     createdAt: "2026-08-01T10:00:00Z"
   }
 ];
+var initialDarshanItems = [
+  {
+    id: "darshan-1",
+    title: "Mahakaleshwar Jyotirlinga Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u092E\u0939\u093E\u0915\u093E\u0932\u0947\u0936\u094D\u0935\u0930 \u091C\u094D\u092F\u094B\u0924\u093F\u0930\u094D\u0932\u093F\u0902\u0917 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Bhasma Aarti & Sanctum Sanctorum",
+    image: "/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg",
+    altText: "Mahakaleshwar Jyotirlinga Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "4:00 AM \u2013 11:00 PM",
+    sortOrder: 1,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-2",
+    title: "Omkareshwar Jyotirlinga Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u0913\u0902\u0915\u093E\u0930\u0947\u0936\u094D\u0935\u0930 \u091C\u094D\u092F\u094B\u0924\u093F\u0930\u094D\u0932\u093F\u0902\u0917 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Mandhata Island & Narmada Darshan",
+    image: "/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
+    altText: "Omkareshwar Jyotirlinga Darshan",
+    location: "Omkareshwar",
+    templeTiming: "5:00 AM \u2013 9:30 PM",
+    sortOrder: 2,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-3",
+    title: "Harsiddhi Shaktipeeth Darshan",
+    hindiTitle: "\u092E\u093E\u0901 \u0939\u0930\u0938\u093F\u0926\u094D\u0927\u093F \u0936\u0915\u094D\u0924\u093F\u092A\u0940\u0920 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "13th Shaktipeeth & Deepstambh Lighting",
+    image: "/assets/images/navchandi-path-havan-ujjain.webp",
+    altText: "Harsiddhi Shaktipeeth Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "5:00 AM \u2013 10:00 PM",
+    sortOrder: 3,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-4",
+    title: "Kaal Bhairav Mandir Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u0915\u093E\u0932 \u092D\u0948\u0930\u0935 \u092E\u0902\u0926\u093F\u0930 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Kshetrapal of Ujjain & Madira Bhog",
+    image: "/assets/images/mirchi-havan-vikrant-bhairav-ujjain.webp",
+    altText: "Kaal Bhairav Mandir Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "5:00 AM \u2013 10:00 PM",
+    sortOrder: 4,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-5",
+    title: "Garhkalika Shaktipeeth Darshan",
+    hindiTitle: "\u092E\u093E\u0901 \u0917\u0922\u093C\u0915\u093E\u0932\u093F\u0915\u093E \u0936\u0915\u094D\u0924\u093F\u092A\u0940\u0920 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Kalidas Aradhya Devi",
+    image: "/assets/images/shatchandi-path-havan-ujjain.webp",
+    altText: "Garhkalika Shaktipeeth Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 9:00 PM",
+    sortOrder: 5,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-6",
+    title: "Mangalnath Mandir Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u092E\u0902\u0917\u0932\u0928\u093E\u0925 \u092E\u0902\u0926\u093F\u0930 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Birthplace of Mars & Bhat Pooja",
+    image: "/assets/images/bhat-pooja-mangalnath-ujjain.webp",
+    altText: "Mangalnath Mandir Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 8:30 PM",
+    sortOrder: 6,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-7",
+    title: "Angareshwar Mahadev Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u0905\u0902\u0917\u093E\u0930\u0947\u0936\u094D\u0935\u0930 \u092E\u0939\u093E\u0926\u0947\u0935 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Vedic Mangal Shanti & Shipra Bank",
+    image: "/assets/images/bhat-pooja-angareshwar-ujjain.webp",
+    altText: "Angareshwar Mahadev Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 8:00 PM",
+    sortOrder: 7,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-8",
+    title: "Chintaman Ganesh Mandir Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u091A\u093F\u0902\u0924\u093E\u092E\u0928 \u0917\u0923\u0947\u0936 \u092E\u0902\u0926\u093F\u0930 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Swayambhu Vighnaharta Ganesh",
+    image: "/assets/images/108-ganesh-atharvashirsha-path-ujjain.webp",
+    altText: "Chintaman Ganesh Mandir Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 9:00 PM",
+    sortOrder: 8,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-9",
+    title: "Vikrant Bhairav Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u0935\u093F\u0915\u094D\u0930\u093E\u0902\u0924 \u092D\u0948\u0930\u0935 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Tantrik Shaktipeeth & Mirchi Havan",
+    image: "/assets/images/mirchi-havan-vikrant-bhairav-ujjain.webp",
+    altText: "Vikrant Bhairav Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 9:00 PM",
+    sortOrder: 9,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-10",
+    title: "Siddhavat Mandir Darshan",
+    hindiTitle: "\u0936\u094D\u0930\u0940 \u0938\u093F\u0926\u094D\u0927\u0935\u091F \u092E\u0902\u0926\u093F\u0930 \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Akshaya Vat & Pitru Moksha Kshetra",
+    image: "/assets/images/pooja_pitru_ramghat_1786196153062.jpg",
+    altText: "Siddhavat Mandir Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:00 AM \u2013 8:00 PM",
+    sortOrder: 10,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-11",
+    title: "Sandipani Ashram Darshan",
+    hindiTitle: "\u092E\u0939\u0930\u094D\u0937\u093F \u0938\u093E\u0902\u0926\u0940\u092A\u0928\u093F \u0906\u0936\u094D\u0930\u092E \u0926\u0930\u094D\u0936\u0928",
+    subtitle: "Lord Krishna, Balarama & Sudama Shiksha Sthal",
+    image: "/assets/images/108-vishnu-sahastranama-path-ujjain.webp",
+    altText: "Sandipani Ashram Darshan Ujjain",
+    location: "Ujjain",
+    templeTiming: "6:30 AM \u2013 7:30 PM",
+    sortOrder: 11,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  },
+  {
+    id: "darshan-12",
+    title: "Kshipra Ramghat Evening Aarti",
+    hindiTitle: "\u092E\u093E\u0901 \u0936\u093F\u092A\u094D\u0930\u093E \u0930\u093E\u092E\u0918\u093E\u091F \u092E\u0939\u093E \u0906\u0930\u0924\u0940",
+    subtitle: "Daily Evening Maha Aarti & Deep Daan",
+    image: "/assets/images/header_bg_spiritual_1786196057015.jpg",
+    altText: "Kshipra Ramghat Evening Aarti Ujjain",
+    location: "Ujjain (Ramghat)",
+    templeTiming: "6:00 PM \u2013 8:00 PM",
+    sortOrder: 12,
+    isPublished: true,
+    createdAt: "2026-08-01T04:00:00Z"
+  }
+];
 
 // scripts/generateSitemap.ts
 var import_fs = __toESM(require("fs"), 1);
@@ -6746,6 +6904,20 @@ var TABLE_SCHEMAS = [
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS darshan_items (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    hindi_title VARCHAR(255),
+    subtitle VARCHAR(255),
+    image VARCHAR(550) NOT NULL,
+    alt_text VARCHAR(255),
+    location VARCHAR(100) DEFAULT 'Ujjain',
+    temple_timing VARCHAR(100),
+    sort_order INT DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
   `CREATE TABLE IF NOT EXISTS testimonials (
     id VARCHAR(100) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -7207,6 +7379,31 @@ async function autoInitializeDatabase() {
           ]
         );
         result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
+    }
+    const darshanCount = await query("SELECT COUNT(*) as count FROM darshan_items");
+    if (darshanCount[0].count === 0) {
+      console.log("[AUTO-DB] Seeding default darshan items...");
+      for (const item of initialDarshanItems) {
+        const d = item;
+        await execute(
+          `INSERT INTO darshan_items (
+            id, title, hindi_title, subtitle, image, alt_text, location, temple_timing, sort_order, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            d.id,
+            d.title,
+            d.hindiTitle || "",
+            d.subtitle || "",
+            d.image,
+            d.altText || d.title,
+            d.location || "Ujjain",
+            d.templeTiming || "",
+            d.sortOrder || 0,
+            d.isPublished !== false ? 1 : 0
+          ]
+        );
+        result.seeded.darshan = (result.seeded.darshan || 0) + 1;
       }
     }
     const testimonialsCount = await query("SELECT COUNT(*) as count FROM testimonials");
@@ -8739,6 +8936,121 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
+  });
+  app.get("/api/darshan", async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query("SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC");
+        const formatted = rows.map((d) => ({
+          id: d.id,
+          title: d.title,
+          hindiTitle: d.hindi_title || void 0,
+          subtitle: d.subtitle || void 0,
+          image: d.image,
+          altText: d.alt_text || d.title,
+          location: d.location || "Ujjain",
+          templeTiming: d.temple_timing || void 0,
+          sortOrder: Number(d.sort_order) || 0,
+          isPublished: Boolean(d.is_published),
+          createdAt: d.created_at ? new Date(d.created_at).toISOString() : (/* @__PURE__ */ new Date()).toISOString(),
+          updatedAt: d.updated_at ? new Date(d.updated_at).toISOString() : void 0
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to fetch darshan items:", err);
+      }
+    }
+    res.json({ success: true, data: initialDarshanItems });
+  });
+  app.post("/api/darshan", async (req, res) => {
+    const d = req.body;
+    if (!d.id || !d.title || !d.image) {
+      return res.status(400).json({ success: false, error: "Missing required fields (id, title, image)" });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO darshan_items (id, title, hindi_title, subtitle, image, alt_text, location, temple_timing, sort_order, is_published)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           title = VALUES(title),
+           hindi_title = VALUES(hindi_title),
+           subtitle = VALUES(subtitle),
+           image = VALUES(image),
+           alt_text = VALUES(alt_text),
+           location = VALUES(location),
+           temple_timing = VALUES(temple_timing),
+           sort_order = VALUES(sort_order),
+           is_published = VALUES(is_published)`,
+          [
+            d.id,
+            d.title,
+            d.hindiTitle || "",
+            d.subtitle || "",
+            d.image,
+            d.altText || d.title,
+            d.location || "Ujjain",
+            d.templeTiming || "",
+            d.sortOrder !== void 0 ? d.sortOrder : 0,
+            d.isPublished !== false ? 1 : 0
+          ]
+        );
+        return res.json({ success: true, message: "Darshan item saved to MySQL", data: d });
+      } catch (err) {
+        console.error("[DB ERROR] Failed to save darshan item:", err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: "Darshan item saved in-memory (DB not connected)", data: d });
+  });
+  app.put("/api/darshan/:id", async (req, res) => {
+    const { id } = req.params;
+    const d = req.body;
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `UPDATE darshan_items SET 
+            title = COALESCE(?, title),
+            hindi_title = COALESCE(?, hindi_title),
+            subtitle = COALESCE(?, subtitle),
+            image = COALESCE(?, image),
+            alt_text = COALESCE(?, alt_text),
+            location = COALESCE(?, location),
+            temple_timing = COALESCE(?, temple_timing),
+            sort_order = COALESCE(?, sort_order),
+            is_published = COALESCE(?, is_published)
+           WHERE id = ?`,
+          [
+            d.title || null,
+            d.hindiTitle || null,
+            d.subtitle || null,
+            d.image || null,
+            d.altText || null,
+            d.location || null,
+            d.templeTiming || null,
+            d.sortOrder !== void 0 ? d.sortOrder : null,
+            d.isPublished !== void 0 ? d.isPublished ? 1 : 0 : null,
+            id
+          ]
+        );
+        return res.json({ success: true, message: `Darshan item ${id} updated in MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Darshan item ${id} updated (in-memory)` });
+  });
+  app.delete("/api/darshan/:id", async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute("DELETE FROM darshan_items WHERE id = ?", [id]);
+        return res.json({ success: true, message: `Darshan item ${id} deleted from MySQL` });
+      } catch (err) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Darshan item ${id} deleted (in-memory)` });
   });
   app.get("/api/testimonials", async (req, res) => {
     if (isDbConnected()) {

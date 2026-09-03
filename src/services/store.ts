@@ -6,6 +6,7 @@ import {
   FAQ,
   Testimonial,
   GalleryItem,
+  DarshanItem,
   Lead,
   SiteSettings,
   Redirect,
@@ -25,6 +26,7 @@ import {
   initialFAQs,
   initialTestimonials,
   initialGalleryItems,
+  initialDarshanItems,
 } from '../data/initialData';
 import { applyBrandColorPalette } from '../utils/brandTheme';
 
@@ -83,6 +85,7 @@ const KEYS = {
   FAQS: 'aastha_faqs',
   TESTIMONIALS: 'aastha_testimonials',
   GALLERY: 'aastha_gallery',
+  DARSHAN: 'aastha_darshan_items',
   LEADS: 'aastha_leads',
   ASTROLOGY_CONSULTATIONS: 'aastha_astrology_consultations',
   REDIRECTS: 'aastha_redirects',
@@ -998,6 +1001,110 @@ export class StoreService {
     const list = this.getGallery().filter((g) => g.id !== id);
     setItem(KEYS.GALLERY, list);
     syncApiDelete(`/api/gallery/${id}`);
+  }
+
+  // Dedicated Darshan Items Section
+  static getDarshanItems(): DarshanItem[] {
+    const normalizeImg = (img?: string) =>
+      img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+
+    const saved = getItem<DarshanItem[]>(KEYS.DARSHAN, initialDarshanItems);
+    const savedIds = new Set(saved.map((d) => d.id));
+    const missing = initialDarshanItems.filter((d) => !savedIds.has(d.id));
+
+    let list = saved.map((d) => {
+      const init = initialDarshanItems.find((id) => id.id === d.id);
+      if (init) {
+        return {
+          ...init,
+          ...d,
+          image: normalizeImg(d.image || init.image),
+        };
+      }
+      return {
+        ...d,
+        image: normalizeImg(d.image),
+      };
+    });
+
+    if (missing.length > 0) {
+      list = [...list, ...missing.map((m) => ({ ...m, image: normalizeImg(m.image) }))];
+      setItem(KEYS.DARSHAN, list);
+    }
+
+    list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+    return list;
+  }
+
+  static saveDarshanItem(d: Partial<DarshanItem> & { id?: string }): DarshanItem {
+    const list = this.getDarshanItems();
+    const now = new Date().toISOString();
+    const cleanId = d.id && d.id.trim() ? d.id.trim() : `darshan-${Date.now()}`;
+    const cleanTitle = (d.title || '').trim() || 'Sacred Darshan';
+    const cleanImage =
+      (d.image || '').replace(/^\/(?:src|public)\/assets\//, '/assets/') ||
+      '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+
+    if (d.id) {
+      const idx = list.findIndex((x) => x.id === d.id);
+      if (idx !== -1) {
+        const updated: DarshanItem = {
+          ...list[idx],
+          ...d,
+          id: cleanId,
+          title: cleanTitle,
+          image: cleanImage,
+          updatedAt: now,
+        };
+        list[idx] = updated;
+        list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setItem(KEYS.DARSHAN, list);
+        syncApiPost('/api/darshan', updated);
+        window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+        return updated;
+      }
+    }
+
+    const maxSort = list.reduce((max, item) => Math.max(max, item.sortOrder ?? 0), 0);
+    const newD: DarshanItem = {
+      id: cleanId,
+      title: cleanTitle,
+      hindiTitle: d.hindiTitle || '',
+      subtitle: d.subtitle || '',
+      image: cleanImage,
+      altText: d.altText || cleanTitle,
+      location: d.location || 'Ujjain',
+      templeTiming: d.templeTiming || '',
+      sortOrder: d.sortOrder !== undefined ? d.sortOrder : maxSort + 1,
+      isPublished: d.isPublished ?? true,
+      createdAt: now,
+      updatedAt: now,
+      ...d,
+    };
+
+    list.push(newD);
+    list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+    setItem(KEYS.DARSHAN, list);
+    syncApiPost('/api/darshan', newD);
+    window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+    return newD;
+  }
+
+  static deleteDarshanItem(id: string): void {
+    const list = this.getDarshanItems().filter((d) => d.id !== id);
+    setItem(KEYS.DARSHAN, list);
+    syncApiDelete(`/api/darshan/${id}`);
+    window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
+  }
+
+  static reorderDarshanItems(items: DarshanItem[]): void {
+    const updated = items.map((item, index) => ({
+      ...item,
+      sortOrder: index + 1,
+    }));
+    setItem(KEYS.DARSHAN, updated);
+    updated.forEach((item) => syncApiPost('/api/darshan', item));
+    window.dispatchEvent(new CustomEvent('aastha:darshan-synced'));
   }
 
   // Leads CRM

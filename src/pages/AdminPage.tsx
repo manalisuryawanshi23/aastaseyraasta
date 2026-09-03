@@ -11,6 +11,7 @@ import { AdminBrandColorPicker } from '../components/admin/AdminBrandColorPicker
 import { AdminDataExportManager } from '../components/admin/AdminDataExportManager';
 import { Lead, StaffUser, AdminRole } from '../types';
 import { AdminGalleryManager } from '../components/admin/AdminGalleryManager';
+import { AdminDarshanManager } from '../components/admin/AdminDarshanManager';
 import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsManager';
 import { AdminSpecialOffersManager } from '../components/admin/AdminSpecialOffersManager';
 import { AdminAstrologyConsultations } from '../components/admin/AdminAstrologyConsultations';
@@ -606,6 +607,26 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
                   <button
                     onClick={() => {
+                      changeTab('Darshan');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'Darshan'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                      <span>🛕 Darshan Section</span>
+                    </div>
+                    <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono font-bold">
+                      MySQL
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => {
                       changeTab('Testimonials');
                       setSidebarOpen(false);
                     }}
@@ -770,6 +791,26 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                               <BarChart3 className="w-4 h-4 text-amber-400" />
                               <span>Gallery Management</span>
                             </div>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              changeTab('Darshan');
+                              setSidebarOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                              activeTab === 'Darshan'
+                                ? 'bg-amber-600 text-white shadow-md'
+                                : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <Sparkles className="w-4 h-4 text-amber-400" />
+                              <span>🛕 Darshan Section</span>
+                            </div>
+                            <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono font-bold">
+                              MySQL
+                            </span>
                           </button>
 
                           <button
@@ -1295,6 +1336,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             <AdminGalleryManager />
           )}
 
+          {/* TAB 8b: DEDICATED DARSHAN MANAGEMENT */}
+          {activeTab === 'Darshan' && (currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
+            <AdminDarshanManager />
+          )}
+
           {/* TAB 9: TESTIMONIALS MANAGEMENT */}
           {activeTab === 'Testimonials' && (currentStaffUser?.role === 'Admin' || currentStaffUser?.role === 'Manager') && (
             <AdminTestimonialsManager />
@@ -1319,6 +1365,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             (activeTab === 'Socials' && !userPerms?.canManageSocials) ||
             (activeTab === 'Staff' && !userPerms?.canManageStaff) ||
             (activeTab === 'Gallery' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
+            (activeTab === 'Darshan' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
             (activeTab === 'Testimonials' && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
             (activeTab === 'SpecialOffers' && !userPerms?.canManageSpecialOffers && !userPerms?.canManageSettings && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager') ||
             (activeTab === 'AstrologyConsultations' && !userPerms?.canManageAstrologyConsultations && !userPerms?.canManageLeads && currentStaffUser?.role !== 'Admin' && currentStaffUser?.role !== 'Manager')) && (

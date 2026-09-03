@@ -59,6 +59,7 @@ import {
   initialBlogPosts,
   initialFAQs,
   initialGalleryItems,
+  initialDarshanItems,
   initialTestimonials,
 } from './src/data/initialData';
 import { generateSitemapXml } from './scripts/generateSitemap';
@@ -1527,6 +1528,126 @@ async function startServer() {
       }
     }
     res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
+  });
+
+  // 7.5b. Dedicated Darshan Items (GET, POST, PUT, DELETE)
+  app.get('/api/darshan', async (req, res) => {
+    if (isDbConnected()) {
+      try {
+        const rows = await query('SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC');
+        const formatted = rows.map((d: any) => ({
+          id: d.id,
+          title: d.title,
+          hindiTitle: d.hindi_title || undefined,
+          subtitle: d.subtitle || undefined,
+          image: d.image,
+          altText: d.alt_text || d.title,
+          location: d.location || 'Ujjain',
+          templeTiming: d.temple_timing || undefined,
+          sortOrder: Number(d.sort_order) || 0,
+          isPublished: Boolean(d.is_published),
+          createdAt: d.created_at ? new Date(d.created_at).toISOString() : new Date().toISOString(),
+          updatedAt: d.updated_at ? new Date(d.updated_at).toISOString() : undefined,
+        }));
+        return res.json({ success: true, data: formatted });
+      } catch (err) {
+        console.error('[DB ERROR] Failed to fetch darshan items:', err);
+      }
+    }
+    res.json({ success: true, data: initialDarshanItems });
+  });
+
+  app.post('/api/darshan', async (req, res) => {
+    const d = req.body;
+    if (!d.id || !d.title || !d.image) {
+      return res.status(400).json({ success: false, error: 'Missing required fields (id, title, image)' });
+    }
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `INSERT INTO darshan_items (id, title, hindi_title, subtitle, image, alt_text, location, temple_timing, sort_order, is_published)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+           title = VALUES(title),
+           hindi_title = VALUES(hindi_title),
+           subtitle = VALUES(subtitle),
+           image = VALUES(image),
+           alt_text = VALUES(alt_text),
+           location = VALUES(location),
+           temple_timing = VALUES(temple_timing),
+           sort_order = VALUES(sort_order),
+           is_published = VALUES(is_published)`,
+          [
+            d.id,
+            d.title,
+            d.hindiTitle || '',
+            d.subtitle || '',
+            d.image,
+            d.altText || d.title,
+            d.location || 'Ujjain',
+            d.templeTiming || '',
+            d.sortOrder !== undefined ? d.sortOrder : 0,
+            d.isPublished !== false ? 1 : 0,
+          ]
+        );
+        return res.json({ success: true, message: 'Darshan item saved to MySQL', data: d });
+      } catch (err: any) {
+        console.error('[DB ERROR] Failed to save darshan item:', err);
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: 'Darshan item saved in-memory (DB not connected)', data: d });
+  });
+
+  app.put('/api/darshan/:id', async (req, res) => {
+    const { id } = req.params;
+    const d = req.body;
+    if (isDbConnected()) {
+      try {
+        await execute(
+          `UPDATE darshan_items SET 
+            title = COALESCE(?, title),
+            hindi_title = COALESCE(?, hindi_title),
+            subtitle = COALESCE(?, subtitle),
+            image = COALESCE(?, image),
+            alt_text = COALESCE(?, alt_text),
+            location = COALESCE(?, location),
+            temple_timing = COALESCE(?, temple_timing),
+            sort_order = COALESCE(?, sort_order),
+            is_published = COALESCE(?, is_published)
+           WHERE id = ?`,
+          [
+            d.title || null,
+            d.hindiTitle || null,
+            d.subtitle || null,
+            d.image || null,
+            d.altText || null,
+            d.location || null,
+            d.templeTiming || null,
+            d.sortOrder !== undefined ? d.sortOrder : null,
+            d.isPublished !== undefined ? (d.isPublished ? 1 : 0) : null,
+            id,
+          ]
+        );
+        return res.json({ success: true, message: `Darshan item ${id} updated in MySQL` });
+      } catch (err: any) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Darshan item ${id} updated (in-memory)` });
+  });
+
+  app.delete('/api/darshan/:id', async (req, res) => {
+    const { id } = req.params;
+    if (isDbConnected()) {
+      try {
+        await execute('DELETE FROM darshan_items WHERE id = ?', [id]);
+        return res.json({ success: true, message: `Darshan item ${id} deleted from MySQL` });
+      } catch (err: any) {
+        return res.status(500).json({ success: false, error: err?.message || String(err) });
+      }
+    }
+    res.json({ success: true, message: `Darshan item ${id} deleted (in-memory)` });
   });
 
   // 7.6. Testimonials (GET, POST, HELPFUL, DELETE)

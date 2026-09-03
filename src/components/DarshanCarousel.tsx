@@ -80,31 +80,36 @@ const defaultDarshanItems = [
 ];
 
 export const DarshanCarousel: React.FC = () => {
-  const [galleryItems, setGalleryItems] = useState(() =>
-    StoreService.getGallery().filter((g) => g.category === 'Darshan' && g.isPublished)
+  const [darshanItems, setDarshanItems] = useState(() =>
+    StoreService.getDarshanItems().filter((d) => d.isPublished)
   );
 
   useEffect(() => {
     const handleSync = () => {
-      setGalleryItems(StoreService.getGallery().filter((g) => g.category === 'Darshan' && g.isPublished));
+      setDarshanItems(StoreService.getDarshanItems().filter((d) => d.isPublished));
     };
+    window.addEventListener('aastha:darshan-synced', handleSync);
     window.addEventListener('aastha:data-synced', handleSync);
-    return () => window.removeEventListener('aastha:data-synced', handleSync);
+    return () => {
+      window.removeEventListener('aastha:darshan-synced', handleSync);
+      window.removeEventListener('aastha:data-synced', handleSync);
+    };
   }, []);
 
-  // Merge custom darshan items from gallery with default items
-  const customItems = galleryItems.map((g) => {
-    const cleanImg = g.image.replace(/^\/(?:src|public)\/assets\//, '/assets/');
+  const customItems = darshanItems.map((d) => {
+    const cleanImg = (d.image || '').replace(/^\/(?:src|public)\/assets\//, '/assets/');
     return {
-      name: g.title,
+      name: d.title,
+      hindiName: d.hindiTitle,
+      subtitle: d.subtitle,
       image: cleanImg || DEFAULT_DARSHAN_FALLBACK,
       Icon: Flame,
     };
   });
 
-  const displayItems = customItems.length >= 4 
+  const displayItems = customItems.length > 0 
     ? customItems 
-    : [...customItems, ...defaultDarshanItems.filter(d => !customItems.some(c => c.name.toLowerCase() === d.name.toLowerCase()))];
+    : defaultDarshanItems;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef(0);
@@ -245,9 +250,16 @@ export const DarshanCarousel: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
-                  <span className="absolute bottom-3 left-3 right-3 text-xs font-semibold text-white drop-shadow-md text-left line-clamp-2 leading-snug">
-                    {item.name}
-                  </span>
+                  <div className="absolute bottom-2.5 left-3 right-3 text-left">
+                    <span className="text-xs font-bold text-white drop-shadow-md line-clamp-1 leading-snug block">
+                      {item.name}
+                    </span>
+                    {item.subtitle && (
+                      <span className="text-[10px] text-amber-300 font-medium line-clamp-1 drop-shadow-sm block">
+                        {item.subtitle}
+                      </span>
+                    )}
+                  </div>
                 </a>
               </div>
             </div>

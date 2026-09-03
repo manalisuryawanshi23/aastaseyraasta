@@ -277,6 +277,21 @@ export interface GalleryItem {
   createdAt: string;
 }
 
+export interface DarshanItem {
+  id: string;
+  title: string;
+  hindiTitle?: string;
+  subtitle?: string;
+  image: string;
+  altText: string;
+  location?: string;
+  templeTiming?: string;
+  sortOrder: number;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 export interface Lead {
   id: string;
   name: string;

@@ -7,6 +7,7 @@ import {
   initialDestinations,
   initialFAQs,
   initialGalleryItems,
+  initialDarshanItems,
   initialTestimonials,
 } from '../data/initialData';
 
@@ -276,6 +277,21 @@ const TABLE_SCHEMAS = [
     alt_text VARCHAR(255),
     category VARCHAR(100) NOT NULL DEFAULT 'Pooja',
     location VARCHAR(100),
+    sort_order INT DEFAULT 0,
+    is_published TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+
+  `CREATE TABLE IF NOT EXISTS darshan_items (
+    id VARCHAR(100) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    hindi_title VARCHAR(255),
+    subtitle VARCHAR(255),
+    image VARCHAR(550) NOT NULL,
+    alt_text VARCHAR(255),
+    location VARCHAR(100) DEFAULT 'Ujjain',
+    temple_timing VARCHAR(100),
     sort_order INT DEFAULT 0,
     is_published TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -778,6 +794,33 @@ export async function autoInitializeDatabase() {
           ]
         );
         result.seeded.gallery = (result.seeded.gallery || 0) + 1;
+      }
+    }
+
+    // 8b. Safe Auto-Seeding: Dedicated Darshan Items
+    const darshanCount = await query('SELECT COUNT(*) as count FROM darshan_items');
+    if (darshanCount[0].count === 0) {
+      console.log('[AUTO-DB] Seeding default darshan items...');
+      for (const item of initialDarshanItems) {
+        const d = item as any;
+        await execute(
+          `INSERT INTO darshan_items (
+            id, title, hindi_title, subtitle, image, alt_text, location, temple_timing, sort_order, is_published
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            d.id,
+            d.title,
+            d.hindiTitle || '',
+            d.subtitle || '',
+            d.image,
+            d.altText || d.title,
+            d.location || 'Ujjain',
+            d.templeTiming || '',
+            d.sortOrder || 0,
+            d.isPublished !== false ? 1 : 0,
+          ]
+        );
+        result.seeded.darshan = (result.seeded.darshan || 0) + 1;
       }
     }
 

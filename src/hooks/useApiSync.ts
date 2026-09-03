@@ -17,6 +17,7 @@ const KEYS = {
   FAQS: 'aastha_faqs',
   SETTINGS: 'aastha_settings',
   GALLERY: 'aastha_gallery',
+  DARSHAN: 'aastha_darshan_items',
   TESTIMONIALS: 'aastha_testimonials',
   LEADS: 'aastha_leads',
   STAFF: 'aastha_staff',
@@ -87,6 +88,10 @@ export function useApiSync() {
       // 7. Sync gallery
       const galleryOk = await fetchAndCache('/api/gallery', KEYS.GALLERY);
       if (galleryOk) anyUpdated = true;
+
+      // 7b. Sync dedicated darshan items
+      const darshanOk = await fetchAndCache('/api/darshan', KEYS.DARSHAN);
+      if (darshanOk) anyUpdated = true;
 
       // 8. Sync testimonials
       const testimonialsOk = await fetchAndCache('/api/testimonials', KEYS.TESTIMONIALS);
