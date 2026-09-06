@@ -197,7 +197,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
   const finalFaqSchema = buildFAQSchema(finalFaqs);
 
   const whatsappMessage = slug === '4-days-braj-dham-yatra'
-    ? `Jai Shri Radhe 🙏\nI would like to enquire about the 4 Days / 3 Nights Complete Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan. Please share the current package price and available travel options.`
+    ? `Jai Shri Radhe 🙏\nI would like to enquire about the Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan. Please share the current package price and available travel options.`
     : language === 'hi'
     ? `जय श्री महाकाल 🙏 मुझे ${tourName} यात्रा पैकेज के बारे में जानकारी चाहिए।`
     : `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`;
@@ -1062,7 +1062,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         <div className="max-w-4xl mx-auto px-4 space-y-4 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100">
             {slug === '4-days-braj-dham-yatra'
-              ? (language === 'hi' ? 'अपनी सम्पूर्ण ब्रज धाम यात्रा की योजना बनाएं' : 'Plan Your Complete Braj Dham Yatra')
+              ? (language === 'hi' ? 'अपनी ब्रज धाम यात्रा की योजना बनाएं' : 'Plan Your Braj Dham Yatra')
               : `Plan Your ${tourName}`}
           </h2>
           <p className="text-stone-300 text-sm max-w-xl mx-auto leading-relaxed">
