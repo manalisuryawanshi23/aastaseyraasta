@@ -647,6 +647,83 @@ export async function autoInitializeDatabase() {
         );
         result.seeded.tours++;
       }
+    } else {
+      // Check and insert any missing tours from initialTours
+      for (let idx = 0; idx < initialTours.length; idx++) {
+        const t = initialTours[idx] as any;
+        const existing = await query('SELECT id FROM tours WHERE id = ?', [t.id]);
+        if (!existing || existing.length === 0) {
+          console.log(`[AUTO-DB] Inserting missing tour: ${t.id} (${t.name || t.title})...`);
+          await execute(
+            `INSERT INTO tours (
+              id, title, hindi_title, slug, duration, hindi_duration, price, original_price,
+              badge, hindi_badge, image, gallery_images_json, pickup_location, hindi_pickup_location,
+              drop_location, hindi_drop_location, vehicle_options_json, overview, hindi_overview,
+              itinerary_json, key_highlights_json, hindi_key_highlights_json, inclusions_json,
+              hindi_inclusions_json, exclusions_json, hindi_exclusions_json, faqs_json,
+              is_popular, is_published, meta_title, meta_description,
+              quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
+              category, focus_keyword, secondary_keywords_json, canonical_url,
+              og_title, og_description, og_image,
+              destinations_json, places_covered_json, temples_covered_json,
+              hindi_destinations_json, hindi_places_covered_json, hindi_temples_covered_json, sort_order
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              t.id,
+              t.name || t.title || '',
+              t.hindiName || t.hindiTitle || '',
+              t.slug,
+              t.duration || '',
+              t.hindiDuration || '',
+              t.price || 0,
+              t.originalPrice || null,
+              t.badge || '',
+              t.hindiBadge || '',
+              t.featuredImage || t.image || '',
+              JSON.stringify(t.gallery || t.galleryImages || []),
+              t.pickupLocation || t.startingPoint || '',
+              t.hindiPickupLocation || t.hindiStartingPoint || '',
+              t.dropLocation || t.endingPoint || '',
+              t.hindiDropLocation || t.hindiEndingPoint || '',
+              JSON.stringify(t.vehicleOptions || []),
+              t.description || t.overview || '',
+              t.hindiDescription || t.hindiOverview || '',
+              JSON.stringify(t.itinerary || []),
+              JSON.stringify(t.keyHighlights || []),
+              JSON.stringify(t.hindiKeyHighlights || []),
+              JSON.stringify(t.included || t.inclusions || []),
+              JSON.stringify(t.hindiIncluded || t.hindiInclusions || []),
+              JSON.stringify(t.excluded || t.exclusions || []),
+              JSON.stringify(t.hindiExcluded || t.hindiExclusions || []),
+              JSON.stringify(t.faqs || []),
+              t.isFeatured ? 1 : 0,
+              t.isPublished !== false ? 1 : 0,
+              t.seoTitle || t.metaTitle || '',
+              t.metaDescription || '',
+              t.quickAnswer || '',
+              JSON.stringify(t.whyChoose || []),
+              JSON.stringify(t.whatWeOffer || []),
+              t.howToReach || '',
+              JSON.stringify(t.travelTips || []),
+              t.category || '',
+              t.focusKeyword || '',
+              JSON.stringify(t.secondaryKeywords || []),
+              t.canonicalUrl || '',
+              t.ogTitle || '',
+              t.ogDescription || '',
+              t.ogImage || '',
+              JSON.stringify(t.destinations || []),
+              JSON.stringify(t.placesCovered || []),
+              JSON.stringify(t.templesCovered || []),
+              JSON.stringify(t.hindiDestinations || []),
+              JSON.stringify(t.hindiPlacesCovered || []),
+              JSON.stringify(t.hindiTemplesCovered || []),
+              idx + 1,
+            ]
+          );
+          result.seeded.tours = (result.seeded.tours || 0) + 1;
+        }
+      }
     }
 
     // 5. Safe Auto-Seeding: Destinations

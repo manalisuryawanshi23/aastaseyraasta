@@ -5664,9 +5664,200 @@ const rawTours: Tour[] = [
     "createdAt": "2026-08-01T10:00:00Z",
     "updatedAt": "2026-08-01T10:00:00Z"
   }
+,
+  {
+    "id": "tour-braj-dham-4d3n",
+    "name": "4 Days / 3 Nights – Complete Braj Dham Yatra",
+    "hindiName": "4 दिन / 3 रात – सम्पूर्ण ब्रज धाम यात्रा",
+    "slug": "4-days-braj-dham-yatra",
+    "urlSlug": "/spiritual-tours/4-days-braj-dham-yatra",
+    "category": "Braj Dham Pilgrimage",
+    "hindiCategory": "ब्रज धाम तीर्थ यात्रा",
+    "shortDescription": "Explore Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan through a thoughtfully planned 4-day pilgrimage journey.",
+    "hindiShortDescription": "मथुरा, गोकुल, वृन्दावन, बरसाना, नंदगाँव और गोवर्धन की 4 दिवसीय सुगम एवं भक्तिमय सम्पूर्ण ब्रज धाम तीर्थ यात्रा।",
+    "description": "## About the Complete Braj Dham Yatra\nThe Complete Braj Dham Yatra is a sacred 4-day and 3-night pilgrimage designed for devotees who wish to immerse themselves in the timeless divine leelas of Lord Shri Krishna and Shri Radha Rani. Covering the holy land of Braj—spanning Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and Govardhan—this thoughtfully structured journey allows pilgrims to visit all major sacred shrines at a comfortable and peaceful pace without unnecessary rushing.\n\nFrom the divine appearance site of Bhagwan Krishna in Mathura to the affectionate childhood leela sthalis in Gokul and Nandgaon, the ecstatic devotional temples of Vrindavan, the blissful abode of Shri Radha Rani in Barsana, and the spiritually elevating 21 km Govardhan Parikrama, this yatra encompasses the very essence of Braj Bhakti.\n\n## Krishna Janmabhoomi & Mathura Heritage\nThe pilgrimage begins in Mathura, one of India's Sapta Puri sacred cities and the divine birthplace of Lord Krishna. Devotees visit the revered Shri Krishna Janmabhoomi complex, the ancient Bhagwan Keshav Dev Temple, and the historic Dwarkadhish Temple known for its vibrant traditional sevas. The visit concludes at the historic Vishram Ghat along the sacred Yamuna River, where Lord Krishna rested after pacifying Kamsa, offering a deeply calming Yamuna Darshan and evening Aarti.\n\n## Gokul & Bal Krishna Leela\nJust across the Yamuna lies Gokul, the tranquil pastoral settlement where Nanda Baba and Yashoda Maiya raised Bal Krishna. Pilgrims visit Raman Reti—the sacred sands where Krishna played with cowherd friends—Nand Bhavan, the miraculous Brahmand Ghat where Yashoda witnessed the universe in child Krishna's mouth, Chaurasi Khamba (the 84-pillared ancient temple), and the Gokul Nath Ji Temple.\n\n## Vrindavan & Divine Radha-Krishna Devotion\nVrindavan is the spiritual heartbeat of Braj devotion. The yatra dedicates comprehensive time to experience the foremost temples of the Gaudiya and Pushtimarg traditions:\n- **Shri Banke Bihari Ji Temple**: The iconic deity of Swami Haridas with spontaneous curtain darshans.\n- **Radha Raman Temple**: One of the seven ancient Goswami temples featuring self-manifested Shaligram Shila deity and uninterrupted sacred kitchen fire.\n- **Radha Vallabh & Radha Damodar Temples**: Sacred shrines preserving profound devotional literature, Jiva Goswami's samadhi, and Govardhan Shila with Krishna's footprint.\n- **Nidhivan & Seva Kunj**: Sacred groves venerated as the nocturnal pastime groves of divine Jugal Sarkar.\n- **ISKCON & Prem Mandir**: Magnificent contemporary architectural marvels illuminated gracefully in the evening hours.\n\n## Barsana & Shri Radha Rani's Abode\nBarsana is celebrated across the spiritual world as the divine home of Shri Radha Rani. Pilgrims ascend to the historic Shri Radha Rani Temple (popularly known as Ladli Ji Temple) atop Bhanugarh hill, visit Maan Mandir, Kirti Mandir, and the serene Prem Sarovar, where the tears of divine love created a sacred reservoir.\n\n## Nandgaon & Sacred Braj Associations\nAdjoining Barsana is Nandgaon, the fortified hill settlement of Nanda Maharaj. Here, pilgrims worship at Nand Bhavan (Nand Ji Temple), visit Yashoda Kund, and meditate by Pavan Sarovar, where Lord Krishna's cows were watered.\n\n## Govardhan Parikrama Guide\nGovardhan Hill (Giriraj Maharaj) holds supreme importance in Braj pilgrimage. Traditional Govardhan Parikrama is approximately 21 km in length, encompassing Daan Ghati Temple, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha. Devotees can choose to perform the parikrama by walking, utilizing authorized E-rickshaws, or combining walking with local transport depending on individual physical comfort and group requirements. An early morning start is strongly recommended to enjoy peaceful darshans during cooler hours.",
+    "startingPoint": "Mathura",
+    "hindiStartingPoint": "मथुरा",
+    "endingPoint": "Mathura",
+    "hindiEndingPoint": "मथुरा",
+    "duration": "4 Days / 3 Nights",
+    "hindiDuration": "4 दिन / 3 रात",
+    "destinations": [
+      "Mathura",
+      "Gokul",
+      "Vrindavan",
+      "Barsana",
+      "Nandgaon",
+      "Govardhan"
+    ],
+    "placesCovered": [
+      "Shri Krishna Janmabhoomi Mathura",
+      "Dwarkadhish Temple Mathura",
+      "Vishram Ghat & Yamuna Darshan",
+      "Raman Reti & Nand Bhavan Gokul",
+      "Brahmand Ghat & Chaurasi Khamba",
+      "Banke Bihari Ji Temple Vrindavan",
+      "Radha Raman & Radha Vallabh Temples",
+      "Radha Damodar & Nidhivan Vrindavan",
+      "Prem Mandir & ISKCON Vrindavan",
+      "Shri Radha Rani Temple (Ladli Ji) Barsana",
+      "Kirti Mandir & Prem Sarovar Barsana",
+      "Nand Bhavan & Pavan Sarovar Nandgaon",
+      "Govardhan Parikrama & Daan Ghati",
+      "Radha Kund & Shyam Kund Govardhan",
+      "Kusum Sarovar & Mansi Ganga Govardhan",
+      "Punchari Ka Lotha Govardhan"
+    ],
+    "templesCovered": [
+      "Shri Krishna Janmabhoomi",
+      "Bhagwan Keshav Dev Temple",
+      "Dwarkadhish Temple Mathura",
+      "Gokul Nath Ji Temple",
+      "Banke Bihari Ji Temple",
+      "Radha Vallabh Temple",
+      "Radha Raman Temple",
+      "Radha Damodar Temple",
+      "Govind Dev Ji Temple",
+      "Prem Mandir Vrindavan",
+      "ISKCON Vrindavan",
+      "Shri Radha Rani Temple Barsana",
+      "Maan Mandir Barsana",
+      "Kirti Mandir Barsana",
+      "Nand Bhavan Nandgaon",
+      "Daan Ghati Temple Govardhan",
+      "Mukharbind Temple Govardhan",
+      "Punchari Ka Lotha Temple"
+    ],
+    "itinerary": [
+      {
+        "dayNumber": 1,
+        "title": "Mathura & Gokul (Krishna Janmabhoomi & Bal Leela)",
+        "hindiTitle": "मथुरा एवं गोकुल (श्रीकृष्ण जन्मभूमि एवं बाल लीला दर्शन)",
+        "description": "Morning arrival in Mathura. Visit Shri Krishna Janmabhoomi, Bhagwan Keshav Dev Temple, Dwarkadhish Temple, and Vishram Ghat for sacred Yamuna Darshan. Post-lunch drive to Gokul to explore Raman Reti, Nand Bhavan, Brahmand Ghat, Chaurasi Khamba, and Gokul Nath Ji Temple. Attend the peaceful Yamuna Aarti at Vishram Ghat in the evening before transferring to Vrindavan for night stay."
+      },
+      {
+        "dayNumber": 2,
+        "title": "Complete Vrindavan Darshan (Radha-Krishna Bhakti)",
+        "hindiTitle": "सम्पूर्ण वृन्दावन दर्शन (राधा-कृष्ण भक्ति एवं लीला स्थल)",
+        "description": "Early morning darshan at the revered Banke Bihari Ji Temple, Radha Vallabh Temple, and self-manifested deity at Radha Raman Temple. Continue to Radha Damodar Temple, Gopinath Temple, Govind Dev Ji Temple, Nidhivan, and Seva Kunj. Afternoon rest. In the evening, visit ISKCON Krishna Balaram Temple and witness the breathtaking illuminated musical fountain and light darshan at Prem Mandir. Night stay in Vrindavan."
+      },
+      {
+        "dayNumber": 3,
+        "title": "Barsana & Nandgaon (Shri Radha Rani & Braj Prem)",
+        "hindiTitle": "बरसाना एवं नंदगाँव (श्री राधा रानी धाम एवं ब्रज प्रेम)",
+        "description": "Morning journey to Barsana, the sacred abode of Shri Radha Rani. Climb Bhanugarh hill to visit Shri Radha Rani Temple (Ladli Ji Mandir), Maan Mandir, the magnificent Kirti Mandir, and Prem Sarovar. Afternoon proceed to Nandgaon to visit Nand Bhavan (Nand Ji Temple), Yashoda Kund, and Pavan Sarovar. Evening return to Vrindavan with optional evening temple darshan and local market walk. Night stay in Vrindavan."
+      },
+      {
+        "dayNumber": 4,
+        "title": "Govardhan Parikrama & Departure (Giriraj Maharaj)",
+        "hindiTitle": "गोवर्धन परिक्रमा एवं प्रस्थान (गिरिराज महाराज)",
+        "description": "Early morning start for the sacred Govardhan Parikrama (approx. 21 km). Visit Daan Ghati Temple, Mansi Ganga, Govinda Kund, sacred Radha Kund & Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha. Parikrama can be performed by walking, E-rickshaw, or combination as per physical comfort. Afternoon lunch and transfer back to Mathura Railway Station or onward highway connectivity to Delhi / Agra for departure."
+      }
+    ],
+    "included": [
+      "Dedicated air-conditioned private vehicle assistance for 4-day Braj circuit",
+      "Assistance with verified comfortable hotel stays in Vrindavan",
+      "Mathura railway station pick-up and drop coordination",
+      "Govardhan Parikrama route and transit guidance",
+      "Local temple darshan timings and entry coordination",
+      "Assistance connecting with local Vedic Pandits for Yamuna Aarti & Sankalp"
+    ],
+    "priceType": "On Request",
+    "featuredImage": "/assets/images/tour_braj_dham_1788677790057.jpg",
+    "isFeatured": true,
+    "isPublished": true,
+    "quickAnswer": "The 4-Day Braj Dham Yatra is a comprehensive 4-day / 3-night pilgrimage covering the major sacred destinations of the holy Braj region: Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and Govardhan. Thoughtfully planned from Mathura to Mathura, this itinerary provides a comfortable, unhurried pace to experience Shri Krishna Janmabhoomi, Bal Leela sites, Radha-Krishna bhakti temples, Radha Rani's abode in Barsana, and the sacred 21 km Govardhan Parikrama.",
+    "whyChoose": [
+      "Thoughtfully planned Braj route ensuring an unhurried, peaceful pilgrimage.",
+      "Comfortable multi-day pilgrimage covering all 6 major Braj sacred destinations.",
+      "Complete coverage of Mathura, Gokul, Vrindavan, Barsana, Nandgaon & Govardhan.",
+      "Convenient Mathura-to-Mathura round-trip journey with seamless transit planning.",
+      "Personalized enquiry assistance for private AC vehicles, verified stays, and pandit coordination.",
+      "Flexible travel planning suitable for families, senior citizens, and devotional groups."
+    ],
+    "whatWeOffer": [
+      "Private air-conditioned vehicle booking assistance for the complete 4-day Braj circuit",
+      "Verified comfortable hotel stays in Vrindavan with satvik dining options on enquiry",
+      "Experienced local driver familiar with Braj routes, parking, and temple entry timings",
+      "Govardhan Parikrama guidance with local E-rickshaw or walking transit coordination",
+      "Assistance with local Vedic pandits for special pooja, Yamuna aarti, and parikrama sankalp",
+      "Dedicated yatra coordinator support throughout your 4-day journey"
+    ],
+    "howToReach": "The yatra begins and concludes in Mathura. Mathura Junction is well connected by direct express trains to major Indian cities including Delhi, Mumbai, Kolkata, Jaipur, and Chennai. By road, Mathura is easily accessible via the Yamuna Expressway from New Delhi (approx. 3 hours / 160 km) and Agra (approx. 1 hour / 55 km). On Day 4, onward departure is arranged to Mathura Railway Station or connecting highways to Delhi / Agra.",
+    "travelTips": [
+      "Start early in the morning for the Govardhan Parikrama to complete the circuit comfortably in cooler hours.",
+      "Carry comfortable walking footwear and easily removable shoes for temple entries.",
+      "Keep adequate hydration with water bottles and electrolytes during parikrama and temple walks.",
+      "Plan rest appropriately in the afternoon as many Braj temples remain closed between 12:00 PM and 4:30 PM.",
+      "Follow temple-specific instructions, photography guidelines, and respect local devotional customs.",
+      "Choose the Govardhan Parikrama mode (walking, E-rickshaw, or hybrid) that best matches your physical comfort."
+    ],
+    "focusKeyword": "4 days Braj Dham Yatra",
+    "secondaryKeywords": [
+      "braj dham yatra package",
+      "mathura vrindavan barsana gokul govardhan tour",
+      "4 days mathura vrindavan tour package",
+      "braj yatra package from mathura",
+      "mathura vrindavan barsana tour package",
+      "braj dham pilgrimage tour",
+      "govardhan barsana vrindavan yatra",
+      "3 nights 4 days braj yatra"
+    ],
+    "seoTitle": "4 Days Braj Dham Yatra Package | Mathura Vrindavan Barsana",
+    "metaDescription": "Book the complete 4 Days / 3 Nights Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon & Govardhan with comfortable transport and guidance.",
+    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/4-days-braj-dham-yatra",
+    "ogTitle": "4 Days Complete Braj Dham Yatra | Mathura, Vrindavan, Barsana & Govardhan",
+    "ogDescription": "A comfortable 4-day Braj pilgrimage covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan without rushing your sacred journey.",
+    "ogImage": "/assets/images/tour_braj_dham_1788677790057.jpg",
+    "faqs": [
+      {
+        "question": "How many days are enough for a Braj Dham Yatra?",
+        "answer": "A 4-day / 3-night itinerary is widely regarded as the optimal duration for a complete Braj Yatra. It allows pilgrims to comfortably cover Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and the 21 km Govardhan Parikrama without rushing through sacred temple darshans."
+      },
+      {
+        "question": "What places are covered in this 4-day Braj Yatra?",
+        "answer": "This package covers six major pilgrimage destinations in Braj: Mathura (Krishna Janmabhoomi & Dwarkadhish), Gokul (Raman Reti & Brahmand Ghat), Vrindavan (Banke Bihari, Radha Raman, Prem Mandir & ISKCON), Barsana (Radha Rani Temple & Kirti Mandir), Nandgaon (Nand Bhavan & Pavan Sarovar), and Govardhan (Govardhan Parikrama, Radha Kund, Shyam Kund & Kusum Sarovar)."
+      },
+      {
+        "question": "Does the itinerary include Mathura, Gokul and Vrindavan?",
+        "answer": "Yes, Day 1 is dedicated to Mathura and Gokul, followed by an entire full day on Day 2 for Vrindavan's ancient Goswami temples, heritage groves (Nidhivan, Seva Kunj), and evening illumination at Prem Mandir."
+      },
+      {
+        "question": "Does the tour include Barsana and Nandgaon?",
+        "answer": "Yes, Day 3 is dedicated to Barsana (Shri Radha Rani Temple / Ladli Ji, Maan Mandir, Kirti Mandir, Prem Sarovar) and neighboring Nandgaon (Nand Bhavan, Yashoda Kund, Pavan Sarovar)."
+      },
+      {
+        "question": "Is Govardhan Parikrama included?",
+        "answer": "Yes, on Day 4, the tour includes the sacred Govardhan Parikrama covering Daan Ghati Temple, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha."
+      },
+      {
+        "question": "How long is the traditional Govardhan Parikrama?",
+        "answer": "The traditional Govardhan Parikrama is approximately 21 km (14 kos) in length. Depending on your group's preference and physical comfort, it can be completed on foot, via local E-rickshaws, or through a combination of walking and local transport."
+      },
+      {
+        "question": "Can senior citizens participate in the Braj Yatra?",
+        "answer": "Yes, the 4-day pace is specifically designed to be senior-citizen friendly. Dedicated vehicle arrangements, E-rickshaw options for parikrama, and scheduled afternoon rest periods ensure elderly pilgrims can participate comfortably."
+      },
+      {
+        "question": "Can the itinerary be customized?",
+        "answer": "Yes, the itinerary can be tailored according to your family or group requirements, including custom pick-up points, specific pooja schedules, or extended stays in Vrindavan."
+      },
+      {
+        "question": "Does the package start and end in Mathura?",
+        "answer": "Yes, the tour conveniently starts in Mathura and concludes in Mathura, with easy rail connections at Mathura Junction and highway connectivity to Delhi and Agra."
+      },
+      {
+        "question": "How can I know the current Braj Dham Yatra price?",
+        "answer": "Tour pricing is on-request and varies based on your group size, travel dates, vehicle selection, and hotel preferences. Contact Aastha Sey Raasta Seva via our enquiry form or WhatsApp for current package rates and customized quotations."
+      }
+    ],
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-08-01T10:00:00Z"
+  }
 ];
 
 const desiredOrder = [
+  'tour-braj-dham-4d3n',
   'tour-84-mahadev',
   'tour-9-narayana',
   'tour-sapt-sagar',

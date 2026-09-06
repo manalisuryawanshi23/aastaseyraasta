@@ -5670,9 +5670,199 @@ var rawTours = [
     ],
     "createdAt": "2026-08-01T10:00:00Z",
     "updatedAt": "2026-08-01T10:00:00Z"
+  },
+  {
+    "id": "tour-braj-dham-4d3n",
+    "name": "4 Days / 3 Nights \u2013 Complete Braj Dham Yatra",
+    "hindiName": "4 \u0926\u093F\u0928 / 3 \u0930\u093E\u0924 \u2013 \u0938\u092E\u094D\u092A\u0942\u0930\u094D\u0923 \u092C\u094D\u0930\u091C \u0927\u093E\u092E \u092F\u093E\u0924\u094D\u0930\u093E",
+    "slug": "4-days-braj-dham-yatra",
+    "urlSlug": "/spiritual-tours/4-days-braj-dham-yatra",
+    "category": "Braj Dham Pilgrimage",
+    "hindiCategory": "\u092C\u094D\u0930\u091C \u0927\u093E\u092E \u0924\u0940\u0930\u094D\u0925 \u092F\u093E\u0924\u094D\u0930\u093E",
+    "shortDescription": "Explore Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan through a thoughtfully planned 4-day pilgrimage journey.",
+    "hindiShortDescription": "\u092E\u0925\u0941\u0930\u093E, \u0917\u094B\u0915\u0941\u0932, \u0935\u0943\u0928\u094D\u0926\u093E\u0935\u0928, \u092C\u0930\u0938\u093E\u0928\u093E, \u0928\u0902\u0926\u0917\u093E\u0901\u0935 \u0914\u0930 \u0917\u094B\u0935\u0930\u094D\u0927\u0928 \u0915\u0940 4 \u0926\u093F\u0935\u0938\u0940\u092F \u0938\u0941\u0917\u092E \u090F\u0935\u0902 \u092D\u0915\u094D\u0924\u093F\u092E\u092F \u0938\u092E\u094D\u092A\u0942\u0930\u094D\u0923 \u092C\u094D\u0930\u091C \u0927\u093E\u092E \u0924\u0940\u0930\u094D\u0925 \u092F\u093E\u0924\u094D\u0930\u093E\u0964",
+    "description": "## About the Complete Braj Dham Yatra\nThe Complete Braj Dham Yatra is a sacred 4-day and 3-night pilgrimage designed for devotees who wish to immerse themselves in the timeless divine leelas of Lord Shri Krishna and Shri Radha Rani. Covering the holy land of Braj\u2014spanning Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and Govardhan\u2014this thoughtfully structured journey allows pilgrims to visit all major sacred shrines at a comfortable and peaceful pace without unnecessary rushing.\n\nFrom the divine appearance site of Bhagwan Krishna in Mathura to the affectionate childhood leela sthalis in Gokul and Nandgaon, the ecstatic devotional temples of Vrindavan, the blissful abode of Shri Radha Rani in Barsana, and the spiritually elevating 21 km Govardhan Parikrama, this yatra encompasses the very essence of Braj Bhakti.\n\n## Krishna Janmabhoomi & Mathura Heritage\nThe pilgrimage begins in Mathura, one of India's Sapta Puri sacred cities and the divine birthplace of Lord Krishna. Devotees visit the revered Shri Krishna Janmabhoomi complex, the ancient Bhagwan Keshav Dev Temple, and the historic Dwarkadhish Temple known for its vibrant traditional sevas. The visit concludes at the historic Vishram Ghat along the sacred Yamuna River, where Lord Krishna rested after pacifying Kamsa, offering a deeply calming Yamuna Darshan and evening Aarti.\n\n## Gokul & Bal Krishna Leela\nJust across the Yamuna lies Gokul, the tranquil pastoral settlement where Nanda Baba and Yashoda Maiya raised Bal Krishna. Pilgrims visit Raman Reti\u2014the sacred sands where Krishna played with cowherd friends\u2014Nand Bhavan, the miraculous Brahmand Ghat where Yashoda witnessed the universe in child Krishna's mouth, Chaurasi Khamba (the 84-pillared ancient temple), and the Gokul Nath Ji Temple.\n\n## Vrindavan & Divine Radha-Krishna Devotion\nVrindavan is the spiritual heartbeat of Braj devotion. The yatra dedicates comprehensive time to experience the foremost temples of the Gaudiya and Pushtimarg traditions:\n- **Shri Banke Bihari Ji Temple**: The iconic deity of Swami Haridas with spontaneous curtain darshans.\n- **Radha Raman Temple**: One of the seven ancient Goswami temples featuring self-manifested Shaligram Shila deity and uninterrupted sacred kitchen fire.\n- **Radha Vallabh & Radha Damodar Temples**: Sacred shrines preserving profound devotional literature, Jiva Goswami's samadhi, and Govardhan Shila with Krishna's footprint.\n- **Nidhivan & Seva Kunj**: Sacred groves venerated as the nocturnal pastime groves of divine Jugal Sarkar.\n- **ISKCON & Prem Mandir**: Magnificent contemporary architectural marvels illuminated gracefully in the evening hours.\n\n## Barsana & Shri Radha Rani's Abode\nBarsana is celebrated across the spiritual world as the divine home of Shri Radha Rani. Pilgrims ascend to the historic Shri Radha Rani Temple (popularly known as Ladli Ji Temple) atop Bhanugarh hill, visit Maan Mandir, Kirti Mandir, and the serene Prem Sarovar, where the tears of divine love created a sacred reservoir.\n\n## Nandgaon & Sacred Braj Associations\nAdjoining Barsana is Nandgaon, the fortified hill settlement of Nanda Maharaj. Here, pilgrims worship at Nand Bhavan (Nand Ji Temple), visit Yashoda Kund, and meditate by Pavan Sarovar, where Lord Krishna's cows were watered.\n\n## Govardhan Parikrama Guide\nGovardhan Hill (Giriraj Maharaj) holds supreme importance in Braj pilgrimage. Traditional Govardhan Parikrama is approximately 21 km in length, encompassing Daan Ghati Temple, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha. Devotees can choose to perform the parikrama by walking, utilizing authorized E-rickshaws, or combining walking with local transport depending on individual physical comfort and group requirements. An early morning start is strongly recommended to enjoy peaceful darshans during cooler hours.",
+    "startingPoint": "Mathura",
+    "hindiStartingPoint": "\u092E\u0925\u0941\u0930\u093E",
+    "endingPoint": "Mathura",
+    "hindiEndingPoint": "\u092E\u0925\u0941\u0930\u093E",
+    "duration": "4 Days / 3 Nights",
+    "hindiDuration": "4 \u0926\u093F\u0928 / 3 \u0930\u093E\u0924",
+    "destinations": [
+      "Mathura",
+      "Gokul",
+      "Vrindavan",
+      "Barsana",
+      "Nandgaon",
+      "Govardhan"
+    ],
+    "placesCovered": [
+      "Shri Krishna Janmabhoomi Mathura",
+      "Dwarkadhish Temple Mathura",
+      "Vishram Ghat & Yamuna Darshan",
+      "Raman Reti & Nand Bhavan Gokul",
+      "Brahmand Ghat & Chaurasi Khamba",
+      "Banke Bihari Ji Temple Vrindavan",
+      "Radha Raman & Radha Vallabh Temples",
+      "Radha Damodar & Nidhivan Vrindavan",
+      "Prem Mandir & ISKCON Vrindavan",
+      "Shri Radha Rani Temple (Ladli Ji) Barsana",
+      "Kirti Mandir & Prem Sarovar Barsana",
+      "Nand Bhavan & Pavan Sarovar Nandgaon",
+      "Govardhan Parikrama & Daan Ghati",
+      "Radha Kund & Shyam Kund Govardhan",
+      "Kusum Sarovar & Mansi Ganga Govardhan",
+      "Punchari Ka Lotha Govardhan"
+    ],
+    "templesCovered": [
+      "Shri Krishna Janmabhoomi",
+      "Bhagwan Keshav Dev Temple",
+      "Dwarkadhish Temple Mathura",
+      "Gokul Nath Ji Temple",
+      "Banke Bihari Ji Temple",
+      "Radha Vallabh Temple",
+      "Radha Raman Temple",
+      "Radha Damodar Temple",
+      "Govind Dev Ji Temple",
+      "Prem Mandir Vrindavan",
+      "ISKCON Vrindavan",
+      "Shri Radha Rani Temple Barsana",
+      "Maan Mandir Barsana",
+      "Kirti Mandir Barsana",
+      "Nand Bhavan Nandgaon",
+      "Daan Ghati Temple Govardhan",
+      "Mukharbind Temple Govardhan",
+      "Punchari Ka Lotha Temple"
+    ],
+    "itinerary": [
+      {
+        "dayNumber": 1,
+        "title": "Mathura & Gokul (Krishna Janmabhoomi & Bal Leela)",
+        "hindiTitle": "\u092E\u0925\u0941\u0930\u093E \u090F\u0935\u0902 \u0917\u094B\u0915\u0941\u0932 (\u0936\u094D\u0930\u0940\u0915\u0943\u0937\u094D\u0923 \u091C\u0928\u094D\u092E\u092D\u0942\u092E\u093F \u090F\u0935\u0902 \u092C\u093E\u0932 \u0932\u0940\u0932\u093E \u0926\u0930\u094D\u0936\u0928)",
+        "description": "Morning arrival in Mathura. Visit Shri Krishna Janmabhoomi, Bhagwan Keshav Dev Temple, Dwarkadhish Temple, and Vishram Ghat for sacred Yamuna Darshan. Post-lunch drive to Gokul to explore Raman Reti, Nand Bhavan, Brahmand Ghat, Chaurasi Khamba, and Gokul Nath Ji Temple. Attend the peaceful Yamuna Aarti at Vishram Ghat in the evening before transferring to Vrindavan for night stay."
+      },
+      {
+        "dayNumber": 2,
+        "title": "Complete Vrindavan Darshan (Radha-Krishna Bhakti)",
+        "hindiTitle": "\u0938\u092E\u094D\u092A\u0942\u0930\u094D\u0923 \u0935\u0943\u0928\u094D\u0926\u093E\u0935\u0928 \u0926\u0930\u094D\u0936\u0928 (\u0930\u093E\u0927\u093E-\u0915\u0943\u0937\u094D\u0923 \u092D\u0915\u094D\u0924\u093F \u090F\u0935\u0902 \u0932\u0940\u0932\u093E \u0938\u094D\u0925\u0932)",
+        "description": "Early morning darshan at the revered Banke Bihari Ji Temple, Radha Vallabh Temple, and self-manifested deity at Radha Raman Temple. Continue to Radha Damodar Temple, Gopinath Temple, Govind Dev Ji Temple, Nidhivan, and Seva Kunj. Afternoon rest. In the evening, visit ISKCON Krishna Balaram Temple and witness the breathtaking illuminated musical fountain and light darshan at Prem Mandir. Night stay in Vrindavan."
+      },
+      {
+        "dayNumber": 3,
+        "title": "Barsana & Nandgaon (Shri Radha Rani & Braj Prem)",
+        "hindiTitle": "\u092C\u0930\u0938\u093E\u0928\u093E \u090F\u0935\u0902 \u0928\u0902\u0926\u0917\u093E\u0901\u0935 (\u0936\u094D\u0930\u0940 \u0930\u093E\u0927\u093E \u0930\u093E\u0928\u0940 \u0927\u093E\u092E \u090F\u0935\u0902 \u092C\u094D\u0930\u091C \u092A\u094D\u0930\u0947\u092E)",
+        "description": "Morning journey to Barsana, the sacred abode of Shri Radha Rani. Climb Bhanugarh hill to visit Shri Radha Rani Temple (Ladli Ji Mandir), Maan Mandir, the magnificent Kirti Mandir, and Prem Sarovar. Afternoon proceed to Nandgaon to visit Nand Bhavan (Nand Ji Temple), Yashoda Kund, and Pavan Sarovar. Evening return to Vrindavan with optional evening temple darshan and local market walk. Night stay in Vrindavan."
+      },
+      {
+        "dayNumber": 4,
+        "title": "Govardhan Parikrama & Departure (Giriraj Maharaj)",
+        "hindiTitle": "\u0917\u094B\u0935\u0930\u094D\u0927\u0928 \u092A\u0930\u093F\u0915\u094D\u0930\u092E\u093E \u090F\u0935\u0902 \u092A\u094D\u0930\u0938\u094D\u0925\u093E\u0928 (\u0917\u093F\u0930\u093F\u0930\u093E\u091C \u092E\u0939\u093E\u0930\u093E\u091C)",
+        "description": "Early morning start for the sacred Govardhan Parikrama (approx. 21 km). Visit Daan Ghati Temple, Mansi Ganga, Govinda Kund, sacred Radha Kund & Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha. Parikrama can be performed by walking, E-rickshaw, or combination as per physical comfort. Afternoon lunch and transfer back to Mathura Railway Station or onward highway connectivity to Delhi / Agra for departure."
+      }
+    ],
+    "included": [
+      "Dedicated air-conditioned private vehicle assistance for 4-day Braj circuit",
+      "Assistance with verified comfortable hotel stays in Vrindavan",
+      "Mathura railway station pick-up and drop coordination",
+      "Govardhan Parikrama route and transit guidance",
+      "Local temple darshan timings and entry coordination",
+      "Assistance connecting with local Vedic Pandits for Yamuna Aarti & Sankalp"
+    ],
+    "priceType": "On Request",
+    "featuredImage": "/assets/images/tour_braj_dham_1788677790057.jpg",
+    "isFeatured": true,
+    "isPublished": true,
+    "quickAnswer": "The 4-Day Braj Dham Yatra is a comprehensive 4-day / 3-night pilgrimage covering the major sacred destinations of the holy Braj region: Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and Govardhan. Thoughtfully planned from Mathura to Mathura, this itinerary provides a comfortable, unhurried pace to experience Shri Krishna Janmabhoomi, Bal Leela sites, Radha-Krishna bhakti temples, Radha Rani's abode in Barsana, and the sacred 21 km Govardhan Parikrama.",
+    "whyChoose": [
+      "Thoughtfully planned Braj route ensuring an unhurried, peaceful pilgrimage.",
+      "Comfortable multi-day pilgrimage covering all 6 major Braj sacred destinations.",
+      "Complete coverage of Mathura, Gokul, Vrindavan, Barsana, Nandgaon & Govardhan.",
+      "Convenient Mathura-to-Mathura round-trip journey with seamless transit planning.",
+      "Personalized enquiry assistance for private AC vehicles, verified stays, and pandit coordination.",
+      "Flexible travel planning suitable for families, senior citizens, and devotional groups."
+    ],
+    "whatWeOffer": [
+      "Private air-conditioned vehicle booking assistance for the complete 4-day Braj circuit",
+      "Verified comfortable hotel stays in Vrindavan with satvik dining options on enquiry",
+      "Experienced local driver familiar with Braj routes, parking, and temple entry timings",
+      "Govardhan Parikrama guidance with local E-rickshaw or walking transit coordination",
+      "Assistance with local Vedic pandits for special pooja, Yamuna aarti, and parikrama sankalp",
+      "Dedicated yatra coordinator support throughout your 4-day journey"
+    ],
+    "howToReach": "The yatra begins and concludes in Mathura. Mathura Junction is well connected by direct express trains to major Indian cities including Delhi, Mumbai, Kolkata, Jaipur, and Chennai. By road, Mathura is easily accessible via the Yamuna Expressway from New Delhi (approx. 3 hours / 160 km) and Agra (approx. 1 hour / 55 km). On Day 4, onward departure is arranged to Mathura Railway Station or connecting highways to Delhi / Agra.",
+    "travelTips": [
+      "Start early in the morning for the Govardhan Parikrama to complete the circuit comfortably in cooler hours.",
+      "Carry comfortable walking footwear and easily removable shoes for temple entries.",
+      "Keep adequate hydration with water bottles and electrolytes during parikrama and temple walks.",
+      "Plan rest appropriately in the afternoon as many Braj temples remain closed between 12:00 PM and 4:30 PM.",
+      "Follow temple-specific instructions, photography guidelines, and respect local devotional customs.",
+      "Choose the Govardhan Parikrama mode (walking, E-rickshaw, or hybrid) that best matches your physical comfort."
+    ],
+    "focusKeyword": "4 days Braj Dham Yatra",
+    "secondaryKeywords": [
+      "braj dham yatra package",
+      "mathura vrindavan barsana gokul govardhan tour",
+      "4 days mathura vrindavan tour package",
+      "braj yatra package from mathura",
+      "mathura vrindavan barsana tour package",
+      "braj dham pilgrimage tour",
+      "govardhan barsana vrindavan yatra",
+      "3 nights 4 days braj yatra"
+    ],
+    "seoTitle": "4 Days Braj Dham Yatra Package | Mathura Vrindavan Barsana",
+    "metaDescription": "Book the complete 4 Days / 3 Nights Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon & Govardhan with comfortable transport and guidance.",
+    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/4-days-braj-dham-yatra",
+    "ogTitle": "4 Days Complete Braj Dham Yatra | Mathura, Vrindavan, Barsana & Govardhan",
+    "ogDescription": "A comfortable 4-day Braj pilgrimage covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan without rushing your sacred journey.",
+    "ogImage": "/assets/images/tour_braj_dham_1788677790057.jpg",
+    "faqs": [
+      {
+        "question": "How many days are enough for a Braj Dham Yatra?",
+        "answer": "A 4-day / 3-night itinerary is widely regarded as the optimal duration for a complete Braj Yatra. It allows pilgrims to comfortably cover Mathura, Gokul, Vrindavan, Barsana, Nandgaon, and the 21 km Govardhan Parikrama without rushing through sacred temple darshans."
+      },
+      {
+        "question": "What places are covered in this 4-day Braj Yatra?",
+        "answer": "This package covers six major pilgrimage destinations in Braj: Mathura (Krishna Janmabhoomi & Dwarkadhish), Gokul (Raman Reti & Brahmand Ghat), Vrindavan (Banke Bihari, Radha Raman, Prem Mandir & ISKCON), Barsana (Radha Rani Temple & Kirti Mandir), Nandgaon (Nand Bhavan & Pavan Sarovar), and Govardhan (Govardhan Parikrama, Radha Kund, Shyam Kund & Kusum Sarovar)."
+      },
+      {
+        "question": "Does the itinerary include Mathura, Gokul and Vrindavan?",
+        "answer": "Yes, Day 1 is dedicated to Mathura and Gokul, followed by an entire full day on Day 2 for Vrindavan's ancient Goswami temples, heritage groves (Nidhivan, Seva Kunj), and evening illumination at Prem Mandir."
+      },
+      {
+        "question": "Does the tour include Barsana and Nandgaon?",
+        "answer": "Yes, Day 3 is dedicated to Barsana (Shri Radha Rani Temple / Ladli Ji, Maan Mandir, Kirti Mandir, Prem Sarovar) and neighboring Nandgaon (Nand Bhavan, Yashoda Kund, Pavan Sarovar)."
+      },
+      {
+        "question": "Is Govardhan Parikrama included?",
+        "answer": "Yes, on Day 4, the tour includes the sacred Govardhan Parikrama covering Daan Ghati Temple, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha."
+      },
+      {
+        "question": "How long is the traditional Govardhan Parikrama?",
+        "answer": "The traditional Govardhan Parikrama is approximately 21 km (14 kos) in length. Depending on your group's preference and physical comfort, it can be completed on foot, via local E-rickshaws, or through a combination of walking and local transport."
+      },
+      {
+        "question": "Can senior citizens participate in the Braj Yatra?",
+        "answer": "Yes, the 4-day pace is specifically designed to be senior-citizen friendly. Dedicated vehicle arrangements, E-rickshaw options for parikrama, and scheduled afternoon rest periods ensure elderly pilgrims can participate comfortably."
+      },
+      {
+        "question": "Can the itinerary be customized?",
+        "answer": "Yes, the itinerary can be tailored according to your family or group requirements, including custom pick-up points, specific pooja schedules, or extended stays in Vrindavan."
+      },
+      {
+        "question": "Does the package start and end in Mathura?",
+        "answer": "Yes, the tour conveniently starts in Mathura and concludes in Mathura, with easy rail connections at Mathura Junction and highway connectivity to Delhi and Agra."
+      },
+      {
+        "question": "How can I know the current Braj Dham Yatra price?",
+        "answer": "Tour pricing is on-request and varies based on your group size, travel dates, vehicle selection, and hotel preferences. Contact Aastha Sey Raasta Seva via our enquiry form or WhatsApp for current package rates and customized quotations."
+      }
+    ],
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-08-01T10:00:00Z"
   }
 ];
 var desiredOrder = [
+  "tour-braj-dham-4d3n",
   "tour-84-mahadev",
   "tour-9-narayana",
   "tour-sapt-sagar",
@@ -7243,6 +7433,82 @@ async function autoInitializeDatabase() {
           ]
         );
         result.seeded.tours++;
+      }
+    } else {
+      for (let idx = 0; idx < initialTours.length; idx++) {
+        const t = initialTours[idx];
+        const existing = await query("SELECT id FROM tours WHERE id = ?", [t.id]);
+        if (!existing || existing.length === 0) {
+          console.log(`[AUTO-DB] Inserting missing tour: ${t.id} (${t.name || t.title})...`);
+          await execute(
+            `INSERT INTO tours (
+              id, title, hindi_title, slug, duration, hindi_duration, price, original_price,
+              badge, hindi_badge, image, gallery_images_json, pickup_location, hindi_pickup_location,
+              drop_location, hindi_drop_location, vehicle_options_json, overview, hindi_overview,
+              itinerary_json, key_highlights_json, hindi_key_highlights_json, inclusions_json,
+              hindi_inclusions_json, exclusions_json, hindi_exclusions_json, faqs_json,
+              is_popular, is_published, meta_title, meta_description,
+              quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
+              category, focus_keyword, secondary_keywords_json, canonical_url,
+              og_title, og_description, og_image,
+              destinations_json, places_covered_json, temples_covered_json,
+              hindi_destinations_json, hindi_places_covered_json, hindi_temples_covered_json, sort_order
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              t.id,
+              t.name || t.title || "",
+              t.hindiName || t.hindiTitle || "",
+              t.slug,
+              t.duration || "",
+              t.hindiDuration || "",
+              t.price || 0,
+              t.originalPrice || null,
+              t.badge || "",
+              t.hindiBadge || "",
+              t.featuredImage || t.image || "",
+              JSON.stringify(t.gallery || t.galleryImages || []),
+              t.pickupLocation || t.startingPoint || "",
+              t.hindiPickupLocation || t.hindiStartingPoint || "",
+              t.dropLocation || t.endingPoint || "",
+              t.hindiDropLocation || t.hindiEndingPoint || "",
+              JSON.stringify(t.vehicleOptions || []),
+              t.description || t.overview || "",
+              t.hindiDescription || t.hindiOverview || "",
+              JSON.stringify(t.itinerary || []),
+              JSON.stringify(t.keyHighlights || []),
+              JSON.stringify(t.hindiKeyHighlights || []),
+              JSON.stringify(t.included || t.inclusions || []),
+              JSON.stringify(t.hindiIncluded || t.hindiInclusions || []),
+              JSON.stringify(t.excluded || t.exclusions || []),
+              JSON.stringify(t.hindiExcluded || t.hindiExclusions || []),
+              JSON.stringify(t.faqs || []),
+              t.isFeatured ? 1 : 0,
+              t.isPublished !== false ? 1 : 0,
+              t.seoTitle || t.metaTitle || "",
+              t.metaDescription || "",
+              t.quickAnswer || "",
+              JSON.stringify(t.whyChoose || []),
+              JSON.stringify(t.whatWeOffer || []),
+              t.howToReach || "",
+              JSON.stringify(t.travelTips || []),
+              t.category || "",
+              t.focusKeyword || "",
+              JSON.stringify(t.secondaryKeywords || []),
+              t.canonicalUrl || "",
+              t.ogTitle || "",
+              t.ogDescription || "",
+              t.ogImage || "",
+              JSON.stringify(t.destinations || []),
+              JSON.stringify(t.placesCovered || []),
+              JSON.stringify(t.templesCovered || []),
+              JSON.stringify(t.hindiDestinations || []),
+              JSON.stringify(t.hindiPlacesCovered || []),
+              JSON.stringify(t.hindiTemplesCovered || []),
+              idx + 1
+            ]
+          );
+          result.seeded.tours = (result.seeded.tours || 0) + 1;
+        }
       }
     }
     const destCount = await query("SELECT COUNT(*) as count FROM destinations");

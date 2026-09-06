@@ -57,6 +57,10 @@ export const Footer: React.FC = () => {
 
   const yatraLinks = [
     {
+      label: language === 'hi' ? 'सम्पूर्ण ब्रज धाम यात्रा (4 दिन)' : 'Complete Braj Dham Yatra (4D)',
+      href: '/spiritual-tours/4-days-braj-dham-yatra',
+    },
+    {
       label: language === 'hi' ? 'उज्जैन दर्शन यात्रा (1 दिन)' : 'Ujjain Spiritual Tour (1 Day)',
       href: '/spiritual-tours/ujjain-spiritual-tour',
     },

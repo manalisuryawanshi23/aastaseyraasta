@@ -196,6 +196,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
   const finalFaqSchema = buildFAQSchema(finalFaqs);
 
+  const whatsappMessage = slug === '4-days-braj-dham-yatra'
+    ? `Jai Shri Radhe 🙏\nI would like to enquire about the 4 Days / 3 Nights Complete Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan. Please share the current package price and available travel options.`
+    : language === 'hi'
+    ? `जय श्री महाकाल 🙏 मुझे ${tourName} यात्रा पैकेज के बारे में जानकारी चाहिए।`
+    : `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`;
+
   const highlights = slug === 'ujjain-omkareshwar-tour'
     ? [
         {
@@ -221,6 +227,33 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         {
           title: "Narmada River Ghats",
           desc: "Walk along the scenic holy river ghats at Omkareshwar, taking in the spiritual atmosphere and local boat sights."
+        }
+      ]
+    : slug === '4-days-braj-dham-yatra'
+    ? [
+        {
+          title: "Krishna Janmabhoomi & Mathura",
+          desc: "Visit Lord Krishna's divine birthplace, Bhagwan Keshav Dev Temple, Dwarkadhish Temple, and Vishram Ghat on the holy Yamuna River."
+        },
+        {
+          title: "Gokul & Bal Leela Sthali",
+          desc: "Experience the sacred sands of Raman Reti, Nand Bhavan, Brahmand Ghat, and ancient 84 Khamba where child Krishna performed playful pastimes."
+        },
+        {
+          title: "Vrindavan Heritage Temples",
+          desc: "Seek divine blessings at Shri Banke Bihari Ji, Radha Raman, Radha Vallabh, Radha Damodar, Nidhivan, Seva Kunj, ISKCON, and Prem Mandir."
+        },
+        {
+          title: "Barsana & Shri Radha Rani",
+          desc: "Ascend Bhanugarh hill to the revered Shri Radha Rani Temple (Ladli Ji), Maan Mandir, Kirti Mandir, and tranquil Prem Sarovar."
+        },
+        {
+          title: "Nandgaon & Pavan Sarovar",
+          desc: "Explore Nanda Maharaj's historical hill palace (Nand Bhavan), Yashoda Kund, and Pavan Sarovar connected with Krishna's cows."
+        },
+        {
+          title: "Sacred Govardhan Parikrama",
+          desc: "Perform the holy parikrama of Giriraj Maharaj covering Daan Ghati, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, and Kusum Sarovar."
         }
       ]
     : (tourPlacesCovered.length > 0 ? tourPlacesCovered.slice(0, 6) : tourWhyChoose.slice(0, 6)).map((item) => ({
@@ -257,6 +290,49 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Omkareshwar Darshan</div>
               <div>• Mamleshwar Darshan</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (slug === '4-days-braj-dham-yatra') {
+      return (
+        <div className="relative border-l border-stone-400/60 ml-4 space-y-6 pt-4">
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 1 — MATHURA & GOKUL</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Mathura: Shri Krishna Janmabhoomi, Bhagwan Keshav Dev, Dwarkadhish & Vishram Ghat</div>
+              <div>• Gokul: Raman Reti, Nand Bhavan, Brahmand Ghat, Chaurasi Khamba & Gokul Nath Ji</div>
+              <div>• Evening Yamuna Aarti at Vishram Ghat → Transfer to Vrindavan for Night Stay</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 2 — COMPLETE VRINDAVAN DARSHAN</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Morning: Banke Bihari Ji, Radha Vallabh & Radha Raman Temples</div>
+              <div>• Midday: Radha Damodar, Gopinath, Govind Dev Ji, Nidhivan & Seva Kunj</div>
+              <div>• Evening: ISKCON Krishna Balaram Temple & illuminated Prem Mandir</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 3 — BARSANA & NANDGAON</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Barsana: Shri Radha Rani Temple (Ladli Ji), Maan Mandir, Kirti Mandir & Prem Sarovar</div>
+              <div>• Nandgaon: Nand Bhavan (Nand Ji Temple), Yashoda Kund & Pavan Sarovar</div>
+              <div>• Evening: Return to Vrindavan with optional temple darshan & market walk</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 4 — GOVARDHAN PARIKRAMA & DEPARTURE</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Early Morning Govardhan Parikrama (approx. 21 km)</div>
+              <div>• Daan Ghati, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar & Punchari Ka Lotha</div>
+              <div>• Afternoon return to Mathura Railway Station / departure to Delhi or Agra</div>
             </div>
           </div>
         </div>
@@ -358,11 +434,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                 {language === 'hi' ? 'दर के लिए संपर्क करें' : 'ENQUIRE FOR PRICE'}
               </button>
               <a
-                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  language === 'hi'
-                    ? `जय श्री महाकाल 🙏 मुझे ${tourName} यात्रा पैकेज के बारे में जानकारी चाहिए।`
-                    : `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`
-                )}`}
+                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-stone-955 font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
@@ -378,7 +450,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-emerald-500/20 aspect-[4/3] bg-stone-950">
               <img
                 src={(tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg').replace(/^\/(?:src|public)\/assets\//, '/assets/')}
-                alt={tourName}
+                alt={tour.focusKeyword ? `${tour.name} - ${tour.focusKeyword}` : tourName}
                 loading="eager"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -401,56 +473,41 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
               <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                {language === 'hi' ? 'यात्रा प्रकार' : 'Tour Type'}
+                {language === 'hi' ? 'अवधि' : 'DURATION'}
               </span>
               <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
-                {tourCategory}
+                {tourDuration || '4 Days / 3 Nights'}
               </span>
             </div>
 
-            {tourStart ? (
-              <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                  {language === 'hi' ? 'यात्रा मार्ग' : 'Route'}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
-                  {tourStart} {tourEnd ? `→ ${tourEnd}` : ''}
-                </span>
-              </div>
-            ) : (
-              tourPlacesCovered.length > 0 && (
-                <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                  <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                    {language === 'hi' ? 'यात्रा मार्ग' : 'Route'}
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
-                    {tourPlacesCovered[0]} → {tourPlacesCovered[tourPlacesCovered.length - 1]}
-                  </span>
-                </div>
-              )
-            )}
+            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+                {language === 'hi' ? 'प्रारंभ' : 'START'}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
+                {tourStart || 'Mathura'}
+              </span>
+            </div>
 
-            {tourPlacesCovered.length > 0 && (
-              <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                  {language === 'hi' ? 'मुख्य गंतव्य' : 'Main Destination'}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1 truncate">
-                  {tourPlacesCovered.slice(0, 3).join(', ')}
-                </span>
-              </div>
-            )}
+            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+                {language === 'hi' ? 'समाप्ति' : 'END'}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
+                {tourEnd || 'Mathura'}
+              </span>
+            </div>
 
-            {tourDuration && (
-              <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
-                  {language === 'hi' ? 'अवधि' : 'Duration'}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
-                  {tourDuration}
-                </span>
-              </div>
-            )}
+            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+                {language === 'hi' ? 'मुख्य गंतव्य' : 'DESTINATIONS'}
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1 truncate" title={tour.destinations ? tour.destinations.join(' • ') : ''}>
+                {tour.destinations && tour.destinations.length > 0 
+                  ? tour.destinations.join(' • ')
+                  : tourPlacesCovered.slice(0, 3).join(', ')}
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -460,12 +517,14 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         <section className="bg-[#FFFDF8] py-12 border-b border-stone-200/40 pt-0">
           <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
             <span className="inline-block text-emerald-800 text-xs font-bold uppercase tracking-wider">
-              {language === 'hi' ? 'त्वरित जानकारी' : 'QUICK ANSWER'}
+              {language === 'hi' ? 'त्वरित जानकारी' : 'AEO QUICK ANSWER'}
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 mt-1 flex items-center justify-center gap-2 flex-wrap">
               <HelpCircle className="w-6 h-6 text-emerald-700 shrink-0" />
               <span>
-                {language === 'hi' ? `${tourName} क्या है?` : `What is the ${tourName}?`}
+                {slug === '4-days-braj-dham-yatra'
+                  ? (language === 'hi' ? '4-दिवसीय ब्रज धाम यात्रा क्या है?' : 'What is the 4-Day Braj Dham Yatra?')
+                  : (language === 'hi' ? `${tourName} क्या है?` : `What is the ${tourName}?`)}
               </span>
             </h2>
             <div className="p-6 sm:p-8 bg-[#F6F0E6] rounded-3xl border border-[#E6DBC8] text-left shadow-sm">
@@ -473,9 +532,18 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                 {tour.quickAnswer}
               </p>
               <div className="border-t border-stone-300/60 pt-4 space-y-2 text-xs sm:text-sm text-stone-700">
-                {tourStart && <div><strong>Route:</strong> {tourStart} {tourEnd ? `→ ${tourEnd}` : ''}</div>}
-                {tourPlacesCovered.length > 0 && <div><strong>Destinations Covered:</strong> {tourPlacesCovered.join(', ')}</div>}
+                <span className="font-bold text-stone-900 block text-xs uppercase tracking-wider mb-2">
+                  {language === 'hi' ? 'त्वरित तथ्य (Quick Facts)' : 'QUICK FACTS'}
+                </span>
                 {tourDuration && <div><strong>Duration:</strong> {tourDuration}</div>}
+                {tourStart && <div><strong>Starting Point:</strong> {tourStart}</div>}
+                {tourEnd && <div><strong>Ending Point:</strong> {tourEnd}</div>}
+                {tour.destinations && tour.destinations.length > 0 && (
+                  <div><strong>Major Destinations ({tour.destinations.length}):</strong> {tour.destinations.join(' • ')}</div>
+                )}
+                {slug === '4-days-braj-dham-yatra' && (
+                  <div><strong>Main Pilgrimage Themes:</strong> Krishna Janmabhoomi, Radha-Krishna devotion, Braj Leela, Radha Rani, Govardhan Parikrama</div>
+                )}
               </div>
             </div>
           </div>
@@ -544,7 +612,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           {tourItinerary.length > 0 && (
             <div className="pt-8 border-t border-stone-300/40 space-y-6">
               <h3 className="font-serif font-bold text-stone-905 text-lg text-left">
-                {language === 'hi' ? 'दिन-वार विवरण' : 'Day-Wise Itinerary Details'}
+                {language === 'hi' ? 'दिन-वार विवरण' : 'Detailed 4-Day Itinerary'}
               </h3>
               <div className="space-y-4">
                 {tourItinerary.map((day: any) => (
@@ -565,16 +633,179 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </div>
       </section>
 
-      {/* 8. DARSHAN / DESTINATIONS / TREK DETAILS (LIGHT IVORY) */}
-      {tourPlacesCovered.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
-          <div className="max-w-4xl mx-auto px-4 space-y-8">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center border-b border-stone-200 pb-3">
-              {isTrek
-                ? (language === 'hi' ? 'ट्रेक विवरण और स्थल' : 'Trek Details & Highlights')
-                : (language === 'hi' ? 'शामिल दर्शन और गंतव्य' : 'Darshan & Destinations Included')}
+      {/* 8. GOVARDHAN PARIKRAMA GUIDE (DEDICATED DARK SECTION FOR BRAJ DHAM YATRA) */}
+      {slug === '4-days-braj-dham-yatra' && (
+        <section className="bg-[#3A1518] text-white py-16 border-b border-white/10">
+          <div className="max-w-4xl mx-auto px-4 space-y-6 text-left">
+            <div className="text-center space-y-2">
+              <span className="text-xs uppercase font-bold text-amber-300 tracking-wider">
+                {language === 'hi' ? 'विशेष परिक्रमा मार्गदर्शन' : 'PILGRIMAGE GUIDE'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-100">
+                {language === 'hi' ? 'गोवर्धन परिक्रमा मार्गदर्शिका' : 'Govardhan Parikrama Guide'}
+              </h2>
+            </div>
+
+            <div className="p-6 sm:p-8 bg-stone-900/40 rounded-3xl border border-white/10 space-y-4 text-sm sm:text-base leading-relaxed text-[#F5EBE6]">
+              <p>
+                {language === 'hi'
+                  ? 'परंपरागत गोवर्धन परिक्रमा लगभग 21 किमी (14 कोस) की होती है, जो गिरिराज जी के पावन स्वरूप की श्रद्धापूर्वक प्रदक्षिणा है। इस मार्ग पर दानघाटी, मानसी गंगा, गोविन्द कुण्ड, राधा कुण्ड, श्याम कुण्ड, कुसुम सरोवर और पूंछरी का लौठा जैसे पावन स्थल आते हैं।'
+                  : 'The traditional Govardhan Parikrama is approximately 21 km (14 kos) in length according to the sacred itinerary, honoring the divine Giriraj Maharaj. The parikrama route encompasses Daan Ghati Temple, Mansi गंगा, Govinda Kund, sacred Radha Kund, Shyam Kund, Kusum Sarovar, and Punchari Ka Lotha.'}
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <h4 className="font-bold text-amber-300 text-sm mb-1">
+                    {language === 'hi' ? 'प्रातःकाल आरम्भ' : 'Early Morning Start'}
+                  </h4>
+                  <p className="text-xs text-stone-300">
+                    {language === 'hi'
+                      ? 'शांत वातावरण एवं शीतल समय में परिक्रमा हेतु प्रातः जल्दी शुरू करने की अनुशंसा की जाती है।'
+                      : 'An early morning start is strongly recommended to perform darshans comfortably during the cooler hours of the day.'}
+                  </p>
+                </div>
+                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <h4 className="font-bold text-amber-300 text-sm mb-1">
+                    {language === 'hi' ? 'परिक्रमा के माध्यम' : 'Flexible Modes of Yatra'}
+                  </h4>
+                  <p className="text-xs text-stone-300">
+                    {language === 'hi'
+                      ? 'श्रद्धालु अपनी शारीरिक सुविधा अनुसार पैदल, ई-रिक्शा या दोनों के संयोजन से परिक्रमा कर सकते हैं।'
+                      : 'Devotees can approach the parikrama by walking, utilizing authorized local E-rickshaws, or a hybrid combination of walking and transport.'}
+                  </p>
+                </div>
+                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <h4 className="font-bold text-amber-300 text-sm mb-1">
+                    {language === 'hi' ? 'शारीरिक सुविधा' : 'Physical Comfort'}
+                  </h4>
+                  <p className="text-xs text-stone-300">
+                    {language === 'hi'
+                      ? 'श्रद्धालु अपनी शारीरिक क्षमता और पारिवारिक सदस्यों की आवश्यकता अनुसार उचित माध्यम का चयन करें।'
+                      : 'Devotees should choose the mode that best suits their physical comfort and group requirements.'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20 text-xs sm:text-sm text-amber-200">
+                <strong>{language === 'hi' ? 'सम्मानजनक सूचना: ' : 'Respectful Devotional Note: '}</strong>
+                {language === 'hi'
+                  ? 'आस्था से रास्ता सेवा श्रद्धालुओं को परिक्रमा मार्ग, स्थानीय ई-रिक्शा समन्वय एवं विश्राम सम्बन्धी व्यक्तिगत सहायता प्रदान करती है।'
+                  : 'Aastha Sey Raasta Seva assists with parikrama route guidance, local transport coordination, and personalized travel planning.'}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 9. PLACES COVERED / DESTINATIONS GRID (LIGHT IVORY) */}
+      <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <div className="max-w-6xl mx-auto px-4 space-y-10">
+          <div className="text-center space-y-2">
+            <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider">
+              {language === 'hi' ? 'सम्मिलित तीर्थ एवं मंदिर' : 'PLACES COVERED'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+              {slug === '4-days-braj-dham-yatra'
+                ? (language === 'hi' ? 'ब्रज धाम के 6 प्रमुख तीर्थ स्थल' : 'Complete 6-Destination Pilgrimage Grid')
+                : (isTrek
+                    ? (language === 'hi' ? 'ट्रेक विवरण और स्थल' : 'Trek Details & Highlights')
+                    : (language === 'hi' ? 'शामिल दर्शन और गंतव्य' : 'Darshan & Destinations Included'))}
             </h2>
-            
+          </div>
+
+          {slug === '4-days-braj-dham-yatra' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              {/* Mathura */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">MATHURA</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Shri Krishna Janmabhoomi</li>
+                  <li>• Bhagwan Keshav Dev Temple</li>
+                  <li>• Dwarkadhish Temple</li>
+                  <li>• Vishram Ghat</li>
+                  <li>• Sacred Yamuna Darshan & Aarti</li>
+                </ul>
+              </div>
+
+              {/* Gokul */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">GOKUL</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Raman Reti</li>
+                  <li>• Nand Bhavan</li>
+                  <li>• Brahmand Ghat</li>
+                  <li>• Chaurasi Khamba (84 Pillars)</li>
+                  <li>• Gokul Nath Ji Temple</li>
+                </ul>
+              </div>
+
+              {/* Vrindavan */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">VRINDAVAN</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Banke Bihari Ji Temple</li>
+                  <li>• Radha Vallabh & Radha Raman</li>
+                  <li>• Radha Damodar & Gopinath</li>
+                  <li>• Govind Dev Ji Temple</li>
+                  <li>• Nidhivan & Seva Kunj</li>
+                  <li>• ISKCON & Prem Mandir</li>
+                </ul>
+              </div>
+
+              {/* Barsana */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">BARSANA</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Shri Radha Rani Temple (Ladli Ji)</li>
+                  <li>• Maan Mandir</li>
+                  <li>• Kirti Mandir</li>
+                  <li>• Sacred Prem Sarovar</li>
+                </ul>
+              </div>
+
+              {/* Nandgaon */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">NANDGAON</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Nand Bhavan / Nand Ji Temple</li>
+                  <li>• Yashoda Kund</li>
+                  <li>• Sacred Pavan Sarovar</li>
+                </ul>
+              </div>
+
+              {/* Govardhan */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">GOVARDHAN</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Govardhan Parikrama (approx. 21 km)</li>
+                  <li>• Daan Ghati Temple & Mukharbind</li>
+                  <li>• Mansi Ganga & Govinda Kund</li>
+                  <li>• Radha Kund & Shyam Kund</li>
+                  <li>• Kusum Sarovar & Punchari Ka Lotha</li>
+                </ul>
+              </div>
+
+            </div>
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <h3 className="text-xl font-serif font-bold text-stone-900 flex items-center gap-2 text-left">
@@ -605,16 +836,16 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
 
-      {/* 9. WHY CHOOSE THIS JOURNEY? (DARK + LIGHT CARDS) */}
+      {/* 10. WHY CHOOSE THIS JOURNEY? (DARK + LIGHT CARDS) */}
       {tourWhyChoose.length > 0 && (
         <section className="bg-[#3A1518] text-white py-16 border-b border-white/10">
           <div className="max-w-4xl mx-auto px-4 space-y-8">
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-amber-100 text-center">
-              {language === 'hi' ? 'यह यात्रा क्यों चुनें?' : `Why Choose the ${tourName}?`}
+              {language === 'hi' ? 'यह यात्रा क्यों चुनें?' : `Why Choose Aastha Sey Raasta Seva?`}
             </h2>
             <div className="grid grid-cols-1 gap-4 pt-2">
               {tourWhyChoose.map((reason: string, idx: number) => (
@@ -649,29 +880,33 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </section>
       )}
 
-      {/* 11. CHECK AVAILABILITY & PRICE (LIGHT IVORY) */}
+      {/* 12. PRICE & ENQUIRY (LIGHT IVORY) */}
       <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
         <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
-            {language === 'hi' ? 'उपलब्धता और मूल्य की जांच करें' : 'Check Availability & Price'}
+            {slug === '4-days-braj-dham-yatra'
+              ? (language === 'hi' ? 'ब्रज यात्रा का मूल्य जानना चाहते हैं?' : 'Want to Know the Braj Yatra Price?')
+              : (language === 'hi' ? 'उपलब्धता और मूल्य की जांच करें' : 'Check Availability & Price')}
           </h2>
-          <p className="text-stone-750 text-sm sm:text-base">
-            Contact Aastha Sey Raasta Seva for the current price and available arrangements.
+          <p className="text-stone-750 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+            {slug === '4-days-braj-dham-yatra'
+              ? (language === 'hi'
+                  ? 'यात्रा का मूल्य समूह के आकार, वाहन के चयन और अन्य व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं उपलब्ध कस्टमाइजेशन के लिए आस्था से रास्ता सेवा से संपर्क करें।'
+                  : 'Tour pricing can vary according to group size, travel arrangements and selected options. Contact Aastha Sey Raasta Seva for the current package price and available customization.')
+              : 'Contact Aastha Sey Raasta Seva for the current price and available arrangements.'}
           </p>
           <div className="pt-2 flex justify-center gap-4 flex-wrap">
             <button
               onClick={() => onOpenBooking('Tour', tour.name)}
-              className="px-8 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-colors"
+              className="px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-colors shadow-md"
             >
               {language === 'hi' ? 'मूल्य की पूछताछ करें' : 'ENQUIRE FOR PRICE'}
             </button>
             <a
-              href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`
-              )}`}
+              href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-stone-955 font-bold text-sm flex items-center gap-2"
+              className="px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-stone-955 font-bold text-sm flex items-center gap-2 shadow-sm transition-colors"
             >
               <MessageSquare className="w-4 h-4 fill-current" />
               <span>{language === 'hi' ? 'व्हाट्सएप चैट' : 'WHATSAPP US'}</span>
@@ -680,44 +915,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </div>
       </section>
 
-      {/* 12. HOW TO REACH (LIGHT - CONDITIONAL) */}
-      {tourHowToReach && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
-          <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
-              <span>📍</span>
-              {language === 'hi' ? 'कैसे पहुँचें' : 'How to Reach'}
-            </h2>
-            <p className="text-stone-700 text-sm sm:text-base leading-relaxed bg-white p-5 rounded-2xl border border-[#E6DBC8] shadow-sm text-left">
-              {tourHowToReach}
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* 13. TRAVEL TIPS (LIGHT IVORY - CONDITIONAL) */}
-      {tourTravelTips.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
-          <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
-              <span>💡</span>
-              {isTrek
-                ? (language === 'hi' ? 'ट्रेकिंग दिशानिर्देश' : 'Trekking Guidelines & Tips')
-                : (language === 'hi' ? 'यात्रियों के लिए सुझाव' : 'Travel Tips for Visitors')}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {tourTravelTips.map((tip: string, idx: number) => (
-                <div key={idx} className="bg-white p-4 rounded-xl border border-stone-200/60 flex items-start gap-2.5 text-left">
-                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm text-stone-700 leading-normal">{tip}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 14. BOOKING ASSISTANCE (DARK) */}
+      {/* 13. HOW BOOKING WORKS / BOOKING ASSISTANCE (DARK) */}
       <section className="bg-[#3A1518] text-white py-16 border-b border-white/10">
         <div className="max-w-5xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -725,7 +923,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             {/* Left Column */}
             <div className="lg:col-span-7 space-y-3 text-left">
               <span className="text-xs uppercase font-bold text-amber-300 tracking-wider block">
-                BOOKING ASSISTANCE
+                {language === 'hi' ? 'बुकिंग प्रक्रिया' : 'HOW BOOKING WORKS'}
               </span>
               <h3 className="text-2xl sm:text-3xl font-serif font-bold text-amber-100">
                 Plan Your {tourName}
@@ -735,18 +933,27 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </p>
 
               {/* 3-Step visual */}
-              <div className="grid grid-cols-3 gap-2 pt-4">
-                <div className="text-left">
-                  <div className="text-stone-400 font-serif font-bold text-base">01</div>
-                  <div className="text-[10px] sm:text-xs text-[#F5EBE6] font-semibold mt-0.5">Choose Your Journey</div>
+              <div className="grid grid-cols-3 gap-3 pt-4">
+                <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-left">
+                  <div className="text-amber-300 font-serif font-bold text-lg">01</div>
+                  <div className="text-xs font-bold text-white mt-1 uppercase">ENQUIRE</div>
+                  <div className="text-[10px] text-stone-300 mt-0.5 leading-tight">
+                    Share dates, group size & requirements
+                  </div>
                 </div>
-                <div className="text-left">
-                  <div className="text-stone-400 font-serif font-bold text-base">02</div>
-                  <div className="text-[10px] sm:text-xs text-[#F5EBE6] font-semibold mt-0.5">Send an Enquiry</div>
+                <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-left">
+                  <div className="text-amber-300 font-serif font-bold text-lg">02</div>
+                  <div className="text-xs font-bold text-white mt-1 uppercase">DISCUSS</div>
+                  <div className="text-[10px] text-stone-300 mt-0.5 leading-tight">
+                    Our team explains options & itinerary
+                  </div>
                 </div>
-                <div className="text-left">
-                  <div className="text-stone-400 font-serif font-bold text-base">03</div>
-                  <div className="text-[10px] sm:text-xs text-[#F5EBE6] font-semibold mt-0.5">Plan Your Journey</div>
+                <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-left">
+                  <div className="text-amber-300 font-serif font-bold text-lg">03</div>
+                  <div className="text-xs font-bold text-white mt-1 uppercase">CONFIRM</div>
+                  <div className="text-[10px] text-stone-300 mt-0.5 leading-tight">
+                    Finalize details & booking guidance
+                  </div>
                 </div>
               </div>
             </div>
@@ -766,9 +973,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                 {language === 'hi' ? 'मूल्य की पूछताछ करें' : 'ENQUIRE FOR PRICE'}
               </button>
               <a
-                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`
-                )}`}
+                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-stone-955 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
@@ -782,24 +987,61 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </div>
       </section>
 
-      {/* 15. FAQ SECTION (LIGHT) */}
+      {/* 14. HOW TO REACH (LIGHT - CONDITIONAL) */}
+      {tourHowToReach && (
+        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+          <div className="max-w-4xl mx-auto px-4 space-y-4">
+            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
+              <span>📍</span>
+              {language === 'hi' ? 'कैसे पहुँचें' : 'How to Reach'}
+            </h2>
+            <p className="text-stone-700 text-sm sm:text-base leading-relaxed bg-white p-5 rounded-2xl border border-[#E6DBC8] shadow-sm text-left">
+              {tourHowToReach}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* 15. TRAVEL TIPS (LIGHT IVORY - CONDITIONAL) */}
+      {tourTravelTips.length > 0 && (
+        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+          <div className="max-w-4xl mx-auto px-4 space-y-4">
+            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
+              <span>💡</span>
+              {isTrek
+                ? (language === 'hi' ? 'ट्रेकिंग दिशानिर्देश' : 'Trekking Guidelines & Tips')
+                : (language === 'hi' ? 'यात्रियों के लिए सुझाव' : 'Travel Tips & Pilgrimage Guidance')}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {tourTravelTips.map((tip: string, idx: number) => (
+                <div key={idx} className="bg-white p-4 rounded-xl border border-stone-200/60 flex items-start gap-2.5 text-left">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm text-stone-700 leading-normal">{tip}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 16. FAQ SECTION (LIGHT) */}
       {finalFaqs.length > 0 && (
         <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
           <div className="max-w-4xl mx-auto px-4">
             <FAQAccordion
               faqs={finalFaqs}
               showCategoryTabs={false}
-              title={language === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions'}
+              title={language === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions (FAQ)'}
             />
           </div>
         </section>
       )}
 
-      {/* 16. RELATED JOURNEYS (LIGHT IVORY) */}
+      {/* 17. RELATED JOURNEYS (LIGHT IVORY) */}
       <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
         <div className="max-w-7xl mx-auto px-4 space-y-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center">
-            Related Journeys
+            {language === 'hi' ? 'संबंधित तीर्थ यात्राएं' : 'Related Journeys'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedTours.map((t) => (
@@ -809,7 +1051,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </div>
       </section>
 
-      {/* 17. FINAL CTA (DARK + IMAGE OVERLAY) */}
+      {/* 18. FINAL CTA (DARK + IMAGE OVERLAY) */}
       <footer 
         className="relative text-white py-20 text-center space-y-6 overflow-hidden bg-cover bg-center"
         style={{ 
@@ -819,28 +1061,24 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(217,119,6,0.1),transparent)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 space-y-4 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100">
-            Plan Your {tourName}
+            {slug === '4-days-braj-dham-yatra'
+              ? (language === 'hi' ? 'अपनी सम्पूर्ण ब्रज धाम यात्रा की योजना बनाएं' : 'Plan Your Complete Braj Dham Yatra')
+              : `Plan Your ${tourName}`}
           </h2>
-          <p className="text-stone-300 text-sm max-w-xl mx-auto">
-            Contact Aastha Sey Raasta Seva to enquire about arranging this pilgrimage journey.
+          <p className="text-stone-300 text-sm max-w-xl mx-auto leading-relaxed">
+            {slug === '4-days-braj-dham-yatra'
+              ? 'Explore Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan through a thoughtfully planned 4-day pilgrimage journey.'
+              : 'Contact Aastha Sey Raasta Seva to enquire about arranging this pilgrimage journey.'}
           </p>
           <div className="pt-4 flex justify-center gap-4 flex-wrap">
             <button
               onClick={() => onOpenBooking('Tour', tour.name)}
               className="px-8 py-3 rounded-xl bg-white hover:bg-stone-100 text-stone-900 font-bold text-sm shadow-md transition-colors"
             >
-              {language === 'hi' ? 'पूछताछ करें' : 'ENQUIRE NOW'}
-            </button>
-            <button
-              onClick={() => onOpenBooking('Tour', tour.name)}
-              className="px-8 py-3 rounded-xl bg-transparent hover:bg-white/10 text-white border border-white/40 font-bold text-sm transition-colors"
-            >
-              {language === 'hi' ? 'दर के लिए पूछताछ' : 'ENQUIRE FOR PRICE'}
+              {language === 'hi' ? 'पूछताछ करें' : 'ENQUIRE FOR PRICE'}
             </button>
             <a
-              href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`
-              )}`}
+              href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm flex items-center gap-2 transition-colors"
