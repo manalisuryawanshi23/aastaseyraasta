@@ -140,10 +140,10 @@ export const DestinationListingPage: React.FC<DestinationListingPageProps> = ({ 
       <FadeIn delay={80} direction="up">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {trustStats.map((stat, i) => (
-            <div key={i} className="bg-white border border-stone-200 rounded-2xl p-4 text-center space-y-1 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+            <div key={i} className="bg-white dark:bg-[#1C1917] border border-stone-200 dark:border-stone-800 rounded-2xl p-4 text-center space-y-1 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
               <div className="text-2xl">{stat.icon}</div>
-              <div className="text-xl sm:text-2xl font-bold font-serif text-amber-800">{language === 'hi' ? stat.numHi : stat.numEn}</div>
-              <div className="text-[11px] text-stone-500 font-medium leading-tight">{language === 'hi' ? stat.labelHi : stat.labelEn}</div>
+              <div className="text-xl sm:text-2xl font-bold font-serif text-amber-800 dark:text-amber-400">{language === 'hi' ? stat.numHi : stat.numEn}</div>
+              <div className="text-[11px] text-stone-500 dark:text-stone-400 font-medium leading-tight">{language === 'hi' ? stat.labelHi : stat.labelEn}</div>
             </div>
           ))}
         </div>

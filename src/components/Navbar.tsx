@@ -747,18 +747,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
             </div>
 
             {/* Quick Actions Bar Inside Drawer */}
-            <div className="p-3 bg-stone-900/90 border-b border-stone-800 grid grid-cols-2 gap-2 text-xs">
+            <div className="p-3 bg-stone-900/90 border-b border-stone-800 grid grid-cols-3 gap-1.5 text-xs">
               
               {/* Language Switcher Button */}
-              <div className="flex items-center justify-between p-1.5 px-2.5 rounded-xl bg-stone-950 border border-stone-800">
-                <span className="flex items-center gap-1 text-[11px] text-amber-300 font-medium">
-                  <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>{language === 'hi' ? 'भाषा' : 'Lang'}</span>
-                </span>
-                <div className="flex items-center gap-1">
+              <div className="flex items-center justify-between p-1.5 px-2 rounded-xl bg-stone-950 border border-stone-800 col-span-1">
+                <div className="flex items-center justify-center gap-0.5 w-full">
                   <button
                     onClick={() => setLanguage('en')}
-                    className={`px-2 py-1 rounded text-[10px] font-bold transition-all min-h-[30px] ${
+                    className={`px-2 py-1 rounded text-[10px] font-bold transition-all min-h-[28px] ${
                       language === 'en'
                         ? 'bg-amber-500 text-stone-950 shadow-xs'
                         : 'text-stone-400 hover:text-white'
@@ -769,7 +765,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                   </button>
                   <button
                     onClick={() => setLanguage('hi')}
-                    className={`px-2 py-1 rounded text-[10px] font-serif font-bold transition-all min-h-[30px] ${
+                    className={`px-2 py-1 rounded text-[10px] font-serif font-bold transition-all min-h-[28px] ${
                       language === 'hi'
                         ? 'bg-amber-500 text-stone-950 shadow-xs'
                         : 'text-stone-400 hover:text-white'
@@ -791,7 +787,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
                 aria-label="Search poojas, yatras and blogs"
               >
                 <Search className="w-3.5 h-3.5 text-amber-400" />
-                <span>Search</span>
+                <span className="text-[11px]">{language === 'hi' ? 'खोजें' : 'Search'}</span>
+              </button>
+
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-stone-950 hover:bg-stone-800 border border-stone-800 text-stone-200 transition-colors font-medium min-h-[40px]"
+                aria-label="Toggle dark mode"
+              >
+                {theme === 'light' ? (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="text-[11px]">{language === 'hi' ? 'डार्क' : 'Dark'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="text-[11px]">{language === 'hi' ? 'लाइट' : 'Light'}</span>
+                  </>
+                )}
               </button>
             </div>
 

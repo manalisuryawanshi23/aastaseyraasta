@@ -338,27 +338,27 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 2 — COMPLETE VRINDAVAN DARSHAN</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 2 — COMPLETE VRINDAVAN DARSHAN</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Morning: Banke Bihari Ji, Radha Vallabh & Radha Raman Temples</div>
               <div>• Midday: Radha Damodar, Gopinath, Govind Dev Ji, Nidhivan & Seva Kunj</div>
               <div>• Evening: ISKCON Krishna Balaram Temple & illuminated Prem Mandir</div>
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 3 — BARSANA & NANDGAON</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 3 — BARSANA & NANDGAON</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Barsana: Shri Radha Rani Temple (Ladli Ji), Maan Mandir, Kirti Mandir & Prem Sarovar</div>
               <div>• Nandgaon: Nand Bhavan (Nand Ji Temple), Yashoda Kund & Pavan Sarovar</div>
               <div>• Evening: Return to Vrindavan with optional temple darshan & market walk</div>
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 4 — GOVARDHAN PARIKRAMA & DEPARTURE</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 4 — GOVARDHAN PARIKRAMA & DEPARTURE</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Early Morning Govardhan Parikrama (approx. 21 km)</div>
               <div>• Daan Ghati, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, Kusum Sarovar & Punchari Ka Lotha</div>
               <div>• Afternoon return to Mathura Railway Station / departure to Delhi or Agra</div>
@@ -370,38 +370,38 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
     if (slug === 'varanasi-prayagraj-ayodhya-tour-package') {
       return (
-        <div className="relative border-l border-stone-400/60 ml-4 space-y-6 pt-4">
+        <div className="relative border-l border-stone-400/60 dark:border-stone-700 ml-4 space-y-6 pt-4">
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 1 — VARANASI & SARNATH</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 1 — VARANASI & SARNATH</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Varanasi: Early morning Ganga Snan, Kashi Vishwanath, Annapurna Devi, Kaal Bhairav & Vishalakshi Temple</div>
               <div>• Sarnath: Dhamek Stupa, Chaukhandi Stupa, Sarnath Museum, Mulagandha Kuti Vihar & Deer Park</div>
               <div>• Evening: World-renowned Dashashwamedh Ghat Ganga Aarti & optional boat ride (subject to weather) → Night stay in Varanasi</div>
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 2 — VARANASI → PRAYAGRAJ</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 2 — VARANASI → PRAYAGRAJ</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Morning drive from Varanasi to Prayagraj (approx. 3–4 hrs depending on traffic)</div>
               <div>• Prayagraj: Triveni Sangam, Sangam boat ride, Bade Hanuman Mandir, Akshayavat & Patalpuri Temple (subject to access)</div>
               <div>• Evening: Alopi Devi Shaktipeeth Darshan & local market visit → Night stay in Prayagraj</div>
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 3 — PRAYAGRAJ → AYODHYA</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 3 — PRAYAGRAJ → AYODHYA</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Morning drive from Prayagraj to Ayodhya (approx. 4–5 hrs depending on traffic)</div>
               <div>• Ayodhya: Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Dasharath Bhawan & Sita Ki Rasoi</div>
               <div>• Evening: Saryu Aarti, Ram Ki Paidi & devotional atmosphere → Night stay in Ayodhya</div>
             </div>
           </div>
           <div className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 4 — AYODHYA → VARANASI</h4>
-            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">DAY 4 — AYODHYA → VARANASI</h4>
+            <div className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm pl-1 space-y-1">
               <div>• Early Morning: Saryu River Darshan, optional Ram Janmabhoomi second darshan & Nageshwar Nath Temple</div>
               <div>• Afternoon: Return drive to Varanasi (approx. 4–5 hrs)</div>
               <div>• Tour concludes with departure transfer to Varanasi Railway Station / Airport</div>
@@ -412,11 +412,11 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
     }
 
     return (
-      <div className="relative border-l border-stone-400/60 ml-4 space-y-6 pt-4">
+      <div className="relative border-l border-stone-400/60 dark:border-stone-700 ml-4 space-y-6 pt-4">
         {tourPlacesCovered.map((place, idx) => (
           <div key={idx} className="relative pl-8 space-y-1 text-left">
-            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
-            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">{place}</h4>
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white dark:border-stone-900 shadow-sm" />
+            <h4 className="font-bold text-stone-900 dark:text-amber-200 text-sm tracking-wide uppercase">{place}</h4>
           </div>
         ))}
       </div>
@@ -424,7 +424,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] text-stone-900 antialiased">
+    <div className="min-h-screen bg-[#FFFDF8] dark:bg-[#121110] text-stone-900 dark:text-[#F4F1EA] antialiased">
       
       {/* SEO Head — Regression Protected */}
       <SEOHead
@@ -438,18 +438,18 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       />
 
       {/* 1. BREADCRUMB */}
-      <div className="bg-[#F6F0E6] border-b border-[#E6DBC8] py-3">
+      <div className="bg-[#F6F0E6] dark:bg-[#1C1917] border-b border-[#E6DBC8] dark:border-stone-800 py-3">
         <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex items-center space-x-2 text-xs font-medium text-stone-500" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-emerald-800 transition-colors">
+          <nav className="flex items-center space-x-2 text-xs font-medium text-stone-500 dark:text-stone-400" aria-label="Breadcrumb">
+            <a href="/" className="hover:text-emerald-800 dark:hover:text-emerald-400 transition-colors">
               {language === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}
             </a>
             <ChevronRight className="w-3 h-3 shrink-0" />
-            <a href="/spiritual-tours" className="hover:text-emerald-800 transition-colors">
+            <a href="/spiritual-tours" className="hover:text-emerald-800 dark:hover:text-emerald-400 transition-colors">
               {t('nav.tours', 'Spiritual Tours')}
             </a>
             <ChevronRight className="w-3 h-3 shrink-0" />
-            <span className="text-stone-800 font-semibold truncate">
+            <span className="text-stone-800 dark:text-stone-200 font-semibold truncate">
               {tourName}
             </span>
           </nav>
@@ -540,41 +540,41 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       </header>
 
       {/* 3. QUICK TOUR INFORMATION (LIGHT IVORY) */}
-      <section className="bg-[#FFFDF8] py-8 border-b border-stone-200/40">
+      <section className="bg-[#FFFDF8] dark:bg-[#151312] py-8 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
                 {language === 'hi' ? 'अवधि' : 'DURATION'}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
                 {tourDuration || '4 Days / 3 Nights'}
               </span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
                 {language === 'hi' ? 'प्रारंभ' : 'START'}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
                 {tourStart || 'Mathura'}
               </span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
                 {language === 'hi' ? 'समाप्ति' : 'END'}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1">
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">
                 {tourEnd || 'Mathura'}
               </span>
             </div>
 
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">
                 {language === 'hi' ? 'मुख्य गंतव्य' : 'DESTINATIONS'}
               </span>
-              <span className="text-xs sm:text-sm font-bold text-stone-955 block mt-1 truncate" title={tour.destinations ? tour.destinations.join(' • ') : ''}>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 truncate" title={tour.destinations ? tour.destinations.join(' • ') : ''}>
                 {tour.destinations && tour.destinations.length > 0 
                   ? tour.destinations.join(' • ')
                   : tourPlacesCovered.slice(0, 3).join(', ')}
@@ -586,13 +586,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 4. AEO QUICK ANSWER (LIGHT IVORY - VISUALLY CONNECTED) */}
       {tour.quickAnswer && (
-        <section className="bg-[#FFFDF8] py-12 border-b border-stone-200/40 pt-0">
+        <section className="bg-[#FFFDF8] dark:bg-[#151312] py-12 border-b border-stone-200/40 dark:border-stone-800/40 pt-0">
           <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-            <span className="inline-block text-emerald-800 text-xs font-bold uppercase tracking-wider">
+            <span className="inline-block text-emerald-800 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
               {language === 'hi' ? 'त्वरित जानकारी' : 'AEO QUICK ANSWER'}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 mt-1 flex items-center justify-center gap-2 flex-wrap">
-              <HelpCircle className="w-6 h-6 text-emerald-700 shrink-0" />
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 mt-1 flex items-center justify-center gap-2 flex-wrap">
+              <HelpCircle className="w-6 h-6 text-emerald-700 dark:text-emerald-400 shrink-0" />
               <span>
                 {slug === '4-days-braj-dham-yatra'
                   ? (language === 'hi' ? '4-दिवसीय ब्रज धाम यात्रा क्या है?' : 'What is the 4-Day Braj Dham Yatra?')
@@ -601,12 +601,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                   : (language === 'hi' ? `${tourName} क्या है?` : `What is the ${tourName}?`)}
               </span>
             </h2>
-            <div className="p-6 sm:p-8 bg-[#F6F0E6] rounded-3xl border border-[#E6DBC8] text-left shadow-sm">
-              <p className="text-stone-850 text-sm sm:text-base leading-relaxed mb-4">
+            <div className="p-6 sm:p-8 bg-[#F6F0E6] dark:bg-[#1C1917] rounded-3xl border border-[#E6DBC8] dark:border-stone-800 text-left shadow-sm">
+              <p className="text-stone-850 dark:text-stone-300 text-sm sm:text-base leading-relaxed mb-4">
                 {tour.quickAnswer}
               </p>
-              <div className="border-t border-stone-300/60 pt-4 space-y-2 text-xs sm:text-sm text-stone-700">
-                <span className="font-bold text-stone-900 block text-xs uppercase tracking-wider mb-2">
+              <div className="border-t border-stone-300/60 dark:border-stone-700 pt-4 space-y-2 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
+                <span className="font-bold text-stone-900 dark:text-amber-200 block text-xs uppercase tracking-wider mb-2">
                   {language === 'hi' ? 'त्वरित तथ्य (Quick Facts)' : 'QUICK FACTS'}
                 </span>
                 {tourDuration && <div><strong>Duration:</strong> {tourDuration}</div>}
@@ -632,25 +632,25 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 5. TOUR HIGHLIGHTS (LIGHT IVORY) */}
       {highlights.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-7xl mx-auto px-4 space-y-10">
             <div className="text-center space-y-2">
-              <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider">
+              <span className="text-xs uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider">
                 {language === 'hi' ? 'यात्रा के मुख्य आकर्षण' : 'TOUR HIGHLIGHTS'}
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-905">
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
                 {language === 'hi' ? 'प्रमुख दर्शन एवं तीर्थ स्थल' : 'Key Pilgrimage Highlights'}
               </h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {highlights.map((hl, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl border border-stone-200/60 shadow-sm space-y-3 text-left">
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-sm">
+                <div key={idx} className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-800 dark:text-emerald-300 font-bold text-sm">
                     {String(idx + 1).padStart(2, '0')}
                   </div>
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">{hl.title}</h3>
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{hl.desc}</p>
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-stone-100 text-lg">{hl.title}</h3>
+                  <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">{hl.desc}</p>
                 </div>
               ))}
             </div>
@@ -678,10 +678,10 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       )}
 
       {/* 7. ROUTE & JOURNEY OVERVIEW (LIGHT) */}
-      <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+      <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
         <div className="max-w-4xl mx-auto px-4 space-y-8">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 border-b border-stone-300 pb-2 flex items-center gap-2">
-            <Calendar className="w-6 h-6 text-emerald-800 shrink-0" />
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 border-b border-stone-300 dark:border-stone-700 pb-2 flex items-center gap-2">
+            <Calendar className="w-6 h-6 text-emerald-800 dark:text-emerald-400 shrink-0" />
             {language === 'hi' ? 'यात्रा मार्ग एवं कार्यक्रम' : 'Route & Journey Overview'}
           </h2>
 
@@ -690,18 +690,18 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
           {/* Detailed days if present */}
           {tourItinerary.length > 0 && (
-            <div className="pt-8 border-t border-stone-300/40 space-y-6">
-              <h3 className="font-serif font-bold text-stone-905 text-lg text-left">
+            <div className="pt-8 border-t border-stone-300/40 dark:border-stone-700 space-y-6">
+              <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg text-left">
                 {language === 'hi' ? 'दिन-वार विवरण' : 'Detailed 4-Day Itinerary'}
               </h3>
               <div className="space-y-4">
                 {tourItinerary.map((day: any) => (
-                  <div key={day.dayNumber} className="bg-white p-5 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                    <h4 className="font-serif font-bold text-stone-900 text-base">
+                  <div key={day.dayNumber} className="bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+                    <h4 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-base">
                       {language === 'hi' ? `दिन ${day.dayNumber}: ` : `Day ${day.dayNumber}: `}
                       {day.hindiTitle && language === 'hi' ? day.hindiTitle : day.title}
                     </h4>
-                    <p className="text-stone-605 text-xs sm:text-sm leading-relaxed mt-2">
+                    <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed mt-2">
                       {day.hindiDescription && language === 'hi' ? day.hindiDescription : day.description}
                     </p>
                   </div>
@@ -778,13 +778,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       )}
 
       {/* 9. PLACES COVERED / DESTINATIONS GRID (LIGHT IVORY) */}
-      <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+      <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-6xl mx-auto px-4 space-y-10">
           <div className="text-center space-y-2">
-            <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider">
+            <span className="text-xs uppercase font-bold text-emerald-800 dark:text-emerald-400 tracking-wider">
               {language === 'hi' ? 'सम्मिलित तीर्थ एवं मंदिर' : 'PLACES COVERED'}
             </span>
-            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
               {slug === '4-days-braj-dham-yatra'
                 ? (language === 'hi' ? 'ब्रज धाम के 6 प्रमुख तीर्थ स्थल' : 'Complete 6-Destination Pilgrimage Grid')
                 : (isTrek
@@ -797,12 +797,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               
               {/* Varanasi */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">VARANASI</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">VARANASI</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Shri Kashi Vishwanath Temple</li>
                   <li>• Annapurna Devi Temple</li>
                   <li>• Kaal Bhairav Temple</li>
@@ -813,12 +813,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Sarnath */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">SARNATH</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">SARNATH</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Dhamek Stupa (5th Century)</li>
                   <li>• Chaukhandi Stupa</li>
                   <li>• Archaeological Museum</li>
@@ -828,12 +828,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Prayagraj */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">PRAYAGRAJ</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">PRAYAGRAJ</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Sacred Triveni Sangam</li>
                   <li>• Sangam Boat Ride</li>
                   <li>• Bade Hanuman Mandir</li>
@@ -845,12 +845,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Ayodhya */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">AYODHYA</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">AYODHYA</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Shri Ram Janmabhoomi Mandir</li>
                   <li>• Hanuman Garhi</li>
                   <li>• Kanak Bhawan</li>
@@ -866,12 +866,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {/* Mathura */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">MATHURA</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">MATHURA</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Shri Krishna Janmabhoomi</li>
                   <li>• Bhagwan Keshav Dev Temple</li>
                   <li>• Dwarkadhish Temple</li>
@@ -881,12 +881,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Gokul */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">GOKUL</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">GOKUL</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Raman Reti</li>
                   <li>• Nand Bhavan</li>
                   <li>• Brahmand Ghat</li>
@@ -896,12 +896,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Vrindavan */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">VRINDAVAN</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">VRINDAVAN</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Banke Bihari Ji Temple</li>
                   <li>• Radha Vallabh & Radha Raman</li>
                   <li>• Radha Damodar & Gopinath</li>
@@ -912,12 +912,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Barsana */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">BARSANA</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">BARSANA</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Shri Radha Rani Temple (Ladli Ji)</li>
                   <li>• Maan Mandir</li>
                   <li>• Kirti Mandir</li>
@@ -926,12 +926,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Nandgaon */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">NANDGAON</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">NANDGAON</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Nand Bhavan / Nand Ji Temple</li>
                   <li>• Yashoda Kund</li>
                   <li>• Sacred Pavan Sarovar</li>
@@ -939,12 +939,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               {/* Govardhan */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
-                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
-                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
-                  <h3 className="font-serif font-bold text-stone-900 text-lg">GOVARDHAN</h3>
+              <div className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/70 dark:border-stone-800 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+                  <MapPin className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg">GOVARDHAN</h3>
                 </div>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700 dark:text-stone-300">
                   <li>• Govardhan Parikrama (approx. 21 km)</li>
                   <li>• Daan Ghati Temple & Mukharbind</li>
                   <li>• Mansi Ganga & Govinda Kund</li>
@@ -957,13 +957,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
-                <h3 className="text-xl font-serif font-bold text-stone-900 flex items-center gap-2 text-left">
-                  <MapPin className="text-emerald-700" />
+                <h3 className="text-xl font-serif font-bold text-stone-900 dark:text-amber-100 flex items-center gap-2 text-left">
+                  <MapPin className="text-emerald-700 dark:text-emerald-400" />
                   <span>{isTrek ? 'Key Trail Shrines' : 'Main Shrines'}</span>
                 </h3>
                 <div className="grid grid-cols-1 gap-2.5">
                   {tourPlacesCovered.map((place: string, idx: number) => (
-                    <div key={idx} className="bg-white px-4 py-2.5 rounded-lg border border-stone-200/60 text-xs sm:text-sm text-stone-700 font-medium text-left">
+                    <div key={idx} className="bg-white dark:bg-[#1C1917] px-4 py-2.5 rounded-lg border border-stone-200/60 dark:border-stone-800 text-xs sm:text-sm text-stone-700 dark:text-stone-300 font-medium text-left">
                       • {place}
                     </div>
                   ))}
@@ -971,15 +971,15 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-xl font-serif font-bold text-stone-900 flex items-center gap-2 text-left">
-                  <Compass className="text-emerald-700" />
+                <h3 className="text-xl font-serif font-bold text-stone-900 dark:text-amber-100 flex items-center gap-2 text-left">
+                  <Compass className="text-emerald-700 dark:text-emerald-400" />
                   <span>{language === 'hi' ? 'यात्रा सुविधाएँ' : 'Yatra Features'}</span>
                 </h3>
                 <div className="grid grid-cols-1 gap-2.5">
-                  <div className="bg-white px-4 py-2.5 rounded-lg border border-stone-200/60 text-xs sm:text-sm text-stone-700 font-medium text-left">
+                  <div className="bg-white dark:bg-[#1C1917] px-4 py-2.5 rounded-lg border border-stone-200/60 dark:border-stone-800 text-xs sm:text-sm text-stone-700 dark:text-stone-300 font-medium text-left">
                     • {language === 'hi' ? 'निजी वाहन व्यवस्था सहायता' : 'Private transportation booking assistance'}
                   </div>
-                  <div className="bg-white px-4 py-2.5 rounded-lg border border-stone-200/60 text-xs sm:text-sm text-stone-700 font-medium text-left">
+                  <div className="bg-white dark:bg-[#1C1917] px-4 py-2.5 rounded-lg border border-stone-200/60 dark:border-stone-800 text-xs sm:text-sm text-stone-700 dark:text-stone-300 font-medium text-left">
                     • {language === 'hi' ? 'स्थानीय अनुभवी पंडित संपर्क' : 'Verified local pandit coordination'}
                   </div>
                 </div>
@@ -998,9 +998,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             </h2>
             <div className="grid grid-cols-1 gap-4 pt-2">
               {tourWhyChoose.map((reason: string, idx: number) => (
-                <div key={idx} className="bg-[#FFFDF8] p-5 rounded-2xl border border-white/10 shadow-sm flex items-start gap-3 text-stone-900 text-left">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                  <p className="text-stone-850 text-sm sm:text-base leading-relaxed">
+                <div key={idx} className="bg-[#FFFDF8] dark:bg-[#1C1917] p-5 rounded-2xl border border-white/10 dark:border-stone-800 shadow-sm flex items-start gap-3 text-stone-900 dark:text-stone-100 text-left">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <p className="text-stone-850 dark:text-stone-200 text-sm sm:text-base leading-relaxed">
                     {reason}
                   </p>
                 </div>
@@ -1012,16 +1012,16 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 10. WHAT WE OFFER (LIGHT) */}
       {tourWhatWeOffer.length > 0 && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-stone-200/40">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-4xl mx-auto px-4 space-y-6">
-            <h3 className="font-serif font-bold text-stone-900 text-2xl text-center">
+            <h3 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-2xl text-center">
               {language === 'hi' ? 'हमारी व्यवस्थाएं' : 'What We Offer'}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {tourWhatWeOffer.map((offer: string, idx: number) => (
-                <div key={idx} className="bg-white p-4 rounded-xl border border-stone-200/60 flex items-center gap-3 text-left">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span className="text-stone-700 text-xs sm:text-sm font-medium">{offer}</span>
+                <div key={idx} className="bg-white dark:bg-[#1C1917] p-4 rounded-xl border border-stone-200/60 dark:border-stone-800 flex items-center gap-3 text-left">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <span className="text-stone-700 dark:text-stone-300 text-xs sm:text-sm font-medium">{offer}</span>
                 </div>
               ))}
             </div>
@@ -1030,16 +1030,16 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       )}
 
       {/* 12. PRICE & ENQUIRY (LIGHT IVORY) */}
-      <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+      <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
             {slug === '4-days-braj-dham-yatra'
               ? (language === 'hi' ? 'ब्रज यात्रा का मूल्य जानना चाहते हैं?' : 'Want to Know the Braj Yatra Price?')
               : slug === 'varanasi-prayagraj-ayodhya-tour-package'
               ? (language === 'hi' ? 'उपलब्धता एवं वर्तमान पैकेज मूल्य जांचें' : 'Check Availability & Current Package Price')
               : (language === 'hi' ? 'उपलब्धता और मूल्य की जांच करें' : 'Check Availability & Price')}
           </h2>
-          <p className="text-stone-750 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+          <p className="text-stone-750 dark:text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
             {slug === '4-days-braj-dham-yatra'
               ? (language === 'hi'
                   ? 'यात्रा का मूल्य समूह के आकार, वाहन के चयन और अन्य व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं उपलब्ध कस्टमाइजेशन के लिए आस्था से रास्ता सेवा से संपर्क करें।'
@@ -1144,13 +1144,13 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 14. HOW TO REACH (LIGHT - CONDITIONAL) */}
       {tourHowToReach && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
+            <h2 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-2xl flex items-center gap-2 text-left">
               <span>📍</span>
               {language === 'hi' ? 'कैसे पहुँचें' : 'How to Reach'}
             </h2>
-            <p className="text-stone-700 text-sm sm:text-base leading-relaxed bg-white p-5 rounded-2xl border border-[#E6DBC8] shadow-sm text-left">
+            <p className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed bg-white dark:bg-[#1C1917] p-5 rounded-2xl border border-[#E6DBC8] dark:border-stone-800 shadow-sm text-left">
               {tourHowToReach}
             </p>
           </div>
@@ -1159,9 +1159,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 15. TRAVEL TIPS (LIGHT IVORY - CONDITIONAL) */}
       {tourTravelTips.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-4xl mx-auto px-4 space-y-4">
-            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
+            <h2 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-2xl flex items-center gap-2 text-left">
               <span>💡</span>
               {isTrek
                 ? (language === 'hi' ? 'ट्रेकिंग दिशानिर्देश' : 'Trekking Guidelines & Tips')
@@ -1169,9 +1169,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {tourTravelTips.map((tip: string, idx: number) => (
-                <div key={idx} className="bg-white p-4 rounded-xl border border-stone-200/60 flex items-start gap-2.5 text-left">
-                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm text-stone-700 leading-normal">{tip}</span>
+                <div key={idx} className="bg-white dark:bg-[#1C1917] p-4 rounded-xl border border-stone-200/60 dark:border-stone-800 flex items-start gap-2.5 text-left">
+                  <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-normal">{tip}</span>
                 </div>
               ))}
             </div>
@@ -1181,7 +1181,7 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
       {/* 16. FAQ SECTION (LIGHT) */}
       {finalFaqs.length > 0 && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-4xl mx-auto px-4">
             <FAQAccordion
               faqs={finalFaqs}
@@ -1193,9 +1193,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       )}
 
       {/* 17. RELATED JOURNEYS (LIGHT IVORY) */}
-      <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+      <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-7xl mx-auto px-4 space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center">
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 text-center">
             {language === 'hi' ? 'संबंधित तीर्थ यात्राएं' : 'Related Journeys'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

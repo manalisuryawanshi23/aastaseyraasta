@@ -263,7 +263,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
   );
 
   return (
-    <div className="min-h-screen bg-[#FFFDF8] text-stone-900 antialiased">
+    <div className="min-h-screen bg-[#FFFDF8] dark:bg-[#121110] text-stone-900 dark:text-[#F4F1EA] antialiased">
 
       <SEOHead
         title={generateDestinationTitle(dest)}
@@ -276,14 +276,14 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
       />
 
       {/* ── 1. BREADCRUMB BAR ── */}
-      <div className="bg-[#F6F0E6] border-b border-[#E6DBC8] py-3">
+      <div className="bg-[#F6F0E6] dark:bg-[#1C1917] border-b border-[#E6DBC8] dark:border-stone-800 py-3">
         <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex items-center space-x-2 text-xs font-medium text-stone-500" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-amber-800 transition-colors">{language === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}</a>
+          <nav className="flex items-center space-x-2 text-xs font-medium text-stone-500 dark:text-stone-400" aria-label="Breadcrumb">
+            <a href="/" className="hover:text-amber-800 dark:hover:text-amber-400 transition-colors">{language === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}</a>
             <ChevronRight className="w-3 h-3 shrink-0" />
-            <a href="/destinations" className="hover:text-amber-800 transition-colors">{t('nav.destinations', 'Destinations')}</a>
+            <a href="/destinations" className="hover:text-amber-800 dark:hover:text-amber-400 transition-colors">{t('nav.destinations', 'Destinations')}</a>
             <ChevronRight className="w-3 h-3 shrink-0" />
-            <span className="text-stone-800 font-semibold truncate">{destName}</span>
+            <span className="text-stone-800 dark:text-stone-200 font-semibold truncate">{destName}</span>
           </nav>
         </div>
       </div>
@@ -366,26 +366,26 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
       </header>
 
       {/* ── 3. QUICK INFO STRIP ── */}
-      <section className="bg-[#FFFDF8] py-8 border-b border-stone-200/40">
+      <section className="bg-[#FFFDF8] dark:bg-[#151312] py-8 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">{language === 'hi' ? 'राज्य' : 'State'}</span>
-              <span className="text-xs sm:text-sm font-bold text-stone-900 block mt-1">{(dest as any).state || 'Madhya Pradesh'}</span>
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">{language === 'hi' ? 'राज्य' : 'State'}</span>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">{(dest as any).state || 'Madhya Pradesh'}</span>
             </div>
             {distanceFromIndore && (
-              <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-                <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">{language === 'hi' ? 'इंदौर से दूरी' : 'From Indore'}</span>
-                <span className="text-xs sm:text-sm font-bold text-stone-900 block mt-1">{distanceFromIndore}</span>
+              <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+                <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">{language === 'hi' ? 'इंदौर से दूरी' : 'From Indore'}</span>
+                <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">{distanceFromIndore}</span>
               </div>
             )}
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">{language === 'hi' ? 'प्रमुख मंदिर' : 'Main Temple'}</span>
-              <span className="text-xs sm:text-sm font-bold text-stone-900 block mt-1 truncate">{destPlacesToVisit[0] || dest.name}</span>
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">{language === 'hi' ? 'प्रमुख मंदिर' : 'Main Temple'}</span>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1 truncate">{destPlacesToVisit[0] || dest.name}</span>
             </div>
-            <div className="bg-white p-4 rounded-2xl border border-stone-200/60 shadow-sm text-left">
-              <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">{language === 'hi' ? 'यात्रा का उत्तम समय' : 'Best Season'}</span>
-              <span className="text-xs sm:text-sm font-bold text-stone-900 block mt-1">{bestSeason}</span>
+            <div className="bg-white dark:bg-[#1C1917] p-4 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm text-left">
+              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold uppercase tracking-wider block">{language === 'hi' ? 'यात्रा का उत्तम समय' : 'Best Season'}</span>
+              <span className="text-xs sm:text-sm font-bold text-stone-900 dark:text-amber-100 block mt-1">{bestSeason}</span>
             </div>
           </div>
         </div>
@@ -393,22 +393,22 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 4. PILGRIMAGE HIGHLIGHTS GRID ── */}
       {highlights.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-7xl mx-auto px-4 space-y-10">
             <div className="text-center space-y-2">
-              <span className="text-xs uppercase font-bold text-amber-800 tracking-wider">{language === 'hi' ? 'प्रमुख दर्शन स्थल' : 'PILGRIMAGE HIGHLIGHTS'}</span>
-              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+              <span className="text-xs uppercase font-bold text-amber-800 dark:text-amber-400 tracking-wider">{language === 'hi' ? 'प्रमुख दर्शन स्थल' : 'PILGRIMAGE HIGHLIGHTS'}</span>
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100">
                 {language === 'hi' ? `${destName} के प्रमुख मंदिर एवं तीर्थ` : `Sacred Sites in ${dest.name}`}
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {highlights.map((hl, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl border border-stone-200/60 shadow-sm space-y-3 text-left hover:shadow-md hover:-translate-y-0.5 transition-all">
-                  <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 font-bold text-sm">
+                <div key={idx} className="bg-white dark:bg-[#1C1917] p-6 rounded-2xl border border-stone-200/60 dark:border-stone-800 shadow-sm space-y-3 text-left hover:shadow-md hover:-translate-y-0.5 transition-all">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-amber-800 dark:text-amber-300 font-bold text-sm">
                     {String(idx + 1).padStart(2, '0')}
                   </div>
-                  <h3 className="font-serif font-bold text-stone-900 text-lg text-left">{hl.title}</h3>
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed text-left">{hl.desc}</p>
+                  <h3 className="font-serif font-bold text-stone-900 dark:text-stone-100 text-lg text-left">{hl.title}</h3>
+                  <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed text-left">{hl.desc}</p>
                 </div>
               ))}
             </div>
@@ -435,16 +435,16 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 6. TEMPLES & SACRED PLACES (LIGHT IVORY) ── */}
       {destPlacesToVisit.length > 0 && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-4xl mx-auto px-4 space-y-8">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center border-b border-stone-300 pb-3 flex items-center justify-center gap-2">
-              <Landmark className="w-6 h-6 text-amber-700 shrink-0" />
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 text-center border-b border-stone-300 dark:border-stone-700 pb-3 flex items-center justify-center gap-2">
+              <Landmark className="w-6 h-6 text-amber-700 dark:text-amber-400 shrink-0" />
               {language === 'hi' ? `${destName} के मंदिर व पावन स्थल` : `Major Temples & Sacred Places in ${dest.name}`}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {destPlacesToVisit.map((place: string, i: number) => (
-                <div key={i} className="bg-white px-4 py-3 rounded-xl border border-amber-200/60 flex items-center gap-2.5 text-sm font-medium text-stone-800 shadow-xs hover:shadow-sm transition-shadow">
-                  <MapPin className="w-4 h-4 text-amber-700 shrink-0" />
+                <div key={i} className="bg-white dark:bg-[#1C1917] px-4 py-3 rounded-xl border border-amber-200/60 dark:border-stone-800 flex items-center gap-2.5 text-sm font-medium text-stone-800 dark:text-stone-200 shadow-xs hover:shadow-sm transition-shadow">
+                  <MapPin className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
                   <span>{place}</span>
                 </div>
               ))}
@@ -455,30 +455,30 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 7. TRAVEL & CONNECTIVITY ── */}
       {destTravelInfo && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-4xl mx-auto px-4 space-y-6">
-            <h2 className="font-serif font-bold text-stone-900 text-2xl flex items-center gap-2 text-left">
+            <h2 className="font-serif font-bold text-stone-900 dark:text-amber-100 text-2xl flex items-center gap-2 text-left">
               <span>📍</span>
               {language === 'hi' ? 'यात्रा एवं आवागमन जानकारी' : 'How to Reach & Travel Connectivity'}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="bg-[#F6F0E6] p-4 rounded-xl border border-[#E6DBC8] flex flex-col items-center gap-2 text-center">
-                <Plane className="w-6 h-6 text-amber-700" />
-                <span className="font-bold text-xs text-stone-700">{language === 'hi' ? 'हवाई मार्ग' : 'By Air'}</span>
-                <span className="text-xs text-stone-600">{language === 'hi' ? 'इंदौर हवाई अड्डा (IXI) — निकटतम' : 'Indore Airport (IXI) — Nearest Hub'}</span>
+              <div className="bg-[#F6F0E6] dark:bg-[#1C1917] p-4 rounded-xl border border-[#E6DBC8] dark:border-stone-800 flex flex-col items-center gap-2 text-center">
+                <Plane className="w-6 h-6 text-amber-700 dark:text-amber-400" />
+                <span className="font-bold text-xs text-stone-700 dark:text-stone-200">{language === 'hi' ? 'हवाई मार्ग' : 'By Air'}</span>
+                <span className="text-xs text-stone-600 dark:text-stone-400">{language === 'hi' ? 'इंदौर हवाई अड्डा (IXI) — निकटतम' : 'Indore Airport (IXI) — Nearest Hub'}</span>
               </div>
-              <div className="bg-[#F6F0E6] p-4 rounded-xl border border-[#E6DBC8] flex flex-col items-center gap-2 text-center">
-                <Train className="w-6 h-6 text-amber-700" />
-                <span className="font-bold text-xs text-stone-700">{language === 'hi' ? 'रेल मार्ग' : 'By Train'}</span>
-                <span className="text-xs text-stone-600">{language === 'hi' ? 'उज्जैन / इंदौर / रतलाम रेलवे स्टेशन' : 'Ujjain / Indore / Ratlam Station'}</span>
+              <div className="bg-[#F6F0E6] dark:bg-[#1C1917] p-4 rounded-xl border border-[#E6DBC8] dark:border-stone-800 flex flex-col items-center gap-2 text-center">
+                <Train className="w-6 h-6 text-amber-700 dark:text-amber-400" />
+                <span className="font-bold text-xs text-stone-700 dark:text-stone-200">{language === 'hi' ? 'रेल मार्ग' : 'By Train'}</span>
+                <span className="text-xs text-stone-600 dark:text-stone-400">{language === 'hi' ? 'उज्जैन / इंदौर / रतलाम रेलवे स्टेशन' : 'Ujjain / Indore / Ratlam Station'}</span>
               </div>
-              <div className="bg-[#F6F0E6] p-4 rounded-xl border border-[#E6DBC8] flex flex-col items-center gap-2 text-center">
-                <Car className="w-6 h-6 text-amber-700" />
-                <span className="font-bold text-xs text-stone-700">{language === 'hi' ? 'सड़क मार्ग' : 'By Road'}</span>
-                <span className="text-xs text-stone-600">{language === 'hi' ? 'निजी एसी वाहन उपलब्ध' : 'Private AC Cabs Available'}</span>
+              <div className="bg-[#F6F0E6] dark:bg-[#1C1917] p-4 rounded-xl border border-[#E6DBC8] dark:border-stone-800 flex flex-col items-center gap-2 text-center">
+                <Car className="w-6 h-6 text-amber-700 dark:text-amber-400" />
+                <span className="font-bold text-xs text-stone-700 dark:text-stone-200">{language === 'hi' ? 'सड़क मार्ग' : 'By Road'}</span>
+                <span className="text-xs text-stone-600 dark:text-stone-400">{language === 'hi' ? 'निजी एसी वाहन उपलब्ध' : 'Private AC Cabs Available'}</span>
               </div>
             </div>
-            <p className="text-stone-700 text-sm sm:text-base leading-relaxed bg-[#F6F0E6] p-5 rounded-2xl border border-[#E6DBC8] shadow-sm text-left">{destTravelInfo}</p>
+            <p className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed bg-[#F6F0E6] dark:bg-[#1C1917] p-5 rounded-2xl border border-[#E6DBC8] dark:border-stone-800 shadow-sm text-left">{destTravelInfo}</p>
           </div>
         </section>
       )}
@@ -553,10 +553,10 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 9. RELATED POOJAS ── */}
       {relatedPoojas.length > 0 && (
-        <section className="bg-[#FFFDF8] py-16 border-b border-stone-200/40">
+        <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
           <div className="max-w-7xl mx-auto px-4 space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center flex items-center justify-center gap-2">
-              <Sparkles className="w-6 h-6 text-amber-700 shrink-0" />
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 text-center flex items-center justify-center gap-2">
+              <Sparkles className="w-6 h-6 text-amber-700 dark:text-amber-400 shrink-0" />
               {language === 'hi' ? `${destName} में वैदिक पूजा सेवाएं` : `Pooja Services in ${dest.name}`}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -570,10 +570,10 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 10. RELATED TOUR PACKAGES ── */}
       {relatedTours.length > 0 && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-7xl mx-auto px-4 space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 text-center flex items-center justify-center gap-2">
-              <Compass className="w-6 h-6 text-emerald-700 shrink-0" />
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 text-center flex items-center justify-center gap-2">
+              <Compass className="w-6 h-6 text-emerald-700 dark:text-emerald-400 shrink-0" />
               {language === 'hi' ? `${destName} सम्मिलित तीर्थ यात्रा पैकेज` : `Tour Packages Including ${dest.name}`}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -587,7 +587,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
 
       {/* ── 11. FAQ ACCORDION (AEO) ── */}
       {finalFaqs.length > 0 && (
-        <section className="bg-[#F6F0E6] py-16 border-b border-[#E6DBC8]">
+        <section className="bg-[#F6F0E6] dark:bg-[#151312] py-16 border-b border-[#E6DBC8] dark:border-stone-800">
           <div className="max-w-4xl mx-auto px-4">
             <FAQAccordion
               faqs={finalFaqs}
@@ -599,7 +599,7 @@ export const DestinationDetailPage: React.FC<DestinationDetailPageProps> = ({ sl
       )}
 
       {/* ── 12. INTERACTIVE SACRED MAP ── */}
-      <section className="bg-[#FFFDF8] py-8">
+      <section className="bg-[#FFFDF8] dark:bg-[#121110] py-8">
         <div className="max-w-7xl mx-auto px-4">
           <DestinationMapVisualizer
             destinationSlug={dest.slug}
