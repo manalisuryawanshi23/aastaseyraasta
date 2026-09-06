@@ -8,6 +8,7 @@
  */
 
 import { useEffect } from 'react';
+import { StoreService } from '../services/store';
 
 const KEYS = {
   POOJAS: 'aastha_poojas',
@@ -67,7 +68,10 @@ export function useApiSync() {
 
       // 2. Sync tours
       const tourOk = await fetchAndCache('/api/tours', KEYS.TOURS);
-      if (tourOk) anyUpdated = true;
+      if (tourOk) {
+        StoreService.getTours(false);
+        anyUpdated = true;
+      }
 
       // 3. Sync destinations
       const destOk = await fetchAndCache('/api/destinations', KEYS.DESTINATIONS);

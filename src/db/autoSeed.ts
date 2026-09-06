@@ -1139,11 +1139,55 @@ export async function autoInitializeDatabase() {
       ]
     );
 
-    // Sync sequential sort_order for all default tours
-    console.log('[AUTO-DB] Aligning tour sort_orders in database...');
+    // Sync sequential sort_order, titles, meta titles and key content for all default tours
+    console.log('[AUTO-DB] Aligning tour data and sort_orders in database...');
     for (let idx = 0; idx < initialTours.length; idx++) {
-      const t = initialTours[idx];
-      await execute('UPDATE tours SET sort_order = ? WHERE id = ?', [idx + 1, t.id]);
+      const t = initialTours[idx] as any;
+      await execute(
+        `UPDATE tours 
+         SET title = ?, 
+             hindi_title = ?, 
+             meta_title = ?, 
+             og_title = ?, 
+             overview = ?, 
+             hindi_overview = ?, 
+             quick_answer = ?, 
+             destinations_json = ?, 
+             places_covered_json = ?, 
+             temples_covered_json = ?, 
+             itinerary_json = ?, 
+             inclusions_json = ?, 
+             exclusions_json = ?, 
+             why_choose_json = ?, 
+             what_we_offer_json = ?, 
+             travel_tips_json = ?, 
+             faqs_json = ?, 
+             canonical_url = ?, 
+             sort_order = ? 
+         WHERE id = ?`,
+        [
+          t.name || t.title || '',
+          t.hindiName || t.hindiTitle || '',
+          t.seoTitle || t.metaTitle || '',
+          t.ogTitle || '',
+          t.description || t.overview || '',
+          t.hindiDescription || t.hindiOverview || '',
+          t.quickAnswer || '',
+          JSON.stringify(t.destinations || []),
+          JSON.stringify(t.placesCovered || []),
+          JSON.stringify(t.templesCovered || []),
+          JSON.stringify(t.itinerary || []),
+          JSON.stringify(t.included || t.inclusions || []),
+          JSON.stringify(t.excluded || t.exclusions || []),
+          JSON.stringify(t.whyChoose || []),
+          JSON.stringify(t.whatWeOffer || []),
+          JSON.stringify(t.travelTips || []),
+          JSON.stringify(t.faqs || []),
+          t.canonicalUrl || '',
+          idx + 1,
+          t.id
+        ]
+      );
     }
 
     // Sync all destinations details, attractions, and images in database

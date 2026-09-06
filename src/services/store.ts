@@ -391,23 +391,39 @@ export class StoreService {
     const savedIds = new Set(saved.map((t) => t.id));
     const missing = initialTours.filter((t) => !savedIds.has(t.id));
 
+    let updated = false;
     let list = saved.map((t) => {
       const init = initialTours.find((it) => it.id === t.id);
       if (init) {
-        const isNameCorrupted = !t.name || t.name === 'New Spiritual Tour' || t.name.trim() === '';
+        const isNameCorrupted =
+          !t.name ||
+          t.name === 'New Spiritual Tour' ||
+          t.name.trim() === '' ||
+          t.name.includes('4 Days / 3 Nights – Complete') ||
+          t.name.includes('4 Days / 3 Nights - Complete') ||
+          t.name.includes('Complete Braj Dham Yatra') ||
+          (init.id === 'tour-braj-dham-4d3n' && t.name !== 'Braj Dham Yatra');
         const isSlugCorrupted = !t.slug || t.slug === 'new-spiritual-tour' || t.slug.trim() === '';
+
+        if (isNameCorrupted || isSlugCorrupted) {
+          updated = true;
+        }
+
         return {
           ...init,
           ...t,
-          name: isNameCorrupted ? init.name : t.name,
-          hindiName: t.hindiName || init.hindiName,
+          name: isNameCorrupted ? init.name : (t.name || init.name),
+          hindiName: isNameCorrupted ? init.hindiName : (t.hindiName || init.hindiName),
+          seoTitle: isNameCorrupted ? init.seoTitle : (t.seoTitle || init.seoTitle),
+          metaTitle: isNameCorrupted ? init.metaTitle : (t.metaTitle || init.metaTitle),
+          ogTitle: isNameCorrupted ? init.ogTitle : (t.ogTitle || init.ogTitle),
           slug: isSlugCorrupted ? init.slug : t.slug,
           category: t.category || init.category,
           hindiCategory: t.hindiCategory || init.hindiCategory,
-          shortDescription: t.shortDescription || init.shortDescription,
-          hindiShortDescription: t.hindiShortDescription || init.hindiShortDescription,
-          description: t.description || init.description,
-          hindiDescription: t.hindiDescription || init.hindiDescription,
+          shortDescription: isNameCorrupted ? init.shortDescription : (t.shortDescription || init.shortDescription),
+          hindiShortDescription: isNameCorrupted ? init.hindiShortDescription : (t.hindiShortDescription || init.hindiShortDescription),
+          description: isNameCorrupted ? init.description : (t.description || init.description),
+          hindiDescription: isNameCorrupted ? init.hindiDescription : (t.hindiDescription || init.hindiDescription),
           startingPoint: t.startingPoint || init.startingPoint,
           hindiStartingPoint: t.hindiStartingPoint || init.hindiStartingPoint,
           endingPoint: t.endingPoint || init.endingPoint,
@@ -426,7 +442,7 @@ export class StoreService {
           hindiIncluded: init.hindiIncluded && init.hindiIncluded.length > 0 ? init.hindiIncluded : t.hindiIncluded,
           excluded: init.excluded && init.excluded.length > 0 ? init.excluded : t.excluded,
           hindiExcluded: init.hindiExcluded && init.hindiExcluded.length > 0 ? init.hindiExcluded : t.hindiExcluded,
-          quickAnswer: init.quickAnswer || t.quickAnswer,
+          quickAnswer: isNameCorrupted ? init.quickAnswer : (init.quickAnswer || t.quickAnswer),
           whyChoose: init.whyChoose && init.whyChoose.length > 0 ? init.whyChoose : t.whyChoose,
           whatWeOffer: init.whatWeOffer && init.whatWeOffer.length > 0 ? init.whatWeOffer : t.whatWeOffer,
           howToReach: init.howToReach || t.howToReach,
@@ -436,7 +452,7 @@ export class StoreService {
       return t;
     });
 
-    if (missing.length > 0) {
+    if (missing.length > 0 || updated) {
       list = [...list, ...missing];
       setItem(KEYS.TOURS, list);
     }
