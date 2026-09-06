@@ -15,6 +15,8 @@ import { AdminDarshanManager } from '../components/admin/AdminDarshanManager';
 import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsManager';
 import { AdminSpecialOffersManager } from '../components/admin/AdminSpecialOffersManager';
 import { AdminAstrologyConsultations } from '../components/admin/AdminAstrologyConsultations';
+import { AdminDbStatusBanner } from '../components/admin/AdminDbStatusBanner';
+import { apiPut, apiDelete } from '../services/apiService';
 import {
   Lock,
   Users,
@@ -255,17 +257,27 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     }
   };
 
-  const handleStatusChange = (leadId: string, newStatus: Lead['status']) => {
-    StoreService.updateLeadStatus(leadId, newStatus);
-    setLeads((prev) =>
-      prev.map((l) => (l.id === leadId ? { ...l, status: newStatus } : l))
-    );
+  const handleStatusChange = async (leadId: string, newStatus: Lead['status']) => {
+    const result = await apiPut(`/api/leads/${leadId}`, { status: newStatus });
+    if (result.success) {
+      StoreService.updateLeadStatus(leadId, newStatus);
+      setLeads((prev) =>
+        prev.map((l) => (l.id === leadId ? { ...l, status: newStatus } : l))
+      );
+    } else {
+      alert(`Failed to update status in database: ${result.error}`);
+    }
   };
 
-  const handleDeleteLead = (leadId: string, devoteeName: string) => {
+  const handleDeleteLead = async (leadId: string, devoteeName: string) => {
     if (window.confirm(`Delete enquiry from devotee "${devoteeName}"?`)) {
-      StoreService.deleteLead(leadId);
-      setLeads((prev) => prev.filter((l) => l.id !== leadId));
+      const result = await apiDelete(`/api/leads/${leadId}`);
+      if (result.success) {
+        StoreService.deleteLead(leadId);
+        setLeads((prev) => prev.filter((l) => l.id !== leadId));
+      } else {
+        alert(`Failed to delete lead from database: ${result.error}`);
+      }
     }
   };
 
@@ -1048,6 +1060,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
         {/* WORKSPACE VIEW AREA */}
         <main className="p-4 md:p-8 space-y-8 flex-1">
+          {/* Live Database Health Indicator */}
+          <AdminDbStatusBanner />
+
           {accessDeniedMessage && (
             <div className="p-4 rounded-2xl bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 text-xs font-bold flex items-center gap-2 shadow-sm animate-pulse">
               <ShieldAlert className="w-5 h-5 text-red-600 shrink-0" />

@@ -6,6 +6,7 @@ import {
   PreferredCallbackTime,
   StaffUser,
 } from '../../types';
+import { apiPut, apiDelete } from '../../services/apiService';
 import {
   Sparkles,
   Search,
@@ -51,6 +52,8 @@ export const AdminAstrologyConsultations: React.FC<AdminAstrologyConsultationsPr
   const [editNotes, setEditNotes] = useState('');
   const [newFollowUpNote, setNewFollowUpNote] = useState('');
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const refreshData = () => {
     setConsultations(StoreService.getAstrologyConsultations());
@@ -66,9 +69,10 @@ export const AdminAstrologyConsultations: React.FC<AdminAstrologyConsultationsPr
     };
   }, []);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3500);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 3500);
   };
 
   // Metrics Count
@@ -104,9 +108,9 @@ export const AdminAstrologyConsultations: React.FC<AdminAstrologyConsultationsPr
     setNewFollowUpNote('');
   };
 
-  const handleSaveDetails = (e?: React.FormEvent) => {
+  const handleSaveDetails = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!selectedItem) return;
+    if (!selectedItem || isSaving) return;
 
     let updatedFollowUp = selectedItem.followUpHistory || [];
     if (newFollowUpNote.trim()) {
@@ -120,26 +124,40 @@ export const AdminAstrologyConsultations: React.FC<AdminAstrologyConsultationsPr
       ];
     }
 
-    const updated = StoreService.updateAstrologyConsultation(selectedItem.id, {
+    const payload = {
       status: editStatus,
       notes: editNotes,
       followUpHistory: updatedFollowUp,
-    });
+    };
 
-    if (updated) {
-      setSelectedItem(updated);
-      setNewFollowUpNote('');
-      refreshData();
-      showToast(`Consultation record for ${updated.fullName} updated successfully!`);
+    setIsSaving(true);
+    const result = await apiPut(`/api/astrology-consultations/${selectedItem.id}`, payload);
+    setIsSaving(false);
+
+    if (result.success) {
+      const updated = StoreService.updateAstrologyConsultation(selectedItem.id, payload);
+      if (updated) {
+        setSelectedItem(updated);
+        setNewFollowUpNote('');
+        refreshData();
+        showToast(`Consultation record for ${updated.fullName} saved to MySQL database!`);
+      }
+    } else {
+      showToast(`Save failed: ${result.error}`, true);
     }
   };
 
-  const handleDelete = (id: string, name: string) => {
+  const handleDelete = async (id: string, name: string) => {
     if (window.confirm(`Are you sure you want to permanently delete the consultation request for ${name}?`)) {
-      StoreService.deleteAstrologyConsultation(id);
-      if (selectedItem?.id === id) setSelectedItem(null);
-      refreshData();
-      showToast(`Consultation request for ${name} deleted.`);
+      const result = await apiDelete(`/api/astrology-consultations/${id}`);
+      if (result.success) {
+        StoreService.deleteAstrologyConsultation(id);
+        if (selectedItem?.id === id) setSelectedItem(null);
+        refreshData();
+        showToast(`Consultation request for ${name} deleted from database.`);
+      } else {
+        showToast(`Delete failed: ${result.error}`, true);
+      }
     }
   };
 
@@ -224,8 +242,16 @@ export const AdminAstrologyConsultations: React.FC<AdminAstrologyConsultationsPr
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-amber-500/40 flex items-center gap-3 animate-fade-in text-xs font-semibold">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl shadow-2xl border flex items-center gap-3 animate-fade-in text-xs font-semibold backdrop-blur-md ${
+          toastIsError
+            ? 'bg-red-950 text-red-100 border-red-500'
+            : 'bg-stone-900 text-white border-amber-500/40'
+        }`}>
+          {toastIsError ? (
+            <span className="text-red-400 font-bold">✕</span>
+          ) : (
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          )}
           <span>{toastMessage}</span>
         </div>
       )}

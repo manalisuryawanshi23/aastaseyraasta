@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Testimonial } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost, apiDelete } from '../../services/apiService';
 import {
   MessageSquare,
   Plus,
@@ -20,6 +21,8 @@ export const AdminTestimonialsManager: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Testimonial | null>(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   React.useEffect(() => {
     const handleSync = () => setTestimonials(StoreService.getTestimonials());
@@ -27,32 +30,70 @@ export const AdminTestimonialsManager: React.FC = () => {
     return () => window.removeEventListener('aastha:data-synced', handleSync);
   }, []);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
-  const handleTogglePublish = (id: string) => {
+  const handleTogglePublish = async (id: string) => {
     const item = testimonials.find((t) => t.id === id);
     if (!item) return;
-    const updated = StoreService.saveTestimonial({ id, isPublished: !item.isPublished });
-    setTestimonials((prev) => prev.map((t) => (t.id === id ? updated : t)));
-    showToast(`Testimonial ${updated.isPublished ? 'published' : 'hidden'} successfully.`);
+    const newPublished = !item.isPublished;
+    const result = await apiPost('/api/testimonials', { ...item, isPublished: newPublished });
+    if (result.success) {
+      StoreService.saveTestimonial({ id, isPublished: newPublished });
+      setTestimonials((prev) => prev.map((t) => (t.id === id ? { ...t, isPublished: newPublished } : t)));
+      showToast(`Testimonial ${newPublished ? 'published' : 'hidden'} successfully.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const handleToggleFeature = (id: string) => {
+  const handleToggleFeature = async (id: string) => {
     const item = testimonials.find((t) => t.id === id);
     if (!item) return;
-    const updated = StoreService.saveTestimonial({ id, isFeatured: !item.isFeatured });
-    setTestimonials((prev) => prev.map((t) => (t.id === id ? updated : t)));
-    showToast(`Testimonial featured status ${updated.isFeatured ? 'enabled' : 'disabled'}.`);
+    const newFeatured = !item.isFeatured;
+    const result = await apiPost('/api/testimonials', { ...item, isFeatured: newFeatured });
+    if (result.success) {
+      StoreService.saveTestimonial({ id, isFeatured: newFeatured });
+      setTestimonials((prev) => prev.map((t) => (t.id === id ? { ...t, isFeatured: newFeatured } : t)));
+      showToast(`Testimonial featured status ${newFeatured ? 'enabled' : 'disabled'}.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (window.confirm(`Are you sure you want to delete the testimonial from "${name}"?`)) {
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete the testimonial from "${name}"?`)) return;
+    const result = await apiDelete(`/api/testimonials/${id}`);
+    if (result.success) {
       StoreService.deleteTestimonial(id);
       setTestimonials((prev) => prev.filter((t) => t.id !== id));
-      showToast('Testimonial deleted successfully.');
+      showToast('Testimonial deleted from database.');
+    } else {
+      showToast(`Delete failed: ${result.error}`, true);
+    }
+  };
+
+  const handleSaveModal = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingItem || isSaving) return;
+    setIsSaving(true);
+    const result = await apiPost('/api/testimonials', editingItem);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.saveTestimonial(editingItem);
+      const exists = testimonials.some((t) => t.id === editingItem.id);
+      if (exists) {
+        setTestimonials((prev) => prev.map((t) => (t.id === editingItem.id ? editingItem : t)));
+      } else {
+        setTestimonials((prev) => [editingItem, ...prev]);
+      }
+      setIsModalOpen(false);
+      showToast('Testimonial saved to MySQL database!');
+    } else {
+      showToast(`Save failed: ${result.error}`, true);
     }
   };
 
@@ -74,23 +115,6 @@ export const AdminTestimonialsManager: React.FC = () => {
   const handleOpenEditModal = (item: Testimonial) => {
     setEditingItem({ ...item });
     setIsModalOpen(true);
-  };
-
-  const handleSaveModal = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingItem) return;
-
-    const saved = StoreService.saveTestimonial(editingItem);
-    const exists = testimonials.some((t) => t.id === saved.id);
-
-    if (exists) {
-      setTestimonials((prev) => prev.map((t) => (t.id === saved.id ? saved : t)));
-    } else {
-      setTestimonials((prev) => [saved, ...prev]);
-    }
-
-    setIsModalOpen(false);
-    showToast('Testimonial saved successfully!');
   };
 
   return (
@@ -116,8 +140,14 @@ export const AdminTestimonialsManager: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        <div className={`p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
+          toastIsError
+            ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800'
+            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
+        }`}>
+          {toastIsError
+            ? <span className="text-red-600 font-bold">✕</span>
+            : <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           <span>{toastMessage}</span>
         </div>
       )}

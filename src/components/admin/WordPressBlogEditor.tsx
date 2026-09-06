@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BlogPost } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost } from '../../services/apiService';
 import {
   Bold,
   Italic,
@@ -88,6 +89,8 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
   );
 
   const [savedMessage, setSavedMessage] = useState('');
+  const [saveError, setSaveError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // Auto-generate slug from title if empty
   useEffect(() => {
@@ -194,7 +197,8 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
 
   const { score, checks } = calculateScores();
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (isSaving) return;
     if (!title.trim()) {
       alert('Please enter a blog post title.');
       return;
@@ -220,8 +224,8 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
       .map((e) => e.trim())
       .filter(Boolean);
 
-    const saved = StoreService.saveBlogPost({
-      id: initialPost?.id,
+    const blogData = {
+      id: initialPost?.id || `blog-${Date.now()}`,
       title,
       slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       excerpt,
@@ -243,13 +247,23 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
       geoCity,
       geoRegion,
       geoEntities: geoEntitiesArr,
-    });
+    };
 
-    setSavedMessage('Blog post saved successfully!');
-    setTimeout(() => {
-      setSavedMessage('');
-      onSaved();
-    }, 1200);
+    setIsSaving(true);
+    setSaveError('');
+    const result = await apiPost('/api/blogs', blogData);
+    setIsSaving(false);
+
+    if (result.success) {
+      StoreService.saveBlogPost(blogData as any);
+      setSavedMessage('Blog post saved to MySQL database!');
+      setTimeout(() => {
+        setSavedMessage('');
+        onSaved();
+      }, 1200);
+    } else {
+      setSaveError(`Save failed: ${result.error}`);
+    }
   };
 
   const addAeoQuestion = () => {
@@ -286,10 +300,11 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={handleSave}
-            className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs shadow-md transition-colors flex items-center gap-2"
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 disabled:opacity-50 text-white font-medium text-xs shadow-md transition-colors flex items-center gap-2 cursor-pointer"
           >
-            <Save className="w-4 h-4" />
-            <span>Save & Publish</span>
+            <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />
+            <span>{isSaving ? 'Saving to Database...' : 'Save & Publish'}</span>
           </button>
         </div>
       </div>
@@ -298,6 +313,12 @@ export const WordPressBlogEditor: React.FC<WordPressBlogEditorProps> = ({
         <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>{savedMessage}</span>
+        </div>
+      )}
+      {saveError && (
+        <div className="p-3 rounded-xl bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 text-xs font-semibold flex items-center gap-2 border border-red-200 dark:border-red-800">
+          <span className="text-red-600 font-bold">✕</span>
+          <span>{saveError}</span>
         </div>
       )}
 

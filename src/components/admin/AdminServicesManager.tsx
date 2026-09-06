@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PoojaService, Tour } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost, apiDelete } from '../../services/apiService';
 import {
   Flame,
   Compass,
@@ -172,7 +173,9 @@ export const AdminServicesManager: React.FC = () => {
   const [editingTour, setEditingTour] = useState<Tour | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isPooja: boolean) => {
     const file = e.target.files?.[0];
@@ -212,85 +215,104 @@ export const AdminServicesManager: React.FC = () => {
     setTours(StoreService.getTours(false));
   };
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
-  const handleDeletePooja = (id: string, name: string) => {
-    if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
+  const handleDeletePooja = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
+    const result = await apiDelete(`/api/poojas/${id}`);
+    if (result.success) {
       StoreService.deletePooja(id);
       refreshLists();
-      showToast(`Pooja service deleted.`);
+      showToast('Pooja service deleted from database.');
+    } else {
+      showToast(`Delete failed: ${result.error}`, true);
     }
   };
 
-  const handleDeleteTour = (id: string, name: string) => {
-    if (window.confirm(`Are you sure you want to delete tour "${name}"?`)) {
+  const handleDeleteTour = async (id: string, name: string) => {
+    if (!window.confirm(`Are you sure you want to delete tour "${name}"?`)) return;
+    const result = await apiDelete(`/api/tours/${id}`);
+    if (result.success) {
       StoreService.deleteTour(id);
       refreshLists();
-      showToast(`Tour service deleted.`);
+      showToast('Tour service deleted from database.');
+    } else {
+      showToast(`Delete failed: ${result.error}`, true);
     }
   };
 
-  const togglePoojaPublish = (id: string) => {
+  const togglePoojaPublish = async (id: string) => {
     const item = poojas.find((p) => p.id === id);
     if (!item) return;
-    const updated = StoreService.savePooja({ ...item, isPublished: !item.isPublished });
-    setPoojas((prev) => prev.map((p) => (p.id === id ? updated : p)));
-    showToast(`Pooja "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
+    const newPublished = !item.isPublished;
+    const result = await apiPost('/api/poojas', { ...item, isPublished: newPublished });
+    if (result.success) {
+      StoreService.savePooja({ ...item, isPublished: newPublished });
+      setPoojas((prev) => prev.map((p) => (p.id === id ? { ...p, isPublished: newPublished } : p)));
+      showToast(`Pooja "${item.name}" is now ${newPublished ? 'published' : 'hidden/draft'}.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const movePoojaOrder = (id: string, direction: 'up' | 'down') => {
+  const movePoojaOrder = async (id: string, direction: 'up' | 'down') => {
     const newList = [...poojas];
     const index = newList.findIndex((p) => p.id === id);
     if (index === -1) return;
     const targetIdx = direction === 'up' ? index - 1 : index + 1;
     if (targetIdx < 0 || targetIdx >= newList.length) return;
-
-    // Swap items
     const temp = newList[index];
     newList[index] = newList[targetIdx];
     newList[targetIdx] = temp;
-
-    // Reassign sort orders
-    newList.forEach((item, idx) => {
-      item.sortOrder = idx + 1;
-      StoreService.savePooja({ ...item, sortOrder: item.sortOrder });
-    });
-
-    setPoojas(newList);
-    showToast('Pooja sequence rearranged.');
+    const reordered = newList.map((item, idx) => ({ ...item, sortOrder: idx + 1 }));
+    const results = await Promise.all(reordered.map((item) => apiPost('/api/poojas', item)));
+    const anyFailed = results.some((r) => !r.success);
+    if (!anyFailed) {
+      reordered.forEach((item) => StoreService.savePooja({ ...item, sortOrder: item.sortOrder }));
+      setPoojas(reordered);
+      showToast('Pooja sequence rearranged.');
+    } else {
+      showToast('Reorder failed — please try again.', true);
+    }
   };
 
-  const toggleTourPublish = (id: string) => {
+  const toggleTourPublish = async (id: string) => {
     const item = tours.find((t) => t.id === id);
     if (!item) return;
-    const updated = StoreService.saveTour({ ...item, isPublished: !item.isPublished });
-    setTours((prev) => prev.map((t) => (t.id === id ? updated : t)));
-    showToast(`Tour "${item.name}" is now ${updated.isPublished ? 'published' : 'hidden/draft'}.`);
+    const newPublished = !item.isPublished;
+    const result = await apiPost('/api/tours', { ...item, isPublished: newPublished });
+    if (result.success) {
+      StoreService.saveTour({ ...item, isPublished: newPublished });
+      setTours((prev) => prev.map((t) => (t.id === id ? { ...t, isPublished: newPublished } : t)));
+      showToast(`Tour "${item.name}" is now ${newPublished ? 'published' : 'hidden/draft'}.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const moveTourOrder = (id: string, direction: 'up' | 'down') => {
+  const moveTourOrder = async (id: string, direction: 'up' | 'down') => {
     const newList = [...tours];
     const index = newList.findIndex((t) => t.id === id);
     if (index === -1) return;
     const targetIdx = direction === 'up' ? index - 1 : index + 1;
     if (targetIdx < 0 || targetIdx >= newList.length) return;
-
-    // Swap items
     const temp = newList[index];
     newList[index] = newList[targetIdx];
     newList[targetIdx] = temp;
-
-    // Reassign sort orders
-    newList.forEach((item, idx) => {
-      item.sortOrder = idx + 1;
-      StoreService.saveTour({ ...item, sortOrder: item.sortOrder });
-    });
-
-    setTours(newList);
-    showToast('Tour sequence rearranged.');
+    const reordered = newList.map((item, idx) => ({ ...item, sortOrder: idx + 1 }));
+    const results = await Promise.all(reordered.map((item) => apiPost('/api/tours', item)));
+    const anyFailed = results.some((r) => !r.success);
+    if (!anyFailed) {
+      reordered.forEach((item) => StoreService.saveTour({ ...item, sortOrder: item.sortOrder }));
+      setTours(reordered);
+      showToast('Tour sequence rearranged.');
+    } else {
+      showToast('Reorder failed — please try again.', true);
+    }
   };
 
   const openNewPoojaModal = () => {
@@ -363,64 +385,60 @@ export const AdminServicesManager: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const savePoojaService = (p: PoojaService) => {
+  const savePoojaService = async (p: PoojaService) => {
     if (!p.name || !p.name.trim()) {
-      alert('Pooja name is required.');
+      showToast('Pooja name is required.', true);
       return;
     }
+    if (isSaving) return;
     const cleanId = p.id && p.id.trim() ? p.id.trim() : `pooja-${Date.now()}`;
     const cleanName = p.name.trim();
     const fallbackSlug = cleanName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
+      .toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '') || `pooja-${Date.now()}`;
     const cleanSlug = p.slug && p.slug.trim()
       ? p.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
       : fallbackSlug;
+    const payload = { ...p, id: cleanId, name: cleanName, slug: cleanSlug, urlSlug: p.urlSlug || `/pooja/${cleanSlug}`, h1: p.h1 || cleanName };
 
-    const payload = {
-      ...p,
-      id: cleanId,
-      name: cleanName,
-      slug: cleanSlug,
-      urlSlug: p.urlSlug || `/pooja/${cleanSlug}`,
-      h1: p.h1 || cleanName,
-    };
-
-    StoreService.savePooja(payload);
-    refreshLists();
-    setIsModalOpen(false);
-    showToast('Pooja service saved and synced to database successfully!');
+    setIsSaving(true);
+    const result = await apiPost('/api/poojas', payload);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.savePooja(payload);
+      refreshLists();
+      setIsModalOpen(false);
+      showToast('Pooja service saved to MySQL database!');
+    } else {
+      showToast(`Save failed: ${result.error}`, true);
+    }
   };
 
-  const saveTourService = (t: Tour) => {
+  const saveTourService = async (t: Tour) => {
     const cleanName = (t.name || (t as any).title || '').trim();
     if (!cleanName) {
-      alert('Tour name is required.');
+      showToast('Tour name is required.', true);
       return;
     }
+    if (isSaving) return;
     const cleanId = t.id && t.id.trim() ? t.id.trim() : `tour-${Date.now()}`;
     const fallbackSlug = cleanName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]+/g, '-')
-      .replace(/^-|-$/g, '') || `tour-${Date.now()}`;
+      .toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '') || `tour-${Date.now()}`;
     const cleanSlug = t.slug && t.slug.trim()
       ? t.slug.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')
       : fallbackSlug;
+    const payload = { ...t, id: cleanId, name: cleanName, slug: cleanSlug };
 
-    const payload = {
-      ...t,
-      id: cleanId,
-      name: cleanName,
-      slug: cleanSlug,
-    };
-
-    StoreService.saveTour(payload);
-    refreshLists();
-    setIsModalOpen(false);
-    showToast('Tour service saved and synced to database successfully!');
+    setIsSaving(true);
+    const result = await apiPost('/api/tours', payload);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.saveTour(payload);
+      refreshLists();
+      setIsModalOpen(false);
+      showToast('Tour service saved to MySQL database!');
+    } else {
+      showToast(`Save failed: ${result.error}`, true);
+    }
   };
 
   // Audited Poojas & Tours
@@ -502,8 +520,14 @@ export const AdminServicesManager: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        <div className={`p-3 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
+          toastIsError
+            ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800'
+            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
+        }`}>
+          {toastIsError
+            ? <span className="text-red-600 font-bold">✕</span>
+            : <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           <span>{toastMessage}</span>
         </div>
       )}

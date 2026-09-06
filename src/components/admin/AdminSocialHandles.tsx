@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SocialHandle, SiteSettings } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost } from '../../services/apiService';
 import {
   Share2,
   Plus,
@@ -24,33 +25,45 @@ export const AdminSocialHandles: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingHandle, setEditingHandle] = useState<SocialHandle | null>(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const saveHandlesToSettings = (newHandles: SocialHandle[]) => {
+  const showToast = (msg: string, isError = false) => {
+    setToastMessage(msg);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 3500);
+  };
+
+  const saveHandlesToSettings = async (newHandles: SocialHandle[]): Promise<boolean> => {
     const updatedSettings = {
       ...settings,
       socialHandles: newHandles,
     };
-    StoreService.updateSettings(updatedSettings);
-    setSettings(updatedSettings);
-    setHandles(newHandles);
+    setIsSaving(true);
+    const result = await apiPost('/api/settings', updatedSettings);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.updateSettings(updatedSettings);
+      setSettings(updatedSettings);
+      setHandles(newHandles);
+      return true;
+    } else {
+      showToast(`Database write failed: ${result.error}`, true);
+      return false;
+    }
   };
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
-  };
-
-  const handleToggleActive = (id: string) => {
+  const handleToggleActive = async (id: string) => {
     const updated = handles.map((h) => (h.id === id ? { ...h, isActive: !h.isActive } : h));
-    saveHandlesToSettings(updated);
-    showToast('Social handle status updated.');
+    const ok = await saveHandlesToSettings(updated);
+    if (ok) showToast('Social handle status updated.');
   };
 
-  const handleDelete = (id: string, platform: string) => {
+  const handleDelete = async (id: string, platform: string) => {
     if (window.confirm(`Are you sure you want to remove ${platform}?`)) {
       const updated = handles.filter((h) => h.id !== id);
-      saveHandlesToSettings(updated);
-      showToast(`${platform} handle removed.`);
+      const ok = await saveHandlesToSettings(updated);
+      if (ok) showToast(`${platform} handle removed from database.`);
     }
   };
 
@@ -70,9 +83,9 @@ export const AdminSocialHandles: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSaveModal = (e: React.FormEvent) => {
+  const handleSaveModal = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingHandle) return;
+    if (!editingHandle || isSaving) return;
 
     const existingIdx = handles.findIndex((h) => h.id === editingHandle.id);
     let updated: SocialHandle[];
@@ -84,9 +97,11 @@ export const AdminSocialHandles: React.FC = () => {
       updated = [editingHandle, ...handles];
     }
 
-    saveHandlesToSettings(updated);
-    setIsModalOpen(false);
-    showToast('Social handle saved successfully!');
+    const ok = await saveHandlesToSettings(updated);
+    if (ok) {
+      setIsModalOpen(false);
+      showToast('Social handle saved to MySQL database!');
+    }
   };
 
   const getPlatformColor = (platform: string) => {
@@ -133,8 +148,12 @@ export const AdminSocialHandles: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        <div className={`p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
+          toastIsError
+            ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800'
+            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
+        }`}>
+          {toastIsError ? <span className="text-red-600 font-bold">✕</span> : <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           <span>{toastMessage}</span>
         </div>
       )}

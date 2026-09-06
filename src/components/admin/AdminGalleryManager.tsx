@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GalleryItem } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost, apiDelete } from '../../services/apiService';
 import {
   Image as ImageIcon,
   Plus,
@@ -19,7 +20,9 @@ export const AdminGalleryManager: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   React.useEffect(() => {
     const handleSync = () => setGallery(StoreService.getGallery());
@@ -27,9 +30,10 @@ export const AdminGalleryManager: React.FC = () => {
     return () => window.removeEventListener('aastha:data-synced', handleSync);
   }, []);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,19 +64,29 @@ export const AdminGalleryManager: React.FC = () => {
     }
   };
 
-  const handleTogglePublish = (id: string) => {
+  const handleTogglePublish = async (id: string) => {
     const item = gallery.find((g) => g.id === id);
     if (!item) return;
-    const updated = StoreService.saveGalleryItem({ id, isPublished: !item.isPublished });
-    setGallery((prev) => prev.map((g) => (g.id === id ? updated : g)));
-    showToast(`Gallery item ${updated.isPublished ? 'published' : 'unpublished'} successfully.`);
+    const newPublished = !item.isPublished;
+    const result = await apiPost('/api/gallery', { ...item, isPublished: newPublished });
+    if (result.success) {
+      StoreService.saveGalleryItem({ id, isPublished: newPublished });
+      setGallery((prev) => prev.map((g) => (g.id === id ? { ...g, isPublished: newPublished } : g)));
+      showToast(`Gallery item ${newPublished ? 'published' : 'unpublished'} successfully.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete the gallery photo "${title}"?`)) {
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to delete the gallery photo "${title}"?`)) return;
+    const result = await apiDelete(`/api/gallery/${id}`);
+    if (result.success) {
       StoreService.deleteGalleryItem(id);
       setGallery((prev) => prev.filter((g) => g.id !== id));
       showToast('Gallery photo deleted successfully.');
+    } else {
+      showToast(`Delete failed: ${result.error}`, true);
     }
   };
 
@@ -97,41 +111,46 @@ export const AdminGalleryManager: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSaveModal = (e: React.FormEvent) => {
+  const handleSaveModal = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingItem) return;
+    if (!editingItem || isSaving) return;
 
-    const saved = StoreService.saveGalleryItem(editingItem);
-    const exists = gallery.some((g) => g.id === saved.id);
+    setIsSaving(true);
+    const result = await apiPost('/api/gallery', editingItem);
+    setIsSaving(false);
 
-    if (exists) {
-      setGallery((prev) => prev.map((g) => (g.id === saved.id ? saved : g)));
+    if (result.success) {
+      StoreService.saveGalleryItem(editingItem);
+      const exists = gallery.some((g) => g.id === editingItem.id);
+      if (exists) {
+        setGallery((prev) => prev.map((g) => (g.id === editingItem.id ? editingItem : g)));
+      } else {
+        setGallery((prev) => [editingItem, ...prev]);
+      }
+      setIsModalOpen(false);
+      showToast('Gallery item saved to MySQL database!');
     } else {
-      setGallery((prev) => [saved, ...prev]);
+      showToast(`Save failed: ${result.error}`, true);
     }
-
-    setIsModalOpen(false);
-    showToast('Gallery item saved successfully!');
   };
 
-  const moveOrder = (index: number, direction: 'up' | 'down') => {
+  const moveOrder = async (index: number, direction: 'up' | 'down') => {
     const newList = [...gallery];
     const targetIdx = direction === 'up' ? index - 1 : index + 1;
     if (targetIdx < 0 || targetIdx >= newList.length) return;
-
-    // Swap items
     const temp = newList[index];
     newList[index] = newList[targetIdx];
     newList[targetIdx] = temp;
-
-    // Reassign sort orders
-    newList.forEach((item, idx) => {
-      item.sortOrder = idx + 1;
-      StoreService.saveGalleryItem({ id: item.id, sortOrder: item.sortOrder });
-    });
-
-    setGallery(newList);
-    showToast('Display order rearranged.');
+    const reordered = newList.map((item, idx) => ({ ...item, sortOrder: idx + 1 }));
+    const results = await Promise.all(reordered.map((item) => apiPost('/api/gallery', item)));
+    const anyFailed = results.some((r) => !r.success);
+    if (!anyFailed) {
+      reordered.forEach((item) => StoreService.saveGalleryItem({ id: item.id, sortOrder: item.sortOrder }));
+      setGallery(reordered);
+      showToast('Display order rearranged.');
+    } else {
+      showToast('Reorder failed — please try again.', true);
+    }
   };
 
   return (
@@ -157,8 +176,14 @@ export const AdminGalleryManager: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        <div className={`p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
+          toastIsError
+            ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800'
+            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
+        }`}>
+          {toastIsError
+            ? <span className="text-red-600">✕</span>
+            : <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           <span>{toastMessage}</span>
         </div>
       )}
@@ -413,9 +438,10 @@ export const AdminGalleryManager: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold shadow-md transition-all"
+                  disabled={isSaving}
+                  className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold shadow-md transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Save Photo
+                  {isSaving ? 'Saving...' : 'Save Photo'}
                 </button>
               </div>
             </form>

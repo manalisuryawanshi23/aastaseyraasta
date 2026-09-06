@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BlogPost } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiDelete } from '../../services/apiService';
 import { WordPressBlogEditor } from './WordPressBlogEditor';
 import {
   FileText,
@@ -23,21 +24,27 @@ export const AdminBlogManager: React.FC = () => {
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
 
   const refreshList = () => {
     setBlogs(StoreService.getBlogPosts(false));
   };
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
-  const handleDelete = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete blog post "${title}"?`)) {
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Are you sure you want to delete blog post "${title}"?`)) return;
+    const result = await apiDelete(`/api/blogs/${id}`);
+    if (result.success) {
       StoreService.deleteBlogPost(id);
       refreshList();
-      showToast('Blog post deleted.');
+      showToast('Blog post deleted from database.');
+    } else {
+      showToast(`Delete failed: ${result.error}`, true);
     }
   };
 
@@ -95,8 +102,14 @@ export const AdminBlogManager: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        <div className={`p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
+          toastIsError
+            ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 border-red-200 dark:border-red-800'
+            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 border-emerald-200 dark:border-emerald-800'
+        }`}>
+          {toastIsError
+            ? <span className="text-red-600 font-bold">✕</span>
+            : <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
           <span>{toastMessage}</span>
         </div>
       )}

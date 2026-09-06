@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrandColorPalette, SiteSettings } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost } from '../../services/apiService';
 import {
   DEFAULT_BRAND_PALETTE,
   BRAND_PRESETS,
@@ -27,6 +28,8 @@ export const AdminBrandColorPicker: React.FC = () => {
     settings.brandPalette || DEFAULT_BRAND_PALETTE
   );
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'Presets' | 'CustomPicker'>('Presets');
 
   // Sync state with DOM CSS custom properties when palette changes in local state
@@ -52,15 +55,25 @@ export const AdminBrandColorPicker: React.FC = () => {
     applyBrandColorPalette(DEFAULT_BRAND_PALETTE);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (isSaving) return;
     const updatedSettings: SiteSettings = {
       ...settings,
       brandPalette: palette,
     };
-    StoreService.updateSettings(updatedSettings);
-    setSettings(updatedSettings);
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+    setIsSaving(true);
+    setSaveError('');
+    const result = await apiPost('/api/settings', updatedSettings);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.updateSettings(updatedSettings);
+      setSettings(updatedSettings);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 3500);
+    } else {
+      setSaveError(`Database save failed: ${result.error}`);
+      setTimeout(() => setSaveError(''), 4500);
+    }
   };
 
   const colorFields: {
@@ -143,10 +156,11 @@ export const AdminBrandColorPicker: React.FC = () => {
 
           <button
             onClick={handleSave}
-            className="py-2.5 px-6 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium text-xs shadow-md transition-colors flex items-center gap-2"
+            disabled={isSaving}
+            className="py-2.5 px-6 rounded-xl bg-amber-700 hover:bg-amber-800 disabled:opacity-50 text-white font-medium text-xs shadow-md transition-colors flex items-center gap-2 cursor-pointer"
           >
-            <Save className="w-4 h-4" />
-            <span>Save Color Palette</span>
+            <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />
+            <span>{isSaving ? 'Saving to Database...' : 'Save Color Palette'}</span>
           </button>
         </div>
       </div>
@@ -155,11 +169,17 @@ export const AdminBrandColorPicker: React.FC = () => {
         <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-3 border border-emerald-200 dark:border-emerald-800 animate-fadeIn">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <div>
-            <div className="font-bold">Global Brand Color Palette Saved Successfully!</div>
+            <div className="font-bold">Global Brand Color Palette Saved to MySQL Database!</div>
             <div className="text-[11px] font-normal opacity-90">
               All buttons, badges, navigation headers, and banner accents across the entire website have been updated.
             </div>
           </div>
+        </div>
+      )}
+      {saveError && (
+        <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/80 text-red-800 dark:text-red-200 text-xs font-semibold flex items-center gap-3 border border-red-200 dark:border-red-800 animate-fadeIn">
+          <span className="text-red-600 font-bold">✕</span>
+          <div className="font-bold">{saveError}</div>
         </div>
       )}
 

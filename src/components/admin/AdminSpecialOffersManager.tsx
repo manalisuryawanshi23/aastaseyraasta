@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StoreService } from '../../services/store';
 import { SiteSettings } from '../../types';
+import { apiPost } from '../../services/apiService';
 import { SpecialOfferMarquee } from '../SpecialOfferMarquee';
 import {
   Megaphone,
@@ -22,6 +23,7 @@ export const AdminSpecialOffersManager: React.FC = () => {
     StoreService.getSettings()
   );
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
@@ -32,21 +34,24 @@ export const AdminSpecialOffersManager: React.FC = () => {
     return () => window.removeEventListener('aastha:data-synced', handleSync);
   }, []);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3500);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 3500);
   };
 
   const handleSave = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    if (isSaving) return;
     setIsSaving(true);
-    try {
-      StoreService.updateSettings(settings);
-      showToast('Special Offer Marquee settings updated and published successfully!');
-    } catch (err) {
-      alert('Failed to save settings: ' + String(err));
-    }
+    const result = await apiPost('/api/settings', settings);
     setIsSaving(false);
+    if (result.success) {
+      StoreService.updateSettings(settings);
+      showToast('Special Offer Marquee saved to MySQL database and published!');
+    } else {
+      showToast(`Failed to save: ${result.error}`, true);
+    }
   };
 
   const banner = settings.announcementBanner || {
@@ -76,8 +81,16 @@ export const AdminSpecialOffersManager: React.FC = () => {
     <div className="bg-white dark:bg-[#1C1917] p-6 sm:p-8 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-8">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-amber-500/40 flex items-center gap-3 animate-fade-in text-sm font-semibold">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+        <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl shadow-2xl border flex items-center gap-3 animate-fade-in text-sm font-semibold backdrop-blur-md ${
+          toastIsError
+            ? 'bg-red-950 text-red-100 border-red-500'
+            : 'bg-stone-900 text-white border-amber-500/40'
+        }`}>
+          {toastIsError ? (
+            <span className="text-red-400 font-bold">✕</span>
+          ) : (
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+          )}
           <span>{toastMessage}</span>
         </div>
       )}

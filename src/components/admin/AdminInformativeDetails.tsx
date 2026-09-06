@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SiteSettings } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost } from '../../services/apiService';
 import { AdminBrandColorPicker } from './AdminBrandColorPicker';
 import { SpecialOfferMarquee } from '../SpecialOfferMarquee';
 import { initialSiteSettings } from '../../data/initialData';
@@ -26,32 +27,52 @@ import {
 export const AdminInformativeDetails: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings>(StoreService.getSettings());
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    StoreService.updateSettings(settings);
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+  const handleSave = async () => {
+    if (isSaving) return;
+    setIsSaving(true);
+    setSaveError('');
+    const result = await apiPost('/api/settings', settings);
+    setIsSaving(false);
+    if (result.success) {
+      StoreService.updateSettings(settings);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 3000);
+    } else {
+      setSaveError(`Save failed: ${result.error}`);
+      setTimeout(() => setSaveError(''), 4000);
+    }
   };
 
-  const handleResetToDefault = () => {
-    if (window.confirm('Reset contact numbers and address to default temple settings?')) {
-      const reset = {
-        ...settings,
-        phone1: initialSiteSettings.phone1,
-        phone2: initialSiteSettings.phone2,
-        whatsappNumber: initialSiteSettings.whatsappNumber,
-        emergencyHelpline: initialSiteSettings.emergencyHelpline,
-        email: initialSiteSettings.email,
-        address: initialSiteSettings.address,
-        city: initialSiteSettings.city,
-        state: initialSiteSettings.state,
-        pincode: initialSiteSettings.pincode,
-        businessHours: initialSiteSettings.businessHours,
-      };
-      setSettings(reset);
+  const handleResetToDefault = async () => {
+    if (!window.confirm('Reset contact numbers and address to default temple settings?')) return;
+    const reset = {
+      ...settings,
+      phone1: initialSiteSettings.phone1,
+      phone2: initialSiteSettings.phone2,
+      whatsappNumber: initialSiteSettings.whatsappNumber,
+      emergencyHelpline: initialSiteSettings.emergencyHelpline,
+      email: initialSiteSettings.email,
+      address: initialSiteSettings.address,
+      city: initialSiteSettings.city,
+      state: initialSiteSettings.state,
+      pincode: initialSiteSettings.pincode,
+      businessHours: initialSiteSettings.businessHours,
+    };
+    setSettings(reset);
+    setIsSaving(true);
+    setSaveError('');
+    const result = await apiPost('/api/settings', reset);
+    setIsSaving(false);
+    if (result.success) {
       StoreService.updateSettings(reset);
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 3000);
+    } else {
+      setSaveError(`Reset failed: ${result.error}`);
+      setTimeout(() => setSaveError(''), 4000);
     }
   };
 
@@ -92,7 +113,13 @@ export const AdminInformativeDetails: React.FC = () => {
       {savedSuccess && (
         <div className="p-3.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 text-xs font-semibold flex items-center gap-2 border border-emerald-200 dark:border-emerald-800 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-          <span>Contact details and site configuration successfully updated and saved to MySQL database!</span>
+          <span>Contact details and site configuration saved to MySQL database!</span>
+        </div>
+      )}
+      {saveError && (
+        <div className="p-3.5 rounded-xl bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-200 text-xs font-semibold flex items-center gap-2 border border-red-200 dark:border-red-800">
+          <span className="text-red-600 font-bold">✕</span>
+          <span>{saveError}</span>
         </div>
       )}
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StaffUser, AdminRole, AdminPermission } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost, apiDelete } from '../../services/apiService';
 import {
   ShieldCheck,
   UserPlus,
@@ -42,8 +43,10 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<StaffUser | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [validationError, setValidationError] = useState('');
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
 
   // Delete Confirmation State
   const [staffToDelete, setStaffToDelete] = useState<StaffUser | null>(null);
@@ -70,9 +73,10 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     canManageAstrologyConsultations: true,
   });
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 4000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
   const refreshList = () => {
@@ -182,7 +186,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
 
     setIsSaving(true);
     try {
-      StoreService.saveStaffUser({
+      const payload = {
         id: editingStaff?.id,
         name: cleanName,
         email: cleanEmail,
@@ -191,11 +195,17 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         passcode: cleanPasscode,
         status,
         permissions,
-      });
+      };
 
-      setIsModalOpen(false);
-      refreshList();
-      showToast(editingStaff ? `Staff permissions for "${cleanName}" updated and synced to database!` : `New staff member "${cleanName}" added and synced to database!`);
+      const result = await apiPost('/api/admin/users', payload);
+      if (result.success) {
+        StoreService.saveStaffUser(payload);
+        setIsModalOpen(false);
+        refreshList();
+        showToast(editingStaff ? `Staff permissions for "${cleanName}" updated and saved to database!` : `New staff member "${cleanName}" added and saved to database!`);
+      } else {
+        setValidationError(result.error || 'Failed to save staff user to database.');
+      }
     } catch (err: any) {
       setValidationError(err.message || 'Failed to save staff user. Please try again.');
     } finally {
@@ -211,20 +221,34 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     setStaffToDelete(staff);
   };
 
-  const confirmDeleteStaff = () => {
-    if (!staffToDelete) return;
+  const confirmDeleteStaff = async () => {
+    if (!staffToDelete || isDeleting) return;
+    setIsDeleting(true);
     const nameDeleted = staffToDelete.name;
-    StoreService.deleteStaffUser(staffToDelete.id);
-    setStaffToDelete(null);
-    refreshList();
-    showToast(`Staff member "${nameDeleted}" revoked and deleted from database.`);
+    const result = await apiDelete(`/api/admin/users/${staffToDelete.id}`);
+    setIsDeleting(false);
+    if (result.success) {
+      StoreService.deleteStaffUser(staffToDelete.id);
+      setStaffToDelete(null);
+      refreshList();
+      showToast(`Staff member "${nameDeleted}" revoked and deleted from database.`);
+    } else {
+      setStaffToDelete(null);
+      showToast(`Failed to delete staff member: ${result.error}`, true);
+    }
   };
 
-  const toggleStatus = (staff: StaffUser) => {
+  const toggleStatus = async (staff: StaffUser) => {
     const newStatus = staff.status === 'Active' ? 'Inactive' : 'Active';
-    StoreService.saveStaffUser({ id: staff.id, status: newStatus });
-    refreshList();
-    showToast(`Staff member "${staff.name}" status changed to ${newStatus}.`);
+    const updated = { ...staff, status: newStatus };
+    const result = await apiPost('/api/admin/users', updated);
+    if (result.success) {
+      StoreService.saveStaffUser({ id: staff.id, status: newStatus });
+      refreshList();
+      showToast(`Staff member "${staff.name}" status changed to ${newStatus}.`);
+    } else {
+      showToast(`Failed to update status: ${result.error}`, true);
+    }
   };
 
   const togglePasscodeVisibility = (id: string) => {
@@ -268,8 +292,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-emerald-600 text-white font-bold text-xs shadow-2xl flex items-center gap-2 border border-emerald-400/40 animate-bounce">
-          <CheckCircle2 className="w-5 h-5 text-white" />
+        <div className={`fixed bottom-6 right-6 z-50 p-4 rounded-2xl font-bold text-xs shadow-2xl flex items-center gap-2 border animate-bounce ${
+          toastIsError
+            ? 'bg-red-900 text-white border-red-500/50'
+            : 'bg-emerald-600 text-white border-emerald-400/40'
+        }`}>
+          {toastIsError ? <AlertCircle className="w-5 h-5 text-white" /> : <CheckCircle2 className="w-5 h-5 text-white" />}
           <span>{toastMessage}</span>
         </div>
       )}

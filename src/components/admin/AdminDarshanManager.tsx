@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DarshanItem } from '../../types';
 import { StoreService } from '../../services/store';
+import { apiPost, apiDelete } from '../../services/apiService';
 import {
   Sparkles,
   Plus,
@@ -28,7 +29,10 @@ export const AdminDarshanManager: React.FC = () => {
   const [editingItem, setEditingItem] = useState<DarshanItem | null>(null);
   const [deletingItem, setDeletingItem] = useState<DarshanItem | null>(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastIsError, setToastIsError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [filterLocation, setFilterLocation] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -44,9 +48,10 @@ export const AdminDarshanManager: React.FC = () => {
     };
   }, []);
 
-  const showToast = (msg: string) => {
+  const showToast = (msg: string, isError = false) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3000);
+    setToastIsError(isError);
+    setTimeout(() => { setToastMessage(''); setToastIsError(false); }, 4000);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,24 +82,41 @@ export const AdminDarshanManager: React.FC = () => {
     }
   };
 
-  const handleTogglePublish = (id: string) => {
+  const handleTogglePublish = async (id: string) => {
     const item = darshanList.find((d) => d.id === id);
     if (!item) return;
-    const updated = StoreService.saveDarshanItem({ id, isPublished: !item.isPublished });
-    setDarshanList(StoreService.getDarshanItems());
-    showToast(`Darshan card ${updated.isPublished ? 'published' : 'hidden'} on live website.`);
+    const newPublished = !item.isPublished;
+    const result = await apiPost('/api/darshan', { ...item, isPublished: newPublished });
+    if (result.success) {
+      // Update localStorage cache after confirmed DB write
+      StoreService.saveDarshanItem({ id, isPublished: newPublished });
+      setDarshanList(StoreService.getDarshanItems());
+      showToast(`Darshan card ${newPublished ? 'published' : 'hidden'} on live website.`);
+    } else {
+      showToast(`Failed to update: ${result.error}`, true);
+    }
   };
 
-  const confirmDelete = () => {
-    if (!deletingItem) return;
+  const confirmDelete = async () => {
+    if (!deletingItem || isDeleting) return;
+    setIsDeleting(true);
     const title = deletingItem.title;
-    StoreService.deleteDarshanItem(deletingItem.id);
-    setDarshanList(StoreService.getDarshanItems());
-    setDeletingItem(null);
-    showToast(`"${title}" deleted permanently from database.`);
+    const id = deletingItem.id;
+    const result = await apiDelete(`/api/darshan/${id}`);
+    setIsDeleting(false);
+    if (result.success) {
+      // Remove from localStorage cache after confirmed DB delete
+      StoreService.deleteDarshanItem(id);
+      setDarshanList(StoreService.getDarshanItems());
+      setDeletingItem(null);
+      showToast(`"${title}" deleted permanently from database.`);
+    } else {
+      setDeletingItem(null);
+      showToast(`Delete failed: ${result.error}`, true);
+    }
   };
 
-  const handleMoveOrder = (index: number, direction: 'up' | 'down') => {
+  const handleMoveOrder = async (index: number, direction: 'up' | 'down') => {
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= darshanList.length) return;
 
@@ -103,9 +125,21 @@ export const AdminDarshanManager: React.FC = () => {
     newOrder[index] = newOrder[targetIndex];
     newOrder[targetIndex] = temp;
 
-    StoreService.reorderDarshanItems(newOrder);
-    setDarshanList(newOrder);
-    showToast('Darshan sequence updated.');
+    // Assign sort orders
+    const reordered = newOrder.map((item, idx) => ({ ...item, sortOrder: idx + 1 }));
+
+    // Post all reorders to API concurrently
+    const results = await Promise.all(
+      reordered.map((item) => apiPost('/api/darshan', item))
+    );
+    const anyFailed = results.some((r) => !r.success);
+    if (!anyFailed) {
+      StoreService.reorderDarshanItems(reordered);
+      setDarshanList(reordered);
+      showToast('Darshan sequence updated.');
+    } else {
+      showToast('Reorder failed — please try again.', true);
+    }
   };
 
   const handleOpenAddModal = () => {
@@ -130,23 +164,32 @@ export const AdminDarshanManager: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleSaveModal = (e: React.FormEvent) => {
+  const handleSaveModal = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingItem) return;
+    if (!editingItem || isSaving) return;
     if (!editingItem.title.trim()) {
-      alert('Please enter a Darshan temple title.');
+      showToast('Please enter a Darshan temple title.', true);
       return;
     }
     if (!editingItem.image.trim()) {
-      alert('Please provide or upload a Darshan image.');
+      showToast('Please provide or upload a Darshan image.', true);
       return;
     }
 
-    const saved = StoreService.saveDarshanItem(editingItem);
-    setDarshanList(StoreService.getDarshanItems());
-    setIsModalOpen(false);
-    setEditingItem(null);
-    showToast(`Darshan "${saved.title}" saved directly to MySQL database!`);
+    setIsSaving(true);
+    const result = await apiPost('/api/darshan', editingItem);
+    setIsSaving(false);
+
+    if (result.success) {
+      // Update localStorage cache only after confirmed DB write
+      StoreService.saveDarshanItem(editingItem);
+      setDarshanList(StoreService.getDarshanItems());
+      setIsModalOpen(false);
+      setEditingItem(null);
+      showToast(`Darshan "${editingItem.title}" saved to MySQL database!`);
+    } else {
+      showToast(`Save failed: ${result.error}`, true);
+    }
   };
 
   const locations = ['All', ...Array.from(new Set(darshanList.map((d) => d.location || 'Ujjain')))];
@@ -167,8 +210,14 @@ export const AdminDarshanManager: React.FC = () => {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-stone-900/95 dark:bg-stone-100 text-amber-300 dark:text-amber-950 font-bold text-xs shadow-2xl flex items-center gap-2.5 border border-amber-500/30 backdrop-blur-md animate-bounce">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600" />
+        <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl font-bold text-xs shadow-2xl flex items-center gap-2.5 backdrop-blur-md animate-bounce border ${
+          toastIsError
+            ? 'bg-red-900/95 text-red-200 border-red-500/50'
+            : 'bg-stone-900/95 dark:bg-stone-100 text-amber-300 dark:text-amber-950 border-amber-500/30'
+        }`}>
+          {toastIsError
+            ? <AlertCircle className="w-4 h-4 text-red-400" />
+            : <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600" />}
           <span>{toastMessage}</span>
         </div>
       )}
@@ -583,10 +632,11 @@ export const AdminDarshanManager: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                  disabled={isSaving}
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <CheckCircle2 className="w-4 h-4 text-amber-200" />
-                  <span>Save to Database</span>
+                  <span>{isSaving ? 'Saving to Database...' : 'Save to Database'}</span>
                 </button>
               </div>
             </form>
@@ -654,10 +704,11 @@ export const AdminDarshanManager: React.FC = () => {
                 <button
                   type="button"
                   onClick={confirmDelete}
-                  className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  disabled={isDeleting}
+                  className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                  <span>Yes, Delete</span>
+                  <span>{isDeleting ? 'Deleting...' : 'Yes, Delete'}</span>
                 </button>
               </div>
             </div>
