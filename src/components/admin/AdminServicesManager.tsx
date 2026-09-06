@@ -181,12 +181,6 @@ export const AdminServicesManager: React.FC = () => {
     setIsUploading(true);
     const formData = new FormData();
     
-    // Append the existing URL FIRST so multer can access it before processing the file
-    const existingUrl = isPooja ? editingPooja?.featuredImage : editingTour?.featuredImage;
-    if (existingUrl) {
-      formData.append('existingImageUrl', existingUrl);
-    }
-    
     formData.append('image', file);
 
     try {

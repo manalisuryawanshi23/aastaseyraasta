@@ -8229,10 +8229,6 @@ var storage = import_multer.default.diskStorage({
     cb(null, uploadDir);
   },
   filename: function(req, file, cb) {
-    if (req.body.existingImageUrl) {
-      const oldFilename = import_path2.default.basename(req.body.existingImageUrl);
-      return cb(null, oldFilename);
-    }
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = import_path2.default.extname(file.originalname);
     cb(null, file.fieldname + "-" + uniqueSuffix + ext);
