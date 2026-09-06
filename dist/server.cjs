@@ -6688,19 +6688,6 @@ var initialDarshanItems = [
     createdAt: "2026-08-01T04:00:00Z"
   },
   {
-    id: "darshan-2",
-    title: "Omkareshwar Jyotirlinga Darshan",
-    hindiTitle: "\u0936\u094D\u0930\u0940 \u0913\u0902\u0915\u093E\u0930\u0947\u0936\u094D\u0935\u0930 \u091C\u094D\u092F\u094B\u0924\u093F\u0930\u094D\u0932\u093F\u0902\u0917 \u0926\u0930\u094D\u0936\u0928",
-    subtitle: "Mandhata Island & Narmada Darshan",
-    image: "/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
-    altText: "Omkareshwar Jyotirlinga Darshan",
-    location: "Omkareshwar",
-    templeTiming: "5:00 AM \u2013 9:30 PM",
-    sortOrder: 2,
-    isPublished: true,
-    createdAt: "2026-08-01T04:00:00Z"
-  },
-  {
     id: "darshan-3",
     title: "Harsiddhi Shaktipeeth Darshan",
     hindiTitle: "\u092E\u093E\u0901 \u0939\u0930\u0938\u093F\u0926\u094D\u0927\u093F \u0936\u0915\u094D\u0924\u093F\u092A\u0940\u0920 \u0926\u0930\u094D\u0936\u0928",
@@ -7406,6 +7393,10 @@ async function autoInitializeDatabase() {
     }
     result.schemaCreated = true;
     console.log("[AUTO-DB] Database schema verified/created.");
+    if (process.env.DISABLE_AUTO_SEED === "true" || process.env.AUTO_SEED === "false" || process.env.SKIP_DB_SEED === "true") {
+      console.log("[AUTO-DB] Auto-seeding is explicitly disabled via environment variable (DISABLE_AUTO_SEED/AUTO_SEED/SKIP_DB_SEED). Schema verified; leaving all production database records untouched.");
+      return result;
+    }
     if (result.connected) {
       try {
         const toursColumns = await query("SHOW COLUMNS FROM tours");
@@ -7436,8 +7427,6 @@ async function autoInitializeDatabase() {
           console.log("[AUTO-DB] tours table is missing columns. Running ALTER migrations...", toursAlters);
           await execute(`ALTER TABLE tours ${toursAlters.join(", ")}`);
           console.log("[AUTO-DB] tours table schema successfully updated!");
-          await execute("DELETE FROM tours");
-          console.log("[AUTO-DB] Cleared old tours to trigger re-seeding with updated columns.");
         }
         const poojasColumns = await query("SHOW COLUMNS FROM poojas");
         const poojasColNames = poojasColumns.map((col) => col.Field);
@@ -7661,81 +7650,7 @@ async function autoInitializeDatabase() {
         result.seeded.tours++;
       }
     } else {
-      for (let idx = 0; idx < initialTours.length; idx++) {
-        const t = initialTours[idx];
-        const existing = await query("SELECT id FROM tours WHERE id = ?", [t.id]);
-        if (!existing || existing.length === 0) {
-          console.log(`[AUTO-DB] Inserting missing tour: ${t.id} (${t.name || t.title})...`);
-          await execute(
-            `INSERT INTO tours (
-              id, title, hindi_title, slug, duration, hindi_duration, price, original_price,
-              badge, hindi_badge, image, gallery_images_json, pickup_location, hindi_pickup_location,
-              drop_location, hindi_drop_location, vehicle_options_json, overview, hindi_overview,
-              itinerary_json, key_highlights_json, hindi_key_highlights_json, inclusions_json,
-              hindi_inclusions_json, exclusions_json, hindi_exclusions_json, faqs_json,
-              is_popular, is_published, meta_title, meta_description,
-              quick_answer, why_choose_json, what_we_offer_json, how_to_reach, travel_tips_json,
-              category, focus_keyword, secondary_keywords_json, canonical_url,
-              og_title, og_description, og_image,
-              destinations_json, places_covered_json, temples_covered_json,
-              hindi_destinations_json, hindi_places_covered_json, hindi_temples_covered_json, sort_order
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [
-              t.id,
-              t.name || t.title || "",
-              t.hindiName || t.hindiTitle || "",
-              t.slug,
-              t.duration || "",
-              t.hindiDuration || "",
-              t.price || 0,
-              t.originalPrice || null,
-              t.badge || "",
-              t.hindiBadge || "",
-              t.featuredImage || t.image || "",
-              JSON.stringify(t.gallery || t.galleryImages || []),
-              t.pickupLocation || t.startingPoint || "",
-              t.hindiPickupLocation || t.hindiStartingPoint || "",
-              t.dropLocation || t.endingPoint || "",
-              t.hindiDropLocation || t.hindiEndingPoint || "",
-              JSON.stringify(t.vehicleOptions || []),
-              t.description || t.overview || "",
-              t.hindiDescription || t.hindiOverview || "",
-              JSON.stringify(t.itinerary || []),
-              JSON.stringify(t.keyHighlights || []),
-              JSON.stringify(t.hindiKeyHighlights || []),
-              JSON.stringify(t.included || t.inclusions || []),
-              JSON.stringify(t.hindiIncluded || t.hindiInclusions || []),
-              JSON.stringify(t.excluded || t.exclusions || []),
-              JSON.stringify(t.hindiExcluded || t.hindiExclusions || []),
-              JSON.stringify(t.faqs || []),
-              t.isFeatured ? 1 : 0,
-              t.isPublished !== false ? 1 : 0,
-              t.seoTitle || t.metaTitle || "",
-              t.metaDescription || "",
-              t.quickAnswer || "",
-              JSON.stringify(t.whyChoose || []),
-              JSON.stringify(t.whatWeOffer || []),
-              t.howToReach || "",
-              JSON.stringify(t.travelTips || []),
-              t.category || "",
-              t.focusKeyword || "",
-              JSON.stringify(t.secondaryKeywords || []),
-              t.canonicalUrl || "",
-              t.ogTitle || "",
-              t.ogDescription || "",
-              t.ogImage || "",
-              JSON.stringify(t.destinations || []),
-              JSON.stringify(t.placesCovered || []),
-              JSON.stringify(t.templesCovered || []),
-              JSON.stringify(t.hindiDestinations || []),
-              JSON.stringify(t.hindiPlacesCovered || []),
-              JSON.stringify(t.hindiTemplesCovered || []),
-              idx + 1
-            ]
-          );
-          result.seeded.tours = (result.seeded.tours || 0) + 1;
-        }
-      }
+      console.log(`[AUTO-DB] tours table already contains ${toursCount[0].count} records. Preserving all admin changes and deletions.`);
     }
     const destCount = await query("SELECT COUNT(*) as count FROM destinations");
     if (destCount[0].count === 0) {
@@ -7934,266 +7849,13 @@ async function autoInitializeDatabase() {
         result.seeded.testimonials = (result.seeded.testimonials || 0) + 1;
       }
     }
-    console.log("[AUTO-DB] Migrating Sapt Sagar water body names in database...");
-    await execute(
-      `UPDATE tours 
-       SET overview = REPLACE(overview, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar'),
-           quick_answer = REPLACE(quick_answer, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar'),
-           places_covered_json = REPLACE(REPLACE(places_covered_json, '"Kaushalya Sagar"', '"Purushottam Sagar"'), '"Som Sagar"', '"Ratnakar Sagar"'),
-           itinerary_json = REPLACE(REPLACE(itinerary_json, 'Kaushalya, Som', 'Purushottam, Ratnakar'), 'Kaushalya, Som', 'Purushottam, Ratnakar'),
-           faqs_json = REPLACE(faqs_json, 'Kaushalya Sagar, Som Sagar', 'Purushottam Sagar, Ratnakar Sagar')
-       WHERE id = 'tour-sapt-sagar'`
-    );
-    console.log("[AUTO-DB] Migrating 84 Mahadev Yatra itinerary and destinations in database...");
-    const updatedItinerary = [
-      {
-        dayNumber: 1,
-        title: "Sacred Sankalp & Initial Shrines (Temples 1-21)",
-        description: "Perform initial gotra sankalp and begin the parikrama from Agastyeshwar, followed by the first 21 Shiva shrines."
-      },
-      {
-        dayNumber: 2,
-        title: "Historical Quarter Shrines (Temples 22-42)",
-        description: "Continue the parikrama visiting temples 22 to 42 situated within the historic core of Ujjain."
-      },
-      {
-        dayNumber: 3,
-        title: "Rural & Outer Border Shrines (Temples 43-63)",
-        description: "Travel to the peaceful outer boundary locations to visit Shiva temples 43 to 63."
-      },
-      {
-        dayNumber: 4,
-        title: "Parikrama Conclusion & Rudrabhishek (Temples 64-84)",
-        description: "Visit the final temples 64 to 84, followed by a concluding Abhishek Pooja at Mahakaleshwar temple."
-      }
-    ];
-    const updatedDestinations = ["Mahakaleshwar", "Ujjain 84 Shrines"];
-    const updatedPlacesCovered = ["84 Mahadev Temples", "Ramghat", "Harsiddhi", "Mahakaleshwar Jyotirlinga"];
-    const updatedWhyChoose = [
-      "Covers the full traditional 84 Mahadev parikrama circuit in Ujjain.",
-      "Complete puja samagri and Pandit coordination included.",
-      "Private transport to navigate through diverse temple locations.",
-      "Conclude with sacred Mahakaleshwar Jyotirlinga Darshan."
-    ];
-    const updatedTravelTips = [
-      "The full parikrama is usually done comfortably over 3 to 4 days.",
-      "Maintain a list of the 84 temples to track your visits.",
-      "Offer Bilva leaves and water to the Shivlings at each temple."
-    ];
-    const updatedFaqs = [
-      {
-        question: "How long does the 84 Mahadev Yatra take?",
-        answer: "It takes 3 to 4 days to comfortably visit all 84 temples located across Ujjain."
-      },
-      {
-        question: "Do we perform Pooja at all 84 temples?",
-        answer: "Devotees typically offer water and Bilva leaves at all temples, and perform special Abhishek/Pooja at selected major shrines."
-      },
-      {
-        question: "Is this tour customizable?",
-        answer: "Yes, we can design the pace according to your arrival and stay duration."
-      }
-    ];
-    await execute(
-      `UPDATE tours 
-       SET duration = '3 Days / 4 Days',
-           overview = REPLACE(overview, 'Over two to three days', 'Over three to four days'),
-           destinations_json = ?,
-           places_covered_json = ?,
-           itinerary_json = ?,
-           why_choose_json = ?,
-           travel_tips_json = ?,
-           faqs_json = ?
-       WHERE id = 'tour-84-mahadev'`,
-      [
-        JSON.stringify(updatedDestinations),
-        JSON.stringify(updatedPlacesCovered),
-        JSON.stringify(updatedItinerary),
-        JSON.stringify(updatedWhyChoose),
-        JSON.stringify(updatedTravelTips),
-        JSON.stringify(updatedFaqs)
-      ]
-    );
-    console.log("[AUTO-DB] Migrating 9 Narayana names in database...");
-    await execute(
-      `UPDATE tours 
-       SET overview = REPLACE(overview, 'Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabha, Dharanidhara, Laxminarayan, and Badrinarayan', 'Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan'),
-           quick_answer = REPLACE(quick_answer, 'Anant Narayan, Satya Narayan, Purushottam Narayan, Adinarayan, Sheshnarayan, Padmanabhanarayan, Dharanidharanarayan, Laxminarayan, and Badri Narayan', 'Leela Purushottam Narayan, Anant Narayan, Satya Narayan, Chaturbhuj Narayan, Adi Narayan, Shesh Narayan, Padma Narayan, Lakshmi Narayan, and Badri Narayan')
-       WHERE id = 'tour-9-narayana'`
-    );
-    console.log("[AUTO-DB] Migrating 6 Vinayak names in database...");
-    await execute(
-      `UPDATE tours 
-       SET overview = REPLACE(overview, 'Pramod, Sumukh, Gajanand, Bhalchandra, Jatashankar, and Vignaharan Vinayak', 'Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak'),
-           quick_answer = REPLACE(quick_answer, 'Pramod Vinayak, Sumukh Vinayak, Gajanand Vinayak, Bhalchandra Vinayak, Jatashankar Vinayak, and Vignaharan Vinayak', 'Chintaman Ganesh Vinayak, Sthirman Ganesh Vinayak, Aamod-Pramod Vinayak, Modakpriya Vinayak, Durmukh Ganesh Vinayak, and Avighna Vinayak')
-       WHERE id = 'tour-6-vinayak'`
-    );
-    console.log("[AUTO-DB] Migrating Ujjain-Baglamukhi Nalkheda tour whyChoose in database...");
-    await execute(
-      `UPDATE tours 
-       SET why_choose_json = REPLACE(why_choose_json, 'Direct pandit contacts at Nalkheda for yellow Havan rituals.', 'Complete arrangement at nalkheda for yellow havan rituals.')
-       WHERE id = 'tour-ujjain-baglamukhi'`
-    );
-    console.log("[AUTO-DB] Migrating Ujjain-Baglamukhi Nalkheda tour travelTips in database...");
-    const updatedNalkhedaTips = [
-      "It is customary to offer yellow flowers, coconut, and yellow sweets to Maa Baglamukhi.",
-      "Havan rituals at Nalkheda can take 1-2 hours depending on the type."
-    ];
-    await execute(
-      `UPDATE tours 
-       SET travel_tips_json = ?
-       WHERE id = 'tour-ujjain-baglamukhi'`,
-      [JSON.stringify(updatedNalkhedaTips)]
-    );
-    console.log("[AUTO-DB] Migrating Ujjain-Omkareshwar-Baglamukhi Nalkheda tour travelTips in database...");
-    await execute(
-      `UPDATE tours 
-       SET travel_tips_json = REPLACE(travel_tips_json, 'Consult local pandits beforehand if you wish to perform special Havans at Nalkheda.', 'Consult Aastha Sey Raasta beforehand if you wish to perform special Havans at Nalkheda.')
-       WHERE id = 'tour-ujjain-omkareshwar-baglamukhi'`
-    );
-    console.log("[AUTO-DB] Migrating Ujjain-Omkareshwar-Indore tour in database...");
-    const updatedUOIPlaces = [
-      "Ujjain Darshan",
-      "Omkareshwar & Mamleshwar",
-      "Indore Khajrana Ganesh",
-      "Pitra Parvat",
-      "Lal Bagh Palace"
-    ];
-    const updatedUOIItinerary = [
-      {
-        "dayNumber": 1,
-        "title": "Indore Arrival & Ujjain Transfer",
-        "description": "Pickup from Indore, transfer to Ujjain. Perform local temple darshan (Mahakaleshwar, Harsiddhi, Kal Bhairav)."
-      },
-      {
-        "dayNumber": 2,
-        "title": "Ujjain to Omkareshwar",
-        "description": "Early travel to Omkareshwar on Narmada. Boat ride to island temple, Darshan of Omkareshwar & Mamleshwar."
-      },
-      {
-        "dayNumber": 3,
-        "title": "Indore Local Sightseeing & Departure",
-        "description": "Drive back to Indore. Visit the grand Lal Bagh Palace, seek wish-fulfilling blessings at Khajrana Ganesha Temple, and visit the sacred Pitra Parvat to see the monumental 72-foot Pitreshwar Hanuman statue before departure."
-      }
-    ];
-    const updatedUOIWhy = [
-      "Combines twin Jyotirlinga Darshan with Indore's cultural, heritage, and religious tour.",
-      "Covers Khajrana Ganesh, Lal Bagh Palace, and the iconic 72-ft Pitra Parvat Hanuman statue.",
-      "Pick and drop options from both Ujjain and Indore."
-    ];
-    const updatedUOIFaqs = [
-      {
-        "question": "Where is the pickup point?",
-        "answer": "We pick you up from Indore airport, Indore station, or Ujjain station based on your preference."
-      },
-      {
-        "question": "What is included in the hotel stays?",
-        "answer": "We arrange comfortable AC rooms with attached bath and breakfast included."
-      },
-      {
-        "question": "Can we customize the Indore sightseeing list?",
-        "answer": "Yes, we can customize the list to include Rajwada Palace, Chappan Dukan, Sarafa Bazaar, or other destinations based on your travel preferences."
-      }
-    ];
-    const updatedUOITips = [
-      "Indore is known as the cleanest city in India; please keep trash in bins.",
-      "Dress conservatively for Jyotirlinga entries."
-    ];
-    await execute(
-      `UPDATE tours 
-       SET overview = 'The Ujjain \u2013 Omkareshwar \u2013 Indore Tour is an optimized 3-day spiritual and heritage package meticulously designed for family yatras and senior citizens. This comprehensive circuit seamlessly connects the twin Jyotirlingas of Madhya Pradesh with Indore\u2019s prominent cultural landmarks.\\n\\nYour pilgrimage starts in holy Ujjain with an extensive Ujjain Darshan covering Mahakaleshwar Jyotirlinga, Harsiddhi Shaktipeeth, and Kal Bhairav temple. On Day 2, you will journey to the serene Narmada River island for the sacred darshan of Omkareshwar and Mamleshwar Jyotirlingas. On the final day, the tour enters Indore to cover the wish-fulfilling Khajrana Ganesh Temple, the monumental 72-foot metallic Pitreshwar Hanuman statue at Pitra Parvat, and the magnificent European-inspired Lal Bagh Palace of the Holkar dynasty. This itinerary offers a perfect blend of profound Vedic rituals and royal Central Indian history.',
-           quick_answer = 'The Ujjain \u2013 Omkareshwar \u2013 Indore Tour is a 3-day spiritual and heritage circuit. It covers the Mahakaleshwar Jyotirlinga in Ujjain, the Omkareshwar & Mamleshwar Jyotirlingas on the Narmada River, and Indore\\'s main attractions: the historic Lal Bagh Palace, wish-fulfilling Khajrana Ganesh Temple, and the monumental Pitreshwar Hanuman at Pitra Parvat.',
-           places_covered_json = ?,
-           itinerary_json = ?,
-           why_choose_json = ?,
-           faqs_json = ?,
-           travel_tips_json = ?
-       WHERE id = 'tour-ujjain-omkareshwar-indore'`,
-      [
-        JSON.stringify(updatedUOIPlaces),
-        JSON.stringify(updatedUOIItinerary),
-        JSON.stringify(updatedUOIWhy),
-        JSON.stringify(updatedUOIFaqs),
-        JSON.stringify(updatedUOITips)
-      ]
-    );
-    console.log("[AUTO-DB] Aligning tour data and sort_orders in database...");
-    for (let idx = 0; idx < initialTours.length; idx++) {
-      const t = initialTours[idx];
-      await execute(
-        `UPDATE tours 
-         SET title = ?, 
-             hindi_title = ?, 
-             meta_title = ?, 
-             og_title = ?, 
-             overview = ?, 
-             hindi_overview = ?, 
-             quick_answer = ?, 
-             destinations_json = ?, 
-             places_covered_json = ?, 
-             temples_covered_json = ?, 
-             itinerary_json = ?, 
-             inclusions_json = ?, 
-             exclusions_json = ?, 
-             why_choose_json = ?, 
-             what_we_offer_json = ?, 
-             travel_tips_json = ?, 
-             faqs_json = ?, 
-             canonical_url = ?, 
-             sort_order = ? 
-         WHERE id = ?`,
-        [
-          t.name || t.title || "",
-          t.hindiName || t.hindiTitle || "",
-          t.seoTitle || t.metaTitle || "",
-          t.ogTitle || "",
-          t.description || t.overview || "",
-          t.hindiDescription || t.hindiOverview || "",
-          t.quickAnswer || "",
-          JSON.stringify(t.destinations || []),
-          JSON.stringify(t.placesCovered || []),
-          JSON.stringify(t.templesCovered || []),
-          JSON.stringify(t.itinerary || []),
-          JSON.stringify(t.included || t.inclusions || []),
-          JSON.stringify(t.excluded || t.exclusions || []),
-          JSON.stringify(t.whyChoose || []),
-          JSON.stringify(t.whatWeOffer || []),
-          JSON.stringify(t.travelTips || []),
-          JSON.stringify(t.faqs || []),
-          t.canonicalUrl || "",
-          idx + 1,
-          t.id
-        ]
-      );
-    }
-    console.log("[AUTO-DB] Syncing all destinations key data, description, attractions, and images in database...");
-    for (const item of initialDestinations) {
-      const d = item;
-      await execute(
-        `UPDATE destinations 
-         SET title = ?, 
-             hindi_title = ?, 
-             description = ?, 
-             hindi_description = ?, 
-             image = ?, 
-             key_attractions_json = ?, 
-             hindi_key_attractions_json = ?, 
-             nearby_temples_json = ? 
-         WHERE id = ?`,
-        [
-          d.name || d.title || "",
-          d.hindiName || d.hindiTitle || "",
-          d.description || "",
-          d.hindiDescription || "",
-          d.image || d.heroImage || "",
-          JSON.stringify(d.keyAttractions || d.placesToVisit || []),
-          JSON.stringify(d.hindiKeyAttractions || []),
-          JSON.stringify(d.nearbyTemples || d.temples || []),
-          d.id
-        ]
-      );
-    }
-    console.log("[AUTO-DB SUCCESS] Database tables and default records verified and seeded successfully!");
+    await execute(`
+      CREATE TABLE IF NOT EXISTS system_migrations (
+        id VARCHAR(100) PRIMARY KEY,
+        executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    `);
+    console.log("[AUTO-DB SUCCESS] Database schema verified and existing production records preserved safely!");
     return result;
   } catch (error) {
     const errorMsg = error?.message || String(error);

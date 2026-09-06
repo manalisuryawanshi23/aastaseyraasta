@@ -22,7 +22,7 @@ import { LocalBusinessSchema } from './LocalBusinessSchema';
 
 export const Footer: React.FC = () => {
   const settings = StoreService.getSettings();
-  const { language, setLanguage, t, translateText } = useLanguage();
+  const { language, t, translateText } = useLanguage();
 
   const poojaLinks = [
     {

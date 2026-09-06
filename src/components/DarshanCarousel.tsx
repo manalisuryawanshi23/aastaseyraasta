@@ -23,11 +23,6 @@ const defaultDarshanItems = [
     Icon: Flame 
   },
   { 
-    name: 'Omkareshwar Jyotirlinga Darshan', 
-    image: '/assets/images/yatra_omkareshwar_temple_1786193903123.jpg',
-    Icon: Compass 
-  },
-  { 
     name: 'Harsiddhi Shaktipeeth Darshan', 
     image: '/assets/images/navchandi-path-havan-ujjain.webp',
     Icon: Sparkles 

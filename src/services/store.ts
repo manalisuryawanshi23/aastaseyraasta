@@ -186,60 +186,19 @@ export class StoreService {
 
   // Poojas
   static getPoojas(publishedOnly = true): PoojaService[] {
-    const saved = getItem<PoojaService[]>(KEYS.POOJAS, initialPoojas);
-    const savedIds = new Set(saved.map((p) => p.id));
-    const missing = initialPoojas.filter((p) => !savedIds.has(p.id));
-
-    let list = saved.map((p) => {
-      const init = initialPoojas.find((ip) => ip.id === p.id);
-      if (init) {
-        // Auto-heal check: If saved data has corrupted/placeholder names/slugs, restore canonical definition
-        const isNameCorrupted = !p.name || p.name === 'New Pooja Ritual' || p.name.trim() === '';
-        const isSlugCorrupted = !p.slug || p.slug === 'new-pooja-ritual' || p.slug.trim() === '';
-        return {
-          ...init,
-          ...p,
-          name: isNameCorrupted ? init.name : p.name,
-          hindiName: p.hindiName || init.hindiName,
-          slug: isSlugCorrupted ? init.slug : p.slug,
-          urlSlug: isSlugCorrupted ? (init.urlSlug || `/pooja/${init.slug}`) : (p.urlSlug || `/pooja/${p.slug}`),
-          h1: isNameCorrupted ? (init.h1 || init.name) : (p.h1 || p.name),
-          categoryId: p.categoryId || init.categoryId,
-          categoryName: p.categoryName || init.categoryName,
-          hindiCategoryName: p.hindiCategoryName || init.hindiCategoryName,
-          shortDescription: p.shortDescription || init.shortDescription,
-          hindiShortDescription: p.hindiShortDescription || init.hindiShortDescription,
-          description: p.description || init.description,
-          hindiDescription: p.hindiDescription || init.hindiDescription,
-          templeName: p.templeName || init.templeName,
-          hindiTempleName: p.hindiTempleName || init.hindiTempleName,
-          location: p.location || init.location,
-          hindiLocation: p.hindiLocation || init.hindiLocation,
-          city: p.city || init.city,
-          hindiCity: p.hindiCity || init.hindiCity,
-          duration: p.duration || init.duration,
-          hindiDuration: p.hindiDuration || init.hindiDuration,
-          price: p.price ?? init.price,
-          featuredImage: p.featuredImage || (p as any).image || init.featuredImage,
-          gallery: p.gallery && p.gallery.length > 0 ? p.gallery : init.gallery,
-          whatWeOffer: p.whatWeOffer && p.whatWeOffer.length > 0 ? p.whatWeOffer : init.whatWeOffer,
-          hindiWhatWeOffer: p.hindiWhatWeOffer && p.hindiWhatWeOffer.length > 0 ? p.hindiWhatWeOffer : init.hindiWhatWeOffer,
-          benefits: p.benefits && p.benefits.length > 0 ? p.benefits : init.benefits,
-          hindiBenefits: p.hindiBenefits && p.hindiBenefits.length > 0 ? p.hindiBenefits : init.hindiBenefits,
-          whoCanConsider: p.whoCanConsider && p.whoCanConsider.length > 0 ? p.whoCanConsider : init.whoCanConsider,
-          faqs: p.faqs && p.faqs.length > 0 ? p.faqs : init.faqs,
-          quickAnswer: p.quickAnswer || init.quickAnswer,
-          isPublished: p.isPublished !== undefined ? p.isPublished : init.isPublished,
-          isFeatured: p.isFeatured !== undefined ? p.isFeatured : init.isFeatured,
-          sortOrder: p.sortOrder !== undefined ? p.sortOrder : init.sortOrder,
-        };
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.POOJAS) : null;
+    let list: PoojaService[] = [];
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          list = parsed;
+        }
+      } catch (e) {
+        console.error('Error parsing stored poojas:', e);
       }
-      return p;
-    });
-
-    if (missing.length > 0) {
-      list = [...list, ...missing];
-      setItem(KEYS.POOJAS, list);
+    } else {
+      list = initialPoojas;
     }
 
     list.sort((a, b) => {
@@ -387,74 +346,19 @@ export class StoreService {
 
   // Tours
   static getTours(publishedOnly = true): Tour[] {
-    const saved = getItem<Tour[]>(KEYS.TOURS, initialTours);
-    const savedIds = new Set(saved.map((t) => t.id));
-    const missing = initialTours.filter((t) => !savedIds.has(t.id));
-
-    let updated = false;
-    let list = saved.map((t) => {
-      const init = initialTours.find((it) => it.id === t.id);
-      if (init) {
-        const isNameCorrupted =
-          !t.name ||
-          t.name === 'New Spiritual Tour' ||
-          t.name.trim() === '' ||
-          t.name.includes('4 Days / 3 Nights – Complete') ||
-          t.name.includes('4 Days / 3 Nights - Complete') ||
-          t.name.includes('Complete Braj Dham Yatra') ||
-          (init.id === 'tour-braj-dham-4d3n' && t.name !== 'Braj Dham Yatra');
-        const isSlugCorrupted = !t.slug || t.slug === 'new-spiritual-tour' || t.slug.trim() === '';
-
-        if (isNameCorrupted || isSlugCorrupted) {
-          updated = true;
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.TOURS) : null;
+    let list: Tour[] = [];
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          list = parsed;
         }
-
-        return {
-          ...init,
-          ...t,
-          name: isNameCorrupted ? init.name : (t.name || init.name),
-          hindiName: isNameCorrupted ? init.hindiName : (t.hindiName || init.hindiName),
-          seoTitle: isNameCorrupted ? init.seoTitle : (t.seoTitle || init.seoTitle),
-          metaTitle: isNameCorrupted ? init.metaTitle : (t.metaTitle || init.metaTitle),
-          ogTitle: isNameCorrupted ? init.ogTitle : (t.ogTitle || init.ogTitle),
-          slug: isSlugCorrupted ? init.slug : t.slug,
-          category: t.category || init.category,
-          hindiCategory: t.hindiCategory || init.hindiCategory,
-          shortDescription: isNameCorrupted ? init.shortDescription : (t.shortDescription || init.shortDescription),
-          hindiShortDescription: isNameCorrupted ? init.hindiShortDescription : (t.hindiShortDescription || init.hindiShortDescription),
-          description: isNameCorrupted ? init.description : (t.description || init.description),
-          hindiDescription: isNameCorrupted ? init.hindiDescription : (t.hindiDescription || init.hindiDescription),
-          startingPoint: t.startingPoint || init.startingPoint,
-          hindiStartingPoint: t.hindiStartingPoint || init.hindiStartingPoint,
-          endingPoint: t.endingPoint || init.endingPoint,
-          hindiEndingPoint: t.hindiEndingPoint || init.hindiEndingPoint,
-          duration: t.duration || init.duration,
-          hindiDuration: t.hindiDuration || init.hindiDuration,
-          destinations: init.destinations && init.destinations.length > 0 ? init.destinations : t.destinations,
-          hindiDestinations: init.hindiDestinations && init.hindiDestinations.length > 0 ? init.hindiDestinations : t.hindiDestinations,
-          placesCovered: init.placesCovered && init.placesCovered.length > 0 ? init.placesCovered : t.placesCovered,
-          hindiPlacesCovered: init.hindiPlacesCovered && init.hindiPlacesCovered.length > 0 ? init.hindiPlacesCovered : t.hindiPlacesCovered,
-          templesCovered: init.templesCovered && init.templesCovered.length > 0 ? init.templesCovered : t.templesCovered,
-          hindiTemplesCovered: init.hindiTemplesCovered && init.hindiTemplesCovered.length > 0 ? init.hindiTemplesCovered : t.hindiTemplesCovered,
-          itinerary: init.itinerary && init.itinerary.length > 0 ? init.itinerary : t.itinerary,
-          hindiItinerary: init.hindiItinerary && init.hindiItinerary.length > 0 ? init.hindiItinerary : t.hindiItinerary,
-          included: init.included && init.included.length > 0 ? init.included : t.included,
-          hindiIncluded: init.hindiIncluded && init.hindiIncluded.length > 0 ? init.hindiIncluded : t.hindiIncluded,
-          excluded: init.excluded && init.excluded.length > 0 ? init.excluded : t.excluded,
-          hindiExcluded: init.hindiExcluded && init.hindiExcluded.length > 0 ? init.hindiExcluded : t.hindiExcluded,
-          quickAnswer: isNameCorrupted ? init.quickAnswer : (init.quickAnswer || t.quickAnswer),
-          whyChoose: init.whyChoose && init.whyChoose.length > 0 ? init.whyChoose : t.whyChoose,
-          whatWeOffer: init.whatWeOffer && init.whatWeOffer.length > 0 ? init.whatWeOffer : t.whatWeOffer,
-          howToReach: init.howToReach || t.howToReach,
-          travelTips: init.travelTips && init.travelTips.length > 0 ? init.travelTips : t.travelTips,
-        };
+      } catch (e) {
+        console.error('Error parsing stored tours:', e);
       }
-      return t;
-    });
-
-    if (missing.length > 0 || updated) {
-      list = [...list, ...missing];
-      setItem(KEYS.TOURS, list);
+    } else {
+      list = initialTours;
     }
 
     list.sort((a, b) => {
@@ -557,37 +461,19 @@ export class StoreService {
 
   // Destinations
   static getDestinations(publishedOnly = true): Destination[] {
-    const saved = getItem<Destination[]>(KEYS.DESTINATIONS, initialDestinations);
-    const savedIds = new Set(saved.map((d) => d.id));
-    const missing = initialDestinations.filter((d) => !savedIds.has(d.id));
-
-    let list = saved.map((d) => {
-      const init = initialDestinations.find((id) => id.id === d.id);
-      if (init) {
-        const isNameCorrupted = !d.name || d.name === 'New Destination' || d.name.trim() === '';
-        const isSlugCorrupted = !d.slug || d.slug === 'new-destination' || d.slug.trim() === '';
-        return {
-          ...init,
-          ...d,
-          name: isNameCorrupted ? init.name : d.name,
-          hindiName: d.hindiName || init.hindiName,
-          slug: isSlugCorrupted ? init.slug : d.slug,
-          shortDescription: d.shortDescription || init.shortDescription,
-          hindiShortDescription: d.hindiShortDescription || init.hindiShortDescription,
-          description: d.description || init.description,
-          hindiDescription: d.hindiDescription || init.hindiDescription,
-          placesToVisit: d.placesToVisit && d.placesToVisit.length > 0 ? d.placesToVisit : init.placesToVisit,
-          hindiPlacesToVisit: d.hindiPlacesToVisit && d.hindiPlacesToVisit.length > 0 ? d.hindiPlacesToVisit : init.hindiPlacesToVisit,
-          temples: d.temples && d.temples.length > 0 ? d.temples : init.temples,
-          hindiTemples: d.hindiTemples && d.hindiTemples.length > 0 ? d.hindiTemples : init.hindiTemples,
-        };
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.DESTINATIONS) : null;
+    let list: Destination[] = [];
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          list = parsed;
+        }
+      } catch (e) {
+        console.error('Error parsing stored destinations:', e);
       }
-      return d;
-    });
-
-    if (missing.length > 0) {
-      list = [...list, ...missing];
-      setItem(KEYS.DESTINATIONS, list);
+    } else {
+      list = initialDestinations;
     }
 
     if (publishedOnly) {
@@ -862,26 +748,18 @@ export class StoreService {
 
   // Testimonials
   static getTestimonials(): Testimonial[] {
-    const saved = getItem<Testimonial[]>(KEYS.TESTIMONIALS, initialTestimonials);
-    const savedIds = new Set(saved.map((t) => t.id));
-    const missing = initialTestimonials.filter((t) => !savedIds.has(t.id));
-
-    let list = saved.map((t) => {
-      const init = initialTestimonials.find((it) => it.id === t.id);
-      if (init) {
-        return {
-          ...init,
-          ...t,
-        };
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.TESTIMONIALS) : null;
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          return parsed;
+        }
+      } catch (e) {
+        console.error('Error parsing stored testimonials:', e);
       }
-      return t;
-    });
-
-    if (missing.length > 0) {
-      list = [...list, ...missing];
-      setItem(KEYS.TESTIMONIALS, list);
     }
-    return list;
+    return initialTestimonials;
   }
 
   static saveTestimonial(t: Partial<Testimonial> & { id?: string }): Testimonial {
@@ -947,30 +825,26 @@ export class StoreService {
   static getGallery(): GalleryItem[] {
     const normalizeImg = (img?: string) => (img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg');
     const deletedIds = new Set(getItem<string[]>(KEYS.GALLERY_DELETED, []));
-    const saved = getItem<GalleryItem[]>(KEYS.GALLERY, initialGalleryItems).filter((g) => !deletedIds.has(g.id));
-    const savedIds = new Set(saved.map((g) => g.id));
-    const missing = initialGalleryItems.filter((g) => !savedIds.has(g.id) && !deletedIds.has(g.id));
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.GALLERY) : null;
 
-    let list = saved.map((g) => {
-      const init = initialGalleryItems.find((ig) => ig.id === g.id);
-      if (init) {
-        return {
-          ...init,
-          ...g,
-          image: normalizeImg(g.image || init.image),
-        };
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          return parsed
+            .filter((g: GalleryItem) => !deletedIds.has(g.id))
+            .map((g: GalleryItem) => ({ ...g, image: normalizeImg(g.image) }))
+            .sort((a: GalleryItem, b: GalleryItem) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        }
+      } catch (e) {
+        console.error('Error parsing stored gallery items:', e);
       }
-      return {
-        ...g,
-        image: normalizeImg(g.image),
-      };
-    });
-
-    if (missing.length > 0) {
-      list = [...list, ...missing.map((m) => ({ ...m, image: normalizeImg(m.image) }))];
-      setItem(KEYS.GALLERY, list);
     }
-    return list;
+
+    return initialGalleryItems
+      .filter((g) => !deletedIds.has(g.id))
+      .map((g) => ({ ...g, image: normalizeImg(g.image) }))
+      .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
   }
 
   static saveGalleryItem(g: Partial<GalleryItem> & { id?: string }): GalleryItem {
@@ -1040,32 +914,26 @@ export class StoreService {
       img ? img.replace(/^\/(?:src|public)\/assets\//, '/assets/') : '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
 
     const deletedIds = new Set(getItem<string[]>(KEYS.DARSHAN_DELETED, []));
-    const saved = getItem<DarshanItem[]>(KEYS.DARSHAN, initialDarshanItems).filter((d) => !deletedIds.has(d.id));
-    const savedIds = new Set(saved.map((d) => d.id));
-    const missing = initialDarshanItems.filter((d) => !savedIds.has(d.id) && !deletedIds.has(d.id));
+    const stored = typeof window !== 'undefined' ? localStorage.getItem(KEYS.DARSHAN) : null;
 
-    let list = saved.map((d) => {
-      const init = initialDarshanItems.find((id) => id.id === d.id);
-      if (init) {
-        return {
-          ...init,
-          ...d,
-          image: normalizeImg(d.image || init.image),
-        };
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          return parsed
+            .filter((d: DarshanItem) => !deletedIds.has(d.id))
+            .map((d: DarshanItem) => ({ ...d, image: normalizeImg(d.image) }))
+            .sort((a: DarshanItem, b: DarshanItem) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        }
+      } catch (e) {
+        console.error('Error parsing stored darshan items:', e);
       }
-      return {
-        ...d,
-        image: normalizeImg(d.image),
-      };
-    });
-
-    if (missing.length > 0) {
-      list = [...list, ...missing.map((m) => ({ ...m, image: normalizeImg(m.image) }))];
-      setItem(KEYS.DARSHAN, list);
     }
 
-    list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-    return list;
+    return initialDarshanItems
+      .filter((d) => !deletedIds.has(d.id))
+      .map((d) => ({ ...d, image: normalizeImg(d.image) }))
+      .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
   }
 
   static saveDarshanItem(d: Partial<DarshanItem> & { id?: string }): DarshanItem {
