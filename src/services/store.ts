@@ -220,7 +220,7 @@ export class StoreService {
           duration: p.duration || init.duration,
           hindiDuration: p.hindiDuration || init.hindiDuration,
           price: p.price ?? init.price,
-          featuredImage: p.featuredImage || init.featuredImage,
+          featuredImage: p.featuredImage || (p as any).image || init.featuredImage,
           gallery: p.gallery && p.gallery.length > 0 ? p.gallery : init.gallery,
           whatWeOffer: p.whatWeOffer && p.whatWeOffer.length > 0 ? p.whatWeOffer : init.whatWeOffer,
           hindiWhatWeOffer: p.hindiWhatWeOffer && p.hindiWhatWeOffer.length > 0 ? p.hindiWhatWeOffer : init.hindiWhatWeOffer,

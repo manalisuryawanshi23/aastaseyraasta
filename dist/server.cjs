@@ -8480,6 +8480,8 @@ async function startServer() {
       vipEntryPass: Boolean(p.vip_entry_pass),
       panditCount: p.pandit_count,
       image: p.image,
+      featuredImage: p.image,
+      gallery: p.gallery_images_json ? JSON.parse(p.gallery_images_json) : [],
       galleryImages: p.gallery_images_json ? JSON.parse(p.gallery_images_json) : [],
       whatWeOffer: p.what_we_offer_json ? JSON.parse(p.what_we_offer_json) : [],
       benefits: p.benefits_json ? JSON.parse(p.benefits_json) : [],
@@ -8499,8 +8501,14 @@ async function startServer() {
       mantra: p.mantra,
       hindiMantra: p.hindi_mantra,
       isPopular: Boolean(p.is_popular),
+      isFeatured: Boolean(p.is_popular),
       isPublished: Boolean(p.is_published),
       metaTitle: p.seo_title || p.meta_title,
+      focusKeyword: p.primary_keyword,
+      canonicalUrl: p.canonical_url || p.url_slug,
+      ogTitle: p.seo_title || p.meta_title,
+      ogDescription: p.meta_description,
+      ogImage: p.image,
       sortOrder: p.sort_order || 0
     };
   }

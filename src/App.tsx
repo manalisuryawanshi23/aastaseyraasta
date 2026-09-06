@@ -121,6 +121,22 @@ export default function App() {
       return <PoojaDetailPage slug="rudrabhishek-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
     }
 
+    if (path === '/nagbali-pooja-ujjain') {
+      return <PoojaDetailPage slug="nagbali-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/kumbh-vivah-ujjain') {
+      return <PoojaDetailPage slug="kumbh-vivah-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/ark-vivah-ujjain') {
+      return <PoojaDetailPage slug="ark-vivah-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/pitru-dosh-shanti-narayan-bali-ujjain' || path === '/narayan-bali-pooja-ujjain') {
+      return <PoojaDetailPage slug="pitru-dosh-shanti-narayan-bali-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
     if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {
       return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }
