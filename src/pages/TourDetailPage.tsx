@@ -198,6 +198,8 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
 
   const whatsappMessage = slug === '4-days-braj-dham-yatra'
     ? `Jai Shri Radhe 🙏\nI would like to enquire about the Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan. Please share the current package price and available travel options.`
+    : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+    ? `Jai Shri Ram 🙏 Har Har Mahadev 🙏\nI would like to enquire about the 4 Days / 3 Nights Varanasi, Sarnath, Prayagraj & Ayodhya Tour Package. Please share the current package price and available travel options.`
     : language === 'hi'
     ? `जय श्री महाकाल 🙏 मुझे ${tourName} यात्रा पैकेज के बारे में जानकारी चाहिए।`
     : `Jai Shree Mahakal 🙏 I want to enquire about the ${tour.name} package.`;
@@ -254,6 +256,33 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         {
           title: "Sacred Govardhan Parikrama",
           desc: "Perform the holy parikrama of Giriraj Maharaj covering Daan Ghati, Mansi Ganga, Govinda Kund, Radha Kund, Shyam Kund, and Kusum Sarovar."
+        }
+      ]
+    : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+    ? [
+        {
+          title: "Kashi Vishwanath & Ganga Ghats",
+          desc: "Participate in early morning Ganga Snan, visit Shri Kashi Vishwanath Jyotirlinga, Annapurna Devi, Kaal Bhairav, and witness the world-renowned evening Dashashwamedh Ganga Aarti."
+        },
+        {
+          title: "Sarnath Buddhist Heritage",
+          desc: "Explore the peaceful deer park, monumental 5th-century Dhamek Stupa, Chaukhandi Stupa, Sarnath Museum with Ashoka Lion Capital, and Mulagandha Kuti Vihar."
+        },
+        {
+          title: "Triveni Sangam Confluence",
+          desc: "Experience the sacred confluence of Ganga, Yamuna and invisible Saraswati in Prayagraj with a traditional boat ride to the holy Sangam point."
+        },
+        {
+          title: "Sacred Prayag Shrines",
+          desc: "Seek divine blessings at Bade Hanuman Mandir (reclining Hanuman), the immortal Akshayavat banyan tree, subterranean Patalpuri Temple, and Alopi Devi Shaktipeeth."
+        },
+        {
+          title: "Shri Ram Janmabhoomi Ayodhya",
+          desc: "Perform reverent darshan at the magnificent Shri Ram Janmabhoomi Mandir, hilltop Hanuman Garhi fortress, Kanak Bhawan, and Dasharath Bhawan."
+        },
+        {
+          title: "Saryu Aarti & Ram Ki Paidi",
+          desc: "Witness the peaceful evening Saryu Aarti along the riverbanks, visit Ram Ki Paidi, Sita Ki Rasoi, and the ancient Nageshwar Nath Temple."
         }
       ]
     : (tourPlacesCovered.length > 0 ? tourPlacesCovered.slice(0, 6) : tourWhyChoose.slice(0, 6)).map((item) => ({
@@ -338,7 +367,50 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
         </div>
       );
     }
-    
+
+    if (slug === 'varanasi-prayagraj-ayodhya-tour-package') {
+      return (
+        <div className="relative border-l border-stone-400/60 ml-4 space-y-6 pt-4">
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 1 — VARANASI & SARNATH</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Varanasi: Early morning Ganga Snan, Kashi Vishwanath, Annapurna Devi, Kaal Bhairav & Vishalakshi Temple</div>
+              <div>• Sarnath: Dhamek Stupa, Chaukhandi Stupa, Sarnath Museum, Mulagandha Kuti Vihar & Deer Park</div>
+              <div>• Evening: World-renowned Dashashwamedh Ghat Ganga Aarti & optional boat ride (subject to weather) → Night stay in Varanasi</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 2 — VARANASI → PRAYAGRAJ</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Morning drive from Varanasi to Prayagraj (approx. 3–4 hrs depending on traffic)</div>
+              <div>• Prayagraj: Triveni Sangam, Sangam boat ride, Bade Hanuman Mandir, Akshayavat & Patalpuri Temple (subject to access)</div>
+              <div>• Evening: Alopi Devi Shaktipeeth Darshan & local market visit → Night stay in Prayagraj</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 3 — PRAYAGRAJ → AYODHYA</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Morning drive from Prayagraj to Ayodhya (approx. 4–5 hrs depending on traffic)</div>
+              <div>• Ayodhya: Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Dasharath Bhawan & Sita Ki Rasoi</div>
+              <div>• Evening: Saryu Aarti, Ram Ki Paidi & devotional atmosphere → Night stay in Ayodhya</div>
+            </div>
+          </div>
+          <div className="relative pl-8 space-y-1 text-left">
+            <div className="absolute -left-[5.5px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-700 border-2 border-white shadow-sm" />
+            <h4 className="font-bold text-stone-900 text-sm tracking-wide uppercase">DAY 4 — AYODHYA → VARANASI</h4>
+            <div className="text-stone-700 text-xs sm:text-sm pl-1 space-y-1">
+              <div>• Early Morning: Saryu River Darshan, optional Ram Janmabhoomi second darshan & Nageshwar Nath Temple</div>
+              <div>• Afternoon: Return drive to Varanasi (approx. 4–5 hrs)</div>
+              <div>• Tour concludes with departure transfer to Varanasi Railway Station / Airport</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="relative border-l border-stone-400/60 ml-4 space-y-6 pt-4">
         {tourPlacesCovered.map((place, idx) => (
@@ -524,6 +596,8 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               <span>
                 {slug === '4-days-braj-dham-yatra'
                   ? (language === 'hi' ? '4-दिवसीय ब्रज धाम यात्रा क्या है?' : 'What is the 4-Day Braj Dham Yatra?')
+                  : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+                  ? (language === 'hi' ? 'वाराणसी, प्रयागराज एवं अयोध्या यात्रा — त्वरित जानकारी' : 'Varanasi, Prayagraj & Ayodhya Yatra — Quick Answer')
                   : (language === 'hi' ? `${tourName} क्या है?` : `What is the ${tourName}?`)}
               </span>
             </h2>
@@ -539,10 +613,16 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
                 {tourStart && <div><strong>Starting Point:</strong> {tourStart}</div>}
                 {tourEnd && <div><strong>Ending Point:</strong> {tourEnd}</div>}
                 {tour.destinations && tour.destinations.length > 0 && (
-                  <div><strong>Major Destinations ({tour.destinations.length}):</strong> {tour.destinations.join(' • ')}</div>
+                  <div><strong>Main Places ({tour.destinations.length}):</strong> {tour.destinations.join(' • ')}</div>
                 )}
                 {slug === '4-days-braj-dham-yatra' && (
                   <div><strong>Main Pilgrimage Themes:</strong> Krishna Janmabhoomi, Radha-Krishna devotion, Braj Leela, Radha Rani, Govardhan Parikrama</div>
+                )}
+                {slug === 'varanasi-prayagraj-ayodhya-tour-package' && (
+                  <div><strong>Main Pilgrimage Themes:</strong> Kashi Vishwanath & Ganga Ghats, Sarnath Buddhist Heritage, Triveni Sangam Confluence, Shri Ram Janmabhoomi Ayodhya</div>
+                )}
+                {slug === 'varanasi-prayagraj-ayodhya-tour-package' && (
+                  <div><strong>Booking:</strong> Contact Aastha Sey Raasta Seva for availability and current package pricing.</div>
                 )}
               </div>
             </div>
@@ -713,7 +793,76 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             </h2>
           </div>
 
-          {slug === '4-days-braj-dham-yatra' ? (
+          {slug === 'varanasi-prayagraj-ayodhya-tour-package' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              {/* Varanasi */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">VARANASI</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Shri Kashi Vishwanath Temple</li>
+                  <li>• Annapurna Devi Temple</li>
+                  <li>• Kaal Bhairav Temple</li>
+                  <li>• Vishalakshi Shaktipeeth</li>
+                  <li>• Dashashwamedh Ghat</li>
+                  <li>• Evening Ganga Aarti & Ghats</li>
+                </ul>
+              </div>
+
+              {/* Sarnath */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">SARNATH</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Dhamek Stupa (5th Century)</li>
+                  <li>• Chaukhandi Stupa</li>
+                  <li>• Archaeological Museum</li>
+                  <li>• Mulagandha Kuti Vihar</li>
+                  <li>• Buddha Temple & Deer Park</li>
+                </ul>
+              </div>
+
+              {/* Prayagraj */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">PRAYAGRAJ</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Sacred Triveni Sangam</li>
+                  <li>• Sangam Boat Ride</li>
+                  <li>• Bade Hanuman Mandir</li>
+                  <li>• Sacred Akshayavat</li>
+                  <li>• Patalpuri Temple</li>
+                  <li>• Allahabad Fort Area (subject to access)</li>
+                  <li>• Alopi Devi Shaktipeeth</li>
+                </ul>
+              </div>
+
+              {/* Ayodhya */}
+              <div className="bg-white p-6 rounded-2xl border border-stone-200/70 shadow-sm space-y-3 text-left">
+                <div className="flex items-center gap-2 pb-2 border-b border-stone-100">
+                  <MapPin className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-serif font-bold text-stone-900 text-lg">AYODHYA</h3>
+                </div>
+                <ul className="space-y-1.5 text-xs sm:text-sm text-stone-700">
+                  <li>• Shri Ram Janmabhoomi Mandir</li>
+                  <li>• Hanuman Garhi</li>
+                  <li>• Kanak Bhawan</li>
+                  <li>• Dasharath Bhawan</li>
+                  <li>• Sita Ki Rasoi & Ram Ki Paidi</li>
+                  <li>• Saryu River Darshan & Aarti</li>
+                  <li>• Nageshwar Nath Temple</li>
+                </ul>
+              </div>
+
+            </div>
+          ) : slug === '4-days-braj-dham-yatra' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {/* Mathura */}
@@ -886,6 +1035,8 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
             {slug === '4-days-braj-dham-yatra'
               ? (language === 'hi' ? 'ब्रज यात्रा का मूल्य जानना चाहते हैं?' : 'Want to Know the Braj Yatra Price?')
+              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+              ? (language === 'hi' ? 'उपलब्धता एवं वर्तमान पैकेज मूल्य जांचें' : 'Check Availability & Current Package Price')
               : (language === 'hi' ? 'उपलब्धता और मूल्य की जांच करें' : 'Check Availability & Price')}
           </h2>
           <p className="text-stone-750 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
@@ -893,6 +1044,10 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
               ? (language === 'hi'
                   ? 'यात्रा का मूल्य समूह के आकार, वाहन के चयन और अन्य व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं उपलब्ध कस्टमाइजेशन के लिए आस्था से रास्ता सेवा से संपर्क करें।'
                   : 'Tour pricing can vary according to group size, travel arrangements and selected options. Contact Aastha Sey Raasta Seva for the current package price and available customization.')
+              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+              ? (language === 'hi'
+                  ? 'यात्रा की उपलब्धता एवं पैकेज मूल्य यात्रा की तिथियों, समूह के आकार, होटल की श्रेणी और चयनित व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं यात्रा सहायता के लिए हमारी टीम से संपर्क करें।'
+                  : 'Package availability and pricing may vary according to travel dates, group size, accommodation preferences and selected services. Contact our team for the current package price and itinerary assistance.')
               : 'Contact Aastha Sey Raasta Seva for the current price and available arrangements.'}
           </p>
           <div className="pt-2 flex justify-center gap-4 flex-wrap">
@@ -1063,11 +1218,15 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-amber-100">
             {slug === '4-days-braj-dham-yatra'
               ? (language === 'hi' ? 'अपनी ब्रज धाम यात्रा की योजना बनाएं' : 'Plan Your Braj Dham Yatra')
+              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+              ? (language === 'hi' ? 'अपनी वाराणसी-से-वाराणसी तीर्थ यात्रा की योजना बनाएं' : 'Plan Your Varanasi-to-Varanasi Spiritual Yatra')
               : `Plan Your ${tourName}`}
           </h2>
           <p className="text-stone-300 text-sm max-w-xl mx-auto leading-relaxed">
             {slug === '4-days-braj-dham-yatra'
               ? 'Explore Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan through a thoughtfully planned 4-day pilgrimage journey.'
+              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
+              ? 'Bring Varanasi, Sarnath, Prayagraj and Ayodhya together in one thoughtfully planned pilgrimage journey.'
               : 'Contact Aastha Sey Raasta Seva to enquire about arranging this pilgrimage journey.'}
           </p>
           <div className="pt-4 flex justify-center gap-4 flex-wrap">

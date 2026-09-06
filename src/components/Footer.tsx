@@ -57,6 +57,10 @@ export const Footer: React.FC = () => {
 
   const yatraLinks = [
     {
+      label: language === 'hi' ? 'वाराणसी-प्रयागराज-अयोध्या (4 दिन)' : 'Varanasi-Prayagraj-Ayodhya (4D)',
+      href: '/spiritual-tours/varanasi-prayagraj-ayodhya-tour-package',
+    },
+    {
       label: language === 'hi' ? 'ब्रज धाम यात्रा (4 दिन)' : 'Braj Dham Yatra (4D)',
       href: '/spiritual-tours/4-days-braj-dham-yatra',
     },

@@ -5853,10 +5853,236 @@ const rawTours: Tour[] = [
     ],
     "createdAt": "2026-08-01T10:00:00Z",
     "updatedAt": "2026-08-01T10:00:00Z"
+  },
+  {
+    "id": "tour-varanasi-sarnath-prayagraj-ayodhya-4d3n",
+    "name": "Varanasi, Sarnath, Prayagraj & Ayodhya",
+    "hindiName": "वाराणसी, सारनाथ, प्रयागराज एवं अयोध्या यात्रा",
+    "slug": "varanasi-prayagraj-ayodhya-tour-package",
+    "urlSlug": "/spiritual-tours/varanasi-prayagraj-ayodhya-tour-package",
+    "category": "Spiritual Yatra & Pilgrimage",
+    "hindiCategory": "आध्यात्मिक तीर्थ यात्रा",
+    "shortDescription": "Experience a spiritually rich journey from Kashi and Sarnath to sacred Prayagraj and Ayodhya, returning to Varanasi.",
+    "hindiShortDescription": "काशी, सारनाथ, पावन प्रयागराज संगम और अयोध्या श्री राम जन्मभूमि की 4 दिवसीय सुगम एवं भक्तिमय वाराणसी-से-वाराणसी तीर्थ यात्रा।",
+    "description": "## About the Varanasi, Sarnath, Prayagraj & Ayodhya Yatra\nThe Varanasi, Sarnath, Prayagraj & Ayodhya 4 Days / 3 Nights pilgrimage is a spiritually enriching journey designed for devotees and heritage travelers seeking to experience four of Northern India's most venerated sacred hubs. Structured seamlessly as a circular Varanasi-to-Varanasi circuit, this journey connects the timeless Shiva bhakti and sacred Ganga ghats of Kashi, the profound Buddhist heritage of Sarnath, the sacred confluence of the Triveni Sangam in Prayagraj, and the revered Ramayana traditions of Shri Ram Janmabhoomi in Ayodhya.\n\nThoughtfully scheduled to ensure an unhurried, comfortable pilgrimage experience, this itinerary balances ancient temple darshans, sacred river rituals, historical explorations, and comfortable intercity highway transit without overwhelming travelers.\n\n## Kashi's Sacred Heritage & Ghats (Varanasi)\nThe spiritual journey commences in Varanasi (ancient Kashi or Banaras), one of the world's oldest continually inhabited holy cities and the eternal abode of Lord Shiva. Devotees participate in early morning Ganga Snan and sacred river darshans along the stone-stepped ghats, followed by reverent darshans at the iconic Shri Kashi Vishwanath Jyotirlinga Temple. The pilgrimage includes visits to Goddess Annapurna Devi (the provider of nourishment), Kaal Bhairav (the revered guardian deity of Kashi), and Vishalakshi Shaktipeeth. In the evening, pilgrims witness the magnificent Ganga Aarti at Dashashwamedh Ghat, where rhythmic chanting, brass lamps, and devotional hymns illuminate the holy riverfront.\n\n## Sarnath & Buddhist Heritage\nLocated just 10 km from Varanasi lies Sarnath, the peaceful deer park where Bhagwan Buddha delivered his very first sermon (Dhammacakkappavattana Sutta) after attaining enlightenment. Pilgrims and cultural travelers explore the monumental 5th-century Dhamek Stupa, Chaukhandi Stupa, the Sarnath Archaeological Museum housing the iconic Ashoka Lion Capital (India's national emblem), Mulagandha Kuti Vihar with its vibrant Buddhist frescoes, and serene monasteries representing diverse Asian Buddhist traditions.\n\n## Prayagraj & Triveni Sangam Confluence\nDay 2 brings pilgrims to Prayagraj (ancient Prayag), celebrated in Vedic scriptures as the 'King of all Pilgrimage Centers' (Tirtharaj). The centerpiece of Prayagraj is the sacred Triveni Sangam—the confluence point of the holy rivers Ganga, Yamuna, and the invisible Saraswati. Devotees take traditional boat rides to the confluence for prayers and holy snan. Nearby, pilgrims visit the renowned Bade Hanuman Mandir (featuring the unique reclining deity of Lord Hanuman), the ancient sacred banyan tree Akshayavat, the subterranean Patalpuri Temple, and the Allahabad Fort area (subject to access conditions), concluding with prayers at the historic Alopi Devi Shaktipeeth.\n\n## Ayodhya & Shri Ram Janmabhoomi Tradition\nDay 3 takes devotees into the sacred city of Ayodhya, the divine birthplace of Bhagwan Shri Ram situated along the holy Saryu River. The pilgrimage centers on the magnificent Shri Ram Janmabhoomi Mandir, accompanied by visits to the hilltop fortress temple of Hanuman Garhi, the intricately adorned Kanak Bhawan, Dasharath Bhawan, and Sita Ki Rasoi. In the evening, pilgrims participate in the soul-stirring Saryu Aarti along the riverbanks and enjoy peaceful walks around Ram Ki Paidi before returning to Varanasi on Day 4.",
+    "startingPoint": "Varanasi",
+    "hindiStartingPoint": "वाराणसी",
+    "endingPoint": "Varanasi",
+    "hindiEndingPoint": "वाराणसी",
+    "duration": "4 Days / 3 Nights",
+    "hindiDuration": "4 दिन / 3 रात",
+    "destinations": [
+      "Varanasi",
+      "Sarnath",
+      "Prayagraj",
+      "Ayodhya"
+    ],
+    "placesCovered": [
+      "Kashi Vishwanath Temple",
+      "Annapurna Devi Temple",
+      "Kaal Bhairav Temple",
+      "Vishalakshi Temple",
+      "Dashashwamedh Ghat & Ganga Aarti",
+      "Dhamek Stupa & Sarnath Museum",
+      "Mulagandha Kuti Vihar Sarnath",
+      "Triveni Sangam Prayagraj",
+      "Bade Hanuman Mandir Prayagraj",
+      "Akshayavat & Patalpuri Temple",
+      "Alopi Devi Temple Prayagraj",
+      "Shri Ram Janmabhoomi Mandir Ayodhya",
+      "Hanuman Garhi Ayodhya",
+      "Kanak Bhawan & Dasharath Bhawan",
+      "Sita Ki Rasoi & Ram Ki Paidi",
+      "Saryu River Darshan & Aarti",
+      "Nageshwar Nath Temple"
+    ],
+    "templesCovered": [
+      "Kashi Vishwanath Temple",
+      "Annapurna Devi Temple",
+      "Kaal Bhairav Temple",
+      "Vishalakshi Temple",
+      "Mulagandha Kuti Vihar",
+      "Bade Hanuman Mandir",
+      "Patalpuri Temple",
+      "Alopi Devi Temple",
+      "Shri Ram Janmabhoomi Mandir",
+      "Hanuman Garhi",
+      "Kanak Bhawan",
+      "Nageshwar Nath Temple"
+    ],
+    "itinerary": [
+      {
+        "dayNumber": 1,
+        "title": "Varanasi & Sarnath — Kashi Vishwanath & Buddhist Heritage",
+        "hindiTitle": "वाराणसी एवं सारनाथ — काशी विश्वनाथ एवं बौद्ध धरोहर",
+        "description": "Morning in Varanasi starts with sacred Ganga Snan / Darshan, followed by darshans at Shri Kashi Vishwanath Temple, Annapurna Devi, Kaal Bhairav, and Vishalakshi Temple. In the afternoon, drive to Sarnath to visit the historical Dhamek Stupa, Chaukhandi Stupa, Sarnath Archaeological Museum, Mulagandha Kuti Vihar, Buddha Temple and Deer Park. Return to Varanasi for the world-renowned evening Ganga Aarti at Dashashwamedh Ghat and an optional Ganga boat ride (subject to weather and river conditions). Night stay in Varanasi.",
+        "places": [
+          "Kashi Vishwanath Temple",
+          "Annapurna Devi Temple",
+          "Kaal Bhairav",
+          "Dhamek Stupa Sarnath",
+          "Mulagandha Kuti Vihar",
+          "Dashashwamedh Ghat Ganga Aarti"
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Varanasi → Prayagraj — Triveni Sangam & Sacred Prayag",
+        "hindiTitle": "वाराणसी से प्रयागराज — त्रिवेणी संगम एवं पावन प्रयाग दर्शन",
+        "description": "After breakfast and hotel checkout, drive to Prayagraj (approx. 3–4 hours depending on traffic). On arrival, visit the holy Triveni Sangam—the sacred confluence of the Ganga, Yamuna, and traditionally revered Saraswati. Take a Sangam boat ride to offer prayers at the confluence point. Proceed to visit the unique Bade Hanuman Mandir (reclining Hanuman Ji), sacred Akshayavat, and ancient subterranean Patalpuri Temple within the Allahabad Fort area (subject to access conditions). In the evening, visit Alopi Devi Shaktipeeth and enjoy free time for local markets. Night stay in Prayagraj.",
+        "places": [
+          "Triveni Sangam",
+          "Sangam Boat Ride",
+          "Bade Hanuman Mandir",
+          "Akshayavat",
+          "Patalpuri Temple",
+          "Alopi Devi Temple"
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "Prayagraj → Ayodhya — Shri Ram Janmabhoomi",
+        "hindiTitle": "प्रयागराज से अयोध्या — श्री राम जन्मभूमि दर्शन",
+        "description": "After breakfast and checkout, drive to the holy city of Ayodhya (approx. 4–5 hours depending on traffic). Upon arrival in Ayodhya, proceed for darshan at the magnificent Shri Ram Janmabhoomi Mandir. Visit the revered Hanuman Garhi, the historic Kanak Bhawan gifted to Devi Sita, Dasharath Bhawan, and Sita Ki Rasoi. In the evening, witness the serene Saryu Aarti along the riverbanks, visit Ram Ki Paidi, and immerse in the devotional atmosphere of the city. Night stay in Ayodhya.",
+        "places": [
+          "Shri Ram Janmabhoomi Mandir",
+          "Hanuman Garhi",
+          "Kanak Bhawan",
+          "Dasharath Bhawan",
+          "Ram Ki Paidi",
+          "Saryu Aarti"
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Ayodhya → Varanasi — Ayodhya to Kashi Return",
+        "hindiTitle": "अयोध्या से वाराणसी वापसी — यात्रा समापन",
+        "description": "Early morning visit to Saryu River for morning darshan and prayers, with an optional second darshan at Ram Janmabhoomi and Nageshwar Nath Temple (established by Kush). After breakfast and checkout, depart for Varanasi (approx. 4–5 hours depending on highway traffic). Depending on your scheduled departure time, visit remaining Kashi shrines, take a final walk along the Ganga Ghats, or explore traditional Banarasi silk and handicraft markets before transfer to Varanasi Railway Station / Airport for your onward journey.",
+        "places": [
+          "Morning Saryu Darshan",
+          "Nageshwar Nath Temple",
+          "Ram Janmabhoomi",
+          "Return to Varanasi",
+          "Banarasi Handicrafts / Silk",
+          "Departure Transfer"
+        ]
+      }
+    ],
+    "included": [
+      "Private air-conditioned vehicle booking assistance for the complete Varanasi-Sarnath-Prayagraj-Ayodhya-Varanasi circuit",
+      "Verified comfortable hotel accommodation assistance in Varanasi, Prayagraj and Ayodhya as per selected package",
+      "Experienced driver familiar with pilgrimage routes, parking, and highway transit",
+      "Triveni Sangam and Ganga boat ride coordination (subject to weather and river conditions)",
+      "Assistance connecting with local Vedic pandits for pooja, sankalp, and Ganga aarti",
+      "Dedicated yatra coordinator travel guidance throughout the 4-day journey"
+    ],
+    "excluded": [
+      "Personal expenses, room service, laundry, and extra telephone charges",
+      "Meals and beverages other than those specifically included in your selected package",
+      "Special VIP queue tickets, specific donation receipts, or temple trust fees",
+      "Entry tickets to monuments or museums not specified in the custom package quotation",
+      "Any personal pooja dakshina or individual offerings made directly to priests",
+      "Travel insurance and medical emergency coverage",
+      "Any expenses arising due to unexpected road closures, weather events, or traffic diversions"
+    ],
+    "price": 0,
+    "priceType": "On Request",
+    "featuredImage": "/assets/images/tour_varanasi_ayodhya_1788685500088.jpg",
+    "isFeatured": true,
+    "isPublished": true,
+    "quickAnswer": "This 4 Days / 3 Nights Varanasi-to-Varanasi spiritual yatra covers the major pilgrimage and heritage highlights of Varanasi, Sarnath, Prayagraj and Ayodhya. The journey begins in Varanasi, includes Sarnath on Day 1, continues to Prayagraj and Ayodhya, and returns to Varanasi on Day 4.",
+    "whyChoose": [
+      "Spiritual Journey Planning: Thoughtfully scheduled pilgrimage covering Kashi, Sarnath, Prayagraj Sangam, and Ayodhya Ram Janmabhoomi.",
+      "Multi-Destination Pilgrimage Coordination: Smooth intercity transit connecting four of Northern India's most venerated sacred hubs.",
+      "Varanasi-to-Varanasi Route Planning: Convenient circular itinerary starting and concluding at Varanasi's rail and airport hubs.",
+      "Darshan & Sightseeing Assistance: Guidance on temple visiting routines, ghat walks, and local spiritual customs.",
+      "Booking Assistance: Transparent support for private AC transport, hotel stays, and boat arrangements on enquiry.",
+      "Personalized Travel Support: Dedicated travel assistance suited for families, devotional groups, and senior citizens."
+    ],
+    "whatWeOffer": [
+      "Accommodation: Available as per selected package / enquiry",
+      "Transportation: Available as per selected package / enquiry",
+      "Meals: Available as per selected package / enquiry",
+      "Darshan Assistance: Subject to availability and applicable temple rules",
+      "Travel Coordination: Yes, as per selected package",
+      "Local Boat Ride Coordination: Subject to weather and river conditions"
+    ],
+    "howToReach": "The yatra begins and concludes in Varanasi. Varanasi is excellently connected by air via Lal Bahadur Shastri International Airport (VNS) with direct flights from Delhi, Mumbai, Bengaluru, Hyderabad, Kolkata, and Chennai. By rail, Varanasi Junction (BSB), Banaras (BSBS), and Pt. Deen Dayal Upadhyaya Junction (DDU) connect to major Indian cities. By road, national highways connect Varanasi smoothly with Prayagraj (approx. 125 km / 3 hrs) and Ayodhya (approx. 200 km / 4.5 hrs). On Day 4, onward departure transfer is coordinated to Varanasi Airport or Railway Station.",
+    "travelTips": [
+      "Keep sufficient flexibility around temple visits and queue waiting times, especially during festivals and auspicious days.",
+      "Temple access rules and darshan timings may change based on local temple trust guidelines.",
+      "Boat rides on the Ganga and Triveni Sangam are subject to weather, water levels, and local administration advisories.",
+      "Allahabad Fort area access (Akshayavat & Patalpuri) is subject to availability and local administration permissions.",
+      "Carry comfortable walking footwear and easily removable shoes for temple courtyards.",
+      "Keep government-issued photo ID proofs and booking details easily accessible during transit.",
+      "Plan your onward travel from Varanasi on Day 4 with adequate buffer time for intercity road travel."
+    ],
+    "focusKeyword": "varanasi prayagraj ayodhya tour package",
+    "secondaryKeywords": [
+      "varanasi ayodhya prayagraj tour",
+      "varanasi prayagraj ayodhya yatra",
+      "varanasi sarnath prayagraj ayodhya tour",
+      "4 days varanasi ayodhya tour",
+      "varanasi to ayodhya prayagraj tour package",
+      "varanasi prayagraj ayodhya pilgrimage tour",
+      "4 days 3 nights varanasi tour package",
+      "varanasi sarnath ayodhya pilgrimage"
+    ],
+    "seoTitle": "Varanasi Prayagraj Ayodhya Tour Package | 4 Days Yatra",
+    "metaDescription": "Plan a 4 Days / 3 Nights Varanasi to Varanasi spiritual yatra covering Sarnath, Prayagraj and Ayodhya with Aastha Sey Raasta Seva. Enquire for package details and current price.",
+    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/varanasi-prayagraj-ayodhya-tour-package",
+    "ogTitle": "Varanasi, Sarnath, Prayagraj & Ayodhya — 4 Days / 3 Nights Yatra",
+    "ogDescription": "Experience a spiritually rich journey from Kashi and Sarnath to sacred Prayagraj and Ayodhya, returning to Varanasi with comfortable transport and yatra coordination.",
+    "ogImage": "/assets/images/tour_varanasi_ayodhya_1788685500088.jpg",
+    "faqs": [
+      {
+        "question": "How many days is the Varanasi, Prayagraj and Ayodhya tour?",
+        "answer": "The itinerary is designed as a 4 Days / 3 Nights journey starting and ending in Varanasi."
+      },
+      {
+        "question": "What places are covered in this Varanasi to Varanasi yatra?",
+        "answer": "The journey covers Varanasi, Sarnath, Prayagraj and Ayodhya."
+      },
+      {
+        "question": "Does the tour include Sarnath?",
+        "answer": "Yes. Sarnath is covered on Day 1 before returning to Varanasi."
+      },
+      {
+        "question": "What is the route of the yatra?",
+        "answer": "Varanasi → Sarnath → Varanasi → Prayagraj → Ayodhya → Varanasi."
+      },
+      {
+        "question": "What are the main places covered in Prayagraj?",
+        "answer": "The itinerary includes Triveni Sangam, Sangam boat ride, Bade Hanuman Mandir, Akshayavat, Patalpuri Temple, Allahabad Fort area subject to access, and Alopi Devi Temple."
+      },
+      {
+        "question": "What are the main places covered in Ayodhya?",
+        "answer": "The itinerary includes Shri Ram Janmabhoomi Mandir, Hanuman Garhi, Kanak Bhawan, Dasharath Bhawan, Sita Ki Rasoi, Ram Ki Paidi and Nageshwar Nath Temple."
+      },
+      {
+        "question": "How much does the Varanasi Prayagraj Ayodhya tour package cost?",
+        "answer": "Package pricing is available on enquiry and may vary according to travel dates, group size and selected services. Contact Aastha Sey Raasta Seva for the current package price."
+      },
+      {
+        "question": "Can the tour start and end in Varanasi?",
+        "answer": "Yes. This itinerary is designed as a Varanasi-to-Varanasi spiritual yatra."
+      },
+      {
+        "question": "Is the Ganga boat ride guaranteed?",
+        "answer": "No. The itinerary specifies that the boat ride is subject to weather and local conditions."
+      },
+      {
+        "question": "Is access to Allahabad Fort included?",
+        "answer": "The itinerary includes the Allahabad Fort area subject to access."
+      }
+    ],
+    "createdAt": "2026-08-01T10:00:00Z",
+    "updatedAt": "2026-08-01T10:00:00Z"
   }
 ];
 
 const desiredOrder = [
+  'tour-varanasi-sarnath-prayagraj-ayodhya-4d3n',
   'tour-braj-dham-4d3n',
   'tour-84-mahadev',
   'tour-9-narayana',
