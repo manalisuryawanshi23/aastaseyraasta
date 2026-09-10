@@ -664,20 +664,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
               )}
             </a>
 
-            {/* PWA Install Button (Main Navbar) */}
-            {!isInstalled && (
-              <button
-                onClick={() => installApp()}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/10 dark:hover:bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-400/60 dark:border-amber-500/40 text-xs font-semibold shadow-xs hover:shadow-sm transition-all group active:scale-95 cursor-pointer"
-                title="Install App for Instant Offline Access & Darshan"
-                aria-label="Install App"
-              >
-                <Smartphone className="w-4 h-4 text-amber-700 dark:text-amber-400 group-hover:scale-110 transition-transform animate-pulse" />
-                <span className="hidden sm:inline font-sans">{language === 'hi' ? 'ऐप इंस्टॉल करें' : 'Install App'}</span>
-                <span className="sm:hidden font-sans">{language === 'hi' ? 'ऐप' : 'App'}</span>
-                <Download className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 hidden xl:inline" />
-              </button>
-            )}
+
 
             {/* Book / Enquire Button (Desktop & Tablet) */}
             <button
