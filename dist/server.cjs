@@ -1768,17 +1768,6 @@ Aastha Sey Raasta Seva provides comprehensive, respectful, and transparent coord
     price: 3500,
     advanceBookingAmount: 1100,
     priceType: "Starting From",
-    samagriIncluded: true,
-    prasadHomeDelivery: true,
-    liveVideoAvailable: true,
-    vipEntryPass: false,
-    panditCount: 2,
-    mantra: "\u0950 \u0917\u094D\u0930\u093E\u0902 \u0917\u094D\u0930\u0940\u0902 \u0917\u094D\u0930\u094C\u0902 \u0938\u0903 \u0917\u0941\u0930\u0935\u0947 \u0928\u092E\u0903 || \u0950 \u092D\u094D\u0930\u093E\u0902 \u092D\u094D\u0930\u0940\u0902 \u092D\u094D\u0930\u094C\u0902 \u0938\u0903 \u0930\u093E\u0939\u0935\u0947 \u0928\u092E\u0903 ||",
-    hindiMantra: "\u0950 \u0917\u094D\u0930\u093E\u0902 \u0917\u094D\u0930\u0940\u0902 \u0917\u094D\u0930\u094C\u0902 \u0938\u0903 \u0917\u0941\u0930\u0935\u0947 \u0928\u092E\u0903 || \u0950 \u092D\u094D\u0930\u093E\u0902 \u092D\u094D\u0930\u0940\u0902 \u092D\u094D\u0930\u094C\u0902 \u0938\u0903 \u0930\u093E\u0939\u0935\u0947 \u0928\u092E\u0903 ||",
-    auspiciousDays: "Thursdays (Guruwar), Guru Pushya Nakshatra, Shukla Paksha Panchami, Purnima",
-    hindiAuspiciousDays: "\u0917\u0941\u0930\u0941\u0935\u093E\u0930, \u0917\u0941\u0930\u0941 \u092A\u0941\u0937\u094D\u092F \u0928\u0915\u094D\u0937\u0924\u094D\u0930, \u0936\u0941\u0915\u094D\u0932 \u092A\u0915\u094D\u0937 \u092A\u0902\u091A\u092E\u0940, \u092A\u0942\u0930\u094D\u0923\u093F\u092E\u093E",
-    idealFor: "Devotees with Jupiter-Rahu/Ketu conjunction in Janam Kundali, students facing academic blockages, professionals facing sudden career loss",
-    hindiIdealFor: "\u0915\u0941\u0902\u0921\u0932\u0940 \u092E\u0947\u0902 \u0917\u0941\u0930\u0941-\u0930\u093E\u0939\u0941/\u0915\u0947\u0924\u0941 \u092F\u0941\u0924\u093F \u0935\u093E\u0932\u0947 \u091C\u093E\u0924\u0915, \u0936\u093F\u0915\u094D\u0937\u093E \u0935 \u0915\u0930\u093F\u092F\u0930 \u092E\u0947\u0902 \u0930\u0941\u0915\u093E\u0935\u091F \u091D\u0947\u0932 \u0930\u0939\u0947 \u091B\u093E\u0924\u094D\u0930 \u090F\u0935\u0902 \u092A\u0947\u0936\u0947\u0935\u0930",
     featuredImage: "/assets/images/guru-chandal-dosh-shanti-pooja-ujjain.webp",
     isFeatured: true,
     isPublished: true,
@@ -8847,16 +8836,19 @@ async function startServer() {
     };
   }
   app.get("/api/poojas", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM poojas WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC");
+        const sql = isAll ? "SELECT * FROM poojas ORDER BY sort_order ASC, created_at DESC" : "SELECT * FROM poojas WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC";
+        const rows = await query(sql);
         const formatted = rows.map(formatPoojaRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error("[DB ERROR] Failed to fetch poojas:", err);
       }
     }
-    res.json({ success: true, data: initialPoojas.filter((p) => p.isPublished) });
+    const fallbackList = isAll ? initialPoojas : initialPoojas.filter((p) => p.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.get("/api/poojas/:slug", async (req, res) => {
     const slug = req.params.slug;
@@ -9186,16 +9178,19 @@ async function startServer() {
     };
   }
   app.get("/api/tours", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM tours WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC");
+        const sql = isAll ? "SELECT * FROM tours ORDER BY sort_order ASC, created_at DESC" : "SELECT * FROM tours WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC";
+        const rows = await query(sql);
         const formatted = rows.map(formatTourRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error("[DB ERROR] Failed to fetch tours:", err);
       }
     }
-    res.json({ success: true, data: initialTours.filter((t) => t.isPublished) });
+    const fallbackList = isAll ? initialTours : initialTours.filter((t) => t.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.get("/api/tours/:slug", async (req, res) => {
     const slug = req.params.slug;
@@ -9418,9 +9413,11 @@ async function startServer() {
     res.json({ success: true, message: `Tour ${id} deleted (in-memory)` });
   });
   app.get("/api/destinations", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM destinations WHERE is_published = 1 ORDER BY created_at DESC");
+        const sql = isAll ? "SELECT * FROM destinations ORDER BY created_at DESC" : "SELECT * FROM destinations WHERE is_published = 1 ORDER BY created_at DESC";
+        const rows = await query(sql);
         const formatted = rows.map((d) => ({
           id: d.id,
           name: d.title || d.name,
@@ -9464,7 +9461,8 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch destinations:", err);
       }
     }
-    res.json({ success: true, data: initialDestinations.filter((d) => d.isPublished) });
+    const fallbackList = isAll ? initialDestinations : initialDestinations.filter((d) => d.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.post("/api/destinations", async (req, res) => {
     const d = req.body;
@@ -9560,9 +9558,11 @@ async function startServer() {
     res.json({ success: true, message: `Destination ${id} deleted (in-memory)` });
   });
   app.get("/api/blogs", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY created_at DESC");
+        const sql = isAll ? "SELECT * FROM blog_posts ORDER BY created_at DESC" : "SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY created_at DESC";
+        const rows = await query(sql);
         const formatted = rows.map((b) => ({
           id: b.id,
           title: b.title,
@@ -9591,7 +9591,8 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch blogs:", err);
       }
     }
-    res.json({ success: true, data: initialBlogPosts.filter((b) => b.isPublished) });
+    const fallbackList = isAll ? initialBlogPosts : initialBlogPosts.filter((b) => b.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.post("/api/blogs", async (req, res) => {
     const b = req.body;
@@ -9668,9 +9669,11 @@ async function startServer() {
     res.json({ success: true, message: `Blog ${id} deleted (in-memory)` });
   });
   app.get("/api/faqs", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM faqs WHERE is_published = 1");
+        const sql = isAll ? "SELECT * FROM faqs" : "SELECT * FROM faqs WHERE is_published = 1";
+        const rows = await query(sql);
         const formatted = rows.map((f) => ({
           id: f.id,
           question: f.question,
@@ -9686,7 +9689,8 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch faqs:", err);
       }
     }
-    res.json({ success: true, data: initialFAQs.filter((f) => f.isPublished) });
+    const fallbackList = isAll ? initialFAQs : initialFAQs.filter((f) => f.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.post("/api/faqs", async (req, res) => {
     const f = req.body;
@@ -9738,9 +9742,11 @@ async function startServer() {
     res.json({ success: true, message: `FAQ ${id} deleted (in-memory)` });
   });
   app.get("/api/gallery", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC");
+        const sql = isAll ? "SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC" : "SELECT * FROM gallery_items WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC";
+        const rows = await query(sql);
         const formatted = rows.map((g) => ({
           id: g.id,
           title: g.title,
@@ -9758,7 +9764,8 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch gallery items:", err);
       }
     }
-    res.json({ success: true, data: initialGalleryItems });
+    const fallbackList = isAll ? initialGalleryItems : initialGalleryItems.filter((g) => g.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.post("/api/gallery", async (req, res) => {
     const g = req.body;
@@ -9812,9 +9819,11 @@ async function startServer() {
     res.json({ success: true, message: `Gallery item ${id} deleted (in-memory)` });
   });
   app.get("/api/darshan", async (req, res) => {
+    const isAll = req.query.all === "true" || req.query.all === "1" || req.query.admin === "true";
     if (isDbConnected()) {
       try {
-        const rows = await query("SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC");
+        const sql = isAll ? "SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC" : "SELECT * FROM darshan_items WHERE is_published = 1 ORDER BY sort_order ASC, created_at ASC";
+        const rows = await query(sql);
         const formatted = rows.map((d) => ({
           id: d.id,
           title: d.title,
@@ -9834,7 +9843,8 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch darshan items:", err);
       }
     }
-    res.json({ success: true, data: initialDarshanItems });
+    const fallbackList = isAll ? initialDarshanItems : initialDarshanItems.filter((d) => d.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
   app.post("/api/darshan", async (req, res) => {
     const d = req.body;

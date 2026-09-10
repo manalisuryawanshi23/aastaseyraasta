@@ -62,27 +62,27 @@ export function useApiSync() {
     async function syncAll() {
       let anyUpdated = false;
 
-      // 1. Sync poojas
-      const poojaOk = await fetchAndCache('/api/poojas', KEYS.POOJAS);
+      // 1. Sync poojas (all rows including drafts)
+      const poojaOk = await fetchAndCache('/api/poojas?all=true', KEYS.POOJAS);
       if (poojaOk) anyUpdated = true;
 
-      // 2. Sync tours
-      const tourOk = await fetchAndCache('/api/tours', KEYS.TOURS);
+      // 2. Sync tours (all rows including drafts)
+      const tourOk = await fetchAndCache('/api/tours?all=true', KEYS.TOURS);
       if (tourOk) {
         StoreService.getTours(false);
         anyUpdated = true;
       }
 
       // 3. Sync destinations
-      const destOk = await fetchAndCache('/api/destinations', KEYS.DESTINATIONS);
+      const destOk = await fetchAndCache('/api/destinations?all=true', KEYS.DESTINATIONS);
       if (destOk) anyUpdated = true;
 
       // 4. Sync blogs
-      const blogOk = await fetchAndCache('/api/blogs', KEYS.BLOGS);
+      const blogOk = await fetchAndCache('/api/blogs?all=true', KEYS.BLOGS);
       if (blogOk) anyUpdated = true;
 
       // 5. Sync FAQs
-      const faqOk = await fetchAndCache('/api/faqs', KEYS.FAQS);
+      const faqOk = await fetchAndCache('/api/faqs?all=true', KEYS.FAQS);
       if (faqOk) anyUpdated = true;
 
       // 6. Sync site settings
@@ -90,15 +90,15 @@ export function useApiSync() {
       if (settingsOk) anyUpdated = true;
 
       // 7. Sync gallery
-      const galleryOk = await fetchAndCache('/api/gallery', KEYS.GALLERY);
+      const galleryOk = await fetchAndCache('/api/gallery?all=true', KEYS.GALLERY);
       if (galleryOk) anyUpdated = true;
 
       // 7b. Sync dedicated darshan items
-      const darshanOk = await fetchAndCache('/api/darshan', KEYS.DARSHAN);
+      const darshanOk = await fetchAndCache('/api/darshan?all=true', KEYS.DARSHAN);
       if (darshanOk) anyUpdated = true;
 
       // 8. Sync testimonials
-      const testimonialsOk = await fetchAndCache('/api/testimonials', KEYS.TESTIMONIALS);
+      const testimonialsOk = await fetchAndCache('/api/testimonials?all=true', KEYS.TESTIMONIALS);
       if (testimonialsOk) anyUpdated = true;
 
       // 9. Sync staff users

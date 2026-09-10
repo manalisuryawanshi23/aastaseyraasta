@@ -198,17 +198,11 @@ export class StoreService {
           list = parsed.map((item) => {
             const master = masterMap.get(item.id) || slugMap.get(item.slug);
             if (!master) return item;
-
-            // Always prioritize master initialData if item is Guru Chandal Dosh or missing rich AEO fields
-            if (
-              item.id === 'pooja-guru-chandal' ||
-              item.slug === 'guru-chandal-dosh-shanti-pooja-ujjain' ||
-              !item.quickAnswer ||
-              (master.updatedAt && (!item.updatedAt || new Date(master.updatedAt) > new Date(item.updatedAt)))
-            ) {
-              return { ...item, ...master };
-            }
-            return { ...master, ...item };
+            return {
+              ...master,
+              ...item,
+              updatedAt: item.updatedAt || master.updatedAt || new Date().toISOString(),
+            };
           });
         } else {
           list = initialPoojas;
@@ -600,14 +594,14 @@ export class StoreService {
           ...init,
           ...b,
           title: isTitleCorrupted ? init.title : b.title,
-          hindiTitle: b.hindiTitle || init.hindiTitle,
+          hindiTitle: b.hindiTitle !== undefined ? b.hindiTitle : init.hindiTitle,
           slug: isSlugCorrupted ? init.slug : b.slug,
-          excerpt: b.excerpt || init.excerpt,
-          hindiExcerpt: b.hindiExcerpt || init.hindiExcerpt,
-          content: b.content || init.content,
-          hindiContent: b.hindiContent || init.hindiContent,
-          category: b.category || init.category,
-          hindiCategory: b.hindiCategory || init.hindiCategory,
+          excerpt: b.excerpt !== undefined ? b.excerpt : init.excerpt,
+          hindiExcerpt: b.hindiExcerpt !== undefined ? b.hindiExcerpt : init.hindiExcerpt,
+          content: b.content !== undefined ? b.content : init.content,
+          hindiContent: b.hindiContent !== undefined ? b.hindiContent : init.hindiContent,
+          category: b.category !== undefined ? b.category : init.category,
+          hindiCategory: b.hindiCategory !== undefined ? b.hindiCategory : init.hindiCategory,
         };
       }
       return b;
@@ -715,11 +709,11 @@ export class StoreService {
         return {
           ...init,
           ...f,
-          question: f.question || init.question,
-          hindiQuestion: f.hindiQuestion || init.hindiQuestion,
-          answer: f.answer || init.answer,
-          hindiAnswer: f.hindiAnswer || init.hindiAnswer,
-          category: f.category || init.category,
+          question: f.question !== undefined && f.question.trim() ? f.question : init.question,
+          hindiQuestion: f.hindiQuestion !== undefined ? f.hindiQuestion : init.hindiQuestion,
+          answer: f.answer !== undefined && f.answer.trim() ? f.answer : init.answer,
+          hindiAnswer: f.hindiAnswer !== undefined ? f.hindiAnswer : init.hindiAnswer,
+          category: f.category !== undefined ? f.category : init.category,
         };
       }
       return f;

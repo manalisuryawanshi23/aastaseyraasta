@@ -670,16 +670,21 @@ async function startServer() {
 
   // 3. Poojas (GET, POST, DELETE)
   app.get('/api/poojas', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM poojas WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC');
+        const sql = isAll
+          ? 'SELECT * FROM poojas ORDER BY sort_order ASC, created_at DESC'
+          : 'SELECT * FROM poojas WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC';
+        const rows = await query(sql);
         const formatted = rows.map(formatPoojaRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error('[DB ERROR] Failed to fetch poojas:', err);
       }
     }
-    res.json({ success: true, data: initialPoojas.filter((p) => p.isPublished) });
+    const fallbackList = isAll ? initialPoojas : initialPoojas.filter((p) => p.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.get('/api/poojas/:slug', async (req, res) => {
@@ -1122,16 +1127,21 @@ async function startServer() {
   }
 
   app.get('/api/tours', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM tours WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC');
+        const sql = isAll
+          ? 'SELECT * FROM tours ORDER BY sort_order ASC, created_at DESC'
+          : 'SELECT * FROM tours WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC';
+        const rows = await query(sql);
         const formatted = rows.map(formatTourRow);
         return res.json({ success: true, data: formatted });
       } catch (err) {
         console.error('[DB ERROR] Failed to fetch tours:', err);
       }
     }
-    res.json({ success: true, data: initialTours.filter((t) => t.isPublished) });
+    const fallbackList = isAll ? initialTours : initialTours.filter((t) => t.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.get('/api/tours/:slug', async (req, res) => {
@@ -1430,9 +1440,13 @@ async function startServer() {
 
   // 5. Destinations (GET, POST, DELETE)
   app.get('/api/destinations', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM destinations WHERE is_published = 1 ORDER BY created_at DESC');
+        const sql = isAll
+          ? 'SELECT * FROM destinations ORDER BY created_at DESC'
+          : 'SELECT * FROM destinations WHERE is_published = 1 ORDER BY created_at DESC';
+        const rows = await query(sql);
         const formatted = rows.map((d) => ({
           id: d.id,
           name: d.title || d.name,
@@ -1476,7 +1490,8 @@ async function startServer() {
         console.error('[DB ERROR] Failed to fetch destinations:', err);
       }
     }
-    res.json({ success: true, data: initialDestinations.filter((d) => d.isPublished) });
+    const fallbackList = isAll ? initialDestinations : initialDestinations.filter((d) => d.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.post('/api/destinations', async (req, res) => {
@@ -1576,9 +1591,13 @@ async function startServer() {
 
   // 6. Blogs (GET, POST, DELETE)
   app.get('/api/blogs', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY created_at DESC');
+        const sql = isAll
+          ? 'SELECT * FROM blog_posts ORDER BY created_at DESC'
+          : 'SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY created_at DESC';
+        const rows = await query(sql);
         const formatted = rows.map((b) => ({
           id: b.id,
           title: b.title,
@@ -1607,7 +1626,8 @@ async function startServer() {
         console.error('[DB ERROR] Failed to fetch blogs:', err);
       }
     }
-    res.json({ success: true, data: initialBlogPosts.filter((b) => b.isPublished) });
+    const fallbackList = isAll ? initialBlogPosts : initialBlogPosts.filter((b) => b.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.post('/api/blogs', async (req, res) => {
@@ -1688,9 +1708,11 @@ async function startServer() {
 
   // 7. FAQs (GET, POST, DELETE)
   app.get('/api/faqs', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM faqs WHERE is_published = 1');
+        const sql = isAll ? 'SELECT * FROM faqs' : 'SELECT * FROM faqs WHERE is_published = 1';
+        const rows = await query(sql);
         const formatted = rows.map((f) => ({
           id: f.id,
           question: f.question,
@@ -1706,7 +1728,8 @@ async function startServer() {
         console.error('[DB ERROR] Failed to fetch faqs:', err);
       }
     }
-    res.json({ success: true, data: initialFAQs.filter((f) => f.isPublished) });
+    const fallbackList = isAll ? initialFAQs : initialFAQs.filter((f) => f.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.post('/api/faqs', async (req, res) => {
@@ -1762,9 +1785,13 @@ async function startServer() {
 
   // 7.5. Gallery (GET, POST, DELETE)
   app.get('/api/gallery', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC');
+        const sql = isAll
+          ? 'SELECT * FROM gallery_items ORDER BY sort_order ASC, created_at DESC'
+          : 'SELECT * FROM gallery_items WHERE is_published = 1 ORDER BY sort_order ASC, created_at DESC';
+        const rows = await query(sql);
         const formatted = rows.map((g: any) => ({
           id: g.id,
           title: g.title,
@@ -1782,7 +1809,8 @@ async function startServer() {
         console.error('[DB ERROR] Failed to fetch gallery items:', err);
       }
     }
-    res.json({ success: true, data: initialGalleryItems });
+    const fallbackList = isAll ? initialGalleryItems : initialGalleryItems.filter((g) => g.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.post('/api/gallery', async (req, res) => {
@@ -1840,9 +1868,13 @@ async function startServer() {
 
   // 7.5b. Dedicated Darshan Items (GET, POST, PUT, DELETE)
   app.get('/api/darshan', async (req, res) => {
+    const isAll = req.query.all === 'true' || req.query.all === '1' || req.query.admin === 'true';
     if (isDbConnected()) {
       try {
-        const rows = await query('SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC');
+        const sql = isAll
+          ? 'SELECT * FROM darshan_items ORDER BY sort_order ASC, created_at ASC'
+          : 'SELECT * FROM darshan_items WHERE is_published = 1 ORDER BY sort_order ASC, created_at ASC';
+        const rows = await query(sql);
         const formatted = rows.map((d: any) => ({
           id: d.id,
           title: d.title,
@@ -1862,7 +1894,8 @@ async function startServer() {
         console.error('[DB ERROR] Failed to fetch darshan items:', err);
       }
     }
-    res.json({ success: true, data: initialDarshanItems });
+    const fallbackList = isAll ? initialDarshanItems : initialDarshanItems.filter((d) => d.isPublished);
+    res.json({ success: true, data: fallbackList });
   });
 
   app.post('/api/darshan', async (req, res) => {
