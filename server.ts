@@ -18,30 +18,69 @@ const resolvedDirname = typeof __dirname !== 'undefined'
 // Comprehensive multi-path .env loader for Hostinger / Passenger / local environments
 const envPaths = [
   path.resolve(process.cwd(), '.env'),
+  path.resolve(process.cwd(), '../.env'), // /home/u235459051/.env (Safe from Git CI/CD wiping!)
+  path.resolve(process.cwd(), '../persistent_uploads/.env'),
   path.resolve(resolvedDirname, '.env'),
   path.resolve(resolvedDirname, '..', '.env'),
   path.resolve(resolvedDirname, '../..', '.env'),
+  '/home/u235459051/.env',
+  '/home/u235459051/persistent_uploads/.env',
 ];
 for (const envPath of envPaths) {
-  if (fs.existsSync(envPath)) {
-    dotenv.config({ path: envPath });
+  try {
+    if (fs.existsSync(envPath)) {
+      dotenv.config({ path: envPath });
+      console.log('[ENV] Loaded configuration from:', envPath);
+    }
+  } catch (e) {
+    // ignore
   }
 }
 dotenv.config();
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PERSISTENT UPLOAD DIRECTORY (CI/CD-safe)
-// On Hostinger production: set UPLOAD_PATH=/home/u123456/persistent_uploads/images
-// in your server .env file. This directory is OUTSIDE the Git deploy root so
-// CI/CD rebuilds never delete admin-uploaded images.
-// Locally: falls back to public/assets/images (existing behaviour).
+// PERSISTENT UPLOAD DIRECTORY (CI/CD-safe with Auto-Detection)
 // ─────────────────────────────────────────────────────────────────────────────
-const uploadDir = process.env.UPLOAD_PATH
-  ? path.resolve(process.env.UPLOAD_PATH)
-  : path.resolve('public/assets/images');
+function resolveUploadDirectory(): string {
+  // 1. If explicit UPLOAD_PATH env is set and valid, use it
+  if (process.env.UPLOAD_PATH) {
+    const p = path.resolve(process.env.UPLOAD_PATH);
+    console.log('[STORAGE] Using configured UPLOAD_PATH from environment:', p);
+    return p;
+  }
+
+  // 2. Auto-detect persistent_uploads folder on Hostinger (outside public_html Git root)
+  const candidatePaths = [
+    path.resolve(process.cwd(), '../persistent_uploads/images'),
+    path.resolve(resolvedDirname, '../../persistent_uploads/images'),
+    '/home/u235459051/persistent_uploads/images',
+  ];
+
+  for (const candidate of candidatePaths) {
+    try {
+      if (fs.existsSync(candidate)) {
+        console.log('[STORAGE] Auto-detected external persistent upload directory:', candidate);
+        return candidate;
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  // 3. Fallback to local development directory
+  console.log('[STORAGE] Falling back to local public/assets/images directory');
+  return path.resolve('public/assets/images');
+}
+
+const uploadDir = resolveUploadDirectory();
 
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+  try {
+    fs.mkdirSync(uploadDir, { recursive: true });
+    console.log('[STORAGE] Created upload directory:', uploadDir);
+  } catch (err) {
+    console.error('[STORAGE ERROR] Failed to create upload directory:', uploadDir, err);
+  }
 }
 
 const storage = multer.diskStorage({
@@ -88,10 +127,10 @@ async function startServer() {
       res.setHeader('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400');
     }
   };
-  // ↓ Serve uploads from the same uploadDir (env-configured persistent path or public/assets/images fallback)
+  // ↓ Serve uploads from uploadDir (persistent path or local fallback)
   app.use('/assets/images', express.static(uploadDir, staticCacheOptions));
-  // Also serve the public/assets/images fallback path (for bundled default images when UPLOAD_PATH is set)
-  if (process.env.UPLOAD_PATH) {
+  // Also serve the public/assets/images fallback path (for bundled default temple images)
+  if (uploadDir !== path.resolve('public/assets/images')) {
     app.use('/assets/images', express.static(path.join(process.cwd(), 'public/assets/images'), staticCacheOptions));
   }
   app.use('/assets/audio', express.static(path.join(process.cwd(), 'public/assets/audio'), staticCacheOptions));
@@ -347,13 +386,35 @@ async function startServer() {
     }
   });
 
+  // Storage Diagnostics Endpoint
+  app.get('/api/storage-info', (req, res) => {
+    let filesCount = 0;
+    try {
+      if (fs.existsSync(uploadDir)) {
+        filesCount = fs.readdirSync(uploadDir).length;
+      }
+    } catch (e) {
+      // ignore
+    }
+    res.json({
+      activeUploadDir: uploadDir,
+      uploadDirExists: fs.existsSync(uploadDir),
+      filesCountInUploadDir: filesCount,
+      envUploadPath: process.env.UPLOAD_PATH || null,
+      loadedEnvPaths: envPaths.filter((p) => {
+        try { return fs.existsSync(p); } catch { return false; }
+      }),
+    });
+  });
+
   // Image Upload Endpoint
   app.post('/api/upload', upload.single('image'), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ success: false, error: 'No file uploaded' });
     }
     const fileUrl = `/assets/images/${req.file.filename}`;
-    res.json({ success: true, url: fileUrl });
+    console.log('[UPLOAD SUCCESS] File saved to:', req.file.path, 'URL:', fileUrl);
+    res.json({ success: true, url: fileUrl, savedTo: req.file.destination });
   });
 
   // 2. Site Settings (GET & POST)

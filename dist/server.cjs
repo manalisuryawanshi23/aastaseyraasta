@@ -8201,19 +8201,56 @@ var resolvedFilename = typeof __filename !== "undefined" ? __filename : metaUrl 
 var resolvedDirname = typeof __dirname !== "undefined" ? __dirname : import_path2.default.dirname(resolvedFilename);
 var envPaths = [
   import_path2.default.resolve(process.cwd(), ".env"),
+  import_path2.default.resolve(process.cwd(), "../.env"),
+  // /home/u235459051/.env (Safe from Git CI/CD wiping!)
+  import_path2.default.resolve(process.cwd(), "../persistent_uploads/.env"),
   import_path2.default.resolve(resolvedDirname, ".env"),
   import_path2.default.resolve(resolvedDirname, "..", ".env"),
-  import_path2.default.resolve(resolvedDirname, "../..", ".env")
+  import_path2.default.resolve(resolvedDirname, "../..", ".env"),
+  "/home/u235459051/.env",
+  "/home/u235459051/persistent_uploads/.env"
 ];
 for (const envPath of envPaths) {
-  if (import_fs2.default.existsSync(envPath)) {
-    import_dotenv.default.config({ path: envPath });
+  try {
+    if (import_fs2.default.existsSync(envPath)) {
+      import_dotenv.default.config({ path: envPath });
+      console.log("[ENV] Loaded configuration from:", envPath);
+    }
+  } catch (e) {
   }
 }
 import_dotenv.default.config();
-var uploadDir = process.env.UPLOAD_PATH ? import_path2.default.resolve(process.env.UPLOAD_PATH) : import_path2.default.resolve("public/assets/images");
+function resolveUploadDirectory() {
+  if (process.env.UPLOAD_PATH) {
+    const p = import_path2.default.resolve(process.env.UPLOAD_PATH);
+    console.log("[STORAGE] Using configured UPLOAD_PATH from environment:", p);
+    return p;
+  }
+  const candidatePaths = [
+    import_path2.default.resolve(process.cwd(), "../persistent_uploads/images"),
+    import_path2.default.resolve(resolvedDirname, "../../persistent_uploads/images"),
+    "/home/u235459051/persistent_uploads/images"
+  ];
+  for (const candidate of candidatePaths) {
+    try {
+      if (import_fs2.default.existsSync(candidate)) {
+        console.log("[STORAGE] Auto-detected external persistent upload directory:", candidate);
+        return candidate;
+      }
+    } catch (e) {
+    }
+  }
+  console.log("[STORAGE] Falling back to local public/assets/images directory");
+  return import_path2.default.resolve("public/assets/images");
+}
+var uploadDir = resolveUploadDirectory();
 if (!import_fs2.default.existsSync(uploadDir)) {
-  import_fs2.default.mkdirSync(uploadDir, { recursive: true });
+  try {
+    import_fs2.default.mkdirSync(uploadDir, { recursive: true });
+    console.log("[STORAGE] Created upload directory:", uploadDir);
+  } catch (err) {
+    console.error("[STORAGE ERROR] Failed to create upload directory:", uploadDir, err);
+  }
 }
 var storage = import_multer.default.diskStorage({
   destination: function(req, file, cb) {
@@ -8240,7 +8277,7 @@ async function startServer() {
     }
   };
   app.use("/assets/images", import_express.default.static(uploadDir, staticCacheOptions));
-  if (process.env.UPLOAD_PATH) {
+  if (uploadDir !== import_path2.default.resolve("public/assets/images")) {
     app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images"), staticCacheOptions));
   }
   app.use("/assets/audio", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/audio"), staticCacheOptions));
@@ -8468,12 +8505,35 @@ async function startServer() {
       res.status(500).json({ success: false, error: err?.message || String(err), config: getDbConfigDetails() });
     }
   });
+  app.get("/api/storage-info", (req, res) => {
+    let filesCount = 0;
+    try {
+      if (import_fs2.default.existsSync(uploadDir)) {
+        filesCount = import_fs2.default.readdirSync(uploadDir).length;
+      }
+    } catch (e) {
+    }
+    res.json({
+      activeUploadDir: uploadDir,
+      uploadDirExists: import_fs2.default.existsSync(uploadDir),
+      filesCountInUploadDir: filesCount,
+      envUploadPath: process.env.UPLOAD_PATH || null,
+      loadedEnvPaths: envPaths.filter((p) => {
+        try {
+          return import_fs2.default.existsSync(p);
+        } catch {
+          return false;
+        }
+      })
+    });
+  });
   app.post("/api/upload", upload.single("image"), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ success: false, error: "No file uploaded" });
     }
     const fileUrl = `/assets/images/${req.file.filename}`;
-    res.json({ success: true, url: fileUrl });
+    console.log("[UPLOAD SUCCESS] File saved to:", req.file.path, "URL:", fileUrl);
+    res.json({ success: true, url: fileUrl, savedTo: req.file.destination });
   });
   app.get("/api/settings", async (req, res) => {
     if (isDbConnected()) {
