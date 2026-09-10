@@ -2519,14 +2519,19 @@ async function startServer() {
 
   // Dynamic XML Sitemap for SEO
   app.get('/sitemap.xml', (req, res) => {
-    const xml = generateSitemapXml();
-    res.header('Content-Type', 'application/xml');
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    const host = req.get('host') || 'aasthasaysrasta.com';
+    const dynamicBase = host.includes('localhost') ? `${protocol}://${host}` : 'https://aasthasaysrasta.com';
+    const xml = generateSitemapXml(dynamicBase);
+    res.header('Content-Type', 'application/xml; charset=utf-8');
     res.send(xml);
   });
 
   // Dynamic Robots.txt
   app.get('/robots.txt', (req, res) => {
-    const baseUrl = process.env.APP_URL || 'https://aasthasaysrasta.com';
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
+    const host = req.get('host') || 'aasthasaysrasta.com';
+    const baseUrl = host.includes('localhost') ? `${protocol}://${host}` : 'https://aasthasaysrasta.com';
     const content = `User-agent: *
 Allow: /
 Disallow: /admin
@@ -2534,7 +2539,7 @@ Disallow: /api/
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
-    res.header('Content-Type', 'text/plain');
+    res.header('Content-Type', 'text/plain; charset=utf-8');
     res.send(content);
   });
 

@@ -7069,33 +7069,39 @@ var TODAY = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
 function escapeXml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 }
-function generateSitemapXml() {
+function generateSitemapXml(customBaseUrl) {
+  let effectiveBaseUrl = (customBaseUrl || process.env.APP_URL || "https://aasthasaysrasta.com").replace(/\/$/, "");
+  if (!effectiveBaseUrl.includes("localhost")) {
+    effectiveBaseUrl = "https://aasthasaysrasta.com";
+  }
+  const BASE_URL2 = effectiveBaseUrl;
+  const TODAY2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
   const urls = [
     // Core Primary Routes
-    { loc: `${BASE_URL}/`, lastmod: TODAY, changefreq: "daily", priority: "1.0" },
-    { loc: `${BASE_URL}/pooja-services`, lastmod: TODAY, changefreq: "daily", priority: "0.9" },
-    { loc: `${BASE_URL}/spiritual-tours`, lastmod: TODAY, changefreq: "daily", priority: "0.9" },
-    { loc: `${BASE_URL}/destinations`, lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
-    { loc: `${BASE_URL}/blog`, lastmod: TODAY, changefreq: "daily", priority: "0.8" },
-    { loc: `${BASE_URL}/site-map`, lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
+    { loc: `${BASE_URL2}/`, lastmod: TODAY2, changefreq: "daily", priority: "1.0" },
+    { loc: `${BASE_URL2}/pooja-services`, lastmod: TODAY2, changefreq: "daily", priority: "0.9" },
+    { loc: `${BASE_URL2}/spiritual-tours`, lastmod: TODAY2, changefreq: "daily", priority: "0.9" },
+    { loc: `${BASE_URL2}/destinations`, lastmod: TODAY2, changefreq: "weekly", priority: "0.8" },
+    { loc: `${BASE_URL2}/blog`, lastmod: TODAY2, changefreq: "daily", priority: "0.8" },
+    { loc: `${BASE_URL2}/site-map`, lastmod: TODAY2, changefreq: "weekly", priority: "0.8" },
     // Static Informational Routes
-    { loc: `${BASE_URL}/about-us`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-    { loc: `${BASE_URL}/why-choose-us`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-    { loc: `${BASE_URL}/how-it-works`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-    { loc: `${BASE_URL}/testimonials`, lastmod: TODAY, changefreq: "weekly", priority: "0.7" },
-    { loc: `${BASE_URL}/gallery`, lastmod: TODAY, changefreq: "weekly", priority: "0.7" },
-    { loc: `${BASE_URL}/faq`, lastmod: TODAY, changefreq: "weekly", priority: "0.7" },
-    { loc: `${BASE_URL}/contact`, lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-    { loc: `${BASE_URL}/privacy-policy`, lastmod: TODAY, changefreq: "yearly", priority: "0.4" },
-    { loc: `${BASE_URL}/terms-and-conditions`, lastmod: TODAY, changefreq: "yearly", priority: "0.4" },
-    { loc: `${BASE_URL}/disclaimer`, lastmod: TODAY, changefreq: "yearly", priority: "0.4" },
-    { loc: `${BASE_URL}/refund-cancellation-policy`, lastmod: TODAY, changefreq: "yearly", priority: "0.4" }
+    { loc: `${BASE_URL2}/about-us`, lastmod: TODAY2, changefreq: "monthly", priority: "0.7" },
+    { loc: `${BASE_URL2}/why-choose-us`, lastmod: TODAY2, changefreq: "monthly", priority: "0.7" },
+    { loc: `${BASE_URL2}/how-it-works`, lastmod: TODAY2, changefreq: "monthly", priority: "0.7" },
+    { loc: `${BASE_URL2}/testimonials`, lastmod: TODAY2, changefreq: "weekly", priority: "0.7" },
+    { loc: `${BASE_URL2}/gallery`, lastmod: TODAY2, changefreq: "weekly", priority: "0.7" },
+    { loc: `${BASE_URL2}/faq`, lastmod: TODAY2, changefreq: "weekly", priority: "0.7" },
+    { loc: `${BASE_URL2}/contact`, lastmod: TODAY2, changefreq: "monthly", priority: "0.7" },
+    { loc: `${BASE_URL2}/privacy-policy`, lastmod: TODAY2, changefreq: "yearly", priority: "0.4" },
+    { loc: `${BASE_URL2}/terms-and-conditions`, lastmod: TODAY2, changefreq: "yearly", priority: "0.4" },
+    { loc: `${BASE_URL2}/disclaimer`, lastmod: TODAY2, changefreq: "yearly", priority: "0.4" },
+    { loc: `${BASE_URL2}/refund-cancellation-policy`, lastmod: TODAY2, changefreq: "yearly", priority: "0.4" }
   ];
   initialPoojas.forEach((p) => {
     if (p.isPublished) {
       urls.push({
-        loc: `${BASE_URL}/pooja/${p.slug}`,
-        lastmod: p.updatedAt ? p.updatedAt.split("T")[0] : TODAY,
+        loc: `${BASE_URL2}/pooja/${p.slug}`,
+        lastmod: p.updatedAt ? p.updatedAt.split("T")[0] : TODAY2,
         changefreq: "weekly",
         priority: "0.9"
       });
@@ -7104,8 +7110,8 @@ function generateSitemapXml() {
   initialTours.forEach((t) => {
     if (t.isPublished) {
       urls.push({
-        loc: `${BASE_URL}/spiritual-tours/${t.slug}`,
-        lastmod: t.updatedAt ? t.updatedAt.split("T")[0] : TODAY,
+        loc: `${BASE_URL2}/spiritual-tours/${t.slug}`,
+        lastmod: t.updatedAt ? t.updatedAt.split("T")[0] : TODAY2,
         changefreq: "weekly",
         priority: "0.9"
       });
@@ -7114,8 +7120,8 @@ function generateSitemapXml() {
   initialDestinations.forEach((d) => {
     if (d.isPublished) {
       urls.push({
-        loc: `${BASE_URL}/destinations/${d.slug}`,
-        lastmod: d.updatedAt ? d.updatedAt.split("T")[0] : TODAY,
+        loc: `${BASE_URL2}/destinations/${d.slug}`,
+        lastmod: d.updatedAt ? d.updatedAt.split("T")[0] : TODAY2,
         changefreq: "monthly",
         priority: "0.8"
       });
@@ -7124,8 +7130,8 @@ function generateSitemapXml() {
   initialBlogPosts.forEach((b) => {
     if (b.isPublished) {
       urls.push({
-        loc: `${BASE_URL}/blog/${b.slug}`,
-        lastmod: b.updatedAt ? b.updatedAt.split("T")[0] : TODAY,
+        loc: `${BASE_URL2}/blog/${b.slug}`,
+        lastmod: b.updatedAt ? b.updatedAt.split("T")[0] : TODAY2,
         changefreq: "weekly",
         priority: "0.8"
       });
@@ -10443,12 +10449,17 @@ async function startServer() {
     res.status(401).json({ success: false, message: "Invalid credentials or passcode" });
   });
   app.get("/sitemap.xml", (req, res) => {
-    const xml = generateSitemapXml();
-    res.header("Content-Type", "application/xml");
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
+    const host = req.get("host") || "aasthasaysrasta.com";
+    const dynamicBase = host.includes("localhost") ? `${protocol}://${host}` : "https://aasthasaysrasta.com";
+    const xml = generateSitemapXml(dynamicBase);
+    res.header("Content-Type", "application/xml; charset=utf-8");
     res.send(xml);
   });
   app.get("/robots.txt", (req, res) => {
-    const baseUrl = process.env.APP_URL || "https://aasthasaysrasta.com";
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
+    const host = req.get("host") || "aasthasaysrasta.com";
+    const baseUrl = host.includes("localhost") ? `${protocol}://${host}` : "https://aasthasaysrasta.com";
     const content = `User-agent: *
 Allow: /
 Disallow: /admin
@@ -10456,7 +10467,7 @@ Disallow: /api/
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
-    res.header("Content-Type", "text/plain");
+    res.header("Content-Type", "text/plain; charset=utf-8");
     res.send(content);
   });
   app.get("/google:code.html", (req, res) => {

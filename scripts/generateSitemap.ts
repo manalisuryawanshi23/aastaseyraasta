@@ -36,7 +36,14 @@ interface SitemapUrl {
   priority: string;
 }
 
-export function generateSitemapXml(): string {
+export function generateSitemapXml(customBaseUrl?: string): string {
+  let effectiveBaseUrl = (customBaseUrl || process.env.APP_URL || 'https://aasthasaysrasta.com').replace(/\/$/, '');
+  if (!effectiveBaseUrl.includes('localhost')) {
+    effectiveBaseUrl = 'https://aasthasaysrasta.com';
+  }
+  const BASE_URL = effectiveBaseUrl;
+  const TODAY = new Date().toISOString().split('T')[0];
+
   const urls: SitemapUrl[] = [
     // Core Primary Routes
     { loc: `${BASE_URL}/`, lastmod: TODAY, changefreq: 'daily', priority: '1.0' },
