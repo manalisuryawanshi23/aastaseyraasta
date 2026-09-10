@@ -83,6 +83,30 @@ if (!fs.existsSync(uploadDir)) {
   }
 }
 
+// Auto-migrate: copy any existing bundled/uploaded images from public/assets/images to persistent uploadDir
+if (uploadDir !== path.resolve('public/assets/images')) {
+  try {
+    const legacyDir = path.resolve(process.cwd(), 'public/assets/images');
+    if (fs.existsSync(legacyDir)) {
+      const files = fs.readdirSync(legacyDir);
+      let copiedCount = 0;
+      for (const file of files) {
+        const srcPath = path.join(legacyDir, file);
+        const destPath = path.join(uploadDir, file);
+        if (fs.statSync(srcPath).isFile() && !fs.existsSync(destPath)) {
+          fs.copyFileSync(srcPath, destPath);
+          copiedCount++;
+        }
+      }
+      if (copiedCount > 0) {
+        console.log(`[STORAGE MIGRATION] Automatically copied ${copiedCount} files to persistent storage:`, uploadDir);
+      }
+    }
+  } catch (mErr) {
+    console.warn('[STORAGE MIGRATION] Non-critical migration warning:', mErr);
+  }
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
@@ -389,9 +413,12 @@ async function startServer() {
   // Storage Diagnostics Endpoint
   app.get('/api/storage-info', (req, res) => {
     let filesCount = 0;
+    let filesSample: string[] = [];
     try {
       if (fs.existsSync(uploadDir)) {
-        filesCount = fs.readdirSync(uploadDir).length;
+        const allFiles = fs.readdirSync(uploadDir);
+        filesCount = allFiles.length;
+        filesSample = allFiles.slice(0, 15);
       }
     } catch (e) {
       // ignore
@@ -400,6 +427,7 @@ async function startServer() {
       activeUploadDir: uploadDir,
       uploadDirExists: fs.existsSync(uploadDir),
       filesCountInUploadDir: filesCount,
+      filesSample,
       envUploadPath: process.env.UPLOAD_PATH || null,
       loadedEnvPaths: envPaths.filter((p) => {
         try { return fs.existsSync(p); } catch { return false; }

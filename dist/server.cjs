@@ -8252,6 +8252,28 @@ if (!import_fs2.default.existsSync(uploadDir)) {
     console.error("[STORAGE ERROR] Failed to create upload directory:", uploadDir, err);
   }
 }
+if (uploadDir !== import_path2.default.resolve("public/assets/images")) {
+  try {
+    const legacyDir = import_path2.default.resolve(process.cwd(), "public/assets/images");
+    if (import_fs2.default.existsSync(legacyDir)) {
+      const files = import_fs2.default.readdirSync(legacyDir);
+      let copiedCount = 0;
+      for (const file of files) {
+        const srcPath = import_path2.default.join(legacyDir, file);
+        const destPath = import_path2.default.join(uploadDir, file);
+        if (import_fs2.default.statSync(srcPath).isFile() && !import_fs2.default.existsSync(destPath)) {
+          import_fs2.default.copyFileSync(srcPath, destPath);
+          copiedCount++;
+        }
+      }
+      if (copiedCount > 0) {
+        console.log(`[STORAGE MIGRATION] Automatically copied ${copiedCount} files to persistent storage:`, uploadDir);
+      }
+    }
+  } catch (mErr) {
+    console.warn("[STORAGE MIGRATION] Non-critical migration warning:", mErr);
+  }
+}
 var storage = import_multer.default.diskStorage({
   destination: function(req, file, cb) {
     cb(null, uploadDir);
@@ -8507,9 +8529,12 @@ async function startServer() {
   });
   app.get("/api/storage-info", (req, res) => {
     let filesCount = 0;
+    let filesSample = [];
     try {
       if (import_fs2.default.existsSync(uploadDir)) {
-        filesCount = import_fs2.default.readdirSync(uploadDir).length;
+        const allFiles = import_fs2.default.readdirSync(uploadDir);
+        filesCount = allFiles.length;
+        filesSample = allFiles.slice(0, 15);
       }
     } catch (e) {
     }
@@ -8517,6 +8542,7 @@ async function startServer() {
       activeUploadDir: uploadDir,
       uploadDirExists: import_fs2.default.existsSync(uploadDir),
       filesCountInUploadDir: filesCount,
+      filesSample,
       envUploadPath: process.env.UPLOAD_PATH || null,
       loadedEnvPaths: envPaths.filter((p) => {
         try {
