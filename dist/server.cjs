@@ -7906,59 +7906,7 @@ async function autoInitializeDatabase() {
           );
           console.log("[AUTO-DB] Seeded missing Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.");
         } else {
-          await execute(
-            `UPDATE poojas SET
-              name = ?, hindi_name = ?, page_type = ?, primary_keyword = ?, secondary_keywords_json = ?,
-              search_intent = ?, seo_title = ?, meta_description = ?, url_slug = ?, h1 = ?, quick_answer = ?,
-              short_description = ?, description = ?, temple_name = ?, hindi_temple_name = ?, location = ?,
-              duration = ?, hindi_duration = ?, what_we_offer_json = ?, benefits_json = ?, hindi_benefits_json = ?,
-              who_can_consider_json = ?, procedure_steps_json = ?, hindi_procedure_steps_json = ?,
-              faqs_json = ?, internal_links_json = ?, image_seo_json = ?, schema_types_json = ?,
-              quality_score = ?, ideal_for = ?, hindi_ideal_for = ?, auspicious_days = ?, hindi_auspicious_days = ?,
-              mantra = ?, hindi_mantra = ?, meta_title = ?
-            WHERE id = ? OR slug = ?`,
-            [
-              guruChandal.name,
-              guruChandal.hindiName || "",
-              guruChandal.pageType || "",
-              guruChandal.primaryKeyword || "",
-              JSON.stringify(guruChandal.secondaryKeywords || []),
-              guruChandal.searchIntent || "",
-              guruChandal.seoTitle || "",
-              guruChandal.metaDescription || "",
-              guruChandal.urlSlug || `/pooja/${guruChandal.slug}`,
-              guruChandal.h1 || guruChandal.name,
-              guruChandal.quickAnswer || "",
-              guruChandal.shortDescription || "",
-              guruChandal.description || "",
-              guruChandal.templeName || "",
-              guruChandal.hindiTempleName || "",
-              guruChandal.location || "",
-              guruChandal.duration || "",
-              guruChandal.hindiDuration || "",
-              JSON.stringify(guruChandal.whatWeOffer || []),
-              JSON.stringify(guruChandal.benefits || []),
-              JSON.stringify(guruChandal.hindiBenefits || []),
-              JSON.stringify(guruChandal.whoCanConsider || []),
-              JSON.stringify(guruChandal.procedureSteps || []),
-              JSON.stringify(guruChandal.hindiProcedureSteps || []),
-              JSON.stringify(guruChandal.faqs || []),
-              JSON.stringify(guruChandal.internalLinks || []),
-              JSON.stringify(guruChandal.imageSeo || {}),
-              JSON.stringify(guruChandal.schemaTypes || []),
-              guruChandal.qualityScore || 98,
-              guruChandal.idealFor || "",
-              guruChandal.hindiIdealFor || "",
-              guruChandal.auspiciousDays || "",
-              guruChandal.hindiAuspiciousDays || "",
-              guruChandal.mantra || "",
-              guruChandal.hindiMantra || "",
-              guruChandal.seoTitle || "",
-              guruChandal.id,
-              guruChandal.slug
-            ]
-          );
-          console.log("[AUTO-DB] Enriched Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.");
+          console.log("[AUTO-DB] Guru Chandal Dosh pooja exists in database. Preserving all admin edits.");
         }
       }
     } catch (e) {
