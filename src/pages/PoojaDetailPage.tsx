@@ -137,6 +137,40 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
   const localBusinessSchema = buildLocalBusinessSchema(settings);
   const jsonLd = [poojaSchema, breadcrumbSchema, faqSchema, localBusinessSchema];
 
+  // ── INLINE MARKDOWN FORMATTER ─────────────────────────────────────────────
+  const formatInlineMarkdown = (text: string): React.ReactNode => {
+    if (!text) return text;
+    const parts: React.ReactNode[] = [];
+    const regex = /(\*\*.*?\*\*|\*.*?\*)/g;
+    let lastIdx = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIdx) {
+        parts.push(text.substring(lastIdx, match.index));
+      }
+      const token = match[0];
+      if (token.startsWith('**') && token.endsWith('**')) {
+        parts.push(
+          <strong key={match.index} className="font-bold text-stone-900 dark:text-amber-100">
+            {token.slice(2, -2)}
+          </strong>
+        );
+      } else if (token.startsWith('*') && token.endsWith('*')) {
+        parts.push(
+          <em key={match.index} className="italic text-stone-600 dark:text-stone-300">
+            {token.slice(1, -1)}
+          </em>
+        );
+      }
+      lastIdx = regex.lastIndex;
+    }
+    if (lastIdx < text.length) {
+      parts.push(text.substring(lastIdx));
+    }
+    return parts.length > 0 ? parts : text;
+  };
+
   // ── DESCRIPTION RENDERER ──────────────────────────────────────────────────
   const renderStructuredDescription = (text?: string) => {
     if (!text) return null;
@@ -153,7 +187,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
               key={`p-${key}`}
               className="text-stone-700 dark:text-stone-300 leading-relaxed text-sm sm:text-base mb-4"
             >
-              {joined}
+              {formatInlineMarkdown(joined)}
             </p>
           );
         }
@@ -172,9 +206,10 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         elements.push(
           <h2
             key={`h2-${i}`}
-            className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-amber-100 pt-6 pb-2 border-b border-amber-100 dark:border-stone-800 mb-3"
+            className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-amber-100 pt-8 pb-2.5 border-b border-amber-200/60 dark:border-stone-800 mb-4 flex items-center gap-2.5"
           >
-            {trimmed.replace(/^##\s+/, '')}
+            <Sparkles className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
+            <span>{trimmed.replace(/^##\s+/, '')}</span>
           </h2>
         );
       } else if (trimmed.startsWith('### ')) {
@@ -182,20 +217,59 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         elements.push(
           <h3
             key={`h3-${i}`}
-            className="text-lg font-serif font-bold text-amber-900 dark:text-amber-300 pt-4 mb-2"
+            className="text-lg font-serif font-bold text-amber-900 dark:text-amber-300 pt-5 pb-1 mb-2"
           >
             {trimmed.replace(/^###\s+/, '')}
           </h3>
         );
-      } else if (trimmed.startsWith('- ')) {
+      } else if (trimmed.toLowerCase().startsWith('*disclaimer:') || (trimmed.startsWith('*') && trimmed.endsWith('*') && trimmed.toLowerCase().includes('disclaimer'))) {
         flush(i);
         elements.push(
           <div
-            key={`li-${i}`}
-            className="flex items-start gap-2.5 text-stone-700 dark:text-stone-300 text-sm my-1.5 ml-2"
+            key={`disc-${i}`}
+            className="my-6 p-4 sm:p-5 rounded-2xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-500/25 text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-relaxed space-y-1.5"
           >
-            <span className="text-amber-700 font-bold shrink-0 mt-0.5">•</span>
-            <span>{trimmed.replace(/^-\s*/, '')}</span>
+            <div className="flex items-center gap-2 font-bold text-amber-900 dark:text-amber-300 uppercase tracking-wider text-[11px]">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+              <span>Important Devotional Notice</span>
+            </div>
+            <p className="italic text-stone-600 dark:text-stone-300">
+              {formatInlineMarkdown(trimmed.replace(/^\*|\*$/g, ''))}
+            </p>
+          </div>
+        );
+      } else if (/^\d+\.\s+/.test(trimmed)) {
+        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
+        if (numMatch) {
+          flush(i);
+          const num = numMatch[1];
+          const stepContent = numMatch[2];
+          elements.push(
+            <div
+              key={`step-${i}`}
+              className="flex items-start gap-3.5 text-stone-700 dark:text-stone-300 text-sm sm:text-base my-3 bg-amber-500/5 dark:bg-[#1C1917] p-4 rounded-2xl border border-amber-200/50 dark:border-stone-800 shadow-2xs"
+            >
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-800 dark:bg-amber-700 text-amber-50 font-bold text-xs shrink-0 mt-0.5 shadow-xs">
+                {num}
+              </span>
+              <div className="leading-relaxed pt-0.5">
+                {formatInlineMarkdown(stepContent)}
+              </div>
+            </div>
+          );
+        }
+      } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+        flush(i);
+        const bulletContent = trimmed.replace(/^[-*]\s*/, '');
+        elements.push(
+          <div
+            key={`li-${i}`}
+            className="flex items-start gap-3 text-stone-700 dark:text-stone-300 text-sm sm:text-base my-2.5 ml-2"
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-600 dark:bg-amber-400 shrink-0 mt-2" />
+            <div className="leading-relaxed">
+              {formatInlineMarkdown(bulletContent)}
+            </div>
           </div>
         );
       } else {
@@ -490,7 +564,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                     {preparation.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{item}</span>
+                        <span>{formatInlineMarkdown(item)}</span>
                       </li>
                     ))}
                   </ul>
@@ -536,11 +610,11 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                     </div>
                     {title && (
                       <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900 dark:text-amber-100 leading-snug">
-                        {title}
+                        {formatInlineMarkdown(title)}
                       </h3>
                     )}
                     <p className="text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
-                      {body}
+                      {formatInlineMarkdown(body)}
                     </p>
                   </div>
                 );
@@ -595,7 +669,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
-                  <p className="text-stone-200 text-xs sm:text-sm leading-relaxed mt-0.5">{offer}</p>
+                  <p className="text-stone-200 text-xs sm:text-sm leading-relaxed mt-0.5">{formatInlineMarkdown(offer)}</p>
                 </div>
               ))}
             </div>
@@ -621,7 +695,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                     className="flex items-start gap-2.5 text-stone-700 dark:text-stone-300 text-sm sm:text-base"
                   >
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span>{formatInlineMarkdown(item)}</span>
                   </li>
                 ))}
               </ul>
