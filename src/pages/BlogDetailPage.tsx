@@ -61,7 +61,7 @@ export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
         title={generateBlogTitle(post)}
         description={post.metaDescription || post.excerpt}
         keywords={post.focusKeyword ? `${post.focusKeyword}, ${post.title}, Ujjain Spiritual Blog` : `${post.title}, Ujjain Poojas, Vedic Rituals Guide`}
-        canonicalUrl={post.canonicalUrl || `https://aasthaserasta.com/blog/${post.slug}`}
+        canonicalUrl={post.canonicalUrl || `https://aasthasaysrasta.com/blog/${post.slug}`}
         ogImage={post.featuredImage}
         ogImageAlt={post.title}
         ogType="article"

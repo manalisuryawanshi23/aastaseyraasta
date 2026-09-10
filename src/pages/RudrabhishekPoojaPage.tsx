@@ -210,7 +210,7 @@ export const RudrabhishekPoojaPage: React.FC<RudrabhishekPoojaPageProps> = ({ on
         title="Rudrabhishek Pooja in Ujjain | Aastha Sey Raasta Seva"
         description="Book authentic Rudrabhishek pooja in ujjain at sacred Shiva temples. Performed by experienced Vedic pandits with complete arrangements and devotion."
         keywords="rudrabhishek pooja in ujjain, rudrabhishek in ujjain, ujjain rudrabhishek pooja, rudrabhishek pooja booking ujjain, rudrabhishek at shiva temples ujjain, rudrabhishek seva ujjain"
-        canonicalUrl={`${typeof window !== 'undefined' ? window.location.origin : 'https://aasthaserasta.com'}/rudrabhishek-pooja-ujjain`}
+        canonicalUrl={`${typeof window !== 'undefined' ? window.location.origin : 'https://aasthasaysrasta.com'}/rudrabhishek-pooja-ujjain`}
         ogImage={featuredImage}
         ogImageAlt="Rudrabhishek Pooja in Ujjain Shivling Panchamrit Abhishek"
         jsonLd={jsonLd}

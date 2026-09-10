@@ -3582,7 +3582,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Spiritual Tour | Complete Local Sightseeing & Darshan",
     "metaDescription": "Book a complete Ujjain local sightseeing and temple darshan tour covering Mahakaleshwar Jyotirlinga, Kalbhairav, Harsiddhi Shaktipeeth with expert guides.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-spiritual-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-spiritual-tour",
     "ogTitle": "Ujjain Spiritual Tour | Local Sightseeing & Temple Darshan",
     "ogDescription": "Complete Ujjain temple parikrama including Mahakaleshwar, Harsiddhi Shaktipeeth, Kalbhairav, Mangalnath, Angareshwar, and Shipra Ramghat Aarti.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -3680,7 +3680,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Omkareshwar Tour Package | Twin Jyotirlinga Yatra",
     "metaDescription": "Book a 2-day twin Jyotirlinga tour package covering Mahakaleshwar Ujjain & Omkareshwar Mamleshwar temples. Private AC transport and hotel stays included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-omkareshwar-tour",
     "ogTitle": "Ujjain Omkareshwar Tour Package | Twin Jyotirlinga",
     "ogDescription": "2 Days spiritual package covering Mahakaleshwar and Omkareshwar Jyotirlingas with boat rides on Narmada.",
     "ogImage": "/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg",
@@ -3784,7 +3784,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Omkareshwar Indore Tour Package | 3-Day Yatra",
     "metaDescription": "Book a 3-day Ujjain Omkareshwar Indore tour package. Cover Mahakaleshwar, Omkareshwar & Mamleshwar, plus Indore's Khajrana, Pitra Parvat, and Lal Bagh.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-indore-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-omkareshwar-indore-tour",
     "ogTitle": "Ujjain Omkareshwar Indore Tour Package | 3 Days",
     "ogDescription": "Combined Jyotirlinga & Indore heritage tour package covering Mahakaleshwar, Omkareshwar, Khajrana, Pitra Parvat, and Lal Bagh.",
     "ogImage": "/assets/images/yatra_omkareshwar_temple_1786193903123.jpg",
@@ -3884,7 +3884,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Omkareshwar Baglamukhi Nalkheda Tour | 3-Day Yatra",
     "metaDescription": "Perform twin Jyotirlinga darshan and Maa Baglamukhi Havan at Nalkheda in a single 3-day tour. Includes hotels, AC cab, and Vedic Pandits.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-omkareshwar-baglamukhi-nalkheda-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-omkareshwar-baglamukhi-nalkheda-tour",
     "ogTitle": "Ujjain Omkareshwar Baglamukhi Nalkheda Tour",
     "ogDescription": "Combined Jyotirlinga and Maa Baglamukhi Nalkheda Shaktipeeth yatra package with Havan arrangements.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -3974,7 +3974,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Baglamukhi Nalkheda Tour Package | 2 Days",
     "metaDescription": "Plan a 2-day tour to Ujjain & Maa Baglamukhi Temple Nalkheda. Perform victory Havans with Vedic Pandits. Private cab transfers included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-baglamukhi-nalkheda-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-baglamukhi-nalkheda-tour",
     "ogTitle": "Ujjain Baglamukhi Nalkheda Tour | 2 Days",
     "ogDescription": "2-Day pilgrimage connecting Ujjain Mahakaleshwar and Maa Baglamukhi Temple in Nalkheda.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4073,7 +4073,7 @@ var rawTours = [
     ],
     "seoTitle": "Ujjain Pashupatinath Sanwariya Seth Tour | 3-Day Package",
     "metaDescription": "Book a 3-day pilgrimage tour covering Mahakaleshwar Ujjain, Pashupatinath Mandsaur, & Sanwariya Seth temple. Private interstate cab and hotels included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/ujjain-pashupatinath-sanwariya-seth-tour",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/ujjain-pashupatinath-sanwariya-seth-tour",
     "ogTitle": "Ujjain Mandsaur Sanwariya Seth Tour | 3 Days",
     "ogDescription": "Combined pilgrimage connecting Ujjain, Mandsaur Pashupatinath, and Chittorgarh Sanwariya Seth.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4210,7 +4210,7 @@ var rawTours = [
     ],
     "seoTitle": "Char Dham Yatra Package Uttarakhand | 10-Day Yatra",
     "metaDescription": "Book a complete 10-day Uttarakhand Char Dham Yatra package covering Yamunotri, Gangotri, Kedarnath, and Badrinath. Standard hotel stays and transport included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/char-dham-yatra-uttarakhand",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/char-dham-yatra-uttarakhand",
     "ogTitle": "Char Dham Yatra Uttarakhand | 10 Days Pilgrimage",
     "ogDescription": "Sacred Himalayan pilgrimage to Gangotri, Yamunotri, Badrinath, and Kedarnath starting from Haridwar.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -4349,7 +4349,7 @@ var rawTours = [
     ],
     "seoTitle": "Panch Kedar Yatra Trek Uttarakhand | 10-Day Pilgrimage",
     "metaDescription": "Join the sacred Panch Kedar Yatra. Complete 10-day trekking guide and package covering Kedarnath, Madmaheshwar, Tungnath, Rudranath, and Kalpeshwar.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/panch-kedar-yatra-uttarakhand",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/panch-kedar-yatra-uttarakhand",
     "ogTitle": "Panch Kedar Yatra Uttarakhand | 5 Sacred Shiva Shrines",
     "ogDescription": "Trekking yatra covering all five Kedar temples in Garhwal Himalayas with guides and stays.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -4457,7 +4457,7 @@ var rawTours = [
     ],
     "seoTitle": "Panch Badri Yatra Uttarakhand | 5 Badri Temples Tour",
     "metaDescription": "Plan your 4-day Panch Badri Yatra covering Vishal Badri, Yogdhyan Badri, Bhavishya Badri, Vridha Badri, and Adi Badri. Book private transport and hotels.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/panch-badri-yatra-uttarakhand",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/panch-badri-yatra-uttarakhand",
     "ogTitle": "Panch Badri Yatra Uttarakhand | 4 Days",
     "ogDescription": "Sacred Vaishnava yatra covering all five Badri temples in Garhwal hills.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -4559,7 +4559,7 @@ var rawTours = [
     ],
     "seoTitle": "84 Mahadev Yatra & Pooja in Ujjain | Chaurasi Mahadev",
     "metaDescription": "Participate in the holy 84 Mahadev Yatra and parikrama in Ujjain. Complete pooja samagri, transport, and Vedic Pandits provided.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/84-mahadev-yatra-pooja-ujjain",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/84-mahadev-yatra-pooja-ujjain",
     "ogTitle": "84 Mahadev Yatra & Pooja Ujjain",
     "ogDescription": "Full Chaurasi Mahadev parikrama circuit and abhishek ritual services in Ujjain.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4641,7 +4641,7 @@ var rawTours = [
     ],
     "seoTitle": "9 Narayana Yatra & Pooja in Ujjain | Nav Narayan",
     "metaDescription": "Plan 9 Narayana Yatra in Ujjain. Complete temple parikrama and Vishnu puja with expert Vedic Pandits. Private cab transfers included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/9-narayana-yatra-pooja-ujjain",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/9-narayana-yatra-pooja-ujjain",
     "ogTitle": "9 Narayana Yatra & Pooja Ujjain",
     "ogDescription": "Sacred parikrama of nine ancient Vishnu temples in Ujjain with puja and transport.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4728,7 +4728,7 @@ var rawTours = [
     ],
     "seoTitle": "Sapt Sagar Yatra & Pooja in Ujjain | Seven Sagars",
     "metaDescription": "Book Sapt Sagar Yatra & Pooja in Ujjain. Complete tour covering the 7 holy water bodies with Vedic Pandits for purification rituals.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/sapt-sagar-yatra-pooja-ujjain",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/sapt-sagar-yatra-pooja-ujjain",
     "ogTitle": "Sapt Sagar Yatra & Pooja Ujjain",
     "ogDescription": "Holy water-body pilgrimage circuit and purification rituals in Ujjain.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4809,7 +4809,7 @@ var rawTours = [
     ],
     "seoTitle": "6 Vinayak Yatra & Pooja in Ujjain | Shad Vinayak",
     "metaDescription": "Plan 6 Vinayak Yatra in Ujjain. Visit six ancient Ganesha temples consecrated by Lord Rama. Book transport and Ganesh puja online.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/6-vinayak-yatra-pooja-ujjain",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/6-vinayak-yatra-pooja-ujjain",
     "ogTitle": "6 Vinayak Yatra & Pooja Ujjain",
     "ogDescription": "Sacred parikrama of 6 ancient Ganesha temples in Ujjain with modak offerings.",
     "ogImage": "/assets/images/header_bg_spiritual_1786196057015.jpg",
@@ -4909,7 +4909,7 @@ var rawTours = [
     ],
     "seoTitle": "Kedarkantha Trek Package | Winter Snow Trek Uttarakhand",
     "metaDescription": "Book a 4-day winter snow Kedarkantha Trek starting from Sankri. All camping equipment, guides, meals, and permits included in the package.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/sankri-kedarkantha-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/sankri-kedarkantha-trek",
     "ogTitle": "Kedarkantha Winter Snow Trek | 4 Days",
     "ogDescription": "Fabulous snow trekking expedition in Garhwal Himalayas with campsites at Juda Ka Talab.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5015,7 +5015,7 @@ var rawTours = [
     ],
     "seoTitle": "Pangarchulla Peak Trek Package | 5-Day Summit",
     "metaDescription": "Join the challenging 5-day Pangarchulla Trek near Joshimath. Scale up to 15,069 ft with professional mountain guides and safety kits.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/joshimath-pangarchulla-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/joshimath-pangarchulla-trek",
     "ogTitle": "Pangarchulla Peak Summit Trek | Uttarakhand",
     "ogDescription": "Climb Pangarchulla Peak (15,069 ft) for ultimate Himalayan snow vistas.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5121,7 +5121,7 @@ var rawTours = [
     ],
     "seoTitle": "Kuari Pass Trek Package | Lord Curzon's Trail",
     "metaDescription": "Plan your 5-day Kuari Pass Trek. beginner-friendly trail starting from Joshimath. Includes standard tents, guides, forest permits, and vegetarian meals.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/joshimath-kuari-pass-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/joshimath-kuari-pass-trek",
     "ogTitle": "Kuari Pass Trek | Uttarakhand Himalayas",
     "ogDescription": "5-Day trekking circuit to Kuari Pass with panoramic Nanda Devi views.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5221,7 +5221,7 @@ var rawTours = [
     ],
     "seoTitle": "Kagbhusundi Tal Trek Package | 4-Day Offbeat Trek",
     "metaDescription": "Book the 4-day Kagbhusundi Trek in Chamoli. Visit the emerald holy lake at 15,500 ft. High-grade camps, guides, and meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-kagbhusundi-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/chamoli-kagbhusundi-trek",
     "ogTitle": "Kagbhusundi Tal Trek | Chamoli Garhwal",
     "ogDescription": "Explore the legendary emerald triangular lake beneath Hathi Parbat.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5322,7 +5322,7 @@ var rawTours = [
     ],
     "seoTitle": "Roopkund Trek Package | Mystery Skeleton Lake",
     "metaDescription": "Embark on the 4-day Roopkund Trek in Chamoli. Visit the Skeleton Lake at 15,750 ft. Experienced trek leaders, alpine camps, and meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-roopkund-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/chamoli-roopkund-trek",
     "ogTitle": "Roopkund Skeleton Lake Trek | Chamoli",
     "ogDescription": "Climb to Roopkund Lake (15,750 ft) via Ali and Bedni Bugyal meadows.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5434,7 +5434,7 @@ var rawTours = [
     ],
     "seoTitle": "Pindari Glacier Trek Package | 6-Day Glacial Yatra",
     "metaDescription": "Join the classic 6-day Pindari Glacier Trek. Trek along Pindar river to Zero Point (12,010 ft). Local guides, tents, and Kumaoni meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/bageshwar-pindari-glacier-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/bageshwar-pindari-glacier-trek",
     "ogTitle": "Pindari Glacier Trek | Kumaon Himalayas",
     "ogDescription": "Venture to the snout of Pindari Glacier in Uttarakhand's scenic Kumaon hills.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5540,7 +5540,7 @@ var rawTours = [
     ],
     "seoTitle": "Dayara Bugyal Trek Package | Alpine Meadow Trek",
     "metaDescription": "Embark on the 5-day Dayara Bugyal Trek in Uttarkashi. Walk the rolling grasslands at 12,100 ft. All camping equipment, guides, and meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/uttarkashi-dayara-bugyal-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/uttarkashi-dayara-bugyal-trek",
     "ogTitle": "Dayara Bugyal Trek | Uttarkashi Uttarakhand",
     "ogDescription": "Vast rolling alpine meadows of Garhwal with clear views of Mt. Bandarpoonch.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5660,7 +5660,7 @@ var rawTours = [
     ],
     "seoTitle": "Satopanth Tal Trek Package | 8-Day Sacred Trek",
     "metaDescription": "Plan the holy 8-day Satopanth Tal Trek past Badrinath. Trek on glaciers to the Trinity's lake. All high-altitude camps, guides, and meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-satopanth-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/chamoli-satopanth-trek",
     "ogTitle": "Satopanth Tal Trek | Badrinath Garhwal",
     "ogDescription": "Sacred high-altitude triangular lake trek beneath Swargarohini and Neelkanth peaks.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5772,7 +5772,7 @@ var rawTours = [
     ],
     "seoTitle": "Valley of Flowers Trek Package | Hemkund Sahib Tour",
     "metaDescription": "Book a 6-day Valley of Flowers & Hemkund Sahib Trek from Govindghat. Includes National Park tickets, local guides, stays, and meals.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/chamoli-valley-of-flowers-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/chamoli-valley-of-flowers-trek",
     "ogTitle": "Valley of Flowers & Hemkund Sahib Trek",
     "ogDescription": "6-Day monsoon trekking to the UNESCO flower valley and Hemkund Sahib lake.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -5882,7 +5882,7 @@ var rawTours = [
     ],
     "seoTitle": "Gaumukh Trek Package | Source of Ganga River",
     "metaDescription": "Join the 6-day Gaumukh Trek starting from Gangotri Temple. Walk to the snout of Gangotri Glacier. National Park permits, camps, guides, and meals included.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/gangotri-gaumukh-trek",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/gangotri-gaumukh-trek",
     "ogTitle": "Gaumukh Snout Trek | Uttarakhand Himalayas",
     "ogDescription": "Venture to the source of Ganga at Gaumukh glacier snout.",
     "ogImage": "/assets/images/tour_char_dham_1786196121631.jpg",
@@ -6043,7 +6043,7 @@ var rawTours = [
     ],
     "seoTitle": "Braj Dham Yatra Package | Mathura Vrindavan Barsana",
     "metaDescription": "Book the complete 4 Days / 3 Nights Braj Dham Yatra covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon & Govardhan with comfortable transport and guidance.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/4-days-braj-dham-yatra",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/4-days-braj-dham-yatra",
     "ogTitle": "Braj Dham Yatra | Mathura, Vrindavan, Barsana & Govardhan",
     "ogDescription": "A comfortable 4-day Braj pilgrimage covering Mathura, Gokul, Vrindavan, Barsana, Nandgaon and Govardhan without rushing your sacred journey.",
     "ogImage": "/assets/images/tour_braj_dham_1788677790057.jpg",
@@ -6268,7 +6268,7 @@ var rawTours = [
     ],
     "seoTitle": "Varanasi Prayagraj Ayodhya Tour Package | 4 Days Yatra",
     "metaDescription": "Plan a 4 Days / 3 Nights Varanasi to Varanasi spiritual yatra covering Sarnath, Prayagraj and Ayodhya with Aastha Sey Raasta Seva. Enquire for package details and current price.",
-    "canonicalUrl": "https://aasthaserasta.com/spiritual-tours/varanasi-prayagraj-ayodhya-tour-package",
+    "canonicalUrl": "https://aasthasaysrasta.com/spiritual-tours/varanasi-prayagraj-ayodhya-tour-package",
     "ogTitle": "Varanasi, Sarnath, Prayagraj & Ayodhya \u2014 4 Days / 3 Nights Yatra",
     "ogDescription": "Experience a spiritually rich journey from Kashi and Sarnath to sacred Prayagraj and Ayodhya, returning to Varanasi with comfortable transport and yatra coordination.",
     "ogImage": "/assets/images/tour_varanasi_ayodhya_1788685500088.jpg",
@@ -7064,7 +7064,7 @@ var getDirname = () => {
   return import_path.default.dirname(filename);
 };
 var _dirname = getDirname();
-var BASE_URL = process.env.APP_URL || "https://aasthaserasta.com";
+var BASE_URL = process.env.APP_URL || "https://aasthasaysrasta.com";
 var TODAY = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
 function escapeXml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -10447,7 +10447,7 @@ async function startServer() {
     res.send(xml);
   });
   app.get("/robots.txt", (req, res) => {
-    const baseUrl = process.env.APP_URL || "https://aasthaserasta.com";
+    const baseUrl = process.env.APP_URL || "https://aasthasaysrasta.com";
     const content = `User-agent: *
 Allow: /
 Disallow: /admin
@@ -10457,6 +10457,19 @@ Sitemap: ${baseUrl}/sitemap.xml
 `;
     res.header("Content-Type", "text/plain");
     res.send(content);
+  });
+  app.get("/google:code.html", (req, res) => {
+    const filename = `google${req.params.code}.html`;
+    const publicPath = import_path2.default.join(process.cwd(), "public", filename);
+    const distPath = import_path2.default.join(process.cwd(), "dist", filename);
+    if (import_fs2.default.existsSync(publicPath)) {
+      return res.sendFile(publicPath);
+    }
+    if (import_fs2.default.existsSync(distPath)) {
+      return res.sendFile(distPath);
+    }
+    res.header("Content-Type", "text/html");
+    res.send(`google-site-verification: ${filename}`);
   });
   if (process.env.NODE_ENV !== "production") {
     const vite = await (0, import_vite.createServer)({

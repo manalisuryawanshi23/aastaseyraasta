@@ -17,7 +17,7 @@ const getDirname = () => {
 };
 const _dirname = getDirname();
 
-const BASE_URL = process.env.APP_URL || 'https://aasthaserasta.com';
+const BASE_URL = process.env.APP_URL || 'https://aasthasaysrasta.com';
 const TODAY = new Date().toISOString().split('T')[0];
 
 function escapeXml(str: string): string {

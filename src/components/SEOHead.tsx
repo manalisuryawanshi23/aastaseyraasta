@@ -45,7 +45,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       el.setAttribute('content', content);
     };
 
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://aasthaserasta.com';
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://aasthasaysrasta.com';
     const currentUrl = canonicalUrl || (typeof window !== 'undefined' ? window.location.href.split('?')[0] : origin);
 
     // Resolve absolute image URL for Social Media previews (WhatsApp, Facebook, Twitter, LinkedIn, iMessage)

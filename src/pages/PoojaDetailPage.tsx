@@ -224,7 +224,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         }
         canonicalUrl={
           pooja.canonicalUrl ||
-          `${typeof window !== 'undefined' ? window.location.origin : 'https://aasthaserasta.com'}/pooja/${pooja.slug}`
+          `${typeof window !== 'undefined' ? window.location.origin : 'https://aasthasaysrasta.com'}/pooja/${pooja.slug}`
         }
         ogImage={pooja.featuredImage}
         ogImageAlt={`${pooja.name} - ${pooja.templeName}, ${pooja.city}`}

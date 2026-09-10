@@ -94,7 +94,7 @@ export const DestinationListingPage: React.FC<DestinationListingPageProps> = ({ 
         title={generateDestinationListingTitle()}
         description="Explore sacred pilgrimage destinations in Madhya Pradesh and Uttarakhand. Complete travel guides for Ujjain Mahakaleshwar, Omkareshwar Jyotirlinga, Maa Baglamukhi Nalkheda, and Indore with Aastha Sey Raasta."
         keywords="Sacred Shrines Ujjain, Omkareshwar Jyotirlinga, Baglamukhi Nalkheda, Pilgrimage Destinations Madhya Pradesh, Char Dham Yatra, Mahakaleshwar Temple Guide"
-        canonicalUrl="https://aasthaserasta.com/destinations"
+        canonicalUrl="https://aasthasaysrasta.com/destinations"
         ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt="Sacred Pilgrimage Destinations — Ujjain, Omkareshwar, Nalkheda"
       />

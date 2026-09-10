@@ -111,7 +111,7 @@ export const TourListingPage: React.FC<TourListingPageProps> = ({ onOpenBooking 
         title={generateTourListingTitle(selectedCategory, searchTerm)}
         description="Book customized spiritual pilgrimage tours in Ujjain, Omkareshwar, Baglamukhi Nalkheda, Indore, and Char Dham Uttarakhand with private AC transport and hotel stays."
         keywords="Spiritual Tours Ujjain, Omkareshwar Yatra, Char Dham Yatra Package, 84 Mahadev Yatra, Ujjain Pilgrimage Tour"
-        canonicalUrl="https://aasthaserasta.com/spiritual-tours"
+        canonicalUrl="https://aasthasaysrasta.com/spiritual-tours"
         ogImage="/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg"
         ogImageAlt="Spiritual Tours & Yatra Packages in Ujjain & Central India"
       />

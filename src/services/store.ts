@@ -1305,6 +1305,7 @@ export class StoreService {
     // 1. Direct Master Admin Authentication Match
     const isAdminUserIdentifier =
       cleanEmail === 'admin' ||
+      cleanEmail === 'admin@aasthasaysrasta.com' ||
       cleanEmail === 'admin@aasthaseyraasta.com' ||
       cleanEmail === 'admin@aasthaseva.com' ||
       cleanEmail === 'admin@aasthaserasta.com' ||
@@ -1323,7 +1324,7 @@ export class StoreService {
       const adminUser: StaffUser = {
         id: 'staff-admin-1',
         name: 'Aastha Super Admin',
-        email: 'admin@aasthaseyraasta.com',
+        email: 'admin@aasthasaysrasta.com',
         role: 'Admin',
         passcode: 'admin123',
         phone: '+91 98260 00001',
@@ -1350,6 +1351,7 @@ export class StoreService {
     // 2. Direct Master Manager Authentication Match
     const isManagerUserIdentifier =
       cleanEmail === 'manager' ||
+      cleanEmail === 'manager@aasthasaysrasta.com' ||
       cleanEmail === 'manager@aasthaseyraasta.com' ||
       cleanEmail === 'manager@aasthaseva.com' ||
       cleanEmail === 'manager@aasthaserasta.com' ||

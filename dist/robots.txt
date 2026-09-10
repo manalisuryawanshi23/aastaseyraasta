@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://aasthaserasta.com/sitemap.xml
+Sitemap: https://aasthasaysrasta.com/sitemap.xml

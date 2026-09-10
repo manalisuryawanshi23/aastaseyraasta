@@ -8,9 +8,9 @@ export interface SchemaFAQItem {
   answer: string;
 }
 
-const DEFAULT_BASE_URL = 'https://aasthaserasta.com';
+const DEFAULT_BASE_URL = 'https://aasthasaysrasta.com';
 const ORGANIZATION_NAME = 'Aastha Sey Raasta Seva';
-const LOGO_URL = 'https://aasthaserasta.com/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+const LOGO_URL = 'https://aasthasaysrasta.com/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
 
 export function getBaseUrl(): string {
   if (typeof window !== 'undefined' && window.location.origin) {
@@ -26,7 +26,7 @@ export function buildLocalBusinessSchema(customSettings?: any) {
   const baseUrl = getBaseUrl();
   const phone = customSettings?.phone1 || '+91 98765 43210';
   const altPhone = customSettings?.phone2 || '+91 91111 22233';
-  const email = customSettings?.email || 'contact@aasthaserasta.com';
+  const email = customSettings?.email || 'contact@aasthasaysrasta.com';
   const businessName = customSettings?.businessName || ORGANIZATION_NAME;
   const addressStr = customSettings?.address || 'Mahakal Marg, Near Ramghat & Mahakaleshwar Temple';
   const city = customSettings?.city || 'Ujjain';

@@ -72,7 +72,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ onOpenBooking }) => {
       <SEOHead
         title="Spiritual Photo Gallery - Sacred Darshan, Vedic Pooja & Pilgrimage Photos | Aastha Sey Raasta Seva"
         description="Explore the sacred photo gallery of Mahakaleshwar Jyotirlinga, Omkareshwar, Vedic Poojas, Ramghat Aarti, and Himalayan Yatras."
-        canonicalUrl="https://aasthaserasta.com/gallery"
+        canonicalUrl="https://aasthasaysrasta.com/gallery"
         ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
       />
 

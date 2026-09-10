@@ -323,7 +323,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
     <div className="space-y-16 pb-12">
       <SEOHead
         title="Official Vedic Pooja Booking & Spiritual Tours in Ujjain"
-        canonicalUrl="https://aasthaserasta.com/"
+        canonicalUrl="https://aasthasaysrasta.com/"
         ogImage="/assets/images/header_bg_spiritual_1786196057015.jpg"
         ogImageAlt="Aastha Sey Raasta Seva - Official Pooja Services & Spiritual Tours Ujjain"
         jsonLd={[faqSchema]}

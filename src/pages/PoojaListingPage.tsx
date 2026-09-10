@@ -95,7 +95,7 @@ export const PoojaListingPage: React.FC<PoojaListingPageProps> = ({ onOpenBookin
         title={generatePoojaListingTitle(activeCategoryName, searchTerm)}
         description="Book authentic Vedic Poojas in Ujjain including Rudrabhishek, Bhat Pooja at Angareshwar & Mangalnath, Mahamrityunjaya Jaap, Baglamukhi Havan, and Pitru Dosh Shanti."
         keywords="Ujjain Pooja Services, Mahakaleshwar Rudrabhishek, Bhat Pooja Mangalnath, Baglamukhi Havan Nalkheda, Pitru Dosh Shanti"
-        canonicalUrl="https://aasthaserasta.com/pooja-services"
+        canonicalUrl="https://aasthasaysrasta.com/pooja-services"
         ogImage="/assets/images/pooja_rudrabhishek_1786196070818.jpg"
         ogImageAlt="Vedic Pooja Services in Ujjain Mahakaleshwar"
       />

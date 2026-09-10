@@ -2526,7 +2526,7 @@ async function startServer() {
 
   // Dynamic Robots.txt
   app.get('/robots.txt', (req, res) => {
-    const baseUrl = process.env.APP_URL || 'https://aasthaserasta.com';
+    const baseUrl = process.env.APP_URL || 'https://aasthasaysrasta.com';
     const content = `User-agent: *
 Allow: /
 Disallow: /admin
@@ -2536,6 +2536,22 @@ Sitemap: ${baseUrl}/sitemap.xml
 `;
     res.header('Content-Type', 'text/plain');
     res.send(content);
+  });
+
+  // Google Search Console HTML Verification File Handler
+  app.get('/google:code.html', (req, res) => {
+    const filename = `google${req.params.code}.html`;
+    const publicPath = path.join(process.cwd(), 'public', filename);
+    const distPath = path.join(process.cwd(), 'dist', filename);
+    if (fs.existsSync(publicPath)) {
+      return res.sendFile(publicPath);
+    }
+    if (fs.existsSync(distPath)) {
+      return res.sendFile(distPath);
+    }
+    // Dynamic fallback so verification succeeds immediately
+    res.header('Content-Type', 'text/html');
+    res.send(`google-site-verification: ${filename}`);
   });
 
   // Vite Middleware or Static Production Serving

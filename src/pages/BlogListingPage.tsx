@@ -42,7 +42,7 @@ export const BlogListingPage: React.FC = () => {
         title={generateBlogListingTitle()}
         description="Read detailed articles on Rudrabhishek vidhi, Bhat Pooja significance at Mangalnath, Baglamukhi Havan Mahatmyam, and Ujjain pilgrimage tips."
         keywords="Spiritual Blog Ujjain, Vedic Rituals Guide, Rudrabhishek Vidhi, Bhat Pooja Mahatmyam, Baglamukhi Havan Secrets"
-        canonicalUrl="https://aasthaserasta.com/blog"
+        canonicalUrl="https://aasthasaysrasta.com/blog"
         ogImage="/assets/images/pooja_rudrabhishek_1786196070818.jpg"
         ogImageAlt="Spiritual Articles and Vedic Guides"
       />
