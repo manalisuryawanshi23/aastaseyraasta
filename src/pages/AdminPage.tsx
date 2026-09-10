@@ -53,6 +53,12 @@ import {
   Mail,
   Eye,
   EyeOff,
+  AlertTriangle,
+  WifiOff,
+  Power,
+  ToggleLeft,
+  ToggleRight,
+  RefreshCw,
 } from 'lucide-react';
 
 const initialSampleLeads: Lead[] = [
@@ -109,7 +115,7 @@ const initialSampleLeads: Lead[] = [
   },
 ];
 
-type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials' | 'SpecialOffers' | 'AstrologyConsultations';
+type AdminTab = 'Overview' | 'Leads' | 'Blog' | 'Services' | 'DataExport' | 'Informative' | 'BrandColors' | 'Socials' | 'Staff' | 'Gallery' | 'Testimonials' | 'Darshan' | 'SpecialOffers' | 'AstrologyConsultations';
 
 interface AdminPageProps {
   defaultPath?: string;
@@ -206,6 +212,59 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   const blogs = useMemo(() => StoreService.getBlogPosts(false), [activeTab, syncTick]);
   const poojas = useMemo(() => StoreService.getPoojas(false), [activeTab, syncTick]);
   const settings = useMemo(() => StoreService.getSettings(), [activeTab, syncTick]);
+
+  // Maintenance Mode state & handlers
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState<boolean>(() => !!settings.isMaintenanceMode);
+  const [maintenanceMessage, setMaintenanceMessage] = useState<string>(() => settings.maintenanceMessage || '');
+  const [isSavingMaintenance, setIsSavingMaintenance] = useState(false);
+  const [maintenanceSuccessNotice, setMaintenanceSuccessNotice] = useState('');
+
+  useEffect(() => {
+    setIsMaintenanceMode(!!settings.isMaintenanceMode);
+    if (settings.maintenanceMessage !== undefined) {
+      setMaintenanceMessage(settings.maintenanceMessage);
+    }
+  }, [settings.isMaintenanceMode, settings.maintenanceMessage]);
+
+  const handleToggleMaintenance = async (forceState?: boolean) => {
+    const nextVal = typeof forceState === 'boolean' ? forceState : !isMaintenanceMode;
+    setIsSavingMaintenance(true);
+    try {
+      StoreService.saveSettings({
+        ...settings,
+        isMaintenanceMode: nextVal,
+        maintenanceMessage: maintenanceMessage.trim() || 'We are currently performing scheduled maintenance to enhance your spiritual experience. We will be back online shortly.',
+      });
+      setIsMaintenanceMode(nextVal);
+      setMaintenanceSuccessNotice(
+        nextVal
+          ? 'Maintenance Mode activated! Public visitors will now see the 503 Maintenance page.'
+          : 'Maintenance Mode deactivated! Website is now live for all visitors.'
+      );
+      setTimeout(() => setMaintenanceSuccessNotice(''), 6000);
+    } catch (err) {
+      console.error('Failed to update maintenance mode:', err);
+    } finally {
+      setIsSavingMaintenance(false);
+    }
+  };
+
+  const handleSaveMaintenanceMessage = async () => {
+    setIsSavingMaintenance(true);
+    try {
+      StoreService.saveSettings({
+        ...settings,
+        isMaintenanceMode,
+        maintenanceMessage: maintenanceMessage.trim(),
+      });
+      setMaintenanceSuccessNotice('Custom maintenance message saved successfully.');
+      setTimeout(() => setMaintenanceSuccessNotice(''), 4000);
+    } catch (err) {
+      console.error('Failed to save maintenance message:', err);
+    } finally {
+      setIsSavingMaintenance(false);
+    }
+  };
 
   // Lead filtering
   const [leadSearch, setLeadSearch] = useState('');
@@ -439,6 +498,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   }
 
   const userPerms = currentStaffUser?.permissions;
+  const canControlMaintenance = userPerms?.canManageSettings || currentStaffUser?.role === 'SuperAdmin' || currentStaffUser?.role === 'Admin';
 
   // AUTHENTICATED ADMIN PANEL LAYOUT
   return (
@@ -1063,25 +1123,170 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           {/* Live Database Health Indicator */}
           <AdminDbStatusBanner />
 
+          {/* Persistent Maintenance Mode Alert (Visible across all tabs when ON) */}
+          {isMaintenanceMode && (
+            <div className="p-4 rounded-2xl bg-amber-500/15 border-2 border-amber-500/40 text-amber-950 dark:text-amber-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-amber-500/25 text-amber-700 dark:text-amber-300 shrink-0 animate-pulse">
+                  <AlertTriangle className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-sm">Website is currently in Maintenance Mode</span>
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-amber-600 text-white uppercase tracking-wider shadow-sm">
+                      503 Active
+                    </span>
+                  </div>
+                  <p className="text-xs text-amber-900/80 dark:text-amber-200/80 mt-0.5">
+                    Public visitors see the sacred maintenance screen. Admin login & management routes remain fully accessible.
+                  </p>
+                </div>
+              </div>
+              {canControlMaintenance && (
+                <button
+                  onClick={() => handleToggleMaintenance(false)}
+                  disabled={isSavingMaintenance}
+                  className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow self-start sm:self-auto shrink-0"
+                >
+                  <Power className="w-3.5 h-3.5" />
+                  <span>Go Live Now</span>
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Maintenance Success Feedback Toast */}
+          {maintenanceSuccessNotice && (
+            <div className="p-3.5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-950 dark:text-emerald-100 text-xs font-bold flex items-center gap-2.5 shadow-sm animate-in fade-in duration-200">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span>{maintenanceSuccessNotice}</span>
+            </div>
+          )}
+
           {accessDeniedMessage && (
             <div className="p-4 rounded-2xl bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 text-xs font-bold flex items-center gap-2 shadow-sm animate-pulse">
               <ShieldAlert className="w-5 h-5 text-red-600 shrink-0" />
               <span>{accessDeniedMessage}</span>
             </div>
           )}
+
           {/* TAB 1: OVERVIEW DASHBOARD */}
           {activeTab === 'Overview' && userPerms?.canViewOverview && (
-            <AdminDashboardOverview
-              leads={leads}
-              blogCount={blogs.length}
-              poojaCount={poojas.length}
-              galleryCount={StoreService.getGallery().length}
-              testimonialsCount={StoreService.getTestimonials().length}
-              bannerActive={!!settings.announcementBanner?.isActive}
-              bannerText={settings.announcementBanner?.text}
-              onNavigateTab={(tab) => changeTab(tab as any)}
-              role={currentStaffUser?.role}
-            />
+            <div className="space-y-8">
+              {/* Maintenance Mode Quick Control Card */}
+              {canControlMaintenance && (
+                <div
+                  className={`p-6 rounded-3xl border transition-all duration-300 ${
+                    isMaintenanceMode
+                      ? 'bg-gradient-to-br from-amber-500/15 via-amber-500/5 to-transparent border-amber-500/40 shadow-lg shadow-amber-500/5'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 shadow-sm'
+                  }`}
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div className="flex items-start gap-4">
+                      <div
+                        className={`p-3 rounded-2xl shrink-0 ${
+                          isMaintenanceMode
+                            ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20'
+                            : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300'
+                        }`}
+                      >
+                        {isMaintenanceMode ? (
+                          <AlertTriangle className="w-6 h-6 animate-pulse" />
+                        ) : (
+                          <Power className="w-6 h-6" />
+                        )}
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h4 className="text-base font-bold text-stone-900 dark:text-stone-100">
+                            Website Availability & Maintenance Mode
+                          </h4>
+                          {isMaintenanceMode ? (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                              Maintenance Active (503)
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+                              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                              Website is Live
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed max-w-2xl">
+                          {isMaintenanceMode
+                            ? 'Public visitors currently see the 503 Maintenance Page. Admin workspace, database sync, and APIs remain operational.'
+                            : 'Your website is open to all visitors. Turning Maintenance Mode ON will immediately intercept public visitors with a friendly 503 spiritual notice while keeping admin access open.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 self-start lg:self-center shrink-0">
+                      <button
+                        onClick={() => handleToggleMaintenance()}
+                        disabled={isSavingMaintenance}
+                        className={`px-5 py-2.5 rounded-2xl font-bold text-xs transition-all duration-200 flex items-center gap-2 shadow-sm ${
+                          isMaintenanceMode
+                            ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                            : 'bg-amber-600 hover:bg-amber-700 text-white shadow-amber-600/20'
+                        }`}
+                      >
+                        {isSavingMaintenance ? (
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                        ) : isMaintenanceMode ? (
+                          <Power className="w-4 h-4" />
+                        ) : (
+                          <AlertTriangle className="w-4 h-4" />
+                        )}
+                        <span>{isMaintenanceMode ? 'Deactivate (Go Live)' : 'Activate Maintenance Mode'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Custom notice editor */}
+                  <div className="mt-5 pt-5 border-t border-stone-200/70 dark:border-stone-800/80">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                      <label className="text-xs font-bold text-stone-700 dark:text-stone-300">
+                        Devotee Notice Message (Displayed on 503 page)
+                      </label>
+                      <span className="text-[11px] text-stone-400">
+                        Customize what devotees see when maintenance is active
+                      </span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                      <input
+                        type="text"
+                        value={maintenanceMessage}
+                        onChange={(e) => setMaintenanceMessage(e.target.value)}
+                        placeholder="e.g. We are currently performing scheduled maintenance to enhance your spiritual experience. We will be back online shortly."
+                        className="flex-1 px-4 py-2.5 rounded-xl text-xs bg-stone-50 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
+                      <button
+                        onClick={handleSaveMaintenanceMessage}
+                        disabled={isSavingMaintenance}
+                        className="px-4 py-2.5 rounded-xl bg-stone-800 dark:bg-stone-700 hover:bg-stone-900 dark:hover:bg-stone-600 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shrink-0"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>Update Notice</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <AdminDashboardOverview
+                leads={leads}
+                blogCount={blogs.length}
+                poojaCount={poojas.length}
+                galleryCount={StoreService.getGallery().length}
+                testimonialsCount={StoreService.getTestimonials().length}
+                bannerActive={!!settings.announcementBanner?.isActive}
+                bannerText={settings.announcementBanner?.text}
+                onNavigateTab={(tab) => changeTab(tab as any)}
+                role={currentStaffUser?.role}
+              />
+            </div>
           )}
 
           {/* TAB 2: DEVOTEE LEADS CRM */}

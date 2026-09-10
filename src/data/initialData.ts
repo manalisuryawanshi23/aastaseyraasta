@@ -68,6 +68,8 @@ export const initialSiteSettings: SiteSettings = {
     heroGradientEnd: '#1c1917',
     presetName: 'Sacred Saffron (Default)',
   },
+  isMaintenanceMode: false,
+  maintenanceMessage: 'We are currently performing scheduled maintenance to enhance your spiritual experience. We will be back online shortly. For urgent inquiries or pooja bookings, please contact us on WhatsApp.',
 };
 
 export const initialPoojaCategories: PoojaCategory[] = [

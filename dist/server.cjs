@@ -88,7 +88,9 @@ var initialSiteSettings = {
     heroGradientStart: "#451a03",
     heroGradientEnd: "#1c1917",
     presetName: "Sacred Saffron (Default)"
-  }
+  },
+  isMaintenanceMode: false,
+  maintenanceMessage: "We are currently performing scheduled maintenance to enhance your spiritual experience. We will be back online shortly. For urgent inquiries or pooja bookings, please contact us on WhatsApp."
 };
 var initialPoojas = [
   {
@@ -7242,6 +7244,8 @@ var TABLE_SCHEMAS = [
     trust_stats_json LONGTEXT,
     about_mission_text TEXT,
     brand_palette_json LONGTEXT,
+    is_maintenance_mode TINYINT(1) DEFAULT 0,
+    maintenance_message TEXT,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
   `CREATE TABLE IF NOT EXISTS poojas (
@@ -7539,7 +7543,8 @@ async function autoInitializeDatabase() {
       faqs: 0,
       gallery: 0,
       testimonials: 0,
-      adminUsers: 0
+      adminUsers: 0,
+      darshan: 0
     },
     error: null
   };
@@ -7604,6 +7609,20 @@ async function autoInitializeDatabase() {
           console.log("[AUTO-DB] poojas table is missing columns. Running ALTER migrations...", poojasAlters);
           await execute(`ALTER TABLE poojas ${poojasAlters.join(", ")}`);
           console.log("[AUTO-DB] poojas table schema successfully updated!");
+        }
+        const settingsColumns = await query("SHOW COLUMNS FROM site_settings");
+        const settingsColNames = settingsColumns.map((col) => col.Field);
+        const settingsAlters = [];
+        if (!settingsColNames.includes("is_maintenance_mode")) {
+          settingsAlters.push("ADD COLUMN is_maintenance_mode TINYINT(1) DEFAULT 0");
+        }
+        if (!settingsColNames.includes("maintenance_message")) {
+          settingsAlters.push("ADD COLUMN maintenance_message TEXT");
+        }
+        if (settingsAlters.length > 0) {
+          console.log("[AUTO-DB] site_settings table is missing columns. Running ALTER migrations...", settingsAlters);
+          await execute(`ALTER TABLE site_settings ${settingsAlters.join(", ")}`);
+          console.log("[AUTO-DB] site_settings table schema successfully updated!");
         }
       } catch (e) {
         console.error("[AUTO-DB WARNING] Failed to run schema check or migrations for tours/poojas:", e);
@@ -8192,7 +8211,7 @@ for (const envPath of envPaths) {
   }
 }
 import_dotenv.default.config();
-var uploadDir = import_path2.default.resolve("public/assets/images");
+var uploadDir = process.env.UPLOAD_PATH ? import_path2.default.resolve(process.env.UPLOAD_PATH) : import_path2.default.resolve("public/assets/images");
 if (!import_fs2.default.existsSync(uploadDir)) {
   import_fs2.default.mkdirSync(uploadDir, { recursive: true });
 }
@@ -8220,7 +8239,10 @@ async function startServer() {
       res.setHeader("Cache-Control", "public, max-age=2592000, stale-while-revalidate=86400");
     }
   };
-  app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images"), staticCacheOptions));
+  app.use("/assets/images", import_express.default.static(uploadDir, staticCacheOptions));
+  if (process.env.UPLOAD_PATH) {
+    app.use("/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/images"), staticCacheOptions));
+  }
   app.use("/assets/audio", import_express.default.static(import_path2.default.join(process.cwd(), "public/assets/audio"), staticCacheOptions));
   app.use("/src/assets/images", import_express.default.static(import_path2.default.join(process.cwd(), "src/assets/images"), staticCacheOptions));
   app.use(import_express.default.static(import_path2.default.join(process.cwd(), "public"), staticCacheOptions));
@@ -8230,6 +8252,177 @@ async function startServer() {
   app.get("/favicon.svg", (req, res) => {
     res.type("image/svg+xml");
     res.sendFile(import_path2.default.join(process.cwd(), "public/favicon.svg"));
+  });
+  let maintenanceCache = {
+    isOn: false,
+    message: "We are currently performing scheduled maintenance. We'll be back shortly!",
+    lastChecked: 0
+  };
+  const MAINTENANCE_CACHE_TTL_MS = 3e4;
+  async function getMaintenanceStatus() {
+    const now = Date.now();
+    if (now - maintenanceCache.lastChecked < MAINTENANCE_CACHE_TTL_MS) {
+      return { isOn: maintenanceCache.isOn, message: maintenanceCache.message };
+    }
+    if (isDbConnected()) {
+      try {
+        const rows = await query("SELECT is_maintenance_mode, maintenance_message FROM site_settings WHERE id = ?", ["default"]);
+        if (rows.length > 0) {
+          maintenanceCache = {
+            isOn: Boolean(rows[0].is_maintenance_mode),
+            message: rows[0].maintenance_message || maintenanceCache.message,
+            lastChecked: now
+          };
+        }
+      } catch (e) {
+        console.error("[MAINTENANCE] Failed to read maintenance status from DB:", e);
+        maintenanceCache.lastChecked = now;
+      }
+    }
+    return { isOn: maintenanceCache.isOn, message: maintenanceCache.message };
+  }
+  function invalidateMaintenanceCache() {
+    maintenanceCache.lastChecked = 0;
+  }
+  function buildMaintenancePage(message) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>\u{1F6D5} Website Under Maintenance \u2014 Aastha Sey Raasta Seva</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 60% 0%, #451a03 0%, #1c1917 55%, #0c0a09 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; color: #e7e5e4; padding: 24px;
+      overflow: hidden;
+    }
+    .mandala-bg {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; opacity: 0.04;
+    }
+    .mandala-bg svg { width: 110vw; height: 110vh; }
+    .card {
+      position: relative; z-index: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(217,119,6,0.25);
+      border-radius: 28px;
+      padding: 56px 48px;
+      max-width: 560px; width: 100%;
+      text-align: center;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .om {
+      font-size: 3.5rem; line-height: 1;
+      background: linear-gradient(135deg, #f59e0b, #ef4444, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px rgba(245,158,11,0.5));
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { filter: drop-shadow(0 0 16px rgba(245,158,11,0.4)); }
+      50% { filter: drop-shadow(0 0 32px rgba(245,158,11,0.8)); }
+    }
+    .title {
+      font-family: 'Noto Serif', serif;
+      font-size: 2rem; font-weight: 700;
+      color: #fef3c7; margin: 20px 0 8px;
+      line-height: 1.25;
+    }
+    .subtitle {
+      font-size: 0.85rem; color: #a8a29e; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 28px;
+    }
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, #d97706, transparent);
+      margin: 0 auto 28px;
+    }
+    .message {
+      font-size: 1rem; line-height: 1.7;
+      color: #d6d3d1; margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(217,119,6,0.15);
+      border: 1px solid rgba(217,119,6,0.35);
+      border-radius: 999px;
+      padding: 8px 20px;
+      font-size: 0.78rem; font-weight: 600;
+      color: #fbbf24; text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; animation: blink 1.2s ease infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+    .contact {
+      margin-top: 36px; font-size: 0.8rem; color: #78716c;
+    }
+    .contact a { color: #fbbf24; text-decoration: none; }
+    .contact a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="mandala-bg">
+    <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="400" cy="400" r="380" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="400" cy="400" r="300" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="400" cy="400" r="220" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="400" cy="400" r="140" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="400" cy="400" r="60" fill="none" stroke="white" stroke-width="1"/>
+      ${Array.from({ length: 16 }, (_, i) => {
+      const angle = i / 16 * 2 * Math.PI;
+      const x1 = 400 + 60 * Math.cos(angle);
+      const y1 = 400 + 60 * Math.sin(angle);
+      const x2 = 400 + 380 * Math.cos(angle);
+      const y2 = 400 + 380 * Math.sin(angle);
+      return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="white" stroke-width="0.5"/>`;
+    }).join("")}
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="om">\u0950</div>
+    <h1 class="title">Website Under Maintenance</h1>
+    <p class="subtitle">Aastha Sey Raasta Seva</p>
+    <div class="divider"></div>
+    <p class="message">${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+    <div class="badge">
+      <span class="dot"></span>
+      <span>Maintenance in Progress</span>
+    </div>
+    <div class="contact">
+      For urgent queries, WhatsApp us at
+      <a href="https://wa.me/919111099799">+91 91110 99799</a>
+      or email
+      <a href="mailto:aasthaserasta@gmail.com">aasthaserasta@gmail.com</a>
+    </div>
+  </div>
+</body>
+</html>`;
+  }
+  app.use(async (req, res, next) => {
+    const bypassPaths = ["/admin", "/api/", "/assets/", "/src/assets/", "/favicon"];
+    const isBypassed = bypassPaths.some((p) => req.path.startsWith(p));
+    if (isBypassed) return next();
+    try {
+      const { isOn, message } = await getMaintenanceStatus();
+      if (isOn) {
+        res.status(503).set("Retry-After", "3600").send(buildMaintenancePage(message));
+        return;
+      }
+    } catch (e) {
+    }
+    next();
   });
   const serverLeads = [];
   app.get("/api/health", async (req, res) => {
@@ -8317,7 +8510,9 @@ async function startServer() {
             announcementBanner: row.announcement_banner_json ? JSON.parse(row.announcement_banner_json) : {},
             trustStats: row.trust_stats_json ? JSON.parse(row.trust_stats_json) : {},
             aboutMissionText: row.about_mission_text,
-            brandPalette: row.brand_palette_json ? JSON.parse(row.brand_palette_json) : {}
+            brandPalette: row.brand_palette_json ? JSON.parse(row.brand_palette_json) : {},
+            isMaintenanceMode: Boolean(row.is_maintenance_mode),
+            maintenanceMessage: row.maintenance_message || ""
           };
           return res.json({ success: true, data: settings });
         }
@@ -8325,7 +8520,11 @@ async function startServer() {
         console.error("[DB ERROR] Failed to fetch settings:", err);
       }
     }
-    res.json({ success: true, data: initialSiteSettings });
+    res.json({ success: true, data: { ...initialSiteSettings, isMaintenanceMode: false, maintenanceMessage: "" } });
+  });
+  app.get("/api/maintenance-status", async (req, res) => {
+    const { isOn, message } = await getMaintenanceStatus();
+    res.json({ isMaintenanceMode: isOn, maintenanceMessage: message });
   });
   app.post("/api/settings", async (req, res) => {
     const s = req.body;
@@ -8338,8 +8537,9 @@ async function startServer() {
             social_facebook, social_instagram, social_youtube, google_business_profile,
             social_handles_json, default_seo_title, default_meta_description, default_og_image,
             google_analytics_id, business_hours, footer_description, announcement_banner_json,
-            trust_stats_json, about_mission_text, brand_palette_json
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            trust_stats_json, about_mission_text, brand_palette_json,
+            is_maintenance_mode, maintenance_message
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           ON DUPLICATE KEY UPDATE
             business_name = VALUES(business_name),
             hindi_business_name = VALUES(hindi_business_name),
@@ -8369,7 +8569,9 @@ async function startServer() {
             announcement_banner_json = VALUES(announcement_banner_json),
             trust_stats_json = VALUES(trust_stats_json),
             about_mission_text = VALUES(about_mission_text),
-            brand_palette_json = VALUES(brand_palette_json)`,
+            brand_palette_json = VALUES(brand_palette_json),
+            is_maintenance_mode = VALUES(is_maintenance_mode),
+            maintenance_message = VALUES(maintenance_message)`,
           [
             "default",
             s.businessName || "",
@@ -8400,9 +8602,12 @@ async function startServer() {
             JSON.stringify(s.announcementBanner || {}),
             JSON.stringify(s.trustStats || {}),
             s.aboutMissionText || "",
-            JSON.stringify(s.brandPalette || {})
+            JSON.stringify(s.brandPalette || {}),
+            s.isMaintenanceMode ? 1 : 0,
+            s.maintenanceMessage || ""
           ]
         );
+        invalidateMaintenanceCache();
         return res.json({ success: true, message: "Settings saved to MySQL", data: s });
       } catch (err) {
         console.error("[DB ERROR] Failed to save settings:", err);

@@ -44,6 +44,7 @@ export interface PoojaService {
   duration?: string | null;
   hindiDuration?: string | null;
   price?: number | null;
+  advanceBookingAmount?: number;
   priceType?: 'Fixed' | 'Starting From' | 'Custom / On Request';
   featuredImage?: string;
   gallery?: string[];
@@ -66,6 +67,8 @@ export interface PoojaService {
   h1?: string;
   quickAnswer?: string;
   whoCanConsider?: string[];
+  procedureSteps?: string[];
+  hindiProcedureSteps?: string[];
   internalLinks?: { anchor: string; link: string; reason?: string }[];
   imageSeo?: { featuredImageIdea?: string; alt?: string; title?: string; filename?: string };
   schemaTypes?: string[];
@@ -420,6 +423,8 @@ export interface SiteSettings {
   aboutMissionText?: string;
   brandPalette?: BrandColorPalette;
   devotionalAtmosphere?: DevotionalAtmosphereSettings;
+  isMaintenanceMode?: boolean;
+  maintenanceMessage?: string;
 }
 
 export interface User {

@@ -43,6 +43,8 @@ const TABLE_SCHEMAS = [
     trust_stats_json LONGTEXT,
     about_mission_text TEXT,
     brand_palette_json LONGTEXT,
+    is_maintenance_mode TINYINT(1) DEFAULT 0,
+    maintenance_message TEXT,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
 
@@ -353,6 +355,7 @@ export async function autoInitializeDatabase() {
       gallery: 0,
       testimonials: 0,
       adminUsers: 0,
+      darshan: 0,
     },
     error: null as string | null,
   };
@@ -432,6 +435,24 @@ export async function autoInitializeDatabase() {
           console.log('[AUTO-DB] poojas table is missing columns. Running ALTER migrations...', poojasAlters);
           await execute(`ALTER TABLE poojas ${poojasAlters.join(', ')}`);
           console.log('[AUTO-DB] poojas table schema successfully updated!');
+        }
+
+        // 3. site_settings table checks (maintenance mode columns)
+        const settingsColumns = await query<any>('SHOW COLUMNS FROM site_settings');
+        const settingsColNames = settingsColumns.map((col: any) => col.Field);
+
+        const settingsAlters: string[] = [];
+        if (!settingsColNames.includes('is_maintenance_mode')) {
+          settingsAlters.push('ADD COLUMN is_maintenance_mode TINYINT(1) DEFAULT 0');
+        }
+        if (!settingsColNames.includes('maintenance_message')) {
+          settingsAlters.push('ADD COLUMN maintenance_message TEXT');
+        }
+
+        if (settingsAlters.length > 0) {
+          console.log('[AUTO-DB] site_settings table is missing columns. Running ALTER migrations...', settingsAlters);
+          await execute(`ALTER TABLE site_settings ${settingsAlters.join(', ')}`);
+          console.log('[AUTO-DB] site_settings table schema successfully updated!');
         }
       } catch (e) {
         console.error('[AUTO-DB WARNING] Failed to run schema check or migrations for tours/poojas:', e);
