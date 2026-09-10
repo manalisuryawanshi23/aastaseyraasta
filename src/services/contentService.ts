@@ -739,28 +739,28 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
     id: 'pooja-guru-chandal',
     slug: 'guru-chandal-dosh-shanti-pooja-ujjain',
     name: {
-      en: 'Guru Chandal Dosh Shanti Pooja — At Ancient Devguru Brihaspati Temple',
-      hi: 'गुरु चांडाल दोष शांति पूजा — प्राचीन देवगुरु बृहस्पति मंदिर',
+      en: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
+      hi: 'गुरु चांडाल दोष शांति पूजा उज्जैन — देवगुरु बृहस्पति मंदिर अनुष्ठान',
     },
     categoryName: {
       en: 'Dosh Shanti & Special Poojas',
       hi: 'दोष शांति एवं विशेष पूजा',
     },
     shortDescription: {
-      en: 'Jupiter-Rahu afflictions pacification at Ancient Devguru Brihaspati Temple Ujjain for education and wealth.',
-      hi: 'उज्जैन के प्राचीन देवगुरु बृहस्पति मंदिर में गुरु-राहु युति (चांडाल दोष) से मुक्ति और ज्ञान-धन वृद्धि हेतु पूजा।',
+      en: 'Vedic pacification ritual at Ancient Devguru Brihaspati Temple Ujjain to neutralize Jupiter-Rahu conjunction and restore academic focus and wealth.',
+      hi: 'उज्जैन के प्राचीन देवगुरु बृहस्पति मंदिर में गुरु-राहु युति (चांडाल दोष) से मुक्ति, बुद्धि-विवेक एवं ज्ञान-धन वृद्धि हेतु शास्त्रोक्त पूजा।',
     },
     description: {
-      en: 'Guru Chandal Dosh is created when benevolent Jupiter (Guru) is conjunct with shadow planet Rahu in the birth chart. It negatively affects higher education, moral clarity, financial growth, and spiritual progress. Performed at the famous Devguru Brihaspati Temple in Ujjain with yellow offerings and Brihaspati Vedic mantras.',
-      hi: 'जब कुंडली में शुभ ग्रह बृहस्पति (गुरु) के साथ राहु बैठ जाता है, तो गुरु चांडाल दोष बनता है। इससे पढ़ाई में मन नहीं लगता, गलत संगति होती है और धन का नुकसान होता है। उज्जैन के प्राचीन बृहस्पति मंदिर में पीले फूल, चने की दाल और पीले वस्त्रों से पूजा कराने पर यह दोष पूरी तरह शांत होता है।',
+      en: 'Guru Chandal Dosh occurs when auspicious Jupiter (Devguru Brihaspati) is conjunct with or aspected by shadow planet Rahu or Ketu in the birth chart. This affliction clouds intellectual discernment, hampers higher education, invites financial setbacks, and causes moral or emotional distress. Performed at the sacred Ancient Devguru Brihaspati Temple in Ujjain with yellow samagri, Vedic Beej mantras, and Navgraha Shanti Havan.',
+      hi: 'जब कुंडली में शुभ ग्रह बृहस्पति (गुरु) के साथ राहु या केतु की युति होती है, तो गुरु चांडाल दोष बनता है। इससे विद्याध्ययन में एकाग्रता भंग होती है, गलत निर्णय होते हैं, आर्थिक नुकसान व मान-सम्मान की हानि होती है। उज्जैन के प्राचीन देवगुरु बृहस्पति मंदिर में पीले पुष्प, चने की दाल, हल्दी एवं पीत वस्त्रों से वैदिक आहुति कराने पर यह दोष पूर्णतः शांत होता है।',
     },
     templeName: {
-      en: 'Ancient Devguru Brihaspati Temple',
-      hi: 'प्राचीन देवगुरु बृहस्पति मंदिर',
+      en: 'Ancient Devguru Brihaspati Temple, Ujjain',
+      hi: 'प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन',
     },
     location: {
-      en: 'Brihaspati Temple Marg, Ujjain',
-      hi: 'बृहस्पति मंदिर मार्ग, उज्जैन',
+      en: 'Brihaspati Temple Marg, Near Kshipra River, Ujjain',
+      hi: 'बृहस्पति मंदिर मार्ग, शिप्रा तट के समीप, उज्जैन',
     },
     city: {
       en: 'Ujjain',
@@ -771,24 +771,58 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
       hi: 'मध्य प्रदेश',
     },
     duration: {
-      en: '2.5 Hours',
-      hi: '2.5 घंटे',
+      en: '2.5 to 3.5 Hours',
+      hi: '2.5 से 3.5 घंटे',
     },
     whatWeOffer: {
-      en: ['Yellow Clothes & Flowers', 'Brihaspati & Rahu Samagri', 'Gotra Sankalp', 'Yantra Blessing'],
-      hi: ['पीले वस्त्र व पीले पुष्प', 'गुरु-राहु विशेष सामग्री', 'नाम-गोत्र संकल्प', 'बृहस्पति यंत्र आशीर्वाद'],
+      en: [
+        'Complete arrangements for Guru Chandal Dosh Shanti with devotion and authenticity.',
+        'Rituals conducted by senior Gurukul-trained Vedic Brahmins specializing in planetary Shanti.',
+        'Supply of authentic yellow cloth, fresh chana dal, yellow flowers, turmeric, and pure cow ghee for Havan.',
+        'Personalized Name, Gotra, and Nakshatra Sankalp with energized Brihaspati Yantra blessing.'
+      ],
+      hi: [
+        'वरिष्ठ वेदपाठी गुरुकुल ब्राह्मणों द्वारा शास्त्रोक्त अनुष्ठान व्यवस्था',
+        'पीत वस्त्र, पीली चना दाल, हल्दी, केसर एवं शुद्ध देशी घी युक्त संपूर्ण हवन सामग्री',
+        'यजमान के नाम, गोत्र एवं नक्षत्र अनुसार व्यक्तिगत वैदिक संकल्प',
+        'अभिमंत्रित देवगुरु बृहस्पति यंत्र एवं प्रसाद घर पर भेजने की सुविधा'
+      ],
     },
     benefits: {
-      en: ['Academic excellence, sound decision making, wealth accumulation, career guidance'],
-      hi: ['शिक्षा व परीक्षा में सफलता, सही निर्णय लेने की क्षमता, धन में बरकत, मान-सम्मान'],
+      en: [
+        'Academic Excellence & Focus: [शिक्षा] Removes cognitive fog, improves memory retention, and clears obstacles in competitive examinations.',
+        'Financial Stability & Growth: [आर्थिक] Protects against deceptive business partnerships, mitigates sudden financial losses, and stabilizes income flow.',
+        'Sound Judgment & Moral Clarity: [विवेक] Restores wisdom, logical decision-making, and safeguards against reckless impulses.',
+        'Pacification of Rahu Afflictions: [ग्रह शांति] Neutralizes the malefic shadow of Rahu over Jupiter, bringing peace and harmony to the horoscope.',
+        'Career Growth & Promotion: [करियर] Dissolves stagnation in professional life and restores favorable relationships with mentors and seniors.',
+        'Spiritual Peace & Guru Kripa: [आध्यात्मिक] Bestows the divine blessings of Devguru Brihaspati, awakening spiritual growth and righteous conduct.'
+      ],
+      hi: [
+        '[शिक्षा] एकाग्रता में वृद्धि, स्मरण शक्ति की मजबूती एवं प्रतियोगी परीक्षाओं में सफलता',
+        '[आर्थिक] अप्रत्याशित धन हानि से रक्षा, धोखाधड़ी से बचाव एवं व्यापारिक स्थिरता',
+        '[विवेक] सही निर्णय लेने की क्षमता, नकारात्मक संगति से मुक्ति एवं नैतिक स्पष्टता',
+        '[ग्रह शांति] गुरु-राहु युति के नकारात्मक प्रभाव का पूर्ण शमन एवं नवग्रह कृपा',
+        '[करियर] कार्यक्षेत्र में रुकावटों का अंत, पदोन्नति एवं वरिष्ठों से मधुर संबंध',
+        '[आध्यात्मिक] देवगुरु बृहस्पति का आशीर्वाद, पारिवारिक सुख-शांति एवं धर्म मार्ग में उन्नति'
+      ],
     },
     preparation: {
-      en: ['Wear yellow traditional attire if possible, keep fast on Thursday morning'],
-      hi: ['संभव हो तो पीले कपड़े पहनें, गुरुवार के दिन यह पूजा कराना अति उत्तम है'],
+      en: [
+        'Wear traditional yellow or light-colored attire on the day of the pooja if possible.',
+        'Observe a light fast or consume satvik fruit diet on Thursday morning before the ceremony.',
+        'Keep your birth details (Date, Time, Place of Birth) and Gotra ready for the sacred Sankalp.',
+        'Refrain from non-satvik food and alcohol for 24 hours prior to the Shanti Anushthan.'
+      ],
+      hi: [
+        'संभव हो तो पूजा के दिन पीले अथवा हल्के रंग के पारंपरिक वस्त्र धारण करें।',
+        'गुरुवार के दिन प्रातः काल सात्विक रहें और पूजा संपन्न होने तक फलाहार रखें।',
+        'संकल्प हेतु अपना नाम, गोत्र एवं जन्म विवरण (तिथि, समय, स्थान) तैयार रखें।',
+        'पूजा से पूर्व तामसिक भोजन एवं मदिरा आदि का पूर्ण त्याग रखें।'
+      ],
     },
     ritualDetails: {
-      en: 'Brihaspati pooja, Rahu shanti path, yellow sweet offering, 108 Guru mantra jaap, and havan.',
-      hi: 'बृहस्पति देव का पूजन, राहु शांति पाठ, बेसन के लड्डू व पीले फल अर्पण, गुरु बीज मंत्र जाप और हवन।',
+      en: 'Ganpati Pujan, Navgraha Mandal Sthapana, Brihaspati & Rahu Aavahan, Vedic Beej Mantra recitations, Peet Daan (yellow offerings), sacred Havan with Peepal and Palash samidha, Brihaspati Yantra Abhimantran, and Maha Aarti.',
+      hi: 'गणेश पूजन, नवग्रह मंडल स्थापना, देवगुरु बृहस्पति एवं राहु आवाहन, वैदिक बीज मंत्र जाप, पीत दान (पीले पुष्प, चना दाल, वस्त्र), पीपल-पलाश समिधा युक्त नवग्रह हवन, बृहस्पति यंत्र अभिमंत्रण एवं महाआरती।',
     },
   },
 

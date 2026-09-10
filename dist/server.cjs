@@ -1533,25 +1533,191 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
   },
   {
     id: "pooja-guru-chandal",
-    name: "Guru Chandal Dosh Shanti Pooja \u2014 At Ancient Devguru Brihaspati Temple",
-    hindiName: "\u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u2014 \u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u0926\u0947\u0935guru \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930",
+    name: "Guru Chandal Dosh Shanti Pooja in Ujjain",
+    hindiName: "\u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0909\u091C\u094D\u091C\u0948\u0928 \u2014 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928",
     slug: "guru-chandal-dosh-shanti-pooja-ujjain",
+    urlSlug: "/pooja/guru-chandal-dosh-shanti-pooja-ujjain",
     categoryId: "cat-dosh",
     categoryName: "Dosh Shanti & Special Poojas",
-    shortDescription: "Authentic Jupiter-Rahu afflictions pacification at Ancient Devguru Brihaspati Temple Ujjain.",
-    description: "Guru Chandal Dosh occurs when Jupiter is conjunct Rahu. Performed at the ancient Devguru Brihaspati Temple in Ujjain with yellow samagri and Jupiter mantras.",
-    templeName: "Ancient Devguru Brihaspati Temple",
-    location: "Brihaspati Temple Marg, Ujjain",
+    hindiCategoryName: "\u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u092A\u0942\u091C\u093E",
+    pageType: "Pooja / Dosh Shanti",
+    primaryKeyword: "guru chandal dosh pooja in ujjain",
+    focusKeyword: "guru chandal dosh shanti pooja ujjain",
+    secondaryKeywords: [
+      "guru chandal dosh nivaran ujjain",
+      "guru chandal yog shanti pooja ujjain",
+      "guru chandal dosh puja cost ujjain",
+      "devguru brihaspati temple ujjain pooja",
+      "guru rahu yuti shanti ujjain",
+      "brihaspati rahu dosh nivaran",
+      "guru chandal dosh upay ujjain"
+    ],
+    searchIntent: "Transactional & Informational (Devotees and families seeking authentic Vedic Guru Chandal Dosh Shanti Pooja at the Ancient Devguru Brihaspati Temple in Ujjain to neutralize Jupiter-Rahu afflictions, restore academic focus, financial stability, and moral wisdom)",
+    seoTitle: "Guru Chandal Dosh Shanti Pooja in Ujjain | Devguru Brihaspati Temple",
+    metaDescription: "Book authentic Guru Chandal Dosh Shanti Pooja in Ujjain at Ancient Devguru Brihaspati Temple. Vedic Guru-Rahu yuti nivaran, yellow samagri, havan & certified Gurukul Pandits.",
+    h1: "Guru Chandal Dosh Shanti Pooja in Ujjain \u2014 Ancient Devguru Brihaspati Temple",
+    quickAnswer: "Guru chandal dosh pooja in ujjain is a specialized Vedic planetary pacification ceremony performed at the Ancient Devguru Brihaspati Temple in Ujjain, Madhya Pradesh, to neutralize the malefic conjunction of benevolent Jupiter (Guru) and shadow planet Rahu or Ketu in the horoscope. Arranged by Aastha Sey Raasta Seva, the ceremony is performed by experienced Gurukul Brahmins using yellow offerings, Brihaspati & Rahu Vedic mantras, and an authentic Navgraha Shanti Havan to pray for academic excellence, financial growth, wisdom, and moral clarity.",
+    shortDescription: "Guru Chandal Dosh Shanti Pooja is an authentic Vedic pacification ritual conducted at the ancient Devguru Brihaspati Temple in Ujjain to neutralize the malefic conjunction of Jupiter and Rahu, clearing academic, financial, and life hurdles.",
+    description: `Guru Chandal Dosh (also referred to as Guru Chandal Yog) is an astrological affliction formed in Vedic astrology when benevolent Jupiter (Devguru Brihaspati)\u2014the karaka of wisdom, intellect, righteous conduct, and wealth\u2014is conjunct with or aspected by the malefic shadow planet Rahu (or Ketu) in a native's Janam Kundali. Because Jupiter represents pure sattva and cosmic guidance, its eclipse by Rahu's tamasic energy can lead to corrupted judgment, severe impediments in higher education, unexpected financial distress, estrangement from spiritual teachers, and chronic indecisiveness.
+
+Performing a guru chandal dosh pooja in ujjain connects devotees with the sacred spiritual energy of Avantika Kshetra, recognized since Vedic antiquity as the cosmic meridian of the earth and the preeminent seat for planetary remedies. Situated on the sacred banks of the holy Kshipra River, the Ancient Devguru Brihaspati Temple in Ujjain is the world-renowned sanctum dedicated to Lord Jupiter. At Aastha Sey Raasta Seva, we arrange authentic, strictly scriptural Guru Chandal Dosh Shanti Anushthans conducted by certified Gurukul-trained Vedic Brahmins with complete ceremonial purity.
+
+## About Guru Chandal Dosh & Its Astrological Implications
+In Vedic astrology (Jyotish Shastra), Jupiter governs the 9th and 12th houses of the natural zodiac, embodying dharma, higher knowledge, fortune, children, and spiritual evolution. When Rahu conjoins Jupiter, it creates the 'Chandal' influence\u2014generating illusions (Maya), restlessness, and rebellious impulses that divert the individual from their destined path.
+
+Common astrological manifestations of unpacified Guru Chandal Dosh include:
+- Repeated setbacks and lack of concentration in competitive exams and higher education.
+- Sudden loss of accumulated wealth or entrapment in fraudulent partnerships and bad investments.
+- Frequent moral conflicts, misunderstandings with father figures, gurus, and mentors.
+- Vulnerability to deceptive promises, addictions, or unrighteous associations.
+- Delays in marriage, career stagnation, and a pervasive sense of mental restlessness.
+
+The Guru Chandal Dosh Shanti Pooja is an elaborate Vedic prayaschitta and propitiation ritual designed to cleanse the native's aura of Rahu's shadow, awaken Jupiter's divine benevolence, and re-establish harmony among the Navgrahas.
+
+## Why Perform Guru Chandal Dosh Shanti at Ancient Devguru Brihaspati Temple in Ujjain
+Ujjain, the holy city of Mahakaleshwar, holds unique astrological and spiritual authority:
+- **Tirtha of Devguru Brihaspati**: The ancient Devguru Brihaspati Temple in Ujjain is among the rarest and most revered sanctums consecrated specifically to the preceptor of the Gods.
+- **Seat of Supreme Knowledge**: Lord Shri Krishna, Balarama, and Sudama mastered the 64 arts and 14 sciences in Ujjain at the ashram of Guru Sandipani, making Ujjain the ultimate spiritual soil for intellect, memory, and Guru Kripa.
+- **Vedic Zero Meridian**: Ancient astronomical treatises like Surya Siddhanta identify Ujjain as the prime celestial meridian, exponentially magnifying the efficacy of planetary Shanti Yagyas.
+
+## Vedic Ritual Vidhi & Sacred Ceremonial Steps
+Conducted strictly according to classical Parashara and Shaunaka scriptures, our pandits follow a comprehensive step-by-step ceremony:
+1. **Ganpati & Gauri Pujan**: Invocation of Lord Ganesha to remove all obstacles from the ceremony.
+2. **Punyahavachan & Matrika Pujan**: Purification of the sacred premises and invocation of divine feminine energies.
+3. **Navgraha Mandal Sthapana & Shodash Upchar Pujan**: Establishment of the planetary mandala with dedicated Brihaspati and Rahu yantras.
+4. **Devguru Brihaspati & Rahu Aavahan**: Chanting of Vedic Suktas and recitations of Guru Beej Mantras along with Rahu Kavach.
+5. **Yellow Offerings (Peet Samagri)**: Offering of yellow clothes, yellow flowers, turmeric, saffron, and split Bengal gram (chana dal) to Lord Jupiter.
+6. **Vedic Havan (Sacred Fire Offerings)**: Consecrated oblation using sacred Peepal (Ashwatha) and Palash samidha, pure desi cow ghee, and divine medicinal aushadhis.
+7. **Brihaspati Yantra Abhimantran & Aarti**: Energizing of the holy Brihaspati Yantra for the devotee, concluding with Maha Aarti, Shanti Path, and Prasad distribution.
+
+## Guru Chandal Dosh Shanti in Ujjain with Aastha Sey Raasta Seva
+Aastha Sey Raasta Seva coordinates every logistical and ceremonial aspect with absolute devotion and transparency:
+- Individual, family, or gotra-specific Sankalp performed by verified Gurukul Vedic scholars.
+- Complete arrangement of all pure, satvik pooja samagri, fresh flowers, and authentic offerings.
+- Devotees unable to visit Ujjain in person can participate seamlessly via interactive live video streaming, with consecrated Prasad, energized Yantra, and sacred Raksha Sutra safely delivered to their doorstep.`,
+    templeName: "Ancient Devguru Brihaspati Temple, Ujjain",
+    hindiTempleName: "\u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930, \u0909\u091C\u094D\u091C\u0948\u0928",
+    location: "Brihaspati Temple Marg, Near Kshipra River, Ujjain",
+    hindiLocation: "\u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u092E\u093E\u0930\u094D\u0917, \u0936\u093F\u092A\u094D\u0930\u093E \u0924\u091F \u0915\u0947 \u0938\u092E\u0940\u092A, \u0909\u091C\u094D\u091C\u0948\u0928",
     city: "Ujjain",
+    hindiCity: "\u0909\u091C\u094D\u091C\u0948\u0928",
     state: "Madhya Pradesh",
     country: "India",
-    duration: "2.5 Hours",
-    priceType: "Custom / On Request",
+    whatWeOffer: [
+      "Complete arrangements for Guru Chandal Dosh Shanti with devotion, authenticity, and convenience for devotees.",
+      "Rituals conducted by senior Gurukul-trained Vedic Brahmins specializing in planetary Shanti.",
+      "Supply of authentic yellow cloth, fresh chana dal, yellow flowers, turmeric, and pure cow ghee for Havan.",
+      "Personalized Name, Gotra, and Nakshatra Sankalp with energized Brihaspati Yantra blessing."
+    ],
+    hindiWhatWeOffer: [
+      "\u0935\u0930\u093F\u0937\u094D\u0920 \u0935\u0947\u0926\u092A\u093E\u0920\u0940 \u0917\u0941\u0930\u0941\u0915\u0941\u0932 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928",
+      "\u092A\u0940\u0924 \u0935\u0938\u094D\u0924\u094D\u0930, \u092A\u0940\u0932\u0940 \u091A\u0928\u093E \u0926\u093E\u0932, \u0939\u0932\u094D\u0926\u0940, \u0915\u0947\u0938\u0930 \u090F\u0935\u0902 \u0936\u0941\u0926\u094D\u0927 \u0926\u0947\u0936\u0940 \u0918\u0940 \u092F\u0941\u0915\u094D\u0924 \u0939\u0935\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940",
+      "\u092F\u091C\u092E\u093E\u0928 \u0915\u0947 \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0905\u0928\u0941\u0938\u093E\u0930 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0935\u0948\u0926\u093F\u0915 \u0938\u0902\u0915\u0932\u094D\u092A",
+      "\u0905\u092D\u093F\u092E\u0902\u0924\u094D\u0930\u093F\u0924 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092F\u0902\u0924\u094D\u0930 \u090F\u0935\u0902 \u092A\u094D\u0930\u0938\u093E\u0926 \u0918\u0930 \u092A\u0930 \u092D\u0947\u091C\u0928\u0947 \u0915\u0940 \u0938\u0941\u0935\u093F\u0927\u093E"
+    ],
+    benefits: [
+      "Academic Excellence & Focus: [\u0936\u093F\u0915\u094D\u0937\u093E] Removes cognitive fog, improves memory retention, and clears obstacles in competitive examinations and higher studies.",
+      "Financial Stability & Growth: [\u0906\u0930\u094D\u0925\u093F\u0915] Protects against deceptive business partnerships, mitigates sudden financial losses, and stabilizes income flow.",
+      "Sound Judgment & Moral Clarity: [\u0935\u093F\u0935\u0947\u0915] Restores wisdom, logical decision-making, and safeguards against reckless impulses or harmful associations.",
+      "Pacification of Rahu Afflictions: [\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F] Neutralizes the malefic shadow of Rahu over Jupiter, bringing peace and harmony to the horoscope.",
+      "Career Growth & Promotion: [\u0915\u0930\u093F\u092F\u0930] Dissolves stagnation in professional life and restores favorable relationships with bosses, mentors, and seniors.",
+      "Spiritual Peace & Guru Kripa: [\u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915] Bestows the divine blessings of Devguru Brihaspati, awakening spiritual growth, righteous conduct, and family peace."
+    ],
+    hindiBenefits: [
+      "[\u0936\u093F\u0915\u094D\u0937\u093E] \u090F\u0915\u093E\u0917\u094D\u0930\u0924\u093E \u092E\u0947\u0902 \u0935\u0943\u0926\u094D\u0927\u093F, \u0938\u094D\u092E\u0930\u0923 \u0936\u0915\u094D\u0924\u093F \u0915\u0940 \u092E\u091C\u092C\u0942\u0924\u0940 \u090F\u0935\u0902 \u092A\u094D\u0930\u0924\u093F\u092F\u094B\u0917\u0940 \u092A\u0930\u0940\u0915\u094D\u0937\u093E\u0913\u0902 \u092E\u0947\u0902 \u0938\u092B\u0932\u0924\u093E",
+      "[\u0906\u0930\u094D\u0925\u093F\u0915] \u0905\u092A\u094D\u0930\u0924\u094D\u092F\u093E\u0936\u093F\u0924 \u0927\u0928 \u0939\u093E\u0928\u093F \u0938\u0947 \u0930\u0915\u094D\u0937\u093E, \u0927\u094B\u0916\u093E\u0927\u0921\u093C\u0940 \u0938\u0947 \u092C\u091A\u093E\u0935 \u090F\u0935\u0902 \u0935\u094D\u092F\u093E\u092A\u093E\u0930\u093F\u0915 \u0938\u094D\u0925\u093F\u0930\u0924\u093E",
+      "[\u0935\u093F\u0935\u0947\u0915] \u0938\u0939\u0940 \u0928\u093F\u0930\u094D\u0923\u092F \u0932\u0947\u0928\u0947 \u0915\u0940 \u0915\u094D\u0937\u092E\u0924\u093E, \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u0938\u0902\u0917\u0924\u093F \u0938\u0947 \u092E\u0941\u0915\u094D\u0924\u093F \u090F\u0935\u0902 \u0928\u0948\u0924\u093F\u0915 \u0938\u094D\u092A\u0937\u094D\u091F\u0924\u093E",
+      "[\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F] \u0917\u0941\u0930\u0941-\u0930\u093E\u0939\u0941 \u092F\u0941\u0924\u093F \u0915\u0947 \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u092A\u094D\u0930\u092D\u093E\u0935 \u0915\u093E \u092A\u0942\u0930\u094D\u0923 \u0936\u092E\u0928 \u090F\u0935\u0902 \u0928\u0935\u0917\u094D\u0930\u0939 \u0915\u0943\u092A\u093E",
+      "[\u0915\u0930\u093F\u092F\u0930] \u0915\u093E\u0930\u094D\u092F\u0915\u094D\u0937\u0947\u0924\u094D\u0930 \u092E\u0947\u0902 \u0930\u0941\u0915\u093E\u0935\u091F\u094B\u0902 \u0915\u093E \u0905\u0902\u0924, \u092A\u0926\u094B\u0928\u094D\u0928\u0924\u093F \u090F\u0935\u0902 \u0935\u0930\u093F\u0937\u094D\u0920\u094B\u0902 \u0938\u0947 \u092E\u0927\u0941\u0930 \u0938\u0902\u092C\u0902\u0927",
+      "[\u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915] \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u0915\u093E \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926, \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u0938\u0941\u0916-\u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0927\u0930\u094D\u092E \u092E\u093E\u0930\u094D\u0917 \u092E\u0947\u0902 \u0909\u0928\u094D\u0928\u0924\u093F"
+    ],
+    whoCanConsider: [
+      "Devotees whose birth charts indicate Jupiter conjunct Rahu or Ketu (Guru Chandal Yog) in critical houses (1st, 5th, 9th, or 10th).",
+      "Students and aspirants experiencing unexpected hurdles, lack of focus, or repeated failures in higher education or competitive exams.",
+      "Business owners and professionals suffering from chronic financial mismanagement, fraud, or unexplained career stagnation.",
+      "Individuals experiencing persistent mental confusion, conflicts with mentors/elders, or deviation from ethical principles.",
+      "Anyone seeking divine blessings of wisdom, prosperity, and peace at the sacred Devguru Brihaspati Temple in Ujjain."
+    ],
+    procedureSteps: [
+      "Swasti Vachan & Sankalp: Devotee Name, Gotra, and Nakshatra recitation invoking Lord Ganesha and Navgrahas.",
+      "Kalash Sthapana & Pujan: Consecration of holy water, Brihaspati Mandal, and Rahu Yantra setup.",
+      "Vedic Mantra Jaap: Chanting of traditional Brihaspati and Rahu Vedic Beej Mantras with sacred Rudraksha rosaries.",
+      "Peet Daan & Offerings: Sacred offering of yellow flowers, chana dal, yellow sweets, turmeric, and yellow vastra.",
+      "Navgraha Havan & Aarti: Sacred oblation with Peepal and Palash samidha into consecrated Agni, followed by Maha Aarti and Shanti Path."
+    ],
+    hindiProcedureSteps: [
+      "\u0938\u094D\u0935\u0938\u094D\u0924\u093F \u0935\u093E\u091A\u0928 \u090F\u0935\u0902 \u0938\u0902\u0915\u0932\u094D\u092A: \u092F\u091C\u092E\u093E\u0928 \u0915\u0947 \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u0914\u0930 \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0915\u093E \u0909\u091A\u094D\u091A\u093E\u0930\u0923 \u0915\u0930 \u0935\u093F\u0918\u094D\u0928\u0939\u0930\u094D\u0924\u093E \u0917\u0923\u0947\u0936 \u091C\u0940 \u0915\u093E \u0906\u0935\u093E\u0939\u0928\u0964",
+      "\u0915\u0932\u0936 \u0938\u094D\u0925\u093E\u092A\u0928\u093E \u090F\u0935\u0902 \u0928\u0935\u0917\u094D\u0930\u0939 \u092E\u0902\u0921\u0932 \u092A\u0942\u091C\u0928: \u092A\u0935\u093F\u0924\u094D\u0930 \u091C\u0932 \u0915\u0932\u0936, \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u092F\u0902\u0924\u094D\u0930 \u0915\u0940 \u0935\u0948\u0926\u093F\u0915 \u0938\u094D\u0925\u093E\u092A\u0928\u093E\u0964",
+      "\u0935\u0948\u0926\u093F\u0915 \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A: \u0905\u0928\u0941\u092D\u0935\u0940 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0917\u0941\u0930\u0941 \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u0915\u0947 \u090F\u0915\u093E\u0915\u094D\u0937\u0930\u0940 \u0935 \u092C\u0940\u091C \u092E\u0902\u0924\u094D\u0930\u094B\u0902 \u0915\u093E \u0935\u093F\u0927\u093F\u0935\u0924 \u092A\u093E\u0920\u0964",
+      "\u092A\u0940\u0924 \u0926\u093E\u0928 \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u0905\u0930\u094D\u092A\u0923: \u092A\u0940\u0932\u0947 \u092A\u0941\u0937\u094D\u092A, \u092A\u0940\u0932\u0940 \u091A\u0928\u093E \u0926\u093E\u0932, \u0939\u0932\u094D\u0926\u0940, \u092C\u0947\u0938\u0928 \u0915\u0947 \u0932\u0921\u094D\u0921\u0942 \u0935 \u092A\u0940\u0924 \u0935\u0938\u094D\u0924\u094D\u0930 \u0915\u093E \u0905\u0930\u094D\u092A\u0923\u0964",
+      "\u0939\u0935\u0928 \u090F\u0935\u0902 \u092E\u0939\u093E\u0906\u0930\u0924\u0940: \u092A\u0940\u092A\u0932 \u0935 \u092A\u0932\u093E\u0936 \u0915\u0940 \u0938\u092E\u093F\u0927\u093E \u0924\u0925\u093E \u0914\u0937\u0927\u093F\u092F\u094B\u0902 \u0938\u0947 \u092A\u0935\u093F\u0924\u094D\u0930 \u0905\u0917\u094D\u0928\u093F \u092E\u0947\u0902 \u0906\u0939\u0941\u0924\u093F, \u0906\u0930\u0924\u0940 \u090F\u0935\u0902 \u0936\u093E\u0902\u0924\u093F \u092A\u093E\u0920\u0964"
+    ],
+    faqs: [
+      {
+        question: "What is Guru Chandal Dosh and why is Shanti Pooja performed?",
+        answer: "Guru Chandal Dosh is formed in Vedic astrology when benevolent Jupiter (Guru), the planet of wisdom, knowledge, and righteous fortune, is conjunct with the malefic shadow planet Rahu or Ketu. This affliction clouds intellectual discernment, hampers education, invites financial setbacks, and causes emotional restlessness. The Shanti Pooja is performed to pacify Rahu and awaken Jupiter's benevolent energy."
+      },
+      {
+        question: "Why is Ancient Devguru Brihaspati Temple in Ujjain the best place for this pooja?",
+        answer: "Ujjain (Avantika) is the prime meridian of ancient Vedic astronomy and the sanctified soil where Lord Krishna studied under Guru Sandipani. The Ancient Devguru Brihaspati Temple in Ujjain is specifically consecrated to Jupiter, making it the most scripturally potent and geographically sacred kshetra for nullifying Guru Chandal Dosh."
+      },
+      {
+        question: "What are the main symptoms of Guru Chandal Dosh in daily life?",
+        answer: "Common symptoms include difficulty in concentrating on studies, repeated exam failures, sudden financial loss through bad investments or fraud, strained relationships with teachers and fathers, moral dilemmas, and career stagnation despite hard work."
+      },
+      {
+        question: "What sacred samagri is used during the pooja?",
+        answer: "The ritual utilizes sacred yellow items dear to Jupiter, including yellow clothes, yellow flowers, turmeric, saffron, split Bengal gram (chana dal), yellow brass offerings, Peepal wood samidha, pure cow ghee, and sacred havan herbs."
+      },
+      {
+        question: "How long does the Guru Chandal Dosh Shanti Pooja take?",
+        answer: "The comprehensive Vedic ceremony takes approximately 2.5 to 3.5 hours, conducted by two certified Gurukul Vedic Brahmins in Ujjain. Complete Name and Gotra Sankalp is performed individually for the devotee."
+      },
+      {
+        question: "Can devotees participate online via live video streaming?",
+        answer: "Yes, Aastha Sey Raasta Seva provides high-definition live video participation for devotees unable to visit Ujjain in person. You join the live Sankalp and Havan from home, and energized Brihaspati Yantra, Raksha Sutra, and sacred Prasad are couriered to your address."
+      },
+      {
+        question: "What benefits are traditionally experienced after completing this pooja?",
+        answer: "Devotees traditionally experience sharp mental clarity, improved concentration in studies and exams, protection from financial fraud and debt, restoration of career growth, harmonious relationships with elders, and profound inner peace."
+      }
+    ],
+    internalLinks: [
+      { anchor: "Rudrabhishek Pooja in Ujjain", link: "/pooja/rudrabhishek-pooja-ujjain", reason: "Core Shiva blessing for planetary harmony." },
+      { anchor: "Kaal Sarp Dosh Pooja in Ujjain", link: "/pooja/kaal-sarp-dosh-shanti-ujjain", reason: "Rahu-Ketu planetary pacification." },
+      { anchor: "Navgraha Shanti Pooja in Ujjain", link: "/pooja/navgraha-shanti-pooja-ujjain", reason: "Complete 9-planet balancing ceremony." },
+      { anchor: "Rin Mukti Pooja in Ujjain", link: "/pooja/rin-mukti-pooja-ujjain", reason: "Financial debt relief worship on Kshipra bank." },
+      { anchor: "Mahamrityunjaya Jaap in Ujjain", link: "/pooja/mahamrityunjaya-jaap-ujjain", reason: "Health protection and vitality Jaap." }
+    ],
+    imageSeo: {
+      featuredImageIdea: "Vedic pandits performing Guru Chandal Dosh Shanti Yajna with yellow flowers, chana dal offerings, and Brihaspati Yantra at Ancient Devguru Brihaspati Temple in Ujjain.",
+      alt: "Guru Chandal Dosh Shanti Pooja at Ancient Devguru Brihaspati Temple Ujjain",
+      title: "Guru Chandal Dosh Nivaran Pooja Ujjain \u2014 Aastha Sey Raasta Seva",
+      filename: "guru-chandal-dosh-shanti-pooja-ujjain.webp"
+    },
+    schemaTypes: ["Service", "FAQPage", "BreadcrumbList", "LocalBusiness"],
+    qualityScore: 98,
+    duration: "2.5 to 3.5 Hours",
+    hindiDuration: "2.5 \u0938\u0947 3.5 \u0918\u0902\u091F\u0947",
+    price: 3500,
+    advanceBookingAmount: 1100,
+    priceType: "Starting From",
+    samagriIncluded: true,
+    prasadHomeDelivery: true,
+    liveVideoAvailable: true,
+    vipEntryPass: false,
+    panditCount: 2,
+    mantra: "\u0950 \u0917\u094D\u0930\u093E\u0902 \u0917\u094D\u0930\u0940\u0902 \u0917\u094D\u0930\u094C\u0902 \u0938\u0903 \u0917\u0941\u0930\u0935\u0947 \u0928\u092E\u0903 || \u0950 \u092D\u094D\u0930\u093E\u0902 \u092D\u094D\u0930\u0940\u0902 \u092D\u094D\u0930\u094C\u0902 \u0938\u0903 \u0930\u093E\u0939\u0935\u0947 \u0928\u092E\u0903 ||",
+    hindiMantra: "\u0950 \u0917\u094D\u0930\u093E\u0902 \u0917\u094D\u0930\u0940\u0902 \u0917\u094D\u0930\u094C\u0902 \u0938\u0903 \u0917\u0941\u0930\u0935\u0947 \u0928\u092E\u0903 || \u0950 \u092D\u094D\u0930\u093E\u0902 \u092D\u094D\u0930\u0940\u0902 \u092D\u094D\u0930\u094C\u0902 \u0938\u0903 \u0930\u093E\u0939\u0935\u0947 \u0928\u092E\u0903 ||",
+    auspiciousDays: "Thursdays (Guruwar), Guru Pushya Nakshatra, Shukla Paksha Panchami, Purnima",
+    hindiAuspiciousDays: "\u0917\u0941\u0930\u0941\u0935\u093E\u0930, \u0917\u0941\u0930\u0941 \u092A\u0941\u0937\u094D\u092F \u0928\u0915\u094D\u0937\u0924\u094D\u0930, \u0936\u0941\u0915\u094D\u0932 \u092A\u0915\u094D\u0937 \u092A\u0902\u091A\u092E\u0940, \u092A\u0942\u0930\u094D\u0923\u093F\u092E\u093E",
+    idealFor: "Devotees with Jupiter-Rahu/Ketu conjunction in Janam Kundali, students facing academic blockages, professionals facing sudden career loss",
+    hindiIdealFor: "\u0915\u0941\u0902\u0921\u0932\u0940 \u092E\u0947\u0902 \u0917\u0941\u0930\u0941-\u0930\u093E\u0939\u0941/\u0915\u0947\u0924\u0941 \u092F\u0941\u0924\u093F \u0935\u093E\u0932\u0947 \u091C\u093E\u0924\u0915, \u0936\u093F\u0915\u094D\u0937\u093E \u0935 \u0915\u0930\u093F\u092F\u0930 \u092E\u0947\u0902 \u0930\u0941\u0915\u093E\u0935\u091F \u091D\u0947\u0932 \u0930\u0939\u0947 \u091B\u093E\u0924\u094D\u0930 \u090F\u0935\u0902 \u092A\u0947\u0936\u0947\u0935\u0930",
     featuredImage: "/assets/images/guru-chandal-dosh-shanti-pooja-ujjain.webp",
     isFeatured: true,
     isPublished: true,
     createdAt: "2026-08-01T10:00:00Z",
-    updatedAt: "2026-08-01T10:00:00Z"
+    updatedAt: "2026-09-10T10:00:00Z"
   },
   // 3. Jaap & Havan Services (9)
   {
@@ -7507,7 +7673,7 @@ async function autoInitializeDatabase() {
             hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
             faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
             mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             p.id,
             p.name,
@@ -7574,6 +7740,150 @@ async function autoInitializeDatabase() {
         );
         result.seeded.poojas++;
       }
+    }
+    try {
+      const guruChandal = initialPoojas.find((x) => x.id === "pooja-guru-chandal");
+      if (guruChandal) {
+        const checkExisting = await query(
+          "SELECT id, quick_answer, seo_title FROM poojas WHERE id = ? OR slug = ?",
+          ["pooja-guru-chandal", "guru-chandal-dosh-shanti-pooja-ujjain"]
+        );
+        if (checkExisting.length === 0) {
+          await execute(
+            `INSERT INTO poojas (
+              id, name, hindi_name, slug, category_id, category_name, hindi_category_name,
+              page_type, primary_keyword, secondary_keywords_json, search_intent, seo_title, meta_description, url_slug, h1, quick_answer,
+              short_description, hindi_short_description, description, hindi_description,
+              temple_name, hindi_temple_name, location, hindi_location, city, hindi_city,
+              price, original_price, advance_booking_amount, duration, hindi_duration,
+              timing, hindi_timing, samagri_included, prasad_home_delivery, live_video_available,
+              vip_entry_pass, pandit_count, image, gallery_images_json, what_we_offer_json, benefits_json,
+              hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
+              faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
+              mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              guruChandal.id,
+              guruChandal.name,
+              guruChandal.hindiName || "",
+              guruChandal.slug,
+              guruChandal.categoryId || "",
+              guruChandal.categoryName || "",
+              guruChandal.hindiCategoryName || "",
+              guruChandal.pageType || guruChandal.categoryName || "",
+              guruChandal.primaryKeyword || guruChandal.focusKeyword || "",
+              JSON.stringify(guruChandal.secondaryKeywords || []),
+              guruChandal.searchIntent || "",
+              guruChandal.seoTitle || guruChandal.metaTitle || "",
+              guruChandal.metaDescription || "",
+              guruChandal.urlSlug || `/pooja/${guruChandal.slug}`,
+              guruChandal.h1 || guruChandal.name,
+              guruChandal.quickAnswer || "",
+              guruChandal.shortDescription || "",
+              guruChandal.hindiShortDescription || "",
+              guruChandal.description || "",
+              guruChandal.hindiDescription || "",
+              guruChandal.templeName || "",
+              guruChandal.hindiTempleName || "",
+              guruChandal.location || "",
+              guruChandal.hindiLocation || "",
+              guruChandal.city || "",
+              guruChandal.hindiCity || "",
+              guruChandal.price || 0,
+              guruChandal.originalPrice || null,
+              guruChandal.advanceBookingAmount || null,
+              guruChandal.duration || "",
+              guruChandal.hindiDuration || "",
+              guruChandal.timing || "",
+              guruChandal.hindiTiming || "",
+              guruChandal.samagriIncluded !== false ? 1 : 0,
+              guruChandal.prasadHomeDelivery !== false ? 1 : 0,
+              guruChandal.liveVideoAvailable !== false ? 1 : 0,
+              guruChandal.vipEntryPass ? 1 : 0,
+              guruChandal.panditCount || 1,
+              guruChandal.featuredImage || guruChandal.image || "",
+              JSON.stringify(guruChandal.gallery || guruChandal.galleryImages || []),
+              JSON.stringify(guruChandal.whatWeOffer || []),
+              JSON.stringify(guruChandal.benefits || []),
+              JSON.stringify(guruChandal.hindiBenefits || []),
+              JSON.stringify(guruChandal.whoCanConsider || guruChandal.whoIsItFor || []),
+              JSON.stringify(guruChandal.procedureSteps || guruChandal.preparation || []),
+              JSON.stringify(guruChandal.hindiProcedureSteps || guruChandal.hindiPreparation || []),
+              JSON.stringify(guruChandal.faqs || guruChandal.aeoQuestions || []),
+              JSON.stringify(guruChandal.internalLinks || []),
+              JSON.stringify(guruChandal.imageSeo || {}),
+              JSON.stringify(guruChandal.schemaTypes || []),
+              guruChandal.qualityScore || 98,
+              guruChandal.idealFor || "",
+              guruChandal.hindiIdealFor || "",
+              guruChandal.auspiciousDays || "",
+              guruChandal.hindiAuspiciousDays || "",
+              guruChandal.mantra || "",
+              guruChandal.hindiMantra || "",
+              guruChandal.isFeatured ? 1 : 0,
+              guruChandal.isPublished !== false ? 1 : 0,
+              guruChandal.seoTitle || guruChandal.metaTitle || "",
+              99
+            ]
+          );
+          console.log("[AUTO-DB] Seeded missing Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.");
+        } else if (!checkExisting[0].quick_answer || String(checkExisting[0].quick_answer).trim() === "") {
+          await execute(
+            `UPDATE poojas SET
+              name = ?, hindi_name = ?, page_type = ?, primary_keyword = ?, secondary_keywords_json = ?,
+              search_intent = ?, seo_title = ?, meta_description = ?, url_slug = ?, h1 = ?, quick_answer = ?,
+              short_description = ?, description = ?, temple_name = ?, hindi_temple_name = ?, location = ?,
+              duration = ?, hindi_duration = ?, what_we_offer_json = ?, benefits_json = ?, hindi_benefits_json = ?,
+              who_can_consider_json = ?, procedure_steps_json = ?, hindi_procedure_steps_json = ?,
+              faqs_json = ?, internal_links_json = ?, image_seo_json = ?, schema_types_json = ?,
+              quality_score = ?, ideal_for = ?, hindi_ideal_for = ?, auspicious_days = ?, hindi_auspicious_days = ?,
+              mantra = ?, hindi_mantra = ?, meta_title = ?
+            WHERE id = ?`,
+            [
+              guruChandal.name,
+              guruChandal.hindiName || "",
+              guruChandal.pageType || "",
+              guruChandal.primaryKeyword || "",
+              JSON.stringify(guruChandal.secondaryKeywords || []),
+              guruChandal.searchIntent || "",
+              guruChandal.seoTitle || "",
+              guruChandal.metaDescription || "",
+              guruChandal.urlSlug || `/pooja/${guruChandal.slug}`,
+              guruChandal.h1 || guruChandal.name,
+              guruChandal.quickAnswer || "",
+              guruChandal.shortDescription || "",
+              guruChandal.description || "",
+              guruChandal.templeName || "",
+              guruChandal.hindiTempleName || "",
+              guruChandal.location || "",
+              guruChandal.duration || "",
+              guruChandal.hindiDuration || "",
+              JSON.stringify(guruChandal.whatWeOffer || []),
+              JSON.stringify(guruChandal.benefits || []),
+              JSON.stringify(guruChandal.hindiBenefits || []),
+              JSON.stringify(guruChandal.whoCanConsider || []),
+              JSON.stringify(guruChandal.procedureSteps || []),
+              JSON.stringify(guruChandal.hindiProcedureSteps || []),
+              JSON.stringify(guruChandal.faqs || []),
+              JSON.stringify(guruChandal.internalLinks || []),
+              JSON.stringify(guruChandal.imageSeo || {}),
+              JSON.stringify(guruChandal.schemaTypes || []),
+              guruChandal.qualityScore || 98,
+              guruChandal.idealFor || "",
+              guruChandal.hindiIdealFor || "",
+              guruChandal.auspiciousDays || "",
+              guruChandal.hindiAuspiciousDays || "",
+              guruChandal.mantra || "",
+              guruChandal.hindiMantra || "",
+              guruChandal.seoTitle || "",
+              guruChandal.id
+            ]
+          );
+          console.log("[AUTO-DB] Enriched Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.");
+        }
+      }
+    } catch (e) {
+      console.warn("[AUTO-DB] Safe Guru Chandal sync warning:", e);
     }
     const toursCount = await query("SELECT COUNT(*) as count FROM tours");
     if (toursCount[0].count === 0) {

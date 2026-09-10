@@ -505,7 +505,7 @@ export async function autoInitializeDatabase() {
             hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
             faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
             mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             p.id,
             p.name,
@@ -572,6 +572,152 @@ export async function autoInitializeDatabase() {
         );
         result.seeded.poojas++;
       }
+    }
+
+    // 3.1 Ensure Guru Chandal Dosh Pooja has rich SEO, AEO, and GEO fields in database
+    try {
+      const guruChandal = initialPoojas.find((x) => x.id === 'pooja-guru-chandal') as any;
+      if (guruChandal) {
+        const checkExisting = await query<any>(
+          'SELECT id, quick_answer, seo_title FROM poojas WHERE id = ? OR slug = ?',
+          ['pooja-guru-chandal', 'guru-chandal-dosh-shanti-pooja-ujjain']
+        );
+        if (checkExisting.length === 0) {
+          await execute(
+            `INSERT INTO poojas (
+              id, name, hindi_name, slug, category_id, category_name, hindi_category_name,
+              page_type, primary_keyword, secondary_keywords_json, search_intent, seo_title, meta_description, url_slug, h1, quick_answer,
+              short_description, hindi_short_description, description, hindi_description,
+              temple_name, hindi_temple_name, location, hindi_location, city, hindi_city,
+              price, original_price, advance_booking_amount, duration, hindi_duration,
+              timing, hindi_timing, samagri_included, prasad_home_delivery, live_video_available,
+              vip_entry_pass, pandit_count, image, gallery_images_json, what_we_offer_json, benefits_json,
+              hindi_benefits_json, who_can_consider_json, procedure_steps_json, hindi_procedure_steps_json,
+              faqs_json, internal_links_json, image_seo_json, schema_types_json, quality_score, ideal_for, hindi_ideal_for, auspicious_days, hindi_auspicious_days,
+              mantra, hindi_mantra, is_popular, is_published, meta_title, sort_order
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              guruChandal.id,
+              guruChandal.name,
+              guruChandal.hindiName || '',
+              guruChandal.slug,
+              guruChandal.categoryId || '',
+              guruChandal.categoryName || '',
+              guruChandal.hindiCategoryName || '',
+              guruChandal.pageType || guruChandal.categoryName || '',
+              guruChandal.primaryKeyword || guruChandal.focusKeyword || '',
+              JSON.stringify(guruChandal.secondaryKeywords || []),
+              guruChandal.searchIntent || '',
+              guruChandal.seoTitle || guruChandal.metaTitle || '',
+              guruChandal.metaDescription || '',
+              guruChandal.urlSlug || `/pooja/${guruChandal.slug}`,
+              guruChandal.h1 || guruChandal.name,
+              guruChandal.quickAnswer || '',
+              guruChandal.shortDescription || '',
+              guruChandal.hindiShortDescription || '',
+              guruChandal.description || '',
+              guruChandal.hindiDescription || '',
+              guruChandal.templeName || '',
+              guruChandal.hindiTempleName || '',
+              guruChandal.location || '',
+              guruChandal.hindiLocation || '',
+              guruChandal.city || '',
+              guruChandal.hindiCity || '',
+              guruChandal.price || 0.0,
+              guruChandal.originalPrice || null,
+              guruChandal.advanceBookingAmount || null,
+              guruChandal.duration || '',
+              guruChandal.hindiDuration || '',
+              guruChandal.timing || '',
+              guruChandal.hindiTiming || '',
+              guruChandal.samagriIncluded !== false ? 1 : 0,
+              guruChandal.prasadHomeDelivery !== false ? 1 : 0,
+              guruChandal.liveVideoAvailable !== false ? 1 : 0,
+              guruChandal.vipEntryPass ? 1 : 0,
+              guruChandal.panditCount || 1,
+              guruChandal.featuredImage || guruChandal.image || '',
+              JSON.stringify(guruChandal.gallery || guruChandal.galleryImages || []),
+              JSON.stringify(guruChandal.whatWeOffer || []),
+              JSON.stringify(guruChandal.benefits || []),
+              JSON.stringify(guruChandal.hindiBenefits || []),
+              JSON.stringify(guruChandal.whoCanConsider || guruChandal.whoIsItFor || []),
+              JSON.stringify(guruChandal.procedureSteps || guruChandal.preparation || []),
+              JSON.stringify(guruChandal.hindiProcedureSteps || guruChandal.hindiPreparation || []),
+              JSON.stringify(guruChandal.faqs || guruChandal.aeoQuestions || []),
+              JSON.stringify(guruChandal.internalLinks || []),
+              JSON.stringify(guruChandal.imageSeo || {}),
+              JSON.stringify(guruChandal.schemaTypes || []),
+              guruChandal.qualityScore || 98,
+              guruChandal.idealFor || '',
+              guruChandal.hindiIdealFor || '',
+              guruChandal.auspiciousDays || '',
+              guruChandal.hindiAuspiciousDays || '',
+              guruChandal.mantra || '',
+              guruChandal.hindiMantra || '',
+              guruChandal.isFeatured ? 1 : 0,
+              guruChandal.isPublished !== false ? 1 : 0,
+              guruChandal.seoTitle || guruChandal.metaTitle || '',
+              99,
+            ]
+          );
+          console.log('[AUTO-DB] Seeded missing Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.');
+        } else if (!checkExisting[0].quick_answer || String(checkExisting[0].quick_answer).trim() === '') {
+          await execute(
+            `UPDATE poojas SET
+              name = ?, hindi_name = ?, page_type = ?, primary_keyword = ?, secondary_keywords_json = ?,
+              search_intent = ?, seo_title = ?, meta_description = ?, url_slug = ?, h1 = ?, quick_answer = ?,
+              short_description = ?, description = ?, temple_name = ?, hindi_temple_name = ?, location = ?,
+              duration = ?, hindi_duration = ?, what_we_offer_json = ?, benefits_json = ?, hindi_benefits_json = ?,
+              who_can_consider_json = ?, procedure_steps_json = ?, hindi_procedure_steps_json = ?,
+              faqs_json = ?, internal_links_json = ?, image_seo_json = ?, schema_types_json = ?,
+              quality_score = ?, ideal_for = ?, hindi_ideal_for = ?, auspicious_days = ?, hindi_auspicious_days = ?,
+              mantra = ?, hindi_mantra = ?, meta_title = ?
+            WHERE id = ?`,
+            [
+              guruChandal.name,
+              guruChandal.hindiName || '',
+              guruChandal.pageType || '',
+              guruChandal.primaryKeyword || '',
+              JSON.stringify(guruChandal.secondaryKeywords || []),
+              guruChandal.searchIntent || '',
+              guruChandal.seoTitle || '',
+              guruChandal.metaDescription || '',
+              guruChandal.urlSlug || `/pooja/${guruChandal.slug}`,
+              guruChandal.h1 || guruChandal.name,
+              guruChandal.quickAnswer || '',
+              guruChandal.shortDescription || '',
+              guruChandal.description || '',
+              guruChandal.templeName || '',
+              guruChandal.hindiTempleName || '',
+              guruChandal.location || '',
+              guruChandal.duration || '',
+              guruChandal.hindiDuration || '',
+              JSON.stringify(guruChandal.whatWeOffer || []),
+              JSON.stringify(guruChandal.benefits || []),
+              JSON.stringify(guruChandal.hindiBenefits || []),
+              JSON.stringify(guruChandal.whoCanConsider || []),
+              JSON.stringify(guruChandal.procedureSteps || []),
+              JSON.stringify(guruChandal.hindiProcedureSteps || []),
+              JSON.stringify(guruChandal.faqs || []),
+              JSON.stringify(guruChandal.internalLinks || []),
+              JSON.stringify(guruChandal.imageSeo || {}),
+              JSON.stringify(guruChandal.schemaTypes || []),
+              guruChandal.qualityScore || 98,
+              guruChandal.idealFor || '',
+              guruChandal.hindiIdealFor || '',
+              guruChandal.auspiciousDays || '',
+              guruChandal.hindiAuspiciousDays || '',
+              guruChandal.mantra || '',
+              guruChandal.hindiMantra || '',
+              guruChandal.seoTitle || '',
+              guruChandal.id,
+            ]
+          );
+          console.log('[AUTO-DB] Enriched Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.');
+        }
+      }
+    } catch (e) {
+      console.warn('[AUTO-DB] Safe Guru Chandal sync warning:', e);
     }
 
     // 4. Safe Auto-Seeding: Tours
