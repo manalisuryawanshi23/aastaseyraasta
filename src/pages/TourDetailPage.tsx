@@ -692,7 +692,9 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
           {tourItinerary.length > 0 && (
             <div className="pt-8 border-t border-stone-300/40 dark:border-stone-700 space-y-6">
               <h3 className="font-serif font-bold text-stone-900 dark:text-amber-200 text-lg text-left">
-                {language === 'hi' ? 'दिन-वार विवरण' : 'Detailed 4-Day Itinerary'}
+                {language === 'hi'
+                  ? `दिन-वार विस्तृत विवरण (${tourItinerary.length} दिवसीय यात्रा)`
+                  : `Detailed ${tourItinerary.length}-Day Itinerary`}
               </h3>
               <div className="space-y-4">
                 {tourItinerary.map((day: any) => (
