@@ -7921,7 +7921,7 @@ async function autoInitializeDatabase() {
               faqs_json = ?, internal_links_json = ?, image_seo_json = ?, schema_types_json = ?,
               quality_score = ?, ideal_for = ?, hindi_ideal_for = ?, auspicious_days = ?, hindi_auspicious_days = ?,
               mantra = ?, hindi_mantra = ?, meta_title = ?
-            WHERE id = ?`,
+            WHERE id = ? OR slug = ?`,
             [
               guruChandal.name,
               guruChandal.hindiName || "",
@@ -7959,7 +7959,8 @@ async function autoInitializeDatabase() {
               guruChandal.mantra || "",
               guruChandal.hindiMantra || "",
               guruChandal.seoTitle || "",
-              guruChandal.id
+              guruChandal.id,
+              guruChandal.slug
             ]
           );
           console.log("[AUTO-DB] Enriched Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.");

@@ -191,11 +191,31 @@ export class StoreService {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          list = parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const masterMap = new Map(initialPoojas.map((p) => [p.id, p]));
+          const slugMap = new Map(initialPoojas.map((p) => [p.slug, p]));
+          
+          list = parsed.map((item) => {
+            const master = masterMap.get(item.id) || slugMap.get(item.slug);
+            if (!master) return item;
+
+            // Always prioritize master initialData if item is Guru Chandal Dosh or missing rich AEO fields
+            if (
+              item.id === 'pooja-guru-chandal' ||
+              item.slug === 'guru-chandal-dosh-shanti-pooja-ujjain' ||
+              !item.quickAnswer ||
+              (master.updatedAt && (!item.updatedAt || new Date(master.updatedAt) > new Date(item.updatedAt)))
+            ) {
+              return { ...item, ...master };
+            }
+            return { ...master, ...item };
+          });
+        } else {
+          list = initialPoojas;
         }
       } catch (e) {
         console.error('Error parsing stored poojas:', e);
+        list = initialPoojas;
       }
     } else {
       list = initialPoojas;
@@ -230,6 +250,10 @@ export class StoreService {
       'mool-shanti-pooja-ujjain': 'mool-shanti-pooja-ujjain',
       'vish-yog-shanti-pooja-ujjain': 'vish-yog-shanti-pooja-ujjain',
       'nakshatra-shanti-pooja-ujjain': 'nakshatra-shanti-pooja-ujjain',
+      'guru-chandal-dosh-pooja': 'guru-chandal-dosh-shanti-pooja-ujjain',
+      'guru-chandal-dosh-shanti-pooja': 'guru-chandal-dosh-shanti-pooja-ujjain',
+      'guru-chandal-dosh-pooja-ujjain': 'guru-chandal-dosh-shanti-pooja-ujjain',
+      'guru-chandal-dosh-shanti-pooja-ujjain': 'guru-chandal-dosh-shanti-pooja-ujjain',
     };
 
     const targetSlug = aliasMap[cleanSlug] || cleanSlug;
