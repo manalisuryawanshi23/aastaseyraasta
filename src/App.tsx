@@ -137,6 +137,10 @@ export default function App() {
       return <PoojaDetailPage slug="pitru-dosh-shanti-narayan-bali-ujjain" onOpenBooking={handleOpenBooking} />;
     }
 
+    if (path === '/guru-chandal-dosh-shanti-pooja-ujjain' || path === '/pooja-services/guru-chandal-dosh-shanti-pooja-ujjain' || path === '/pooja/guru-chandal-dosh-shanti-pooja-ujjain') {
+      return <PoojaDetailPage slug="guru-chandal-dosh-shanti-pooja-ujjain" onOpenBooking={handleOpenBooking} />;
+    }
+
     if (path === '/pooja-services' || path === '/poojas' || path === '/pooja') {
       return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }

@@ -682,7 +682,7 @@ export async function autoInitializeDatabase() {
             ]
           );
           console.log('[AUTO-DB] Seeded missing Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.');
-        } else if (!checkExisting[0].quick_answer || String(checkExisting[0].quick_answer).trim() === '') {
+        } else {
           await execute(
             `UPDATE poojas SET
               name = ?, hindi_name = ?, page_type = ?, primary_keyword = ?, secondary_keywords_json = ?,
