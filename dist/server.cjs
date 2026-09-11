@@ -1535,7 +1535,7 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
   {
     id: "pooja-guru-chandal",
     name: "Guru Chandal Dosh Shanti Pooja in Ujjain",
-    hindiName: "\u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0909\u091C\u094D\u091C\u0948\u0928 \u2014 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928",
+    hindiName: "\u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E (\u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930, \u0909\u091C\u094D\u091C\u0948\u0928)",
     slug: "guru-chandal-dosh-shanti-pooja-ujjain",
     urlSlug: "/guru-chandal-dosh-shanti-pooja-ujjain",
     canonicalUrl: "https://aasthasaysrasta.com/guru-chandal-dosh-shanti-pooja-ujjain",
@@ -1544,7 +1544,7 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
     hindiCategoryName: "\u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0935\u093F\u0936\u0947\u0937 \u092A\u0942\u091C\u093E",
     pageType: "Pooja / Dosh Shanti",
     primaryKeyword: "Guru Chandal Dosh Shanti Pooja Ujjain",
-    focusKeyword: "guru chandal dosh shanti pooja in ujjain",
+    focusKeyword: "Guru Chandal Dosh Shanti Pooja in Ujjain",
     secondaryKeywords: [
       "Guru Chandal Dosh Pooja Ujjain",
       "Guru Chandal Dosha Shanti Pooja",
@@ -1556,227 +1556,245 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
       "Guru Chandal Dosh Pooja Ujjain price",
       "Guru Chandal Dosh Pooja Ujjain cost",
       "Guru Chandal Dosh Pooja in Ujjain",
-      "ancient devguru brihaspati temple ujjain",
-      "guru rahu yuti shanti ujjain"
+      "Ancient Devguru Brihaspati Temple Ujjain"
     ],
-    searchIntent: "Transactional & Informational (Devotees and families seeking authentic Vedic Guru Chandal Dosh Shanti Pooja in Ujjain to address Jupiter-Rahu conjunction, academic hurdles, career setbacks, and financial instability)",
+    searchIntent: "Devotees seeking authentic information and booking assistance for Guru Chandal Dosh Shanti Pooja at Ancient Devguru Brihaspati Temple in Ujjain.",
     seoTitle: "Guru Chandal Dosh Shanti Pooja in Ujjain | Aastha Sey Raasta Seva",
-    metaDescription: "Book authentic Guru Chandal Dosh Shanti Pooja in Ujjain at Ancient Devguru Brihaspati Temple. Vedic Guru-Rahu pacification, verified Pandits & complete arrangements.",
+    metaDescription: "Book Guru Chandal Dosh Shanti Pooja in Ujjain at Ancient Devguru Brihaspati Temple with Aastha Sey Raasta Seva. Enquire for details, pricing & booking.",
     h1: "Guru Chandal Dosh Shanti Pooja in Ujjain",
-    quickAnswer: "Guru Chandal Dosh Shanti Pooja in Ujjain is a specialized Vedic planetary pacification ceremony performed at the Ancient Devguru Brihaspati Temple in Ujjain, Madhya Pradesh. According to Vedic astrology, this ritual is traditionally conducted to pacify the malefic astrological effects created by the conjunction of benevolent Jupiter (Devguru Brihaspati) and shadow planet Rahu or Ketu in a horoscope. Arranged by Aastha Sey Raasta Seva, the ceremony is performed by experienced Gurukul-trained Vedic Brahmins using traditional yellow offerings, scriptural Beej mantras, and a Navgraha Shanti Havan to pray for academic focus, financial stability, wisdom, and moral clarity.",
-    shortDescription: "Guru Chandal Dosh Shanti Pooja is an authentic Vedic pacification ritual conducted at the ancient Devguru Brihaspati Temple in Ujjain to pacify the conjunction of Jupiter and Rahu, traditionally performed to support academic focus, financial stability, and life clarity.",
-    description: `Guru Chandal Dosh Shanti Pooja in Ujjain is an authentic Vedic planetary pacification ceremony performed to harmonize the conjunction of Devguru Brihaspati (Jupiter) and the shadow planet Rahu or Ketu. In classical Vedic astrology (Jyotish Shastra), Jupiter represents supreme wisdom (jnana), righteous conduct (dharma), intellect (buddhi), higher learning, progeny, and auspicious prosperity. Rahu, by contrast, embodies cosmic illusions (Maya), impulsive desires, cognitive confusion, and sudden disruptions. When these two opposing planetary forces occupy the same astrological house or cast mutual aspects in a birth chart, the resulting planetary combination is traditionally known as Guru Chandal Dosh or Guru Chandal Yoga.
+    quickAnswer: "Guru Chandal Dosh Shanti Pooja in Ujjain is a specialized Vedic remedial ritual performed at the Ancient Devguru Brihaspati Temple to pacify Guru Chandal Dosh, formed when Jupiter (Guru) is conjunct with Rahu or Ketu in a horoscope. Dedicated to Lord Jupiter\u2014the significator of wisdom, wealth, marriage, and prosperity\u2014this sacred temple in Ujjain is regarded as the most auspicious place for Jupiter-related rituals. Aastha Sey Raasta Seva arranges complete authentic pooja services with experienced Vedic pandits. Contact us for current details, availability, and booking.",
+    shortDescription: "Guru Chandal Dosh Shanti Pooja is a Vedic ritual performed at the Ancient Devguru Brihaspati Temple in Ujjain to pacify Jupiter-Rahu/Ketu affliction, seeking wisdom, clarity, and overall progress.",
+    description: `Guru Chandal Dosh Pooja is a Vedic ritual performed to pacify Guru Chandal Dosh, an inauspicious astrological affliction formed when Jupiter (Guru) is conjunct with Rahu or Ketu in one's horoscope, believed to cause obstacles in wisdom, decision-making, and overall life progress. According to Vedic tradition, this ritual is performed to neutralize the negative effects of this dosha and invoke divine blessings for clarity, prosperity, and success.
 
-According to sacred Vedic treatises, an unpacified Guru Chandal affliction can create subtle spiritual blockages, clouding an individual's discernment and diverting their efforts toward unproductive pursuits. Performing a dedicated Guru Chandal Dosh Shanti Pooja in Ujjain allows devotees to seek divine guidance, restore planetary equilibrium, and invite the benevolent grace of Devguru Brihaspati. At Aastha Sey Raasta Seva, we arrange complete, scripturally authentic Guru Chandal Dosh Shanti ceremonies in Ujjain, conducted by experienced and Gurukul-qualified Vedic Brahmins with absolute devotional integrity.
+The ancient Devguru Brihaspati temple in Ujjain is dedicated to Jupiter (Guru), revered in Vedic tradition as the significator of wisdom, wealth, marriage, and overall prosperity. This sacred temple is regarded as the most auspicious and ideal place for performing Guru Chandal Dosh Pooja and other Jupiter-related rituals. Connect with Aastha Sey Raasta Seva for pooja details, availability and booking assistance.
 
-## Understanding Guru Chandal Dosh in Vedic Astrology
-In classical Jyotish texts, Jupiter is revered as the most auspicious natural benefic planet (Subha Graha), governing the 9th house of fortune, righteousness, and father, and the 12th house of spiritual liberation in the natural zodiac. When shadow planet Rahu conjoins Jupiter in key astrological houses\u2014particularly the 1st (ascendant), 5th (intellect and education), 9th (fortune and dharma), or 10th (career and karma)\u2014its shadowy influence is believed to diminish the positive manifestations of Jupiter.
+## About Guru Chandal Dosh Shanti Pooja
+Guru Chandal Dosh Shanti Pooja is a specialized remedial worship rooted in ancient Vedic astrological traditions. In Vedic astrology, planetary combinations are studied to understand their subtle influences on an individual's life path, intellect, and spiritual journey.
 
-This astrological combination does not imply permanent misfortune, but rather a periodic test of discernment and integrity. Classical texts prescribe specific Shanti Anushthans, Peet Daan (yellow offerings), and Vedic Yagyas to neutralize Rahu's malefic shadow and empower Jupiter's sattvic energy.
+When planetary configurations indicate an association between Jupiter (Devguru Brihaspati) and shadow planets such as Rahu or Ketu, devotees traditionally consider performing a Shanti Pooja to seek spiritual harmony, mental peace, and righteous wisdom. The ritual is focused on invoking divine blessings, fostering personal discernment, and restoring spiritual balance through guided Vedic prayers.
+
+## Understanding Guru Chandal Dosh
+
+### What is Guru Chandal Dosh?
+In classical Vedic astrology, Guru Chandal Dosh is an astrological combination (yoga) that occurs when Jupiter (Guru), the planet of wisdom, knowledge, and righteousness, is in conjunction with or under the strong aspect of the shadow planet Rahu or Ketu.
+
+### How is it understood in Vedic Astrology?
+Jupiter represents supreme wisdom, ethics, moral clarity, education, and spiritual growth. Rahu, on the other hand, represents illusion, worldly desires, restlessness, and sudden disruptions. When these two opposing energies intersect in a birth chart, traditional astrological belief suggests that it may create a period of intellectual confusion, hesitation in decision-making, or ethical dilemmas.
+
+### Why do devotees seek Shanti Pooja?
+Devotees traditionally seek Shanti Pooja to pray for clarity of mind, guidance in higher education and career, and protection against deceptive situations. Rather than a source of fear, this astrological placement is seen as an opportunity for self-awareness, moral discipline, and dedicated spiritual prayer.
 
 ## Traditional Purpose of the Pooja
-Devotees arrange Guru Chandal Dosha Shanti Pooja with sincere devotional intent to seek divine blessings across multiple dimensions of life:
-- **Restoring Intellectual Discernment**: Performed to pray for mental clarity, sharp memory, and unwavering focus in academic and intellectual endeavors.
-- **Harmonizing Planetary Energies**: Intended to pacify Rahu's destabilizing influence and strengthen Jupiter's righteous benevolence in the native's horoscope.
-- **Safeguarding Wealth & Livelihood**: Traditionally believed to protect the household from fraudulent dealings and encourage steady, ethical economic growth.
-- **Strengthening Family & Mentorship Bonds**: Conducted to mend strained relationships with elders, spiritual mentors, and teachers.
-- **Spiritual Cleansing & Peace of Mind**: Anushthan ceremonies help quiet mental turbulence, encouraging tranquility, devotional focus, and ethical living.
+According to Vedic astrology, Guru Chandal Dosh Shanti Pooja is traditionally performed as a remedial practice with sincere devotional intent. Devotees may consider this ritual for:
+- **Neutralization of Guru Chandal Dosh**: Reduces the negative influences of Jupiter's affliction with Rahu/Ketu on one's life.
+- **Clarity in Decision-Making**: Enhances wisdom, judgment, and the ability to make sound life choices.
+- **Removal of Obstacles**: Clears hurdles in career, education, marriage, and other important areas of life.
+- **Career and Business Growth**: Removes blockages hindering professional progress, promotions, and financial gains.
+- **Marital Harmony**: Eases delays or conflicts in marriage caused by this planetary affliction.
+- **Mental Peace and Confidence**: Reduces confusion and anxiety, bringing clarity and self-assurance.
+- **Prosperity and Success**: Opens pathways for growth, stability, and overall material well-being.
+- **Enhanced Guidance from Mentors & Elders**: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors.
+
+*Disclaimer: Astrological beliefs and remedial rituals are traditional devotional practices. Results and experiences may vary depending on individual circumstances and faith. Aastha Sey Raasta Seva provides spiritual coordination and pooja arrangement support in Ujjain without making deterministic or guaranteed outcome claims.*
 
 ## Who May Consider This Pooja
-Devotees commonly consult qualified astrologers and consider Guru Chandal Dosh Shanti Pooja when experiencing specific recurring challenges:
-- **Students & Aspirants**: Facing recurring hurdles, memory lapses, or loss of focus in higher education and competitive examinations.
-- **Professionals & Business Owners**: Experiencing unexpected career turbulence, stagnation, or susceptibility to misleading partnerships.
-- **Individuals Facing Decision Fog**: Struggling with clouded judgment, impulsive actions, or frequent ethical dilemmas.
-- **Devotees with Astrological Afflictions**: Whose horoscopes explicitly indicate Jupiter-Rahu conjunction or aspect in significant houses.
-- **Pilgrims Visiting Ujjain**: Devotees traveling to the holy city of Ujjain seeking divine Guru Kripa at the ancient Devguru Brihaspati sanctum.
+Individuals whose horoscopes are believed to indicate Guru Chandal Dosha, or those experiencing persistent feelings of distraction, decision fatigue, or ethical confusion, may consider seeking guidance. 
 
-*Disclaimer: Astrological suitability depends on an individual's unique birth chart and traditional guidance. Vedic poojas are spiritual ceremonies intended for devotional purposes and personal peace; they do not guarantee medical, legal, or financial outcomes.*
+Because individual astrological circumstances differ significantly, devotees are always encouraged to consult a qualified astrologer or spiritual guide before deciding on any remedial ritual. Aastha Sey Raasta Seva assists devotees who have chosen to perform this sacred ceremony in Ujjain by providing complete arrangement and coordination support.
 
-## Why Ujjain Is the Sacred Kshetra for Guru Chandal Dosh Pooja
-The historic city of Ujjain (ancient Avantika), located on the sacred banks of the holy Kshipra River in Madhya Pradesh, holds unparalleled astrological and spiritual authority:
-- **Sanctum of Devguru Brihaspati**: Ujjain is home to the world-renowned Ancient Devguru Brihaspati Temple, one of the rarest historical sanctums dedicated specifically to Lord Jupiter.
-- **The Prime Meridian of Vedic Astronomy**: Ancient astronomical texts, including the Surya Siddhanta, establish Ujjain as the prime geographical meridian (Madhyarekha) of the earth, creating a consecrated energy vortex where planetary Shanti yagyas are traditionally held to yield profound spiritual efficacy.
-- **Seat of Supreme Learning (Guru Sandipani Ashram)**: Lord Shri Krishna, Shri Balarama, and Sudama arrived in Ujjain to master the 64 arts and 14 sciences under Maharishi Sandipani, making this holy city the ultimate spiritual ground for intellectual enlightenment and Guru Kripa.
-- **Abode of Lord Mahakaleshwar**: As the sacred domain of Lord Shiva in his eternal aspect as the Master of Time (Mahakaal), Ujjain is revered as the supreme destination for neutralizing planetary afflictions and astrological doshas.
+## Pooja Process
+The pooja coordination in Ujjain follows a structured and transparent process:
+1. **Share Birth Details / Requirements**: Devotees provide their name, Gotra, date of birth, time of birth, and place of birth for the traditional Sankalp.
+2. **Discuss the Pooja Requirement**: Our Seva coordinator discusses your specific requirements and answers any questions regarding the pooja.
+3. **Confirm Arrangements & Availability**: Auspicious dates, temple timings, and priest availability in Ujjain are confirmed with you.
+4. **Arrange the Pooja**: Complete arrangements including sacred samagri, qualified priests, and ritual venue in Ujjain are coordinated smoothly.
+5. **Receive Booking / Participation Details**: You receive full confirmation details, venue directions, and participation instructions (whether attending in person in Ujjain or via remote live video).
 
-## Pooja Process & Vedic Ritual Steps
-At Aastha Sey Raasta Seva, every Guru Chandal Dosh Nivaran Pooja is conducted strictly in accordance with traditional Vedic protocols:
-1. **Ganpati & Gauri Pujan**: Invocation of Lord Ganesha to remove all obstacles and seek divine blessings for an auspicious start.
-2. **Punyahavachan & Sankalp**: Purification of the altar followed by individual Name, Gotra, and Nakshatra Sankalp recited by the head priest.
-3. **Navgraha Mandal Sthapana**: Consecration of the sacred planetary mandala with specific Brihaspati and Rahu yantras.
-4. **Vedic Beej Mantra Recitation**: Learned Gurukul Brahmins chant traditional Brihaspati Sukta, Guru Beej Mantras, and Rahu Kavach.
-5. **Peet Samagri Arpan (Yellow Offerings)**: Offering yellow vastra (cloth), split Bengal gram (chana dal), turmeric, saffron, yellow flowers, and brass lamps dear to Lord Brihaspati.
-6. **Navgraha Shanti Havan**: Sacred oblations of pure cow ghee, Peepal and Palash samidha, and medicinal herbs into the consecrated Agni.
-7. **Purnahuti, Yantra Abhimantran & Maha Aarti**: Concluding Purnahuti, consecration of the Brihaspati Yantra for the devotee, followed by Maha Aarti, Shanti Path, and Vedic blessings (Ashirvachan).
+## What We Offer
+Aastha Sey Raasta Seva provides dedicated devotee support for Guru Chandal Dosh Shanti Pooja in Ujjain:
+- **Complete Arrangements**: We provide complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.
+- **Experienced Vedic Pandits**: Performed by experienced and Vedic-qualified Pandits in Ujjain.
+- **Pooja Enquiry Assistance**: Prompt guidance to help you understand the ritual requirements and options.
+- **Booking Coordination**: Seamless scheduling and confirmation tailored to your preferred timeline.
+- **Guidance Regarding Required Details**: Clear instructions on necessary Gotra, birth details, and preparation guidelines.
+- **Pooja Arrangement Support**: End-to-end management of venue, sacred samagri, and qualified Vedic priests.
+- **Communication Regarding Availability**: Real-time updates regarding auspicious muhurats and scheduling slots.
+- **Devotee Assistance**: Caring, responsive assistance throughout the booking and ritual process.
 
-## What We Offer for Devotees
-- **Complete End-to-End Arrangements**: All sacred samagri, yellow vastra, fresh chana dal, pure saffron, and desi cow ghee arranged seamlessly.
-- **Gurukul-Trained Vedic Brahmins**: Experienced, certified Pandits who specialize in planetary Shanti and classical Yagyas.
-- **Individual Sankalp**: Every ritual includes dedicated recitation of the devotee's Name, Gotra, and birth coordinates.
-- **In-Person & Remote Participation**: Comprehensive venue coordination for visitors in Ujjain, plus live video streaming with doorstep delivery of energized Prasad and Brihaspati Yantra for remote devotees.
-
-## Price & Availability Enquiry
-Pooja arrangements and samagri offerings can be tailored to individual devotee requirements and anushthan scale. Devotees may enquire for the current verified pooja pricing, available auspicious dates, and customized arrangements by contacting our Seva coordinators directly.
+## Price & Availability
+Arrangement requirements and ritual scales can be tailored to individual devotee preferences. For verified current pricing, auspicious date availability, and customized booking assistance, please contact our Seva coordinators directly.
 
 ## How Booking Works
-1. **Submit Enquiry**: Fill out the online booking form with your contact information, preferred date, and Gotra details.
-2. **Consultation & Muhurat Selection**: Our Seva coordinator connects with you to confirm auspicious planetary timings and ritual options.
-3. **Advance Booking Confirmation**: Secure your pooja slot with nominal advance confirmation.
-4. **Ceremony Execution**: Attend in person at Ancient Devguru Brihaspati Temple in Ujjain or join interactively via live video link.
+- **STEP 1 \u2014 Share Your Details**: Fill out our online booking enquiry form with your contact information, birth details, and preferred date.
+- **STEP 2 \u2014 Confirm Pooja Requirements & Availability**: Our team contacts you to verify requirements, review auspicious timings, and answer any questions.
+- **STEP 3 \u2014 Complete Your Booking**: Confirm your booking slot and receive comprehensive ritual guidelines and venue coordination for Ujjain.
 
 ## Why Choose Aastha Sey Raasta Seva
-- **Devotional Integrity**: 100% scriptural adherence without commercial shortcuts.
-- **Transparent Coordination**: Clear communication, verified venues, and dedicated Pandit allocation.
-- **Complete Comfort & Peace of Mind**: We handle all operational logistics so you can focus entirely on your prayers.`,
+- **Ujjain-Focused Spiritual Service Assistance**: Dedicated local presence with deep knowledge of Ujjain's sacred temple traditions and the Ancient Devguru Brihaspati Temple.
+- **Clear Communication**: Transparent coordination, honest guidance, and prompt responses at every step.
+- **Booking Coordination**: Professional management of all logistics, samagri, and priest schedules.
+- **Personalized Enquiry Support**: Attentive assistance tailored to your unique family and astrological requirements.
+- **Devotee-Friendly Assistance**: Committed to making your pilgrimage and pooja experience smooth, serene, and spiritually enriching.
+
+## GEO Optimization & Service Context
+- **Service**: Guru Chandal Dosh Shanti Pooja
+- **Sacred Venue**: Ancient Devguru Brihaspati Temple, Ujjain
+- **Location**: Ujjain, Madhya Pradesh, India
+- **Service Provider**: Aastha Sey Raasta Seva
+- **Regional Context**: Ujjain (ancient Avantika) on the sacred banks of the holy Kshipra River is home to the world-renowned Ancient Devguru Brihaspati Temple, revered as the most auspicious kshetra for Jupiter-related remedial rituals.`,
     templeName: "Ancient Devguru Brihaspati Temple, Ujjain",
     hindiTempleName: "\u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930, \u0909\u091C\u094D\u091C\u0948\u0928",
-    location: "Brihaspati Temple Marg, Near Kshipra River, Ujjain",
-    hindiLocation: "\u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u092E\u093E\u0930\u094D\u0917, \u0936\u093F\u092A\u094D\u0930\u093E \u0924\u091F \u0915\u0947 \u0938\u092E\u0940\u092A, \u0909\u091C\u094D\u091C\u0948\u0928",
+    location: "Brihaspati Temple Marg, Near Sacred Kshipra River, Ujjain",
+    hindiLocation: "\u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u092E\u093E\u0930\u094D\u0917, \u092A\u0935\u093F\u0924\u094D\u0930 \u0936\u093F\u092A\u094D\u0930\u093E \u0924\u091F \u0915\u0947 \u0938\u092E\u0940\u092A, \u0909\u091C\u094D\u091C\u0948\u0928",
     city: "Ujjain",
     hindiCity: "\u0909\u091C\u094D\u091C\u0948\u0928",
     state: "Madhya Pradesh",
     country: "India",
     whatWeOffer: [
-      "Complete arrangements for Guru Chandal Dosh Shanti Pooja with devotion, authenticity, and convenience for devotees.",
-      "Ritual conducted by experienced, Gurukul-trained Vedic Brahmins in Ujjain.",
-      "Provision of authentic yellow cloth, fresh chana dal, pure turmeric, saffron, and pure cow ghee for the sacred havan.",
-      "Individual Name, Gotra, and Nakshatra Sankalp with dedicated coordination support and option for live video participation."
+      "Complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.",
+      "Performed by experienced and Vedic-qualified Pandits in Ujjain.",
+      "Pooja enquiry assistance and prompt guidance regarding ritual requirements and birth details.",
+      "Pooja arrangement support including sanctified temple venue, pure samagri, and priest allocation.",
+      "Clear communication regarding auspicious muhurats and date availability.",
+      "Devotee-friendly assistance for both in-person and remote live video participation."
     ],
     hindiWhatWeOffer: [
-      "\u0936\u094D\u0930\u0926\u094D\u0927\u093E, \u092A\u094D\u0930\u093E\u092E\u093E\u0923\u093F\u0915\u0924\u093E \u0914\u0930 \u0938\u0941\u0935\u093F\u0927\u093E \u0915\u0947 \u0938\u093E\u0925 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E",
-      "\u0909\u091C\u094D\u091C\u0948\u0928 \u0915\u0947 \u0935\u0930\u093F\u0937\u094D\u0920 \u0935\u0947\u0926\u092A\u093E\u0920\u0940 \u0917\u0941\u0930\u0941\u0915\u0941\u0932 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928",
-      "\u092A\u0940\u0924 \u0935\u0938\u094D\u0924\u094D\u0930, \u092A\u0940\u0932\u0940 \u091A\u0928\u093E \u0926\u093E\u0932, \u0936\u0941\u0926\u094D\u0927 \u0939\u0932\u094D\u0926\u0940, \u0915\u0947\u0938\u0930 \u090F\u0935\u0902 \u0926\u0947\u0936\u0940 \u0917\u093E\u092F \u0915\u0947 \u0918\u0940 \u092F\u0941\u0915\u094D\u0924 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u0939\u0935\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940",
-      "\u092F\u091C\u092E\u093E\u0928 \u0915\u0947 \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u091C\u0928\u094D\u092E \u0928\u0915\u094D\u0937\u0924\u094D\u0930 \u0905\u0928\u0941\u0938\u093E\u0930 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0935\u0948\u0926\u093F\u0915 \u0938\u0902\u0915\u0932\u094D\u092A \u090F\u0935\u0902 \u0932\u093E\u0907\u0935 \u092A\u094D\u0930\u0938\u093E\u0930\u0923 \u0938\u0941\u0935\u093F\u0927\u093E"
+      "\u0939\u092E \u092D\u0915\u094D\u0924\u094B\u0902 \u0915\u0947 \u0932\u093F\u090F \u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0936\u093E\u0902\u0924\u093F \u092A\u0942\u091C\u093E \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0915\u0940 \u0938\u0902\u092A\u0942\u0930\u094D\u0923 \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E \u0936\u094D\u0930\u0926\u094D\u0927\u093E, \u092A\u094D\u0930\u093E\u092E\u093E\u0923\u093F\u0915\u0924\u093E \u0914\u0930 \u0938\u0941\u0935\u093F\u0927\u093E \u0915\u0947 \u0938\u093E\u0925 \u092A\u094D\u0930\u0926\u093E\u0928 \u0915\u0930\u0924\u0947 \u0939\u0948\u0902\u0964",
+      "\u092F\u0939 \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0905\u0928\u0941\u092D\u0935\u0940 \u0914\u0930 \u0935\u0948\u0926\u093F\u0915 \u0930\u0942\u092A \u0938\u0947 \u092F\u094B\u0917\u094D\u092F \u092A\u0902\u0921\u093F\u0924\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0935\u093F\u0927\u093F \u0938\u0947 \u0938\u0902\u092A\u0928\u094D\u0928 \u0915\u0930\u093E\u092F\u093E \u091C\u093E\u0924\u093E \u0939\u0948\u0964",
+      "\u092A\u0942\u091C\u093E \u0938\u0902\u092C\u0902\u0927\u0940 \u0935\u093F\u0938\u094D\u0924\u0943\u0924 \u092A\u0930\u093E\u092E\u0930\u094D\u0936 \u090F\u0935\u0902 \u091C\u0928\u094D\u092E \u0935\u093F\u0935\u0930\u0923, \u0917\u094B\u0924\u094D\u0930 \u0935 \u092A\u0942\u091C\u0928 \u0935\u093F\u0927\u093F \u0938\u0902\u092C\u0902\u0927\u0940 \u092A\u0942\u0930\u094D\u0923 \u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0928\u0964",
+      "\u0909\u091C\u094D\u091C\u0948\u0928 \u092E\u0947\u0902 \u092A\u0942\u091C\u093E \u0938\u094D\u0925\u0932, \u0935\u0948\u0926\u093F\u0915 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923 \u090F\u0935\u0902 \u0936\u0941\u0926\u094D\u0927 \u092A\u0942\u091C\u0928 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u0915\u0940 \u092A\u0942\u0930\u094D\u0923 \u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E\u0964",
+      "\u0936\u0941\u092D \u092E\u0941\u0939\u0942\u0930\u094D\u0924, \u092E\u0902\u0926\u093F\u0930 \u0938\u092E\u092F \u090F\u0935\u0902 \u0924\u093F\u0925\u093F \u0909\u092A\u0932\u092C\u094D\u0927\u0924\u093E \u0915\u0940 \u0938\u092E\u092F\u092C\u0926\u094D\u0927 \u091C\u093E\u0928\u0915\u093E\u0930\u0940\u0964",
+      "\u0909\u091C\u094D\u091C\u0948\u0928 \u092E\u0947\u0902 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0909\u092A\u0938\u094D\u0925\u093F\u0924\u093F \u0905\u0925\u0935\u093E \u0911\u0928\u0932\u093E\u0907\u0928 \u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u0936\u094D\u0930\u0926\u094D\u0927\u093E\u0932\u0941-\u0905\u0928\u0941\u0915\u0942\u0932 \u0938\u0939\u093E\u092F\u0924\u093E\u0964"
     ],
     benefits: [
-      "Academic Focus & Learning: [\u0936\u093F\u0915\u094D\u0937\u093E] Traditionally performed to support mental clarity, concentration in higher studies, and preparation for competitive examinations.",
-      "Financial Prudence & Stability: [\u0906\u0930\u094D\u0925\u093F\u0915] Believed to safeguard against uncalculated financial risks, deceptive partnerships, and sudden monetary setbacks.",
-      "Sound Judgment & Moral Discernment: [\u0935\u093F\u0935\u0947\u0915] Intended to foster ethical decision-making, clear thinking, and resilience against negative or misleading influences.",
-      "Pacification of Rahu Afflictions: [\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F] Performed to mitigate the malefic shadow of Rahu over Jupiter according to classical astrological principles.",
-      "Professional Consistency & Mentorship: [\u0915\u0930\u093F\u092F\u0930] Traditionally associated with dissolving career blockages and nurturing respectful, cooperative relationships with mentors and seniors.",
-      "Family Harmony & Domestic Peace: [\u0938\u0926\u094D\u092D\u093E\u0935] Believed to ease inner restlessness, misunderstandings with elders, and restore mutual warmth in the household.",
-      "Spiritual Growth & Guru Kripa: [\u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915] Intended to invoke the divine blessings of Devguru Brihaspati for spiritual discernment, righteousness, and long-term well-being."
+      "Neutralization of Guru Chandal Dosh: Reduces the negative influences of Jupiter's affliction with Rahu/Ketu on one's life.",
+      "Clarity in Decision-Making: Enhances wisdom, judgment, and the ability to make sound life choices.",
+      "Removal of Obstacles: Clears hurdles in career, education, marriage, and other important areas of life.",
+      "Career and Business Growth: Removes blockages hindering professional progress, promotions, and financial gains.",
+      "Marital Harmony: Eases delays or conflicts in marriage caused by this planetary affliction.",
+      "Mental Peace and Confidence: Reduces confusion and anxiety, bringing clarity and self-assurance.",
+      "Prosperity and Success: Opens pathways for growth, stability, and overall material well-being.",
+      "Enhanced Guidance from Mentors & Elders: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors."
     ],
     hindiBenefits: [
-      "[\u0936\u093F\u0915\u094D\u0937\u093E] \u090F\u0915\u093E\u0917\u094D\u0930\u0924\u093E \u092E\u0947\u0902 \u0935\u0943\u0926\u094D\u0927\u093F, \u0938\u094D\u092E\u0930\u0923 \u0936\u0915\u094D\u0924\u093F \u0915\u0940 \u092E\u091C\u092C\u0942\u0924\u0940 \u090F\u0935\u0902 \u092A\u094D\u0930\u0924\u093F\u092F\u094B\u0917\u0940 \u092A\u0930\u0940\u0915\u094D\u0937\u093E\u0913\u0902 \u0935 \u0909\u091A\u094D\u091A \u0936\u093F\u0915\u094D\u0937\u093E \u092E\u0947\u0902 \u0905\u0928\u0941\u0915\u0942\u0932\u0924\u093E",
-      "[\u0906\u0930\u094D\u0925\u093F\u0915] \u0905\u092A\u094D\u0930\u0924\u094D\u092F\u093E\u0936\u093F\u0924 \u0927\u0928 \u0939\u093E\u0928\u093F \u0938\u0947 \u0930\u0915\u094D\u0937\u093E, \u0927\u094B\u0916\u093E\u0927\u0921\u093C\u0940 \u0935 \u0917\u0932\u0924 \u0928\u093F\u0935\u0947\u0936 \u0938\u0947 \u092C\u091A\u093E\u0935 \u090F\u0935\u0902 \u0906\u0930\u094D\u0925\u093F\u0915 \u0938\u094D\u0925\u093F\u0930\u0924\u093E",
-      "[\u0935\u093F\u0935\u0947\u0915] \u0938\u0939\u0940 \u0928\u093F\u0930\u094D\u0923\u092F \u0932\u0947\u0928\u0947 \u0915\u0940 \u0915\u094D\u0937\u092E\u0924\u093E, \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u0938\u0902\u0917\u0924\u093F \u0938\u0947 \u092E\u0941\u0915\u094D\u0924\u093F \u090F\u0935\u0902 \u0928\u0948\u0924\u093F\u0915 \u0938\u094D\u092A\u0937\u094D\u091F\u0924\u093E",
-      "[\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F] \u0917\u0941\u0930\u0941-\u0930\u093E\u0939\u0941 \u092F\u0941\u0924\u093F \u0915\u0947 \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u092A\u094D\u0930\u092D\u093E\u0935 \u0915\u093E \u092A\u0942\u0930\u094D\u0923 \u0936\u092E\u0928 \u090F\u0935\u0902 \u0928\u0935\u0917\u094D\u0930\u0939 \u0915\u0943\u092A\u093E",
-      "[\u0915\u0930\u093F\u092F\u0930] \u0915\u093E\u0930\u094D\u092F\u0915\u094D\u0937\u0947\u0924\u094D\u0930 \u092E\u0947\u0902 \u0930\u0941\u0915\u093E\u0935\u091F\u094B\u0902 \u0915\u093E \u0905\u0902\u0924, \u092A\u0926\u094B\u0928\u094D\u0928\u0924\u093F \u090F\u0935\u0902 \u0935\u0930\u093F\u0937\u094D\u0920\u094B\u0902 \u0935 \u0917\u0941\u0930\u0941\u091C\u0928\u094B\u0902 \u0938\u0947 \u092E\u0927\u0941\u0930 \u0938\u0902\u092C\u0902\u0927",
-      "[\u0938\u0926\u094D\u092D\u093E\u0935] \u092A\u093E\u0930\u093F\u0935\u093E\u0930\u093F\u0915 \u092E\u0924\u092D\u0947\u0926 \u0928\u093F\u0935\u093E\u0930\u0923, \u092E\u093E\u0928\u0938\u093F\u0915 \u0936\u093E\u0902\u0924\u093F \u090F\u0935\u0902 \u0918\u0930 \u092E\u0947\u0902 \u0938\u0941\u0916-\u0938\u092E\u0943\u0926\u094D\u0927\u093F \u0915\u0940 \u0935\u0943\u0926\u094D\u0927\u093F",
-      "[\u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915] \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u0915\u093E \u0906\u0936\u0940\u0930\u094D\u0935\u093E\u0926, \u0906\u0927\u094D\u092F\u093E\u0924\u094D\u092E\u093F\u0915 \u0909\u0928\u094D\u0928\u0924\u093F \u090F\u0935\u0902 \u0927\u0930\u094D\u092E \u092E\u093E\u0930\u094D\u0917 \u092E\u0947\u0902 \u0926\u0943\u0922\u093C\u0924\u093E"
+      "\u0917\u0941\u0930\u0941 \u091A\u093E\u0902\u0921\u093E\u0932 \u0926\u094B\u0937 \u0915\u093E \u0928\u093F\u0937\u094D\u092A\u094D\u0930\u092D\u093E\u0935\u0940\u0915\u0930\u0923: \u0915\u0941\u0902\u0921\u0932\u0940 \u092E\u0947\u0902 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u0915\u0940 \u0930\u093E\u0939\u0941/\u0915\u0947\u0924\u0941 \u0915\u0947 \u0938\u093E\u0925 \u092A\u0940\u0921\u093C\u093E \u0915\u0947 \u0928\u0915\u093E\u0930\u093E\u0924\u094D\u092E\u0915 \u092A\u094D\u0930\u092D\u093E\u0935\u094B\u0902 \u0915\u094B \u0915\u092E \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u0928\u093F\u0930\u094D\u0923\u092F \u0915\u094D\u0937\u092E\u0924\u093E \u092E\u0947\u0902 \u0938\u094D\u092A\u0937\u094D\u091F\u0924\u093E: \u092C\u0941\u0926\u094D\u0927\u093F, \u0935\u093F\u0935\u0947\u0915 \u0914\u0930 \u091C\u0940\u0935\u0928 \u092E\u0947\u0902 \u0938\u0939\u0940 \u0928\u093F\u0930\u094D\u0923\u092F \u0932\u0947\u0928\u0947 \u0915\u0940 \u0915\u094D\u0937\u092E\u0924\u093E \u0915\u094B \u092C\u0922\u093C\u093E\u0924\u093E \u0939\u0948\u0964",
+      "\u092C\u093E\u0927\u093E\u0913\u0902 \u0915\u093E \u0928\u093F\u0935\u093E\u0930\u0923: \u0915\u0930\u093F\u092F\u0930, \u0936\u093F\u0915\u094D\u0937\u093E, \u0935\u093F\u0935\u093E\u0939 \u0914\u0930 \u091C\u0940\u0935\u0928 \u0915\u0947 \u0905\u0928\u094D\u092F \u092E\u0939\u0924\u094D\u0935\u092A\u0942\u0930\u094D\u0923 \u0915\u094D\u0937\u0947\u0924\u094D\u0930\u094B\u0902 \u092E\u0947\u0902 \u0906\u0928\u0947 \u0935\u093E\u0932\u0940 \u092C\u093E\u0927\u093E\u0913\u0902 \u0915\u094B \u0926\u0942\u0930 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u0915\u0930\u093F\u092F\u0930 \u0914\u0930 \u0935\u094D\u092F\u0935\u0938\u093E\u092F \u092E\u0947\u0902 \u0935\u0943\u0926\u094D\u0927\u093F: \u0935\u094D\u092F\u093E\u0935\u0938\u093E\u092F\u093F\u0915 \u092A\u094D\u0930\u0917\u0924\u093F, \u092A\u0926\u094B\u0928\u094D\u0928\u0924\u093F \u0914\u0930 \u0906\u0930\u094D\u0925\u093F\u0915 \u0932\u093E\u092D \u092E\u0947\u0902 \u092C\u093E\u0927\u0915 \u0924\u0924\u094D\u0935\u094B\u0902 \u0915\u094B \u0926\u0942\u0930 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u0935\u0948\u0935\u093E\u0939\u093F\u0915 \u0938\u093E\u092E\u0902\u091C\u0938\u094D\u092F: \u0907\u0938 \u0917\u094D\u0930\u0939 \u092A\u0940\u0921\u093C\u093E \u0915\u0947 \u0915\u093E\u0930\u0923 \u0935\u093F\u0935\u093E\u0939 \u092E\u0947\u0902 \u0909\u0924\u094D\u092A\u0928\u094D\u0928 \u0935\u093F\u0932\u0902\u092C \u092F\u093E \u0938\u0902\u0918\u0930\u094D\u0937 \u0915\u094B \u0936\u093E\u0902\u0924 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u092E\u093E\u0928\u0938\u093F\u0915 \u0936\u093E\u0902\u0924\u093F \u0914\u0930 \u0906\u0924\u094D\u092E\u0935\u093F\u0936\u094D\u0935\u093E\u0938: \u092D\u094D\u0930\u092E \u0914\u0930 \u091A\u093F\u0902\u0924\u093E \u0915\u094B \u0915\u092E \u0915\u0930, \u0938\u094D\u092A\u0937\u094D\u091F\u0924\u093E \u0914\u0930 \u0906\u0924\u094D\u092E\u0935\u093F\u0936\u094D\u0935\u093E\u0938 \u092A\u094D\u0930\u0926\u093E\u0928 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u0938\u092E\u0943\u0926\u094D\u0927\u093F \u0914\u0930 \u0938\u092B\u0932\u0924\u093E: \u0935\u093F\u0915\u093E\u0938, \u0938\u094D\u0925\u093F\u0930\u0924\u093E \u0914\u0930 \u0938\u092E\u0917\u094D\u0930 \u092D\u094C\u0924\u093F\u0915 \u0915\u0932\u094D\u092F\u093E\u0923 \u0915\u0947 \u092E\u093E\u0930\u094D\u0917 \u092A\u094D\u0930\u0936\u0938\u094D\u0924 \u0915\u0930\u0924\u093E \u0939\u0948\u0964",
+      "\u0917\u0941\u0930\u0941\u091C\u0928\u094B\u0902 \u0914\u0930 \u0935\u0930\u093F\u0937\u094D\u0920\u094B\u0902 \u0915\u0947 \u0938\u093E\u0925 \u092C\u0947\u0939\u0924\u0930 \u0938\u0902\u092C\u0902\u0927: \u091C\u0940\u0935\u0928 \u092E\u0947\u0902 \u0936\u093F\u0915\u094D\u0937\u0915\u094B\u0902, \u0917\u0941\u0930\u0941\u0913\u0902 \u0914\u0930 \u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0915 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u092F\u094B\u0902 \u0915\u0947 \u092A\u094D\u0930\u0924\u093F \u0938\u092E\u094D\u092E\u093E\u0928 \u0914\u0930 \u092E\u093E\u0930\u094D\u0917\u0926\u0930\u094D\u0936\u0928 \u0915\u094B \u092E\u091C\u092C\u0942\u0924 \u0915\u0930\u0924\u093E \u0939\u0948\u0964"
     ],
     whoCanConsider: [
-      "Devotees whose birth charts indicate Jupiter conjunct Rahu or Ketu (Guru Chandal Yog) as identified by an astrologer.",
-      "Students and professionals facing recurring hurdles, lack of focus, or unexplained setbacks in higher education or career.",
-      "Individuals seeking remedial planetary guidance for financial volatility or deceptive business transactions.",
-      "Devotees experiencing persistent mental confusion, ethical dilemmas, or strained relations with teachers and mentors.",
-      "Devotees traveling to Ujjain who wish to perform an authentic Vedic planetary pacification ceremony at Devguru Brihaspati Temple."
+      "Devotees whose horoscopes are believed to indicate Guru Chandal Dosha based on astrological consultation.",
+      "Students and aspirants seeking spiritual prayer and mental focus for higher education and learning.",
+      "Professionals and business owners seeking career growth, sound judgment, and removal of obstacles.",
+      "Individuals facing marriage delays, conflicts, or decision-making confusion due to planetary affliction.",
+      "Devotees visiting Ujjain wishing to arrange traditional Vedic worship at the Ancient Devguru Brihaspati Temple."
     ],
     procedureSteps: [
-      "Ganpati Pujan & Sankalp: Devotee Name, Gotra, and birth coordinates recited by Vedic priests to invoke divine blessings.",
-      "Navgraha Mandal Sthapana: Consecration of the sacred planetary mandala with specific Brihaspati and Rahu yantras.",
-      "Vedic Beej Mantra Recitation: Chanting of traditional Brihaspati Sukta and Rahu Kavach mantras with scriptural intonation.",
-      "Peet Samagri Arpan (Yellow Offerings): Offering yellow flowers, chana dal, turmeric, saffron, and yellow vastra dear to Devguru Brihaspati.",
-      "Navgraha Shanti Havan & Aarti: Sacred oblation using Peepal and Palash samidha into consecrated Agni, concluding with Maha Aarti and Shanti Path."
+      "Share Birth Details / Requirements: Provide name, Gotra, date of birth, time of birth, and place of birth.",
+      "Discuss the Pooja Requirement: Connect with a Seva coordinator to review pooja requirements and answer questions.",
+      "Confirm Arrangements & Availability: Verify auspicious dates, temple timings, and priest availability in Ujjain.",
+      "Arrange the Pooja: Complete arrangements including venue, samagri, and qualified Vedic priests are coordinated.",
+      "Receive Booking / Participation Details: Devotees receive confirmation details for in-person or live video participation."
     ],
     hindiProcedureSteps: [
-      "\u0917\u0923\u0947\u0936 \u092A\u0942\u091C\u0928 \u090F\u0935\u0902 \u0938\u0902\u0915\u0932\u094D\u092A: \u092F\u091C\u092E\u093E\u0928 \u0915\u0947 \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u0914\u0930 \u091C\u0928\u094D\u092E \u0935\u093F\u0935\u0930\u0923 \u0915\u093E \u0909\u091A\u094D\u091A\u093E\u0930\u0923 \u0915\u0930 \u0935\u093F\u0918\u094D\u0928\u0939\u0930\u094D\u0924\u093E \u0917\u0923\u0947\u0936 \u091C\u0940 \u0915\u093E \u0906\u0935\u093E\u0939\u0928\u0964",
-      "\u0928\u0935\u0917\u094D\u0930\u0939 \u092E\u0902\u0921\u0932 \u0938\u094D\u0925\u093E\u092A\u0928\u093E: \u092A\u0935\u093F\u0924\u094D\u0930 \u091C\u0932 \u0915\u0932\u0936, \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u092F\u0902\u0924\u094D\u0930 \u0915\u0940 \u0936\u093E\u0938\u094D\u0924\u094D\u0930\u094B\u0915\u094D\u0924 \u0935\u0947\u0926\u0940 \u092A\u0930 \u0938\u094D\u0925\u093E\u092A\u0928\u093E\u0964",
-      "\u0935\u0948\u0926\u093F\u0915 \u092C\u0940\u091C \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A: \u0935\u0930\u093F\u0937\u094D\u0920 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0917\u0941\u0930\u0941 \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u0915\u0947 \u090F\u0915\u093E\u0915\u094D\u0937\u0930\u0940 \u0935 \u092C\u0940\u091C \u092E\u0902\u0924\u094D\u0930\u094B\u0902 \u0915\u093E \u0938\u0938\u094D\u0935\u0930 \u092A\u093E\u0920\u0964",
-      "\u092A\u0940\u0924 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u0905\u0930\u094D\u092A\u0923: \u092A\u0940\u0932\u0947 \u092A\u0941\u0937\u094D\u092A, \u092A\u0940\u0932\u0940 \u091A\u0928\u093E \u0926\u093E\u0932, \u0939\u0932\u094D\u0926\u0940, \u0915\u0947\u0938\u0930, \u092C\u0947\u0938\u0928 \u0915\u0947 \u092E\u093F\u0937\u094D\u0920\u093E\u0928\u094D\u0928 \u0935 \u092A\u0940\u0924 \u0935\u0938\u094D\u0924\u094D\u0930 \u0915\u093E \u0905\u0930\u094D\u092A\u0923\u0964",
-      "\u0928\u0935\u0917\u094D\u0930\u0939 \u0936\u093E\u0902\u0924\u093F \u0939\u0935\u0928 \u090F\u0935\u0902 \u092E\u0939\u093E\u0906\u0930\u0924\u0940: \u092A\u0940\u092A\u0932 \u0935 \u092A\u0932\u093E\u0936 \u0915\u0940 \u092A\u0935\u093F\u0924\u094D\u0930 \u0938\u092E\u093F\u0927\u093E \u0924\u0925\u093E \u0914\u0937\u0927\u093F\u092F\u094B\u0902 \u0938\u0947 \u0906\u0939\u0941\u0924\u093F, \u092E\u0939\u093E\u0906\u0930\u0924\u0940 \u090F\u0935\u0902 \u0936\u093E\u0902\u0924\u093F \u092A\u093E\u0920\u0964"
+      "\u091C\u0928\u094D\u092E \u0935\u093F\u0935\u0930\u0923 \u090F\u0935\u0902 \u0906\u0935\u0936\u094D\u092F\u0915\u0924\u093E \u0938\u093E\u091D\u093E \u0915\u0930\u0947\u0902: \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930, \u091C\u0928\u094D\u092E \u0924\u093F\u0925\u093F, \u0938\u092E\u092F \u090F\u0935\u0902 \u0938\u094D\u0925\u093E\u0928 \u092A\u094D\u0930\u0926\u093E\u0928 \u0915\u0930\u0947\u0902\u0964",
+      "\u092A\u0942\u091C\u093E \u0906\u0935\u0936\u094D\u092F\u0915\u0924\u093E \u092A\u0930 \u092A\u0930\u093E\u092E\u0930\u094D\u0936: \u0938\u0947\u0935\u093E \u0938\u092E\u0928\u094D\u0935\u092F\u0915 \u0938\u0947 \u092C\u093E\u0924\u091A\u0940\u0924 \u0915\u0930 \u092A\u0942\u091C\u093E \u0935\u093F\u0927\u093F \u090F\u0935\u0902 \u0906\u0935\u0936\u094D\u092F\u0915\u0924\u093E\u0913\u0902 \u0915\u094B \u0938\u092E\u091D\u0947\u0902\u0964",
+      "\u0935\u094D\u092F\u0935\u0938\u094D\u0925\u093E \u090F\u0935\u0902 \u0924\u093F\u0925\u093F \u0915\u0940 \u092A\u0941\u0937\u094D\u091F\u093F: \u0909\u091C\u094D\u091C\u0948\u0928 \u092E\u0947\u0902 \u0936\u0941\u092D \u092E\u0941\u0939\u0942\u0930\u094D\u0924 \u090F\u0935\u0902 \u092A\u0941\u0930\u094B\u0939\u093F\u0924 \u0909\u092A\u0932\u092C\u094D\u0927\u0924\u093E \u0915\u0940 \u092A\u0941\u0937\u094D\u091F\u093F \u0915\u0930\u0947\u0902\u0964",
+      "\u092A\u0942\u091C\u093E \u0915\u093E \u0906\u092F\u094B\u091C\u0928: \u092A\u0942\u091C\u093E \u0938\u094D\u0925\u0932, \u0936\u0941\u0926\u094D\u0927 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u090F\u0935\u0902 \u092F\u094B\u0917\u094D\u092F \u0935\u0948\u0926\u093F\u0915 \u092C\u094D\u0930\u093E\u0939\u094D\u092E\u0923\u094B\u0902 \u0926\u094D\u0935\u093E\u0930\u093E \u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0915\u093E \u0906\u092F\u094B\u091C\u0928\u0964",
+      "\u092C\u0941\u0915\u093F\u0902\u0917 \u090F\u0935\u0902 \u0938\u0939\u092D\u093E\u0917\u093F\u0924\u093E \u0935\u093F\u0935\u0930\u0923 \u092A\u094D\u0930\u093E\u092A\u094D\u0924 \u0915\u0930\u0947\u0902: \u0909\u091C\u094D\u091C\u0948\u0928 \u092E\u0947\u0902 \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u0917\u0924 \u0905\u0925\u0935\u093E \u0911\u0928\u0932\u093E\u0907\u0928 \u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u092A\u0942\u0930\u094D\u0923 \u0935\u093F\u0935\u0930\u0923 \u092A\u094D\u0930\u093E\u092A\u094D\u0924 \u0915\u0930\u0947\u0902\u0964"
     ],
     preparation: [
-      "Wear clean, traditional Indian attire (preferably yellow or light-colored garments) for the ceremony.",
-      "Keep your exact birth details (Date, Time, Place of Birth) and Gotra ready for the sacred Sankalp.",
-      "Refrain from non-satvik food and alcohol for 24 hours prior to the ritual.",
-      "Arrive at the designated Ujjain venue 15\u201320 minutes prior to the scheduled auspicious Muhurat."
+      "Wear clean, traditional Indian attire (preferably yellow or light-colored garments).",
+      "Keep your birth details (Date, Time, Place of Birth) and Gotra ready for the Sankalp.",
+      "Maintain a calm, devotional mindset prior to the ceremony.",
+      "Connect with our team in advance to verify your scheduled reporting time in Ujjain."
     ],
     hindiPreparation: [
-      "\u092A\u0942\u091C\u093E \u0915\u0947 \u0926\u093F\u0928 \u092A\u0940\u0932\u0947 \u0905\u0925\u0935\u093E \u0939\u0932\u094D\u0915\u0947 \u0930\u0902\u0917 \u0915\u0947 \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u0935\u0938\u094D\u0924\u094D\u0930 \u0927\u093E\u0930\u0923 \u0915\u0930\u0947\u0902\u0964",
-      "\u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u0905\u092A\u0928\u093E \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u091C\u0928\u094D\u092E \u0935\u093F\u0935\u0930\u0923 (\u0924\u093F\u0925\u093F, \u0938\u092E\u092F, \u0938\u094D\u0925\u093E\u0928) \u0924\u0948\u092F\u093E\u0930 \u0930\u0916\u0947\u0902\u0964",
-      "\u092A\u0942\u091C\u093E \u0938\u0947 \u0915\u092E \u0938\u0947 \u0915\u092E 24 \u0918\u0902\u091F\u0947 \u092A\u0942\u0930\u094D\u0935 \u0924\u093E\u092E\u0938\u093F\u0915 \u092D\u094B\u091C\u0928 \u090F\u0935\u0902 \u092E\u0926\u093F\u0930\u093E \u0906\u0926\u093F \u0915\u093E \u092A\u0942\u0930\u094D\u0923 \u0924\u094D\u092F\u093E\u0917 \u0930\u0916\u0947\u0902\u0964",
-      "\u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0936\u0941\u092D \u092E\u0941\u0939\u0942\u0930\u094D\u0924 \u0938\u0947 15-20 \u092E\u093F\u0928\u091F \u092A\u0942\u0930\u094D\u0935 \u092A\u0942\u091C\u093E \u0938\u094D\u0925\u0932 \u092A\u0930 \u0909\u092A\u0938\u094D\u0925\u093F\u0924 \u0939\u094B\u0902\u0964"
+      "\u092A\u0942\u091C\u093E \u0915\u0947 \u0926\u093F\u0928 \u0938\u094D\u0935\u091A\u094D\u091B, \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u0935\u0938\u094D\u0924\u094D\u0930 \u0927\u093E\u0930\u0923 \u0915\u0930\u0947\u0902 (\u092A\u0940\u0932\u093E \u0905\u0925\u0935\u093E \u0939\u0932\u094D\u0915\u093E \u0930\u0902\u0917 \u0909\u0924\u094D\u0924\u092E)\u0964",
+      "\u0938\u0902\u0915\u0932\u094D\u092A \u0939\u0947\u0924\u0941 \u0905\u092A\u0928\u093E \u0928\u093E\u092E, \u0917\u094B\u0924\u094D\u0930 \u090F\u0935\u0902 \u091C\u0928\u094D\u092E \u0935\u093F\u0935\u0930\u0923 \u0924\u0948\u092F\u093E\u0930 \u0930\u0916\u0947\u0902\u0964",
+      "\u0905\u0928\u0941\u0937\u094D\u0920\u093E\u0928 \u0938\u0947 \u092A\u0942\u0930\u094D\u0935 \u0938\u093E\u0924\u094D\u0935\u093F\u0915 \u090F\u0935\u0902 \u0936\u093E\u0902\u0924 \u092E\u0928\u094B\u092D\u093E\u0935 \u092C\u0928\u093E\u090F \u0930\u0916\u0947\u0902\u0964",
+      "\u0909\u091C\u094D\u091C\u0948\u0928 \u092E\u0947\u0902 \u0928\u093F\u0930\u094D\u0927\u093E\u0930\u093F\u0924 \u0938\u092E\u092F \u092A\u0930 \u0909\u092A\u0938\u094D\u0925\u093F\u0924\u093F \u0939\u0947\u0924\u0941 \u092A\u0942\u0930\u094D\u0935 \u0938\u0947 \u0938\u0902\u092A\u0930\u094D\u0915 \u092E\u0947\u0902 \u0930\u0939\u0947\u0902\u0964"
     ],
-    ritualDetails: "Ganpati Pujan, Navgraha Mandal Sthapana, Brihaspati & Rahu Aavahan, Vedic Beej Mantra recitations, Peet Daan (yellow offerings), sacred Havan with Peepal and Palash samidha, Brihaspati Yantra Abhimantran, and Maha Aarti.",
-    hindiRitualDetails: "\u0917\u0923\u0947\u0936 \u092A\u0942\u091C\u0928, \u0928\u0935\u0917\u094D\u0930\u0939 \u092E\u0902\u0921\u0932 \u0938\u094D\u0925\u093E\u092A\u0928\u093E, \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u0906\u0935\u093E\u0939\u0928, \u0935\u0948\u0926\u093F\u0915 \u092C\u0940\u091C \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A, \u092A\u0940\u0924 \u0926\u093E\u0928 (\u092A\u0940\u0932\u0947 \u092A\u0941\u0937\u094D\u092A, \u091A\u0928\u093E \u0926\u093E\u0932, \u0935\u0938\u094D\u0924\u094D\u0930), \u092A\u0940\u092A\u0932-\u092A\u0932\u093E\u0936 \u0938\u092E\u093F\u0927\u093E \u092F\u0941\u0915\u094D\u0924 \u0928\u0935\u0917\u094D\u0930\u0939 \u0939\u0935\u0928, \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092F\u0902\u0924\u094D\u0930 \u0905\u092D\u093F\u092E\u0902\u0924\u094D\u0930\u0923 \u090F\u0935\u0902 \u092E\u0939\u093E\u0906\u0930\u0924\u0940\u0964",
+    ritualDetails: "Vedic Sankalp with devotee Name and Gotra, planetary invocations, Brihaspati and Rahu mantra recitations, traditional Peet offerings, and concluding Aarti with spiritual blessings at Ancient Devguru Brihaspati Temple.",
+    hindiRitualDetails: "\u092F\u091C\u092E\u093E\u0928 \u0915\u0947 \u0928\u093E\u092E \u090F\u0935\u0902 \u0917\u094B\u0924\u094D\u0930 \u0938\u0947 \u0935\u0948\u0926\u093F\u0915 \u0938\u0902\u0915\u0932\u094D\u092A, \u0928\u0935\u0917\u094D\u0930\u0939 \u0906\u0935\u093E\u0939\u0928, \u0917\u0941\u0930\u0941 \u090F\u0935\u0902 \u0930\u093E\u0939\u0941 \u092E\u0902\u0924\u094D\u0930 \u091C\u093E\u092A, \u092A\u093E\u0930\u0902\u092A\u0930\u093F\u0915 \u092A\u0940\u0924 \u0938\u093E\u092E\u0917\u094D\u0930\u0940 \u0905\u0930\u094D\u092A\u0923 \u090F\u0935\u0902 \u092A\u094D\u0930\u093E\u091A\u0940\u0928 \u0926\u0947\u0935\u0917\u0941\u0930\u0941 \u092C\u0943\u0939\u0938\u094D\u092A\u0924\u093F \u092E\u0902\u0926\u093F\u0930 \u092E\u0947\u0902 \u092E\u0939\u093E\u0906\u0930\u0924\u0940 \u0915\u0947 \u0938\u093E\u0925 \u0936\u0941\u092D\u093E\u0936\u0940\u0930\u094D\u0935\u093E\u0926\u0964",
     faqs: [
       {
         question: "What is Guru Chandal Dosh Shanti Pooja?",
-        answer: "Guru Chandal Dosh Shanti Pooja is a specialized Vedic remedial ritual performed to pacify the malefic astrological effects created by the conjunction of benevolent Jupiter (Devguru Brihaspati) and shadow planet Rahu or Ketu in an individual's birth chart. Arranged at the Ancient Devguru Brihaspati Temple in Ujjain, it aims to harmonize planetary energies and invoke divine blessings for wisdom and clarity."
+        answer: "Guru Chandal Dosh Shanti Pooja is a traditional Vedic remedial ritual associated with Guru Chandal Dosha in Vedic astrology. Devotees may seek this pooja as a form of spiritual remedy and guidance based on their individual astrological circumstances."
+      },
+      {
+        question: "What is Guru Chandal Dosh according to Vedic astrology?",
+        answer: "According to Vedic astrology, Guru Chandal Dosh occurs when Jupiter (Guru), representing wisdom and righteousness, is placed in conjunction with or aspected by the shadow planet Rahu or Ketu in an individual's birth chart."
       },
       {
         question: "Why is Guru Chandal Dosh Shanti Pooja performed?",
-        answer: "According to Vedic astrology, unpacified Guru Chandal Dosh can cause intellectual confusion, hurdles in higher education, financial instability, and strained relationships with elders. Devotees perform this pooja to seek spiritual peace, strengthen Jupiter's positive influence, and mitigate Rahu's turbulent shadow."
+        answer: "The pooja is traditionally performed as a remedial prayer to seek mental clarity, spiritual guidance, and planetary harmony, helping to mitigate perceived astrological obstacles in decision-making, career, and learning."
       },
       {
-        question: "Who can consider Guru Chandal Dosh Shanti Pooja?",
-        answer: "Individuals whose horoscopes indicate a conjunction or aspect between Jupiter and Rahu/Ketu, students facing recurring obstacles in examinations, professionals experiencing unexpected career turbulence, and devotees seeking moral and financial clarity may consider this pooja upon consulting a qualified astrologer."
+        question: "Who may consider Guru Chandal Dosh Shanti Pooja?",
+        answer: "Individuals whose birth charts are believed to indicate Guru Chandal Dosha upon consulting an astrologer, students seeking academic focus, or devotees seeking moral and spiritual clarity may consider this pooja."
       },
       {
         question: "Where can I arrange Guru Chandal Dosh Shanti Pooja in Ujjain?",
-        answer: "In Ujjain, the ritual is held at the historic Ancient Devguru Brihaspati Temple located near the banks of the sacred Kshipra River, a revered sanctum dedicated specifically to Lord Jupiter."
+        answer: "In Ujjain, the ritual is traditionally conducted at the Ancient Devguru Brihaspati Temple near the banks of the sacred Kshipra River, revered as the dedicated sanctum for Lord Jupiter."
       },
       {
         question: "How can I book Guru Chandal Dosh Shanti Pooja in Ujjain?",
-        answer: "You can book Guru Chandal Dosh Shanti Pooja directly through Aastha Sey Raasta Seva by submitting an online booking form, calling our dedicated helpline, or connecting via WhatsApp. Our team will guide you through Muhurat selection and priest allocation."
+        answer: "You can book by submitting an enquiry on our website, calling our helpline, or messaging us on WhatsApp. Our Seva coordinator will guide you through the available dates and arrangements."
       },
       {
-        question: "What details are required for booking?",
-        answer: "Devotees need to provide their full name, Gotra, date of birth, time of birth, and place of birth so the Vedic priests can make the individual Sankalp according to scriptural tradition."
+        question: "What details are required to book the pooja?",
+        answer: "Devotees need to provide their full name, Gotra, date of birth, time of birth, place of birth, and preferred date for the traditional Sankalp."
       },
       {
         question: "What is the price of Guru Chandal Dosh Shanti Pooja in Ujjain?",
-        answer: "Pooja requirements, samagri offerings, and pandit allocations can vary depending on individual preferences and anushthan scale. Please contact Aastha Sey Raasta Seva for the current pooja price, available dates, and custom arrangement details."
+        answer: "Pooja requirements and arrangements can vary based on individual preferences. Please contact Aastha Sey Raasta Seva directly for current pricing, auspicious dates, and tailored options."
       },
       {
         question: "How long does the pooja take?",
-        answer: "The complete Vedic ceremony typically takes between 2.5 to 3.5 hours, conducted by certified Gurukul-trained Vedic Brahmins."
+        answer: "The Vedic ceremony typically takes between 2 to 3 hours, depending on the specific rituals and Sankalp protocols coordinated for the devotee."
       },
       {
         question: "Can the pooja be arranged according to individual requirements?",
-        answer: "Yes, arrangements can be coordinated for individual devotees or entire families, including personalized Gotra Sankalp and special planetary invocations."
+        answer: "Yes, Aastha Sey Raasta Seva arranges poojas tailored to individual devotees or families, including personalized Name and Gotra Sankalp."
       },
       {
-        question: "Can devotees participate remotely?",
-        answer: "Yes, Aastha Sey Raasta Seva offers interactive live video participation for devotees across India and abroad. Consecrated Prasad, energized Brihaspati Yantra, and Raksha Sutra are safely couriered to your home after the ceremony."
-      },
-      {
-        question: "What should I bring for the pooja?",
-        answer: "Devotees are advised to wear clean, traditional Indian attire (preferably yellow or light-colored garments). All ritual materials, sacred samidha, flowers, and havan offerings are completely arranged by Aastha Sey Raasta Seva."
+        question: "Can I enquire about the pooja remotely?",
+        answer: "Yes, devotees across India and abroad can enquire, book, and participate in the pooja either in person in Ujjain or remotely through live video coordination."
       },
       {
         question: "How can I contact Aastha Sey Raasta Seva?",
-        answer: "You can easily enquire or book by submitting an enquiry form on our website, calling our official helpline (+91 78988 88888), or connecting directly with our team via WhatsApp for instant assistance."
+        answer: "You can contact Aastha Sey Raasta Seva by submitting an online enquiry form, calling our official helpline (+91 78988 88888), or reaching out via WhatsApp for immediate support."
       }
     ],
     internalLinks: [
       { anchor: "Rudrabhishek Pooja in Ujjain", link: "/pooja/rudrabhishek-pooja-ujjain", reason: "Lord Shiva abhishek for planetary peace and obstacle removal." },
       { anchor: "Mool Shanti Pooja in Ujjain", link: "/pooja/mool-shanti-pooja-ujjain", reason: "Authentic Vedic Mool Nakshatra Shanti ritual." },
-      { anchor: "Vish Yog Shanti Pooja in Ujjain", link: "/pooja/vish-yog-shanti-pooja-ujjain", reason: "Vedic remedy for Saturn-Moon conjunction in Ujjain." },
-      { anchor: "Nakshatra Shanti Pooja in Ujjain", link: "/pooja/nakshatra-shanti-pooja-ujjain", reason: "Birth star pacification ceremony in Ujjain." },
       { anchor: "All Pooja Services in Ujjain", link: "/pooja-services", reason: "Complete directory of authentic temple poojas in Ujjain." },
-      { anchor: "Spiritual Tours in Ujjain", link: "/spiritual-tours", reason: "Guided temple darshan and spiritual yatras in Ujjain." }
+      { anchor: "Contact Aastha Sey Raasta Seva", link: "/contact", reason: "Enquire for current pooja details, pricing, and availability." }
     ],
     imageSeo: {
-      featuredImageIdea: "Vedic pandits in yellow attire performing Guru Chandal Dosh Shanti Yajna with yellow flowers, chana dal offerings, and Brihaspati Yantra at Ancient Devguru Brihaspati Temple in Ujjain.",
-      alt: "Guru Chandal Dosh Shanti Pooja at Ancient Devguru Brihaspati Temple Ujjain",
-      title: "Guru Chandal Dosh Shanti Pooja in Ujjain \u2014 Aastha Sey Raasta Seva",
+      featuredImageIdea: "Vedic pandits in traditional attire performing Guru Chandal Dosh Shanti ritual at Ancient Devguru Brihaspati Temple in Ujjain.",
+      alt: "Guru Chandal Dosh Shanti Pooja in Ujjain",
+      title: "Guru Chandal Dosh Shanti Pooja in Ujjain | Aastha Sey Raasta Seva",
       filename: "guru-chandal-dosh-shanti-pooja-ujjain.webp"
     },
     schemaTypes: ["Service", "FAQPage", "BreadcrumbList", "LocalBusiness"],
     qualityScore: 99,
-    duration: "2.5 to 3.5 Hours",
-    hindiDuration: "2.5 \u0938\u0947 3.5 \u0918\u0902\u091F\u0947",
-    price: 3500,
-    advanceBookingAmount: 1100,
-    priceType: "Starting From",
+    duration: "2 to 3 Hours",
+    hindiDuration: "2 \u0938\u0947 3 \u0918\u0902\u091F\u0947",
+    price: null,
+    advanceBookingAmount: 0,
+    priceType: "Custom / On Request",
     featuredImage: "/assets/images/guru-chandal-dosh-shanti-pooja-ujjain.webp",
     isFeatured: true,
     isPublished: true,
     createdAt: "2026-08-01T10:00:00Z",
-    updatedAt: "2026-09-11T08:00:00Z"
+    updatedAt: "2026-09-11T10:00:00Z"
   },
   // 3. Jaap & Havan Services (9)
   {

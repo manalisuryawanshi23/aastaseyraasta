@@ -740,27 +740,27 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
     slug: 'guru-chandal-dosh-shanti-pooja-ujjain',
     name: {
       en: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
-      hi: 'गुरु चांडाल दोष शांति पूजा उज्जैन — देवगुरु बृहस्पति मंदिर अनुष्ठान',
+      hi: 'गुरु चांडाल दोष शांति पूजा (प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन)',
     },
     categoryName: {
       en: 'Dosh Shanti & Special Poojas',
       hi: 'दोष शांति एवं विशेष पूजा',
     },
     shortDescription: {
-      en: 'Guru Chandal Dosh Shanti Pooja is an authentic Vedic pacification ritual conducted at the ancient Devguru Brihaspati Temple in Ujjain to pacify the conjunction of Jupiter and Rahu, traditionally performed to support academic focus, financial stability, and life clarity.',
-      hi: 'उज्जैन के प्राचीन देवगुरु बृहस्पति मंदिर में गुरु-राहु युति (चांडाल दोष) से मुक्ति, बुद्धि-विवेक एवं ज्ञान-धन वृद्धि हेतु शास्त्रोक्त पूजा।',
+      en: 'Guru Chandal Dosh Shanti Pooja is a Vedic ritual performed at the Ancient Devguru Brihaspati Temple in Ujjain to pacify Jupiter-Rahu/Ketu affliction, seeking wisdom, clarity, and overall progress.',
+      hi: 'उज्जैन स्थित प्राचीन देवगुरु बृहस्पति मंदिर में गुरु चांडाल दोष (गुरु-राहु/केतु युति) की शांति, बुद्धि-विवेक एवं जीवन में समृद्धि व सफलता हेतु वैदिक पूजा।',
     },
     description: {
-      en: 'Guru Chandal Dosh Shanti Pooja in Ujjain is an ancient Vedic planetary remedial ritual performed to pacify the conjunction of Jupiter (Devguru Brihaspati) and the shadow planet Rahu or Ketu. In Vedic astrology (Jyotish Shastra), Jupiter represents supreme wisdom, righteous conduct (dharma), intellect (buddhi), higher learning, progeny, and auspicious wealth. Rahu, by contrast, embodies cosmic illusions (Maya), impulsive desires, confusion, and sudden disruptions. When these two opposing planetary forces occupy the same house or cast mutual aspects in a birth chart, the resulting astrological combination is traditionally designated as Guru Chandal Dosh or Guru Chandal Yoga.\n\nAccording to traditional astrological belief, an unpacified Guru Chandal affliction can create subtle spiritual blockages, clouding an individual\'s discernment and diverting their energies toward unproductive pursuits. Performing a dedicated Guru Chandal Dosh Shanti Pooja in Ujjain allows devotees to seek divine guidance, restore planetary balance, and invite the benevolent grace of Devguru Brihaspati. At Aastha Sey Raasta Seva, we arrange complete, scripturally authentic Guru Chandal Dosh Shanti ceremonies in Ujjain, conducted by experienced and Gurukul-qualified Vedic Brahmins with absolute devotional integrity.',
-      hi: 'जब कुंडली में शुभ ग्रह बृहस्पति (गुरु) के साथ राहु या केतु की युति होती है, तो गुरु चांडाल दोष बनता है। इससे विद्याध्ययन में एकाग्रता भंग होती है, गलत निर्णय होते हैं, आर्थिक नुकसान व मान-सम्मान की हानि होती है। उज्जैन के प्राचीन देवगुरु बृहस्पति मंदिर में पीले पुष्प, चने की दाल, हल्दी एवं पीत वस्त्रों से वैदिक आहुति कराने पर यह दोष पूर्णतः शांत होता है।',
+      en: 'Guru Chandal Dosh Pooja is a Vedic ritual performed to pacify Guru Chandal Dosh, an inauspicious astrological affliction formed when Jupiter (Guru) is conjunct with Rahu or Ketu in one\'s horoscope, believed to cause obstacles in wisdom, decision-making, and overall life progress. According to Vedic tradition, this ritual is performed to neutralize the negative effects of this dosha and invoke divine blessings for clarity, prosperity, and success.\n\nThe ancient Devguru Brihaspati temple in Ujjain is dedicated to Jupiter (Guru), revered in Vedic tradition as the significator of wisdom, wealth, marriage, and overall prosperity. This sacred temple is regarded as the most auspicious and ideal place for performing Guru Chandal Dosh Pooja and other Jupiter-related rituals. Connect with Aastha Sey Raasta Seva for pooja details, availability and booking assistance.',
+      hi: 'गुरु चांडाल दोष पूजा एक वैदिक अनुष्ठान है, जो गुरु चांडाल दोष को शांत करने के लिए किया जाता है। यह एक अशुभ ज्योतिषीय पीड़ा है, जो कुंडली में बृहस्पति (गुरु) के राहु या केतु के साथ युति होने से बनती है, जिसे बुद्धि, निर्णय क्षमता और समग्र जीवन प्रगति में बाधाओं का कारण माना जाता है। वैदिक परंपरा के अनुसार, यह अनुष्ठान इस दोष के नकारात्मक प्रभावों को निष्क्रिय करने तथा स्पष्टता, समृद्धि और सफलता के लिए दिव्य आशीर्वाद प्राप्त करने के लिए किया जाता है। उज्जैन स्थित प्राचीन देवगुरु बृहस्पति मंदिर बृहस्पति (गुरु) ग्रह को समर्पित है, जिन्हें वैदिक परंपरा में बुद्धि, धन, विवाह और समग्र समृद्धि का कारक माना जाता है। यह पवित्र मंदिर गुरु चांडाल दोष पूजा तथा अन्य बृहस्पति संबंधी अनुष्ठानों को संपन्न करने के लिए सबसे शुभ और आदर्श स्थान माना जाता है।',
     },
     templeName: {
       en: 'Ancient Devguru Brihaspati Temple, Ujjain',
       hi: 'प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन',
     },
     location: {
-      en: 'Brihaspati Temple Marg, Near Kshipra River, Ujjain',
-      hi: 'बृहस्पति मंदिर मार्ग, शिप्रा तट के समीप, उज्जैन',
+      en: 'Brihaspati Temple Marg, Near Sacred Kshipra River, Ujjain',
+      hi: 'बृहस्पति मंदिर मार्ग, पवित्र शिप्रा तट के समीप, उज्जैन',
     },
     city: {
       en: 'Ujjain',
@@ -771,60 +771,66 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
       hi: 'मध्य प्रदेश',
     },
     duration: {
-      en: '2.5 to 3.5 Hours',
-      hi: '2.5 से 3.5 घंटे',
+      en: '2 to 3 Hours',
+      hi: '2 से 3 घंटे',
     },
     whatWeOffer: {
       en: [
-        'Complete arrangements for Guru Chandal Dosh Shanti Pooja with devotion, authenticity, and convenience for devotees.',
-        'Ritual conducted by experienced, Gurukul-trained Vedic Brahmins in Ujjain.',
-        'Provision of authentic yellow cloth, fresh chana dal, pure turmeric, saffron, and pure cow ghee for the sacred havan.',
-        'Individual Name, Gotra, and Nakshatra Sankalp with dedicated coordination support and option for live video participation.'
+        'Complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.',
+        'Performed by experienced and Vedic-qualified Pandits in Ujjain.',
+        'Pooja enquiry assistance and prompt guidance regarding ritual requirements and birth details.',
+        'Pooja arrangement support including sanctified temple venue, pure samagri, and priest allocation.',
+        'Clear communication regarding auspicious muhurats and date availability.',
+        'Devotee-friendly assistance for both in-person and remote live video participation.'
       ],
       hi: [
-        'श्रद्धा, प्रामाणिकता और सुविधा के साथ संपूर्ण गुरु चांडाल दोष शांति पूजा व्यवस्था',
-        'उज्जैन के वरिष्ठ वेदपाठी गुरुकुल ब्राह्मणों द्वारा शास्त्रोक्त अनुष्ठान',
-        'पीत वस्त्र, पीली चना दाल, शुद्ध हल्दी, केसर एवं देशी गाय के घी युक्त संपूर्ण हवन सामग्री',
-        'यजमान के नाम, गोत्र एवं जन्म नक्षत्र अनुसार व्यक्तिगत वैदिक संकल्प एवं लाइव प्रसारण सुविधा'
+        'हम भक्तों के लिए गुरु चांडाल दोष शांति पूजा अनुष्ठान की संपूर्ण व्यवस्था श्रद्धा, प्रामाणिकता और सुविधा के साथ प्रदान करते हैं।',
+        'यह अनुष्ठान अनुभवी और वैदिक रूप से योग्य पंडितों द्वारा शास्त्रोक्त विधि से संपन्न कराया जाता है।',
+        'पूजा संबंधी विस्तृत परामर्श एवं जन्म विवरण, गोत्र व पूजन विधि संबंधी पूर्ण मार्गदर्शन।',
+        'उज्जैन में पूजा स्थल, वैदिक ब्राह्मण एवं शुद्ध पूजन सामग्री की पूर्ण व्यवस्था।',
+        'शुभ मुहूर्त, मंदिर समय एवं तिथि उपलब्धता की समयबद्ध जानकारी।',
+        'उज्जैन में व्यक्तिगत उपस्थिति अथवा ऑनलाइन संकल्प हेतु श्रद्धालु-अनुकूल सहायता।'
       ],
     },
     benefits: {
       en: [
-        'Academic Focus & Learning: [शिक्षा] Traditionally performed to support mental clarity, concentration in higher studies, and preparation for competitive examinations.',
-        'Financial Prudence & Stability: [आर्थिक] Believed to safeguard against uncalculated financial risks, deceptive partnerships, and sudden monetary setbacks.',
-        'Sound Judgment & Moral Discernment: [विवेक] Intended to foster ethical decision-making, clear thinking, and resilience against negative or misleading influences.',
-        'Pacification of Rahu Afflictions: [ग्रह शांति] Performed to mitigate the malefic shadow of Rahu over Jupiter according to classical astrological principles.',
-        'Professional Consistency & Mentorship: [करियर] Traditionally associated with dissolving career blockages and nurturing respectful, cooperative relationships with mentors and seniors.',
-        'Family Harmony & Domestic Peace: [सद्भाव] Believed to ease inner restlessness, misunderstandings with elders, and restore mutual warmth in the household.',
-        'Spiritual Growth & Guru Kripa: [आध्यात्मिक] Intended to invoke the divine blessings of Devguru Brihaspati for spiritual discernment, righteousness, and long-term well-being.'
+        'Neutralization of Guru Chandal Dosh: Reduces the negative influences of Jupiter\'s affliction with Rahu/Ketu on one\'s life.',
+        'Clarity in Decision-Making: Enhances wisdom, judgment, and the ability to make sound life choices.',
+        'Removal of Obstacles: Clears hurdles in career, education, marriage, and other important areas of life.',
+        'Career and Business Growth: Removes blockages hindering professional progress, promotions, and financial gains.',
+        'Marital Harmony: Eases delays or conflicts in marriage caused by this planetary affliction.',
+        'Mental Peace and Confidence: Reduces confusion and anxiety, bringing clarity and self-assurance.',
+        'Prosperity and Success: Opens pathways for growth, stability, and overall material well-being.',
+        'Enhanced Guidance from Mentors & Elders: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors.'
       ],
       hi: [
-        '[शिक्षा] एकाग्रता में वृद्धि, स्मरण शक्ति की मजबूती एवं प्रतियोगी परीक्षाओं व उच्च शिक्षा में अनुकूलता',
-        '[आर्थिक] अप्रत्याशित धन हानि से रक्षा, धोखाधड़ी व गलत निवेश से बचाव एवं आर्थिक स्थिरता',
-        '[विवेक] सही निर्णय लेने की क्षमता, नकारात्मक संगति से मुक्ति एवं नैतिक स्पष्टता',
-        '[ग्रह शांति] गुरु-राहु युति के नकारात्मक प्रभाव का पूर्ण शमन एवं नवग्रह कृपा',
-        '[करियर] कार्यक्षेत्र में रुकावटों का अंत, पदोन्नति एवं वरिष्ठों व गुरुजनों से मधुर संबंध',
-        '[सद्भाव] पारिवारिक मतभेद निवारण, मानसिक शांति एवं घर में सुख-समृद्धि की वृद्धि',
-        '[आध्यात्मिक] देवगुरु बृहस्पति का आशीर्वाद, आध्यात्मिक उन्नति एवं धर्म मार्ग में दृढ़ता'
+        'गुरु चांडाल दोष का निष्प्रभावीकरण: कुंडली में बृहस्पति की राहु/केतु के साथ पीड़ा के नकारात्मक प्रभावों को कम करता है।',
+        'निर्णय क्षमता में स्पष्टता: बुद्धि, विवेक और जीवन में सही निर्णय लेने की क्षमता को बढ़ाता है।',
+        'बाधाओं का निवारण: करियर, शिक्षा, विवाह और जीवन के अन्य महत्वपूर्ण क्षेत्रों में आने वाली बाधाओं को दूर करता है।',
+        'करियर और व्यवसाय में वृद्धि: व्यावसायिक प्रगति, पदोन्नति और आर्थिक लाभ में बाधक तत्वों को दूर करता है।',
+        'वैवाहिक सामंजस्य: इस ग्रह पीड़ा के कारण विवाह में उत्पन्न विलंब या संघर्ष को शांत करता है।',
+        'मानसिक शांति और आत्मविश्वास: भ्रम और चिंता को कम कर, स्पष्टता और आत्मविश्वास प्रदान करता है।',
+        'समृद्धि और सफलता: विकास, स्थिरता और समग्र भौतिक कल्याण के मार्ग प्रशस्त करता है।',
+        'गुरुजनों और वरिष्ठों के साथ बेहतर संबंध: जीवन में शिक्षकों, गुरुओं और मार्गदर्शक व्यक्तियों के प्रति सम्मान और मार्गदर्शन को मजबूत करता है।'
       ],
     },
     preparation: {
       en: [
-        'Wear clean, traditional Indian attire (preferably yellow or light-colored garments) for the ceremony.',
-        'Keep your exact birth details (Date, Time, Place of Birth) and Gotra ready for the sacred Sankalp.',
-        'Refrain from non-satvik food and alcohol for 24 hours prior to the ritual.',
-        'Arrive at the designated Ujjain venue 15–20 minutes prior to the scheduled auspicious Muhurat.'
+        'Wear clean, traditional Indian attire (preferably yellow or light-colored garments).',
+        'Keep your birth details (Date, Time, Place of Birth) and Gotra ready for the Sankalp.',
+        'Maintain a calm, devotional mindset prior to the ceremony.',
+        'Connect with our team in advance to verify your scheduled reporting time in Ujjain.'
       ],
       hi: [
-        'पूजा के दिन पीले अथवा हल्के रंग के पारंपरिक सात्विक वस्त्र धारण करें।',
-        'संकल्प हेतु अपना नाम, गोत्र एवं जन्म विवरण (तिथि, समय, स्थान) तैयार रखें।',
-        'पूजा से कम से कम 24 घंटे पूर्व तामसिक भोजन एवं मदिरा आदि का पूर्ण त्याग रखें।',
-        'निर्धारित शुभ मुहूर्त से 15-20 मिनट पूर्व पूजा स्थल पर उपस्थित हों।'
+        'पूजा के दिन स्वच्छ, पारंपरिक सात्विक वस्त्र धारण करें (पीला अथवा हल्का रंग उत्तम)।',
+        'संकल्प हेतु अपना नाम, गोत्र एवं जन्म विवरण तैयार रखें।',
+        'अनुष्ठान से पूर्व सात्विक एवं शांत मनोभाव बनाए रखें।',
+        'उज्जैन में निर्धारित समय पर उपस्थिति हेतु पूर्व से संपर्क में रहें।'
       ],
     },
     ritualDetails: {
-      en: 'Ganpati Pujan, Navgraha Mandal Sthapana, Brihaspati & Rahu Aavahan, Vedic Beej Mantra recitations, Peet Daan (yellow offerings), sacred Havan with Peepal and Palash samidha, Brihaspati Yantra Abhimantran, and Maha Aarti.',
-      hi: 'गणेश पूजन, नवग्रह मंडल स्थापना, देवगुरु बृहस्पति एवं राहु आवाहन, वैदिक बीज मंत्र जाप, पीत दान (पीले पुष्प, चना दाल, वस्त्र), पीपल-पलाश समिधा युक्त नवग्रह हवन, बृहस्पति यंत्र अभिमंत्रण एवं महाआरती।',
+      en: 'Vedic Sankalp with devotee Name and Gotra, planetary invocations, Brihaspati and Rahu mantra recitations, traditional Peet offerings, and concluding Aarti with spiritual blessings at Ancient Devguru Brihaspati Temple.',
+      hi: 'यजमान के नाम एवं गोत्र से वैदिक संकल्प, नवग्रह आवाहन, गुरु एवं राहु मंत्र जाप, पारंपरिक पीत सामग्री अर्पण एवं प्राचीन देवगुरु बृहस्पति मंदिर में महाआरती के साथ शुभाशीर्वाद।',
     },
   },
 

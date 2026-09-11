@@ -1526,7 +1526,7 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
   {
     id: 'pooja-guru-chandal',
     name: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
-    hindiName: 'गुरु चांडाल दोष शांति पूजा उज्जैन — देवगुरु बृहस्पति मंदिर अनुष्ठान',
+    hindiName: 'गुरु चांडाल दोष शांति पूजा (प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन)',
     slug: 'guru-chandal-dosh-shanti-pooja-ujjain',
     urlSlug: '/guru-chandal-dosh-shanti-pooja-ujjain',
     canonicalUrl: 'https://aasthasaysrasta.com/guru-chandal-dosh-shanti-pooja-ujjain',
@@ -1535,7 +1535,7 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
     hindiCategoryName: 'दोष शांति एवं विशेष पूजा',
     pageType: 'Pooja / Dosh Shanti',
     primaryKeyword: 'Guru Chandal Dosh Shanti Pooja Ujjain',
-    focusKeyword: 'guru chandal dosh shanti pooja in ujjain',
+    focusKeyword: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
     secondaryKeywords: [
       'Guru Chandal Dosh Pooja Ujjain',
       'Guru Chandal Dosha Shanti Pooja',
@@ -1547,227 +1547,245 @@ Organizing a rin mukti pooja in ujjain through Aastha Sey Raasta Seva guarantees
       'Guru Chandal Dosh Pooja Ujjain price',
       'Guru Chandal Dosh Pooja Ujjain cost',
       'Guru Chandal Dosh Pooja in Ujjain',
-      'ancient devguru brihaspati temple ujjain',
-      'guru rahu yuti shanti ujjain'
+      'Ancient Devguru Brihaspati Temple Ujjain'
     ],
-    searchIntent: 'Transactional & Informational (Devotees and families seeking authentic Vedic Guru Chandal Dosh Shanti Pooja in Ujjain to address Jupiter-Rahu conjunction, academic hurdles, career setbacks, and financial instability)',
+    searchIntent: 'Devotees seeking authentic information and booking assistance for Guru Chandal Dosh Shanti Pooja at Ancient Devguru Brihaspati Temple in Ujjain.',
     seoTitle: 'Guru Chandal Dosh Shanti Pooja in Ujjain | Aastha Sey Raasta Seva',
-    metaDescription: 'Book authentic Guru Chandal Dosh Shanti Pooja in Ujjain at Ancient Devguru Brihaspati Temple. Vedic Guru-Rahu pacification, verified Pandits & complete arrangements.',
+    metaDescription: 'Book Guru Chandal Dosh Shanti Pooja in Ujjain at Ancient Devguru Brihaspati Temple with Aastha Sey Raasta Seva. Enquire for details, pricing & booking.',
     h1: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
-    quickAnswer: 'Guru Chandal Dosh Shanti Pooja in Ujjain is a specialized Vedic planetary pacification ceremony performed at the Ancient Devguru Brihaspati Temple in Ujjain, Madhya Pradesh. According to Vedic astrology, this ritual is traditionally conducted to pacify the malefic astrological effects created by the conjunction of benevolent Jupiter (Devguru Brihaspati) and shadow planet Rahu or Ketu in a horoscope. Arranged by Aastha Sey Raasta Seva, the ceremony is performed by experienced Gurukul-trained Vedic Brahmins using traditional yellow offerings, scriptural Beej mantras, and a Navgraha Shanti Havan to pray for academic focus, financial stability, wisdom, and moral clarity.',
-    shortDescription: 'Guru Chandal Dosh Shanti Pooja is an authentic Vedic pacification ritual conducted at the ancient Devguru Brihaspati Temple in Ujjain to pacify the conjunction of Jupiter and Rahu, traditionally performed to support academic focus, financial stability, and life clarity.',
-    description: `Guru Chandal Dosh Shanti Pooja in Ujjain is an authentic Vedic planetary pacification ceremony performed to harmonize the conjunction of Devguru Brihaspati (Jupiter) and the shadow planet Rahu or Ketu. In classical Vedic astrology (Jyotish Shastra), Jupiter represents supreme wisdom (jnana), righteous conduct (dharma), intellect (buddhi), higher learning, progeny, and auspicious prosperity. Rahu, by contrast, embodies cosmic illusions (Maya), impulsive desires, cognitive confusion, and sudden disruptions. When these two opposing planetary forces occupy the same astrological house or cast mutual aspects in a birth chart, the resulting planetary combination is traditionally known as Guru Chandal Dosh or Guru Chandal Yoga.
+    quickAnswer: 'Guru Chandal Dosh Shanti Pooja in Ujjain is a specialized Vedic remedial ritual performed at the Ancient Devguru Brihaspati Temple to pacify Guru Chandal Dosh, formed when Jupiter (Guru) is conjunct with Rahu or Ketu in a horoscope. Dedicated to Lord Jupiter—the significator of wisdom, wealth, marriage, and prosperity—this sacred temple in Ujjain is regarded as the most auspicious place for Jupiter-related rituals. Aastha Sey Raasta Seva arranges complete authentic pooja services with experienced Vedic pandits. Contact us for current details, availability, and booking.',
+    shortDescription: 'Guru Chandal Dosh Shanti Pooja is a Vedic ritual performed at the Ancient Devguru Brihaspati Temple in Ujjain to pacify Jupiter-Rahu/Ketu affliction, seeking wisdom, clarity, and overall progress.',
+    description: `Guru Chandal Dosh Pooja is a Vedic ritual performed to pacify Guru Chandal Dosh, an inauspicious astrological affliction formed when Jupiter (Guru) is conjunct with Rahu or Ketu in one's horoscope, believed to cause obstacles in wisdom, decision-making, and overall life progress. According to Vedic tradition, this ritual is performed to neutralize the negative effects of this dosha and invoke divine blessings for clarity, prosperity, and success.
 
-According to sacred Vedic treatises, an unpacified Guru Chandal affliction can create subtle spiritual blockages, clouding an individual's discernment and diverting their efforts toward unproductive pursuits. Performing a dedicated Guru Chandal Dosh Shanti Pooja in Ujjain allows devotees to seek divine guidance, restore planetary equilibrium, and invite the benevolent grace of Devguru Brihaspati. At Aastha Sey Raasta Seva, we arrange complete, scripturally authentic Guru Chandal Dosh Shanti ceremonies in Ujjain, conducted by experienced and Gurukul-qualified Vedic Brahmins with absolute devotional integrity.
+The ancient Devguru Brihaspati temple in Ujjain is dedicated to Jupiter (Guru), revered in Vedic tradition as the significator of wisdom, wealth, marriage, and overall prosperity. This sacred temple is regarded as the most auspicious and ideal place for performing Guru Chandal Dosh Pooja and other Jupiter-related rituals. Connect with Aastha Sey Raasta Seva for pooja details, availability and booking assistance.
 
-## Understanding Guru Chandal Dosh in Vedic Astrology
-In classical Jyotish texts, Jupiter is revered as the most auspicious natural benefic planet (Subha Graha), governing the 9th house of fortune, righteousness, and father, and the 12th house of spiritual liberation in the natural zodiac. When shadow planet Rahu conjoins Jupiter in key astrological houses—particularly the 1st (ascendant), 5th (intellect and education), 9th (fortune and dharma), or 10th (career and karma)—its shadowy influence is believed to diminish the positive manifestations of Jupiter.
+## About Guru Chandal Dosh Shanti Pooja
+Guru Chandal Dosh Shanti Pooja is a specialized remedial worship rooted in ancient Vedic astrological traditions. In Vedic astrology, planetary combinations are studied to understand their subtle influences on an individual's life path, intellect, and spiritual journey.
 
-This astrological combination does not imply permanent misfortune, but rather a periodic test of discernment and integrity. Classical texts prescribe specific Shanti Anushthans, Peet Daan (yellow offerings), and Vedic Yagyas to neutralize Rahu's malefic shadow and empower Jupiter's sattvic energy.
+When planetary configurations indicate an association between Jupiter (Devguru Brihaspati) and shadow planets such as Rahu or Ketu, devotees traditionally consider performing a Shanti Pooja to seek spiritual harmony, mental peace, and righteous wisdom. The ritual is focused on invoking divine blessings, fostering personal discernment, and restoring spiritual balance through guided Vedic prayers.
+
+## Understanding Guru Chandal Dosh
+
+### What is Guru Chandal Dosh?
+In classical Vedic astrology, Guru Chandal Dosh is an astrological combination (yoga) that occurs when Jupiter (Guru), the planet of wisdom, knowledge, and righteousness, is in conjunction with or under the strong aspect of the shadow planet Rahu or Ketu.
+
+### How is it understood in Vedic Astrology?
+Jupiter represents supreme wisdom, ethics, moral clarity, education, and spiritual growth. Rahu, on the other hand, represents illusion, worldly desires, restlessness, and sudden disruptions. When these two opposing energies intersect in a birth chart, traditional astrological belief suggests that it may create a period of intellectual confusion, hesitation in decision-making, or ethical dilemmas.
+
+### Why do devotees seek Shanti Pooja?
+Devotees traditionally seek Shanti Pooja to pray for clarity of mind, guidance in higher education and career, and protection against deceptive situations. Rather than a source of fear, this astrological placement is seen as an opportunity for self-awareness, moral discipline, and dedicated spiritual prayer.
 
 ## Traditional Purpose of the Pooja
-Devotees arrange Guru Chandal Dosha Shanti Pooja with sincere devotional intent to seek divine blessings across multiple dimensions of life:
-- **Restoring Intellectual Discernment**: Performed to pray for mental clarity, sharp memory, and unwavering focus in academic and intellectual endeavors.
-- **Harmonizing Planetary Energies**: Intended to pacify Rahu's destabilizing influence and strengthen Jupiter's righteous benevolence in the native's horoscope.
-- **Safeguarding Wealth & Livelihood**: Traditionally believed to protect the household from fraudulent dealings and encourage steady, ethical economic growth.
-- **Strengthening Family & Mentorship Bonds**: Conducted to mend strained relationships with elders, spiritual mentors, and teachers.
-- **Spiritual Cleansing & Peace of Mind**: Anushthan ceremonies help quiet mental turbulence, encouraging tranquility, devotional focus, and ethical living.
+According to Vedic astrology, Guru Chandal Dosh Shanti Pooja is traditionally performed as a remedial practice with sincere devotional intent. Devotees may consider this ritual for:
+- **Neutralization of Guru Chandal Dosh**: Reduces the negative influences of Jupiter's affliction with Rahu/Ketu on one's life.
+- **Clarity in Decision-Making**: Enhances wisdom, judgment, and the ability to make sound life choices.
+- **Removal of Obstacles**: Clears hurdles in career, education, marriage, and other important areas of life.
+- **Career and Business Growth**: Removes blockages hindering professional progress, promotions, and financial gains.
+- **Marital Harmony**: Eases delays or conflicts in marriage caused by this planetary affliction.
+- **Mental Peace and Confidence**: Reduces confusion and anxiety, bringing clarity and self-assurance.
+- **Prosperity and Success**: Opens pathways for growth, stability, and overall material well-being.
+- **Enhanced Guidance from Mentors & Elders**: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors.
+
+*Disclaimer: Astrological beliefs and remedial rituals are traditional devotional practices. Results and experiences may vary depending on individual circumstances and faith. Aastha Sey Raasta Seva provides spiritual coordination and pooja arrangement support in Ujjain without making deterministic or guaranteed outcome claims.*
 
 ## Who May Consider This Pooja
-Devotees commonly consult qualified astrologers and consider Guru Chandal Dosh Shanti Pooja when experiencing specific recurring challenges:
-- **Students & Aspirants**: Facing recurring hurdles, memory lapses, or loss of focus in higher education and competitive examinations.
-- **Professionals & Business Owners**: Experiencing unexpected career turbulence, stagnation, or susceptibility to misleading partnerships.
-- **Individuals Facing Decision Fog**: Struggling with clouded judgment, impulsive actions, or frequent ethical dilemmas.
-- **Devotees with Astrological Afflictions**: Whose horoscopes explicitly indicate Jupiter-Rahu conjunction or aspect in significant houses.
-- **Pilgrims Visiting Ujjain**: Devotees traveling to the holy city of Ujjain seeking divine Guru Kripa at the ancient Devguru Brihaspati sanctum.
+Individuals whose horoscopes are believed to indicate Guru Chandal Dosha, or those experiencing persistent feelings of distraction, decision fatigue, or ethical confusion, may consider seeking guidance. 
 
-*Disclaimer: Astrological suitability depends on an individual's unique birth chart and traditional guidance. Vedic poojas are spiritual ceremonies intended for devotional purposes and personal peace; they do not guarantee medical, legal, or financial outcomes.*
+Because individual astrological circumstances differ significantly, devotees are always encouraged to consult a qualified astrologer or spiritual guide before deciding on any remedial ritual. Aastha Sey Raasta Seva assists devotees who have chosen to perform this sacred ceremony in Ujjain by providing complete arrangement and coordination support.
 
-## Why Ujjain Is the Sacred Kshetra for Guru Chandal Dosh Pooja
-The historic city of Ujjain (ancient Avantika), located on the sacred banks of the holy Kshipra River in Madhya Pradesh, holds unparalleled astrological and spiritual authority:
-- **Sanctum of Devguru Brihaspati**: Ujjain is home to the world-renowned Ancient Devguru Brihaspati Temple, one of the rarest historical sanctums dedicated specifically to Lord Jupiter.
-- **The Prime Meridian of Vedic Astronomy**: Ancient astronomical texts, including the Surya Siddhanta, establish Ujjain as the prime geographical meridian (Madhyarekha) of the earth, creating a consecrated energy vortex where planetary Shanti yagyas are traditionally held to yield profound spiritual efficacy.
-- **Seat of Supreme Learning (Guru Sandipani Ashram)**: Lord Shri Krishna, Shri Balarama, and Sudama arrived in Ujjain to master the 64 arts and 14 sciences under Maharishi Sandipani, making this holy city the ultimate spiritual ground for intellectual enlightenment and Guru Kripa.
-- **Abode of Lord Mahakaleshwar**: As the sacred domain of Lord Shiva in his eternal aspect as the Master of Time (Mahakaal), Ujjain is revered as the supreme destination for neutralizing planetary afflictions and astrological doshas.
+## Pooja Process
+The pooja coordination in Ujjain follows a structured and transparent process:
+1. **Share Birth Details / Requirements**: Devotees provide their name, Gotra, date of birth, time of birth, and place of birth for the traditional Sankalp.
+2. **Discuss the Pooja Requirement**: Our Seva coordinator discusses your specific requirements and answers any questions regarding the pooja.
+3. **Confirm Arrangements & Availability**: Auspicious dates, temple timings, and priest availability in Ujjain are confirmed with you.
+4. **Arrange the Pooja**: Complete arrangements including sacred samagri, qualified priests, and ritual venue in Ujjain are coordinated smoothly.
+5. **Receive Booking / Participation Details**: You receive full confirmation details, venue directions, and participation instructions (whether attending in person in Ujjain or via remote live video).
 
-## Pooja Process & Vedic Ritual Steps
-At Aastha Sey Raasta Seva, every Guru Chandal Dosh Nivaran Pooja is conducted strictly in accordance with traditional Vedic protocols:
-1. **Ganpati & Gauri Pujan**: Invocation of Lord Ganesha to remove all obstacles and seek divine blessings for an auspicious start.
-2. **Punyahavachan & Sankalp**: Purification of the altar followed by individual Name, Gotra, and Nakshatra Sankalp recited by the head priest.
-3. **Navgraha Mandal Sthapana**: Consecration of the sacred planetary mandala with specific Brihaspati and Rahu yantras.
-4. **Vedic Beej Mantra Recitation**: Learned Gurukul Brahmins chant traditional Brihaspati Sukta, Guru Beej Mantras, and Rahu Kavach.
-5. **Peet Samagri Arpan (Yellow Offerings)**: Offering yellow vastra (cloth), split Bengal gram (chana dal), turmeric, saffron, yellow flowers, and brass lamps dear to Lord Brihaspati.
-6. **Navgraha Shanti Havan**: Sacred oblations of pure cow ghee, Peepal and Palash samidha, and medicinal herbs into the consecrated Agni.
-7. **Purnahuti, Yantra Abhimantran & Maha Aarti**: Concluding Purnahuti, consecration of the Brihaspati Yantra for the devotee, followed by Maha Aarti, Shanti Path, and Vedic blessings (Ashirvachan).
+## What We Offer
+Aastha Sey Raasta Seva provides dedicated devotee support for Guru Chandal Dosh Shanti Pooja in Ujjain:
+- **Complete Arrangements**: We provide complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.
+- **Experienced Vedic Pandits**: Performed by experienced and Vedic-qualified Pandits in Ujjain.
+- **Pooja Enquiry Assistance**: Prompt guidance to help you understand the ritual requirements and options.
+- **Booking Coordination**: Seamless scheduling and confirmation tailored to your preferred timeline.
+- **Guidance Regarding Required Details**: Clear instructions on necessary Gotra, birth details, and preparation guidelines.
+- **Pooja Arrangement Support**: End-to-end management of venue, sacred samagri, and qualified Vedic priests.
+- **Communication Regarding Availability**: Real-time updates regarding auspicious muhurats and scheduling slots.
+- **Devotee Assistance**: Caring, responsive assistance throughout the booking and ritual process.
 
-## What We Offer for Devotees
-- **Complete End-to-End Arrangements**: All sacred samagri, yellow vastra, fresh chana dal, pure saffron, and desi cow ghee arranged seamlessly.
-- **Gurukul-Trained Vedic Brahmins**: Experienced, certified Pandits who specialize in planetary Shanti and classical Yagyas.
-- **Individual Sankalp**: Every ritual includes dedicated recitation of the devotee's Name, Gotra, and birth coordinates.
-- **In-Person & Remote Participation**: Comprehensive venue coordination for visitors in Ujjain, plus live video streaming with doorstep delivery of energized Prasad and Brihaspati Yantra for remote devotees.
-
-## Price & Availability Enquiry
-Pooja arrangements and samagri offerings can be tailored to individual devotee requirements and anushthan scale. Devotees may enquire for the current verified pooja pricing, available auspicious dates, and customized arrangements by contacting our Seva coordinators directly.
+## Price & Availability
+Arrangement requirements and ritual scales can be tailored to individual devotee preferences. For verified current pricing, auspicious date availability, and customized booking assistance, please contact our Seva coordinators directly.
 
 ## How Booking Works
-1. **Submit Enquiry**: Fill out the online booking form with your contact information, preferred date, and Gotra details.
-2. **Consultation & Muhurat Selection**: Our Seva coordinator connects with you to confirm auspicious planetary timings and ritual options.
-3. **Advance Booking Confirmation**: Secure your pooja slot with nominal advance confirmation.
-4. **Ceremony Execution**: Attend in person at Ancient Devguru Brihaspati Temple in Ujjain or join interactively via live video link.
+- **STEP 1 — Share Your Details**: Fill out our online booking enquiry form with your contact information, birth details, and preferred date.
+- **STEP 2 — Confirm Pooja Requirements & Availability**: Our team contacts you to verify requirements, review auspicious timings, and answer any questions.
+- **STEP 3 — Complete Your Booking**: Confirm your booking slot and receive comprehensive ritual guidelines and venue coordination for Ujjain.
 
 ## Why Choose Aastha Sey Raasta Seva
-- **Devotional Integrity**: 100% scriptural adherence without commercial shortcuts.
-- **Transparent Coordination**: Clear communication, verified venues, and dedicated Pandit allocation.
-- **Complete Comfort & Peace of Mind**: We handle all operational logistics so you can focus entirely on your prayers.`,
+- **Ujjain-Focused Spiritual Service Assistance**: Dedicated local presence with deep knowledge of Ujjain's sacred temple traditions and the Ancient Devguru Brihaspati Temple.
+- **Clear Communication**: Transparent coordination, honest guidance, and prompt responses at every step.
+- **Booking Coordination**: Professional management of all logistics, samagri, and priest schedules.
+- **Personalized Enquiry Support**: Attentive assistance tailored to your unique family and astrological requirements.
+- **Devotee-Friendly Assistance**: Committed to making your pilgrimage and pooja experience smooth, serene, and spiritually enriching.
+
+## GEO Optimization & Service Context
+- **Service**: Guru Chandal Dosh Shanti Pooja
+- **Sacred Venue**: Ancient Devguru Brihaspati Temple, Ujjain
+- **Location**: Ujjain, Madhya Pradesh, India
+- **Service Provider**: Aastha Sey Raasta Seva
+- **Regional Context**: Ujjain (ancient Avantika) on the sacred banks of the holy Kshipra River is home to the world-renowned Ancient Devguru Brihaspati Temple, revered as the most auspicious kshetra for Jupiter-related remedial rituals.`,
     templeName: 'Ancient Devguru Brihaspati Temple, Ujjain',
     hindiTempleName: 'प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन',
-    location: 'Brihaspati Temple Marg, Near Kshipra River, Ujjain',
-    hindiLocation: 'बृहस्पति मंदिर मार्ग, शिप्रा तट के समीप, उज्जैन',
+    location: 'Brihaspati Temple Marg, Near Sacred Kshipra River, Ujjain',
+    hindiLocation: 'बृहस्पति मंदिर मार्ग, पवित्र शिप्रा तट के समीप, उज्जैन',
     city: 'Ujjain',
     hindiCity: 'उज्जैन',
     state: 'Madhya Pradesh',
     country: 'India',
     whatWeOffer: [
-      'Complete arrangements for Guru Chandal Dosh Shanti Pooja with devotion, authenticity, and convenience for devotees.',
-      'Ritual conducted by experienced, Gurukul-trained Vedic Brahmins in Ujjain.',
-      'Provision of authentic yellow cloth, fresh chana dal, pure turmeric, saffron, and pure cow ghee for the sacred havan.',
-      'Individual Name, Gotra, and Nakshatra Sankalp with dedicated coordination support and option for live video participation.'
+      'Complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.',
+      'Performed by experienced and Vedic-qualified Pandits in Ujjain.',
+      'Pooja enquiry assistance and prompt guidance regarding ritual requirements and birth details.',
+      'Pooja arrangement support including sanctified temple venue, pure samagri, and priest allocation.',
+      'Clear communication regarding auspicious muhurats and date availability.',
+      'Devotee-friendly assistance for both in-person and remote live video participation.'
     ],
     hindiWhatWeOffer: [
-      'श्रद्धा, प्रामाणिकता और सुविधा के साथ संपूर्ण गुरु चांडाल दोष शांति पूजा व्यवस्था',
-      'उज्जैन के वरिष्ठ वेदपाठी गुरुकुल ब्राह्मणों द्वारा शास्त्रोक्त अनुष्ठान',
-      'पीत वस्त्र, पीली चना दाल, शुद्ध हल्दी, केसर एवं देशी गाय के घी युक्त संपूर्ण हवन सामग्री',
-      'यजमान के नाम, गोत्र एवं जन्म नक्षत्र अनुसार व्यक्तिगत वैदिक संकल्प एवं लाइव प्रसारण सुविधा'
+      'हम भक्तों के लिए गुरु चांडाल दोष शांति पूजा अनुष्ठान की संपूर्ण व्यवस्था श्रद्धा, प्रामाणिकता और सुविधा के साथ प्रदान करते हैं।',
+      'यह अनुष्ठान अनुभवी और वैदिक रूप से योग्य पंडितों द्वारा शास्त्रोक्त विधि से संपन्न कराया जाता है।',
+      'पूजा संबंधी विस्तृत परामर्श एवं जन्म विवरण, गोत्र व पूजन विधि संबंधी पूर्ण मार्गदर्शन।',
+      'उज्जैन में पूजा स्थल, वैदिक ब्राह्मण एवं शुद्ध पूजन सामग्री की पूर्ण व्यवस्था।',
+      'शुभ मुहूर्त, मंदिर समय एवं तिथि उपलब्धता की समयबद्ध जानकारी।',
+      'उज्जैन में व्यक्तिगत उपस्थिति अथवा ऑनलाइन संकल्प हेतु श्रद्धालु-अनुकूल सहायता।'
     ],
     benefits: [
-      'Academic Focus & Learning: [शिक्षा] Traditionally performed to support mental clarity, concentration in higher studies, and preparation for competitive examinations.',
-      'Financial Prudence & Stability: [आर्थिक] Believed to safeguard against uncalculated financial risks, deceptive partnerships, and sudden monetary setbacks.',
-      'Sound Judgment & Moral Discernment: [विवेक] Intended to foster ethical decision-making, clear thinking, and resilience against negative or misleading influences.',
-      'Pacification of Rahu Afflictions: [ग्रह शांति] Performed to mitigate the malefic shadow of Rahu over Jupiter according to classical astrological principles.',
-      'Professional Consistency & Mentorship: [करियर] Traditionally associated with dissolving career blockages and nurturing respectful, cooperative relationships with mentors and seniors.',
-      'Family Harmony & Domestic Peace: [सद्भाव] Believed to ease inner restlessness, misunderstandings with elders, and restore mutual warmth in the household.',
-      'Spiritual Growth & Guru Kripa: [आध्यात्मिक] Intended to invoke the divine blessings of Devguru Brihaspati for spiritual discernment, righteousness, and long-term well-being.'
+      'Neutralization of Guru Chandal Dosh: Reduces the negative influences of Jupiter\'s affliction with Rahu/Ketu on one\'s life.',
+      'Clarity in Decision-Making: Enhances wisdom, judgment, and the ability to make sound life choices.',
+      'Removal of Obstacles: Clears hurdles in career, education, marriage, and other important areas of life.',
+      'Career and Business Growth: Removes blockages hindering professional progress, promotions, and financial gains.',
+      'Marital Harmony: Eases delays or conflicts in marriage caused by this planetary affliction.',
+      'Mental Peace and Confidence: Reduces confusion and anxiety, bringing clarity and self-assurance.',
+      'Prosperity and Success: Opens pathways for growth, stability, and overall material well-being.',
+      'Enhanced Guidance from Mentors & Elders: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors.'
     ],
     hindiBenefits: [
-      '[शिक्षा] एकाग्रता में वृद्धि, स्मरण शक्ति की मजबूती एवं प्रतियोगी परीक्षाओं व उच्च शिक्षा में अनुकूलता',
-      '[आर्थिक] अप्रत्याशित धन हानि से रक्षा, धोखाधड़ी व गलत निवेश से बचाव एवं आर्थिक स्थिरता',
-      '[विवेक] सही निर्णय लेने की क्षमता, नकारात्मक संगति से मुक्ति एवं नैतिक स्पष्टता',
-      '[ग्रह शांति] गुरु-राहु युति के नकारात्मक प्रभाव का पूर्ण शमन एवं नवग्रह कृपा',
-      '[करियर] कार्यक्षेत्र में रुकावटों का अंत, पदोन्नति एवं वरिष्ठों व गुरुजनों से मधुर संबंध',
-      '[सद्भाव] पारिवारिक मतभेद निवारण, मानसिक शांति एवं घर में सुख-समृद्धि की वृद्धि',
-      '[आध्यात्मिक] देवगुरु बृहस्पति का आशीर्वाद, आध्यात्मिक उन्नति एवं धर्म मार्ग में दृढ़ता'
+      'गुरु चांडाल दोष का निष्प्रभावीकरण: कुंडली में बृहस्पति की राहु/केतु के साथ पीड़ा के नकारात्मक प्रभावों को कम करता है।',
+      'निर्णय क्षमता में स्पष्टता: बुद्धि, विवेक और जीवन में सही निर्णय लेने की क्षमता को बढ़ाता है।',
+      'बाधाओं का निवारण: करियर, शिक्षा, विवाह और जीवन के अन्य महत्वपूर्ण क्षेत्रों में आने वाली बाधाओं को दूर करता है।',
+      'करियर और व्यवसाय में वृद्धि: व्यावसायिक प्रगति, पदोन्नति और आर्थिक लाभ में बाधक तत्वों को दूर करता है।',
+      'वैवाहिक सामंजस्य: इस ग्रह पीड़ा के कारण विवाह में उत्पन्न विलंब या संघर्ष को शांत करता है।',
+      'मानसिक शांति और आत्मविश्वास: भ्रम और चिंता को कम कर, स्पष्टता और आत्मविश्वास प्रदान करता है।',
+      'समृद्धि और सफलता: विकास, स्थिरता और समग्र भौतिक कल्याण के मार्ग प्रशस्त करता है।',
+      'गुरुजनों और वरिष्ठों के साथ बेहतर संबंध: जीवन में शिक्षकों, गुरुओं और मार्गदर्शक व्यक्तियों के प्रति सम्मान और मार्गदर्शन को मजबूत करता है।'
     ],
     whoCanConsider: [
-      'Devotees whose birth charts indicate Jupiter conjunct Rahu or Ketu (Guru Chandal Yog) as identified by an astrologer.',
-      'Students and professionals facing recurring hurdles, lack of focus, or unexplained setbacks in higher education or career.',
-      'Individuals seeking remedial planetary guidance for financial volatility or deceptive business transactions.',
-      'Devotees experiencing persistent mental confusion, ethical dilemmas, or strained relations with teachers and mentors.',
-      'Devotees traveling to Ujjain who wish to perform an authentic Vedic planetary pacification ceremony at Devguru Brihaspati Temple.'
+      'Devotees whose horoscopes are believed to indicate Guru Chandal Dosha based on astrological consultation.',
+      'Students and aspirants seeking spiritual prayer and mental focus for higher education and learning.',
+      'Professionals and business owners seeking career growth, sound judgment, and removal of obstacles.',
+      'Individuals facing marriage delays, conflicts, or decision-making confusion due to planetary affliction.',
+      'Devotees visiting Ujjain wishing to arrange traditional Vedic worship at the Ancient Devguru Brihaspati Temple.'
     ],
     procedureSteps: [
-      'Ganpati Pujan & Sankalp: Devotee Name, Gotra, and birth coordinates recited by Vedic priests to invoke divine blessings.',
-      'Navgraha Mandal Sthapana: Consecration of the sacred planetary mandala with specific Brihaspati and Rahu yantras.',
-      'Vedic Beej Mantra Recitation: Chanting of traditional Brihaspati Sukta and Rahu Kavach mantras with scriptural intonation.',
-      'Peet Samagri Arpan (Yellow Offerings): Offering yellow flowers, chana dal, turmeric, saffron, and yellow vastra dear to Devguru Brihaspati.',
-      'Navgraha Shanti Havan & Aarti: Sacred oblation using Peepal and Palash samidha into consecrated Agni, concluding with Maha Aarti and Shanti Path.'
+      'Share Birth Details / Requirements: Provide name, Gotra, date of birth, time of birth, and place of birth.',
+      'Discuss the Pooja Requirement: Connect with a Seva coordinator to review pooja requirements and answer questions.',
+      'Confirm Arrangements & Availability: Verify auspicious dates, temple timings, and priest availability in Ujjain.',
+      'Arrange the Pooja: Complete arrangements including venue, samagri, and qualified Vedic priests are coordinated.',
+      'Receive Booking / Participation Details: Devotees receive confirmation details for in-person or live video participation.'
     ],
     hindiProcedureSteps: [
-      'गणेश पूजन एवं संकल्प: यजमान के नाम, गोत्र और जन्म विवरण का उच्चारण कर विघ्नहर्ता गणेश जी का आवाहन।',
-      'नवग्रह मंडल स्थापना: पवित्र जल कलश, देवगुरु बृहस्पति एवं राहु यंत्र की शास्त्रोक्त वेदी पर स्थापना।',
-      'वैदिक बीज मंत्र जाप: वरिष्ठ ब्राह्मणों द्वारा गुरु एवं राहु के एकाक्षरी व बीज मंत्रों का सस्वर पाठ।',
-      'पीत सामग्री अर्पण: पीले पुष्प, पीली चना दाल, हल्दी, केसर, बेसन के मिष्ठान्न व पीत वस्त्र का अर्पण।',
-      'नवग्रह शांति हवन एवं महाआरती: पीपल व पलाश की पवित्र समिधा तथा औषधियों से आहुति, महाआरती एवं शांति पाठ।'
+      'जन्म विवरण एवं आवश्यकता साझा करें: नाम, गोत्र, जन्म तिथि, समय एवं स्थान प्रदान करें।',
+      'पूजा आवश्यकता पर परामर्श: सेवा समन्वयक से बातचीत कर पूजा विधि एवं आवश्यकताओं को समझें।',
+      'व्यवस्था एवं तिथि की पुष्टि: उज्जैन में शुभ मुहूर्त एवं पुरोहित उपलब्धता की पुष्टि करें।',
+      'पूजा का आयोजन: पूजा स्थल, शुद्ध सामग्री एवं योग्य वैदिक ब्राह्मणों द्वारा अनुष्ठान का आयोजन।',
+      'बुकिंग एवं सहभागिता विवरण प्राप्त करें: उज्जैन में व्यक्तिगत अथवा ऑनलाइन संकल्प हेतु पूर्ण विवरण प्राप्त करें।'
     ],
     preparation: [
-      'Wear clean, traditional Indian attire (preferably yellow or light-colored garments) for the ceremony.',
-      'Keep your exact birth details (Date, Time, Place of Birth) and Gotra ready for the sacred Sankalp.',
-      'Refrain from non-satvik food and alcohol for 24 hours prior to the ritual.',
-      'Arrive at the designated Ujjain venue 15–20 minutes prior to the scheduled auspicious Muhurat.'
+      'Wear clean, traditional Indian attire (preferably yellow or light-colored garments).',
+      'Keep your birth details (Date, Time, Place of Birth) and Gotra ready for the Sankalp.',
+      'Maintain a calm, devotional mindset prior to the ceremony.',
+      'Connect with our team in advance to verify your scheduled reporting time in Ujjain.'
     ],
     hindiPreparation: [
-      'पूजा के दिन पीले अथवा हल्के रंग के पारंपरिक सात्विक वस्त्र धारण करें।',
-      'संकल्प हेतु अपना नाम, गोत्र एवं जन्म विवरण (तिथि, समय, स्थान) तैयार रखें।',
-      'पूजा से कम से कम 24 घंटे पूर्व तामसिक भोजन एवं मदिरा आदि का पूर्ण त्याग रखें।',
-      'निर्धारित शुभ मुहूर्त से 15-20 मिनट पूर्व पूजा स्थल पर उपस्थित हों।'
+      'पूजा के दिन स्वच्छ, पारंपरिक सात्विक वस्त्र धारण करें (पीला अथवा हल्का रंग उत्तम)।',
+      'संकल्प हेतु अपना नाम, गोत्र एवं जन्म विवरण तैयार रखें।',
+      'अनुष्ठान से पूर्व सात्विक एवं शांत मनोभाव बनाए रखें।',
+      'उज्जैन में निर्धारित समय पर उपस्थिति हेतु पूर्व से संपर्क में रहें।'
     ],
-    ritualDetails: 'Ganpati Pujan, Navgraha Mandal Sthapana, Brihaspati & Rahu Aavahan, Vedic Beej Mantra recitations, Peet Daan (yellow offerings), sacred Havan with Peepal and Palash samidha, Brihaspati Yantra Abhimantran, and Maha Aarti.',
-    hindiRitualDetails: 'गणेश पूजन, नवग्रह मंडल स्थापना, देवगुरु बृहस्पति एवं राहु आवाहन, वैदिक बीज मंत्र जाप, पीत दान (पीले पुष्प, चना दाल, वस्त्र), पीपल-पलाश समिधा युक्त नवग्रह हवन, बृहस्पति यंत्र अभिमंत्रण एवं महाआरती।',
+    ritualDetails: 'Vedic Sankalp with devotee Name and Gotra, planetary invocations, Brihaspati and Rahu mantra recitations, traditional Peet offerings, and concluding Aarti with spiritual blessings at Ancient Devguru Brihaspati Temple.',
+    hindiRitualDetails: 'यजमान के नाम एवं गोत्र से वैदिक संकल्प, नवग्रह आवाहन, गुरु एवं राहु मंत्र जाप, पारंपरिक पीत सामग्री अर्पण एवं प्राचीन देवगुरु बृहस्पति मंदिर में महाआरती के साथ शुभाशीर्वाद।',
     faqs: [
       {
         question: 'What is Guru Chandal Dosh Shanti Pooja?',
-        answer: 'Guru Chandal Dosh Shanti Pooja is a specialized Vedic remedial ritual performed to pacify the malefic astrological effects created by the conjunction of benevolent Jupiter (Devguru Brihaspati) and shadow planet Rahu or Ketu in an individual\'s birth chart. Arranged at the Ancient Devguru Brihaspati Temple in Ujjain, it aims to harmonize planetary energies and invoke divine blessings for wisdom and clarity.'
+        answer: 'Guru Chandal Dosh Shanti Pooja is a traditional Vedic remedial ritual associated with Guru Chandal Dosha in Vedic astrology. Devotees may seek this pooja as a form of spiritual remedy and guidance based on their individual astrological circumstances.'
+      },
+      {
+        question: 'What is Guru Chandal Dosh according to Vedic astrology?',
+        answer: 'According to Vedic astrology, Guru Chandal Dosh occurs when Jupiter (Guru), representing wisdom and righteousness, is placed in conjunction with or aspected by the shadow planet Rahu or Ketu in an individual\'s birth chart.'
       },
       {
         question: 'Why is Guru Chandal Dosh Shanti Pooja performed?',
-        answer: 'According to Vedic astrology, unpacified Guru Chandal Dosh can cause intellectual confusion, hurdles in higher education, financial instability, and strained relationships with elders. Devotees perform this pooja to seek spiritual peace, strengthen Jupiter\'s positive influence, and mitigate Rahu\'s turbulent shadow.'
+        answer: 'The pooja is traditionally performed as a remedial prayer to seek mental clarity, spiritual guidance, and planetary harmony, helping to mitigate perceived astrological obstacles in decision-making, career, and learning.'
       },
       {
-        question: 'Who can consider Guru Chandal Dosh Shanti Pooja?',
-        answer: 'Individuals whose horoscopes indicate a conjunction or aspect between Jupiter and Rahu/Ketu, students facing recurring obstacles in examinations, professionals experiencing unexpected career turbulence, and devotees seeking moral and financial clarity may consider this pooja upon consulting a qualified astrologer.'
+        question: 'Who may consider Guru Chandal Dosh Shanti Pooja?',
+        answer: 'Individuals whose birth charts are believed to indicate Guru Chandal Dosha upon consulting an astrologer, students seeking academic focus, or devotees seeking moral and spiritual clarity may consider this pooja.'
       },
       {
         question: 'Where can I arrange Guru Chandal Dosh Shanti Pooja in Ujjain?',
-        answer: 'In Ujjain, the ritual is held at the historic Ancient Devguru Brihaspati Temple located near the banks of the sacred Kshipra River, a revered sanctum dedicated specifically to Lord Jupiter.'
+        answer: 'In Ujjain, the ritual is traditionally conducted at the Ancient Devguru Brihaspati Temple near the banks of the sacred Kshipra River, revered as the dedicated sanctum for Lord Jupiter.'
       },
       {
         question: 'How can I book Guru Chandal Dosh Shanti Pooja in Ujjain?',
-        answer: 'You can book Guru Chandal Dosh Shanti Pooja directly through Aastha Sey Raasta Seva by submitting an online booking form, calling our dedicated helpline, or connecting via WhatsApp. Our team will guide you through Muhurat selection and priest allocation.'
+        answer: 'You can book by submitting an enquiry on our website, calling our helpline, or messaging us on WhatsApp. Our Seva coordinator will guide you through the available dates and arrangements.'
       },
       {
-        question: 'What details are required for booking?',
-        answer: 'Devotees need to provide their full name, Gotra, date of birth, time of birth, and place of birth so the Vedic priests can make the individual Sankalp according to scriptural tradition.'
+        question: 'What details are required to book the pooja?',
+        answer: 'Devotees need to provide their full name, Gotra, date of birth, time of birth, place of birth, and preferred date for the traditional Sankalp.'
       },
       {
         question: 'What is the price of Guru Chandal Dosh Shanti Pooja in Ujjain?',
-        answer: 'Pooja requirements, samagri offerings, and pandit allocations can vary depending on individual preferences and anushthan scale. Please contact Aastha Sey Raasta Seva for the current pooja price, available dates, and custom arrangement details.'
+        answer: 'Pooja requirements and arrangements can vary based on individual preferences. Please contact Aastha Sey Raasta Seva directly for current pricing, auspicious dates, and tailored options.'
       },
       {
         question: 'How long does the pooja take?',
-        answer: 'The complete Vedic ceremony typically takes between 2.5 to 3.5 hours, conducted by certified Gurukul-trained Vedic Brahmins.'
+        answer: 'The Vedic ceremony typically takes between 2 to 3 hours, depending on the specific rituals and Sankalp protocols coordinated for the devotee.'
       },
       {
         question: 'Can the pooja be arranged according to individual requirements?',
-        answer: 'Yes, arrangements can be coordinated for individual devotees or entire families, including personalized Gotra Sankalp and special planetary invocations.'
+        answer: 'Yes, Aastha Sey Raasta Seva arranges poojas tailored to individual devotees or families, including personalized Name and Gotra Sankalp.'
       },
       {
-        question: 'Can devotees participate remotely?',
-        answer: 'Yes, Aastha Sey Raasta Seva offers interactive live video participation for devotees across India and abroad. Consecrated Prasad, energized Brihaspati Yantra, and Raksha Sutra are safely couriered to your home after the ceremony.'
-      },
-      {
-        question: 'What should I bring for the pooja?',
-        answer: 'Devotees are advised to wear clean, traditional Indian attire (preferably yellow or light-colored garments). All ritual materials, sacred samidha, flowers, and havan offerings are completely arranged by Aastha Sey Raasta Seva.'
+        question: 'Can I enquire about the pooja remotely?',
+        answer: 'Yes, devotees across India and abroad can enquire, book, and participate in the pooja either in person in Ujjain or remotely through live video coordination.'
       },
       {
         question: 'How can I contact Aastha Sey Raasta Seva?',
-        answer: 'You can easily enquire or book by submitting an enquiry form on our website, calling our official helpline (+91 78988 88888), or connecting directly with our team via WhatsApp for instant assistance.'
+        answer: 'You can contact Aastha Sey Raasta Seva by submitting an online enquiry form, calling our official helpline (+91 78988 88888), or reaching out via WhatsApp for immediate support.'
       }
     ],
     internalLinks: [
       { anchor: 'Rudrabhishek Pooja in Ujjain', link: '/pooja/rudrabhishek-pooja-ujjain', reason: 'Lord Shiva abhishek for planetary peace and obstacle removal.' },
       { anchor: 'Mool Shanti Pooja in Ujjain', link: '/pooja/mool-shanti-pooja-ujjain', reason: 'Authentic Vedic Mool Nakshatra Shanti ritual.' },
-      { anchor: 'Vish Yog Shanti Pooja in Ujjain', link: '/pooja/vish-yog-shanti-pooja-ujjain', reason: 'Vedic remedy for Saturn-Moon conjunction in Ujjain.' },
-      { anchor: 'Nakshatra Shanti Pooja in Ujjain', link: '/pooja/nakshatra-shanti-pooja-ujjain', reason: 'Birth star pacification ceremony in Ujjain.' },
       { anchor: 'All Pooja Services in Ujjain', link: '/pooja-services', reason: 'Complete directory of authentic temple poojas in Ujjain.' },
-      { anchor: 'Spiritual Tours in Ujjain', link: '/spiritual-tours', reason: 'Guided temple darshan and spiritual yatras in Ujjain.' }
+      { anchor: 'Contact Aastha Sey Raasta Seva', link: '/contact', reason: 'Enquire for current pooja details, pricing, and availability.' }
     ],
     imageSeo: {
-      featuredImageIdea: 'Vedic pandits in yellow attire performing Guru Chandal Dosh Shanti Yajna with yellow flowers, chana dal offerings, and Brihaspati Yantra at Ancient Devguru Brihaspati Temple in Ujjain.',
-      alt: 'Guru Chandal Dosh Shanti Pooja at Ancient Devguru Brihaspati Temple Ujjain',
-      title: 'Guru Chandal Dosh Shanti Pooja in Ujjain — Aastha Sey Raasta Seva',
+      featuredImageIdea: 'Vedic pandits in traditional attire performing Guru Chandal Dosh Shanti ritual at Ancient Devguru Brihaspati Temple in Ujjain.',
+      alt: 'Guru Chandal Dosh Shanti Pooja in Ujjain',
+      title: 'Guru Chandal Dosh Shanti Pooja in Ujjain | Aastha Sey Raasta Seva',
       filename: 'guru-chandal-dosh-shanti-pooja-ujjain.webp'
     },
     schemaTypes: ['Service', 'FAQPage', 'BreadcrumbList', 'LocalBusiness'],
     qualityScore: 99,
-    duration: '2.5 to 3.5 Hours',
-    hindiDuration: '2.5 से 3.5 घंटे',
-    price: 3500,
-    advanceBookingAmount: 1100,
-    priceType: 'Starting From',
+    duration: '2 to 3 Hours',
+    hindiDuration: '2 से 3 घंटे',
+    price: null,
+    advanceBookingAmount: 0,
+    priceType: 'Custom / On Request',
     featuredImage: '/assets/images/guru-chandal-dosh-shanti-pooja-ujjain.webp',
     isFeatured: true,
     isPublished: true,
     createdAt: '2026-08-01T10:00:00Z',
-    updatedAt: '2026-09-11T08:00:00Z',
+    updatedAt: '2026-09-11T10:00:00Z',
   },
 
   // 3. Jaap & Havan Services (9)
