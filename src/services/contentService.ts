@@ -751,8 +751,155 @@ export const POOJA_CONTENT_CATALOG: Record<string, LocalizedPoojaContent> = {
       hi: 'उज्जैन स्थित प्राचीन देवगुरु बृहस्पति मंदिर में गुरु चांडाल दोष (गुरु-राहु/केतु युति) की शांति, बुद्धि-विवेक एवं जीवन में समृद्धि व सफलता हेतु वैदिक पूजा।',
     },
     description: {
-      en: 'Guru Chandal Dosh Pooja is a Vedic ritual performed to pacify Guru Chandal Dosh, an inauspicious astrological affliction formed when Jupiter (Guru) is conjunct with Rahu or Ketu in one\'s horoscope, believed to cause obstacles in wisdom, decision-making, and overall life progress. According to Vedic tradition, this ritual is performed to neutralize the negative effects of this dosha and invoke divine blessings for clarity, prosperity, and success.\n\nThe ancient Devguru Brihaspati temple in Ujjain is dedicated to Jupiter (Guru), revered in Vedic tradition as the significator of wisdom, wealth, marriage, and overall prosperity. This sacred temple is regarded as the most auspicious and ideal place for performing Guru Chandal Dosh Pooja and other Jupiter-related rituals. Connect with Aastha Sey Raasta Seva for pooja details, availability and booking assistance.',
-      hi: 'गुरु चांडाल दोष पूजा एक वैदिक अनुष्ठान है, जो गुरु चांडाल दोष को शांत करने के लिए किया जाता है। यह एक अशुभ ज्योतिषीय पीड़ा है, जो कुंडली में बृहस्पति (गुरु) के राहु या केतु के साथ युति होने से बनती है, जिसे बुद्धि, निर्णय क्षमता और समग्र जीवन प्रगति में बाधाओं का कारण माना जाता है। वैदिक परंपरा के अनुसार, यह अनुष्ठान इस दोष के नकारात्मक प्रभावों को निष्क्रिय करने तथा स्पष्टता, समृद्धि और सफलता के लिए दिव्य आशीर्वाद प्राप्त करने के लिए किया जाता है। उज्जैन स्थित प्राचीन देवगुरु बृहस्पति मंदिर बृहस्पति (गुरु) ग्रह को समर्पित है, जिन्हें वैदिक परंपरा में बुद्धि, धन, विवाह और समग्र समृद्धि का कारक माना जाता है। यह पवित्र मंदिर गुरु चांडाल दोष पूजा तथा अन्य बृहस्पति संबंधी अनुष्ठानों को संपन्न करने के लिए सबसे शुभ और आदर्श स्थान माना जाता है।',
+      en: `Guru Chandal Dosh Pooja is a Vedic ritual performed to pacify Guru Chandal Dosh, an inauspicious astrological affliction formed when Jupiter (Guru) is conjunct with Rahu or Ketu in one's horoscope, believed to cause obstacles in wisdom, decision-making, and overall life progress. According to Vedic tradition, this ritual is performed to neutralize the negative effects of this dosha and invoke divine blessings for clarity, prosperity, and success.
+
+The ancient Devguru Brihaspati temple in Ujjain is dedicated to Jupiter (Guru), revered in Vedic tradition as the significator of wisdom, wealth, marriage, and overall prosperity. This sacred temple is regarded as the most auspicious and ideal place for performing Guru Chandal Dosh Pooja and other Jupiter-related rituals. Connect with Aastha Sey Raasta Seva for pooja details, availability and booking assistance.
+
+## About Guru Chandal Dosh Shanti Pooja
+Guru Chandal Dosh Shanti Pooja is a specialized remedial worship rooted in ancient Vedic astrological traditions. In Vedic astrology, planetary combinations are studied to understand their subtle influences on an individual's life path, intellect, and spiritual journey.
+
+When planetary configurations indicate an association between Jupiter (Devguru Brihaspati) and shadow planets such as Rahu or Ketu, devotees traditionally consider performing a Shanti Pooja to seek spiritual harmony, mental peace, and righteous wisdom. The ritual is focused on invoking divine blessings, fostering personal discernment, and restoring spiritual balance through guided Vedic prayers.
+
+## Understanding Guru Chandal Dosh
+
+### What is Guru Chandal Dosh?
+In classical Vedic astrology, Guru Chandal Dosh is an astrological combination (yoga) that occurs when Jupiter (Guru), the planet of wisdom, knowledge, and righteousness, is in conjunction with or under the strong aspect of the shadow planet Rahu or Ketu.
+
+### How is it understood in Vedic Astrology?
+Jupiter represents supreme wisdom, ethics, moral clarity, education, and spiritual growth. Rahu, on the other hand, represents illusion, worldly desires, restlessness, and sudden disruptions. When these two opposing energies intersect in a birth chart, traditional astrological belief suggests that it may create a period of intellectual confusion, hesitation in decision-making, or ethical dilemmas.
+
+### Why do devotees seek Shanti Pooja?
+Devotees traditionally seek Shanti Pooja to pray for clarity of mind, guidance in higher education and career, and protection against deceptive situations. Rather than a source of fear, this astrological placement is seen as an opportunity for self-awareness, moral discipline, and dedicated spiritual prayer.
+
+## Traditional Purpose of the Pooja
+According to Vedic astrology, Guru Chandal Dosh Shanti Pooja is traditionally performed as a remedial practice with sincere devotional intent. Devotees may consider this ritual for:
+- **Neutralization of Guru Chandal Dosh**: Reduces the negative influences of Jupiter's affliction with Rahu/Ketu on one's life.
+- **Clarity in Decision-Making**: Enhances wisdom, judgment, and the ability to make sound life choices.
+- **Removal of Obstacles**: Clears hurdles in career, education, marriage, and other important areas of life.
+- **Career and Business Growth**: Removes blockages hindering professional progress, promotions, and financial gains.
+- **Marital Harmony**: Eases delays or conflicts in marriage caused by this planetary affliction.
+- **Mental Peace and Confidence**: Reduces confusion and anxiety, bringing clarity and self-assurance.
+- **Prosperity and Success**: Opens pathways for growth, stability, and overall material well-being.
+- **Enhanced Guidance from Mentors & Elders**: Strengthens respect, harmony, and beneficial relationships with teachers, gurus, and mentors.
+
+*Disclaimer: Astrological beliefs and remedial rituals are traditional devotional practices. Results and experiences may vary depending on individual circumstances and faith. Aastha Sey Raasta Seva provides spiritual coordination and pooja arrangement support in Ujjain without making deterministic or guaranteed outcome claims.*
+
+## Who May Consider This Pooja
+Individuals whose horoscopes are believed to indicate Guru Chandal Dosha, or those experiencing persistent feelings of distraction, decision fatigue, or ethical confusion, may consider seeking guidance. 
+
+Because individual astrological circumstances differ significantly, devotees are always encouraged to consult a qualified astrologer or spiritual guide before deciding on any remedial ritual. Aastha Sey Raasta Seva assists devotees who have chosen to perform this sacred ceremony in Ujjain by providing complete arrangement and coordination support.
+
+## Pooja Process
+The pooja coordination in Ujjain follows a structured and transparent process:
+1. **Share Birth Details / Requirements**: Devotees provide their name, Gotra, date of birth, time of birth, and place of birth for the traditional Sankalp.
+2. **Discuss the Pooja Requirement**: Our Seva coordinator discusses your specific requirements and answers any questions regarding the pooja.
+3. **Confirm Arrangements & Availability**: Auspicious dates, temple timings, and priest availability in Ujjain are confirmed with you.
+4. **Arrange the Pooja**: Complete arrangements including sacred samagri, qualified priests, and ritual venue in Ujjain are coordinated smoothly.
+5. **Receive Booking / Participation Details**: You receive full confirmation details, venue directions, and participation instructions (whether attending in person in Ujjain or via remote live video).
+
+## What We Offer
+Aastha Sey Raasta Seva provides dedicated devotee support for Guru Chandal Dosh Shanti Pooja in Ujjain:
+- **Complete Arrangements**: We provide complete arrangements for Guru Chandal Dosh Shanti Pooja Anushthan with devotion, authenticity, and convenience for devotees.
+- **Experienced Vedic Pandits**: Performed by experienced and Vedic-qualified Pandits in Ujjain.
+- **Pooja Enquiry Assistance**: Prompt guidance to help you understand the ritual requirements and options.
+- **Booking Coordination**: Seamless scheduling and confirmation tailored to your preferred timeline.
+- **Guidance Regarding Required Details**: Clear instructions on necessary Gotra, birth details, and preparation guidelines.
+- **Pooja Arrangement Support**: End-to-end management of venue, sacred samagri, and qualified Vedic priests.
+- **Communication Regarding Availability**: Real-time updates regarding auspicious muhurats and scheduling slots.
+- **Devotee Assistance**: Caring, responsive assistance throughout the booking and ritual process.
+
+## Price & Availability
+Arrangement requirements and ritual scales can be tailored to individual devotee preferences. For verified current pricing, auspicious date availability, and customized booking assistance, please contact our Seva coordinators directly.
+
+## How Booking Works
+- **STEP 1 — Share Your Details**: Fill out our online booking enquiry form with your contact information, birth details, and preferred date.
+- **STEP 2 — Confirm Pooja Requirements & Availability**: Our team contacts you to verify requirements, review auspicious timings, and answer any questions.
+- **STEP 3 — Complete Your Booking**: Confirm your booking slot and receive comprehensive ritual guidelines and venue coordination for Ujjain.
+
+## Why Choose Aastha Sey Raasta Seva
+- **Ujjain-Focused Spiritual Service Assistance**: Dedicated local presence with deep knowledge of Ujjain's sacred temple traditions and the Ancient Devguru Brihaspati Temple.
+- **Clear Communication**: Transparent coordination, honest guidance, and prompt responses at every step.
+- **Booking Coordination**: Professional management of all logistics, samagri, and priest schedules.
+- **Personalized Enquiry Support**: Attentive assistance tailored to your unique family and astrological requirements.
+- **Devotee-Friendly Assistance**: Committed to making your pilgrimage and pooja experience smooth, serene, and spiritually enriching.
+
+## GEO Optimization & Service Context
+- **Service**: Guru Chandal Dosh Shanti Pooja
+- **Sacred Venue**: Ancient Devguru Brihaspati Temple, Ujjain
+- **Location**: Ujjain, Madhya Pradesh, India
+- **Service Provider**: Aastha Sey Raasta Seva
+- **Regional Context**: Ujjain (ancient Avantika) on the sacred banks of the holy Kshipra River is home to the world-renowned Ancient Devguru Brihaspati Temple, revered as the most auspicious kshetra for Jupiter-related remedial rituals.`,
+      hi: `गुरु चांडाल दोष पूजा एक वैदिक अनुष्ठान है, जो गुरु चांडाल दोष को शांत करने के लिए किया जाता है। यह एक अशुभ ज्योतिषीय पीड़ा है, जो कुंडली में बृहस्पति (गुरु) के राहु या केतु के साथ युति होने से बनती है, जिसे बुद्धि, निर्णय क्षमता और समग्र जीवन प्रगति में बाधाओं का कारण माना जाता है। वैदिक परंपरा के अनुसार, यह अनुष्ठान इस दोष के नकारात्मक प्रभावों को निष्क्रिय करने तथा स्पष्टता, समृद्धि और सफलता के लिए दिव्य आशीर्वाद प्राप्त करने के लिए किया जाता है।
+
+उज्जैन स्थित प्राचीन देवगुरु बृहस्पति मंदिर बृहस्पति (गुरु) ग्रह को समर्पित है, जिन्हें वैदिक परंपरा में बुद्धि, धन, विवाह और समग्र समृद्धि का कारक माना जाता है। यह पवित्र मंदिर गुरु चांडाल दोष पूजा तथा अन्य बृहस्पति संबंधी अनुष्ठानों को संपन्न करने के लिए सबसे शुभ और आदर्श स्थान माना जाता है।
+
+## गुरु चांडाल दोष शांति पूजा के बारे में
+गुरु चांडाल दोष शांति पूजा एक विशिष्ट वैदिक उपचार अनुष्ठान है, जो प्राचीन ज्योतिषीय परंपराओं पर आधारित है। वैदिक ज्योतिष में, ग्रहों की युति का अध्ययन व्यक्ति के जीवन, बुद्धि और आध्यात्मिक यात्रा पर पड़ने वाले प्रभावों को समझने के लिए किया जाता है।
+
+जब कुंडली में देवगुरु बृहस्पति की छाया ग्रह राहु अथवा केतु के साथ युति होती है, तो श्रद्धालु आध्यात्मिक संतुलन, मानसिक शांति और सदबुद्धि की प्राप्ति हेतु यह शांति पूजा करवाते हैं।
+
+## गुरु चांडाल दोष को समझें
+
+### गुरु चांडाल दोष क्या है?
+वैदिक ज्योतिष के अनुसार, जब ज्ञान, धर्म और विवेक के कारक ग्रह देवगुरु बृहस्पति की युति छाया ग्रह राहु या केतु के साथ होती है, तो इसे गुरु चांडाल दोष कहा जाता है।
+
+### वैदिक ज्योतिष में इसका क्या प्रभाव माना जाता है?
+बृहस्पति उच्च ज्ञान, नैतिकता, शिक्षा और आत्मिक उन्नति के प्रतीक हैं, जबकि राहु भ्रम, सांसारिक तृष्णा और आकस्मिक बाधाओं का कारक है। इन दोनों विरोधी ऊर्जाओं के मिलन से जातक को निर्णय लेने में अनिर्णय, बौद्धिक भ्रम या नैतिक दुविधा का सामना करना पड़ सकता है।
+
+### श्रद्धालु शांति पूजा क्यों करवाते हैं?
+श्रद्धालु मानसिक स्पष्टता, उच्च शिक्षा व करियर में मार्गदर्शन और छल-कपट से रक्षा हेतु यह शांति पूजा करवाते हैं। यह अनुष्ठान आत्म-जागरूकता, अनुशासन और भक्तिमय प्रार्थना का अवसर है।
+
+## पूजा का पारंपरिक उद्देश्य
+वैदिक परंपरा के अनुसार, गुरु चांडाल दोष शांति पूजा पूर्ण श्रद्धा और सात्विक भाव से संपन्न की जाती है:
+- **गुरु चांडाल दोष का निष्प्रभावीकरण**: कुंडली में बृहस्पति की राहु/केतु के साथ पीड़ा के नकारात्मक प्रभावों को कम करता है।
+- **निर्णय क्षमता में स्पष्टता**: बुद्धि, विवेक और जीवन में सही निर्णय लेने की क्षमता को बढ़ाता है।
+- **बाधाओं का निवारण**: करियर, शिक्षा, विवाह और जीवन के अन्य महत्वपूर्ण क्षेत्रों में आने वाली बाधाओं को दूर करता है।
+- **करियर और व्यवसाय में वृद्धि**: व्यावसायिक प्रगति, पदोन्नति और आर्थिक लाभ में बाधक तत्वों को दूर करता है।
+- **वैवाहिक सामंजस्य**: इस ग्रह पीड़ा के कारण विवाह में उत्पन्न विलंब या संघर्ष को शांत करता है।
+- **मानसिक शांति और आत्मविश्वास**: भ्रम और चिंता को कम कर, स्पष्टता और आत्मविश्वास प्रदान करता है।
+- **समृद्धि और सफलता**: विकास, स्थिरता और समग्र भौतिक कल्याण के मार्ग प्रशस्त करता है।
+- **गुरुजनों और वरिष्ठों के साथ बेहतर संबंध**: जीवन में शिक्षकों, गुरुओं और मार्गदर्शक व्यक्तियों के प्रति सम्मान और मार्गदर्शन को मजबूत करता है।
+
+*अस्वीकरण: ज्योतिषीय विश्वास और उपचार अनुष्ठान पारंपरिक धार्मिक प्रथाएं हैं। अनुभव और परिणाम व्यक्तिगत आस्था व परिस्थितियों पर निर्भर करते हैं। आस्था से रास्ता सेवा उज्जैन में संपूर्ण पूजन व्यवस्था उपलब्ध कराती है।*
+
+## यह पूजा किसे करवानी चाहिए
+वे जातक जिनकी कुंडली में गुरु चांडाल योग हो, अथवा जो निरंतर बौद्धिक भ्रम, निर्णय लेने में कठिनाई या करियर में अप्रत्याशित बाधाएं महसूस कर रहे हों, वे विद्वान ज्योतिषाचार्य के परामर्श से यह पूजा करवा सकते हैं।
+
+## पूजा प्रक्रिया
+उज्जैन में पूजा का आयोजन एक सुव्यवस्थित और पारदर्शी प्रक्रिया द्वारा होता है:
+1. **जन्म विवरण साझा करें**: यजमान अपना नाम, गोत्र, जन्म तिथि, समय एवं स्थान प्रदान करते हैं।
+2. **पूजा आवश्यकता पर परामर्श**: हमारे सेवा समन्वयक पूजा विधि और व्यवस्था की विस्तृत जानकारी देते हैं।
+3. **तिथि एवं पुरोहित उपलब्धता की पुष्टि**: शुभ मुहूर्त, मंदिर समय और वेदपाठी पुरोहित की उपलब्धता सुनिश्चित की जाती है।
+4. **पूजा की संपूर्ण व्यवस्था**: उज्जैन में पूजा स्थल, शुद्ध पूजन सामग्री और योग्य ब्राह्मणों की व्यवस्था की जाती है।
+5. **सहभागिता निर्देश प्राप्त करें**: श्रद्धालु को उज्जैन में व्यक्तिगत उपस्थिति अथवा ऑनलाइन लाइव संकल्प हेतु संपूर्ण दिशा-निर्देश प्राप्त होते हैं।
+
+## हम क्या व्यवस्था प्रदान करते हैं
+आस्था से रास्ता सेवा द्वारा गुरु चांडाल दोष शांति पूजा हेतु समर्पित व्यवस्थाएं:
+- **संपूर्ण अनुष्ठान व्यवस्था**: श्रद्धा, प्रामाणिकता और सुगमता के साथ पूरी व्यवस्था।
+- **वेदपाठी ब्राह्मण**: उज्जैन के अनुभवी एवं शास्त्रोक्त विधि-विधान में निपुण पुरोहित।
+- **पूजन सामग्री व्यवस्था**: पीत वस्त्र, समिधा, शुद्ध गाय का घी और सात्विक सामग्री।
+- **गोत्र संकल्प**: यजमान के नाम एवं गोत्र से विधिवत संकल्प।
+- **सुगम समन्वय**: तिथि निर्धारण से लेकर प्रसाद वितरण तक निरंतर सहायता।
+
+## मूल्य एवं उपलब्धता
+पूजा की व्यवस्था और पैमाने के आधार पर सेवा शुल्क निर्धारित होता है। वर्तमान दक्षिणा विवरण एवं शुभ मुहूर्त की जानकारी हेतु हमारे सेवा समन्वयक से संपर्क करें।
+
+## बुकिंग प्रक्रिया
+- **चरण 1 — विवरण भरें**: ऑनलाइन फॉर्म द्वारा अपना नाम, फोन नंबर और जन्म विवरण भेजें।
+- **चरण 2 — समय एवं विधि पुष्टि**: हमारी टीम आपसे संपर्क कर शुभ मुहूर्त एवं आवश्यक तैयारी की पुष्टि करेगी।
+- **चरण 3 — बुकिंग पूर्ण करें**: अपना समय स्लॉट आरक्षित करें और मंदिर व पूजन निर्देश प्राप्त करें।
+
+## आस्था से रास्ता सेवा क्यों चुनें
+- **उज्जैन तीर्थ में प्रामाणिक सेवा**: स्थानीय उपस्थिति और प्राचीन देवगुरु बृहस्पति मंदिर परंपराओं का गहन ज्ञान।
+- **पारदर्शी समन्वय**: प्रत्येक स्तर पर स्पष्ट संवाद और प्रामाणिक मार्गदर्शन।
+- **भक्त-अनुकूल सहायता**: आपकी तीर्थ यात्रा और पूजन अनुभव को सुखद एवं मंगलमय बनाने हेतु समर्पित सेवा।
+
+## भू-संदर्भ एवं सेवा विवरण
+- **सेवा**: गुरु चांडाल दोष शांति पूजा
+- **पवित्र स्थल**: प्राचीन देवगुरु बृहस्पति मंदिर, उज्जैन
+- **स्थान**: उज्जैन, मध्य प्रदेश, भारत
+- **सेवा प्रदाता**: आस्था से रास्ता सेवा
+- **क्षेत्रीय संदर्भ**: पावन शिप्रा नदी के तट पर स्थित अवंतिका (उज्जैन) नगरी का प्राचीन देवगुरु बृहस्पति मंदिर गुरु ग्रह से जुड़े वैदिक अनुष्ठानों हेतु विश्व प्रसिद्ध एवं सर्वाधिक फलदायी क्षेत्र है।`,
     },
     templeName: {
       en: 'Ancient Devguru Brihaspati Temple, Ujjain',

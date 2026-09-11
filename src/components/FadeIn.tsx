@@ -16,7 +16,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
   direction = 'up',
   duration = 700,
   className = '',
-  threshold = 0.12,
+  threshold = 0.01,
   once = true,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +34,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
           setIsVisible(false);
         }
       },
-      { threshold, rootMargin: '0px 0px -40px 0px' }
+      { threshold, rootMargin: '50px 0px 50px 0px' }
     );
 
     const currentRef = ref.current;
