@@ -23,12 +23,16 @@ import {
   ChevronRight,
   Calendar,
   HelpCircle,
+  Navigation,
+  Compass,
+  Award,
 } from 'lucide-react';
 import {
   buildPoojaServiceSchema,
   buildBreadcrumbSchema,
   buildFAQSchema,
   buildLocalBusinessSchema,
+  buildHowToSchema,
 } from '../utils/seoSchemas';
 
 interface PoojaDetailPageProps {
@@ -132,10 +136,11 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
     { name: pooja.name, url: `/pooja/${pooja.slug}` },
   ]);
   const faqSchema = buildFAQSchema(
-    poojaFaqs.slice(0, 5).map((f) => ({ question: f.question, answer: f.answer }))
+    poojaFaqs.map((f) => ({ question: f.question, answer: f.answer }))
   );
   const localBusinessSchema = buildLocalBusinessSchema(settings);
-  const jsonLd = [poojaSchema, breadcrumbSchema, faqSchema, localBusinessSchema];
+  const howToSchema = buildHowToSchema(pooja as any);
+  const jsonLd = [poojaSchema, breadcrumbSchema, faqSchema, localBusinessSchema, howToSchema].filter(Boolean);
 
   // ── INLINE MARKDOWN FORMATTER ─────────────────────────────────────────────
   const formatInlineMarkdown = (text: string): React.ReactNode => {
@@ -503,19 +508,73 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                 {language === 'hi' ? `${poojaName} क्या है?` : `What is ${pooja.name}?`}
               </span>
             </h2>
-            <div className="p-6 sm:p-8 bg-[#F6F0E6] dark:bg-[#1C1917] rounded-3xl border border-[#E6DBC8] dark:border-stone-800 text-left shadow-sm space-y-4">
+            <div className="p-6 sm:p-8 bg-[#F6F0E6] dark:bg-[#1C1917] rounded-3xl border border-[#E6DBC8] dark:border-stone-800 text-left shadow-sm space-y-6">
               <p className="text-stone-800 dark:text-stone-200 text-sm sm:text-base leading-relaxed">
                 {pooja.quickAnswer}
               </p>
               
-              {/* Quick Facts List for AEO / Voice Search */}
-              <div className="pt-3 border-t border-[#E6DBC8] dark:border-stone-800 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700 dark:text-stone-300">
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Pooja Type:</strong> {pooja.name}</div>
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Purpose:</strong> {pooja.primaryKeyword || pooja.h1 || 'Vedic Shanti'}</div>
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Traditionally associated with:</strong> {pooja.categoryName || 'Dosh Shanti'}</div>
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Main Focus:</strong> Peace, Health & Well-being</div>
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Availability:</strong> Available on enquiry</div>
-                <div>• <strong className="text-stone-900 dark:text-amber-100">Arranged by:</strong> Aastha Sey Raasta Seva</div>
+              {/* Structured Quick Summary Table for AEO & AI Citation */}
+              <div className="overflow-x-auto rounded-2xl border border-[#E6DBC8] dark:border-stone-800 bg-white dark:bg-[#141211]">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <tbody className="divide-y divide-[#E6DBC8]/60 dark:divide-stone-800">
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10 w-1/3">
+                        {language === 'hi' ? 'पूजा का नाम' : 'Ritual Service'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300 font-medium">
+                        {pooja.name}
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'तीर्थ क्षेत्र / स्थान' : 'Sacred Kshetra'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
+                        {templeName || pooja.templeName || 'Ancient Devguru Brihaspati Temple, Ujjain (Avantika Puri)'}
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'प्रमुख ग्रह / अधिष्ठाता' : 'Ruling Deities'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
+                        Devguru Brihaspati (Jupiter) & Rahu / Ketu Graha
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'अनुष्ठान अवधि' : 'Estimated Duration'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
+                        {duration || '2.5 to 3.5 Hours'}
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'शुभ मुहूर्त एवं दिन' : 'Recommended Timing'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
+                        Thursdays (Brihaspativar), Guru Pushya Yoga, Shukla Paksha & Purnima
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'सहभागिता माध्यम' : 'Participation Mode'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
+                        In-Person at Ujjain Kshetra OR Live Video Sankalp with home Prasad dispatch
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-amber-500/5">
+                      <th className="py-2.5 px-4 font-bold text-stone-900 dark:text-amber-100 bg-amber-500/10">
+                        {language === 'hi' ? 'आधिकारिक व्यवस्थापक' : 'Arranged By'}
+                      </th>
+                      <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300 font-semibold text-amber-800 dark:text-amber-400">
+                        Aastha Sey Raasta Seva (Verified Vedic Scholars)
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -926,24 +985,67 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
         </div>
       </section>
 
-      {/* ── 14. TRAVEL & VISIT GUIDANCE FOR UJJAIN ────────────────────────── */}
+      {/* ── 14. TRAVEL & VISIT GUIDANCE FOR UJJAIN (GEO & LOCAL SIGNALS) ──── */}
       <section className="bg-[#FFFDF8] dark:bg-[#1A1816] py-16 border-b border-stone-200/60 dark:border-stone-800">
         <div className="max-w-4xl mx-auto px-4 space-y-6 text-left">
           <FadeIn direction="up">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 border-b border-amber-100 dark:border-stone-800 pb-2 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-amber-700 dark:text-amber-500 shrink-0" />
-              {language === 'hi' ? 'उज्जैन यात्रा एवं दर्शन मार्गदर्शन' : 'Travel & Visit Guidance for Ujjain'}
-            </h2>
-            <div className="space-y-4 text-stone-700 dark:text-stone-300 text-xs sm:text-sm leading-relaxed pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-100 dark:border-stone-800 pb-3">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-amber-700 dark:text-amber-500 shrink-0" />
+                {language === 'hi' ? 'उज्जैन (अवंतिका पुरी) यात्रा एवं भौगोलिक महत्व' : 'Ujjain Pilgrimage & Sacred Geography (Avantika Puri)'}
+              </h2>
+              <span className="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-300 w-fit">
+                23.1765° N, 75.7885° E
+              </span>
+            </div>
+
+            <div className="space-y-6 pt-3 text-stone-700 dark:text-stone-300 text-xs sm:text-sm leading-relaxed">
               <p>
-                <strong>Visiting Ujjain (Avantika Puri):</strong> For devotees traveling to Ujjain from other states and cities, Ujjain is well-connected by rail (Ujjain Junction) and road from Indore Airport (approx. 55 km).
+                <strong>Sacred Spiritual Center:</strong> Ujjain (ancient <em>Avantika Puri</em> / <em>Ujjayini</em>), situated on the holy banks of River Kshipra in Madhya Pradesh, is regarded in Surya Siddhanta and Vedic astronomy as the Earth’s prime meridian (Greenwich of ancient India) and the celestial navel (Nabhi Sthana). Planetary shanti rituals performed here carry immense astrological amplification.
               </p>
-              <p>
-                <strong>Ritual Reporting:</strong> Our coordination team advises devotees to report 15–20 minutes prior to the scheduled Muhurat. Complete Gotra Sankalp is conducted before starting the main Vidhi.
-              </p>
-              <p>
-                <strong>Dress Code:</strong> Traditional Indian attire (Dhoti-Kurta for men, Saree/Suit for women) is recommended for all Vedic havan and anushthan ceremonies.
-              </p>
+
+              {/* Transit & Pilgrimage Connectivity */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-stone-900 dark:text-amber-200 text-xs sm:text-sm">
+                    <Navigation className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+                    <span>By Air (Indore Airport)</span>
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-stone-600 dark:text-stone-400">
+                    Devi Ahilyabai Holkar Airport (IDR), Indore is approx. 55 km (60-75 min drive via 4-lane expressway). Taxis and EV cabs operate 24x7.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-stone-900 dark:text-amber-200 text-xs sm:text-sm">
+                    <Compass className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+                    <span>By Rail (Ujjain Junction)</span>
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-stone-600 dark:text-stone-400">
+                    Ujjain Jn (UJN) is directly connected to Delhi, Mumbai, Bengaluru, Kolkata, Ahmedabad, and Jaipur. Most ritual temples are within 3-6 km.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-stone-900 border border-amber-200/50 dark:border-stone-800 space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-stone-900 dark:text-amber-200 text-xs sm:text-sm">
+                    <Award className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0" />
+                    <span>Devotee Assistance</span>
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-stone-600 dark:text-stone-400">
+                    Our team provides dedicated reporting assistance, Brahmin samagri preparation, Gotra Sankalp guidance, and Bhasma Aarti timing coordination.
+                  </p>
+                </div>
+              </div>
+
+              {/* Reporting & Dress Code */}
+              <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-900/80 border border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-300 text-xs sm:text-sm space-y-2">
+                <p>
+                  <strong>Ritual Reporting Protocol:</strong> Devotees attending in-person are requested to arrive 15–20 minutes before the allotted Muhurat. For live online devotees, a consecrated video link is shared 15 minutes prior to the Sankalp.
+                </p>
+                <p>
+                  <strong>Traditional Dress Code:</strong> Traditional Indian spiritual attire (Dhoti-Kurta/Pajama for men, Saree/Salwar-Suit for women) is customary for Vedic havan and anushthan ceremonies.
+                </p>
+              </div>
             </div>
           </FadeIn>
         </div>

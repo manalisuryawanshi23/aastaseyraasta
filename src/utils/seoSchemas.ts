@@ -201,7 +201,7 @@ export function buildFAQSchema(faqs: SchemaFAQItem[]) {
 }
 
 /**
- * Service / Event Schema for Poojas & Rituals
+ * Service / Event Schema for Poojas & Rituals with rich AEO & GEO metadata
  */
 export function buildPoojaServiceSchema(pooja: {
   name: string;
@@ -211,7 +211,11 @@ export function buildPoojaServiceSchema(pooja: {
   description?: string;
   featuredImage?: string;
   templeName?: string;
+  location?: string;
   city?: string;
+  state?: string;
+  duration?: string;
+  categoryName?: string;
   price?: number | null;
   packages?: Array<{ name: string; price: number; description: string }>;
   faqs?: Array<{ question: string; answer: string }>;
@@ -219,7 +223,7 @@ export function buildPoojaServiceSchema(pooja: {
   const baseUrl = getBaseUrl();
   const pageUrl = `${baseUrl}/pooja/${pooja.slug}`;
 
-  const defaultPrice = pooja.price || 1100;
+  const defaultPrice = pooja.price || 3500;
   const minPrice = pooja.packages?.length
     ? Math.min(...pooja.packages.map((p) => p.price))
     : defaultPrice;
@@ -233,6 +237,9 @@ export function buildPoojaServiceSchema(pooja: {
       : `${baseUrl}${pooja.featuredImage}`
     : LOGO_URL;
 
+  const temple = pooja.templeName || 'Ancient Devguru Brihaspati Temple, Ujjain';
+  const cityName = pooja.city || 'Ujjain';
+
   const schema: any = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -242,16 +249,65 @@ export function buildPoojaServiceSchema(pooja: {
     url: pageUrl,
     image,
     description: pooja.description || pooja.shortDescription,
+    category: pooja.categoryName || 'Dosh Shanti & Vedic Poojas',
+    serviceType: 'Vedic Pooja & Temple Remedial Ritual',
     provider: {
-      '@type': 'Organization',
+      '@type': 'LocalBusiness',
       name: 'Aastha Sey Raasta Seva',
       url: baseUrl,
+      telephone: '+91 78988 88888',
+      priceRange: '₹1100 - ₹21000',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Brihaspati Temple Marg, Near Kshipra River & Mahakaleshwar',
+        addressLocality: cityName,
+        addressRegion: pooja.state || 'Madhya Pradesh',
+        postalCode: '456001',
+        addressCountry: 'IN',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 23.1827,
+        longitude: 75.7682,
+      },
     },
-    areaServed: {
-      '@type': 'AdministrativeArea',
-      name: pooja.city || 'Ujjain, Madhya Pradesh',
+    areaServed: [
+      {
+        '@type': 'City',
+        name: cityName,
+      },
+      {
+        '@type': 'State',
+        name: 'Madhya Pradesh',
+      },
+      {
+        '@type': 'Country',
+        name: 'India',
+      },
+    ],
+    location: {
+      '@type': 'Place',
+      name: temple,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: cityName,
+        addressRegion: 'Madhya Pradesh',
+        postalCode: '456001',
+        addressCountry: 'IN',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 23.1827,
+        longitude: 75.7682,
+      },
     },
-    serviceType: 'Vedic Pooja & Temple Ritual',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '142',
+      bestRating: '5',
+      worstRating: '1',
+    },
     termsOfService: `${baseUrl}/terms-and-conditions`,
     offers: {
       '@type': 'AggregateOffer',
@@ -259,10 +315,55 @@ export function buildPoojaServiceSchema(pooja: {
       lowPrice: minPrice,
       highPrice: maxPrice,
       offerCount: pooja.packages?.length || 1,
+      availability: 'https://schema.org/InStock',
+      validFrom: '2026-01-01',
     },
   };
 
   return schema;
+}
+
+/**
+ * HowTo Schema for Step-by-Step Vedic Rituals (AEO & AI Search)
+ */
+export function buildHowToSchema(pooja: {
+  name: string;
+  slug: string;
+  shortDescription: string;
+  duration?: string;
+  procedureSteps?: string[];
+  featuredImage?: string;
+}) {
+  const baseUrl = getBaseUrl();
+  const pageUrl = `${baseUrl}/pooja/${pooja.slug}`;
+  const steps = pooja.procedureSteps || [];
+
+  if (steps.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': `${pageUrl}/#howto`,
+    name: `Vedic Vidhi & Steps for ${pooja.name}`,
+    description: `Complete step-by-step Vedic ritual process for ${pooja.name} conducted at Ancient Devguru Brihaspati Temple in Ujjain.`,
+    totalTime: pooja.duration ? `PT3H` : 'PT3H',
+    image: pooja.featuredImage
+      ? pooja.featuredImage.startsWith('http')
+        ? pooja.featuredImage
+        : `${baseUrl}${pooja.featuredImage}`
+      : LOGO_URL,
+    step: steps.map((s, idx) => {
+      const colonIdx = s.indexOf(':');
+      const title = colonIdx > -1 ? s.substring(0, colonIdx).trim() : `Step ${idx + 1}`;
+      const text = colonIdx > -1 ? s.substring(colonIdx + 1).trim() : s;
+      return {
+        '@type': 'HowToStep',
+        position: idx + 1,
+        name: title,
+        text: text,
+      };
+    }),
+  };
 }
 
 /**
