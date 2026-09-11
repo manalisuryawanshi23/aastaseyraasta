@@ -21,7 +21,7 @@ async function revertAndVerify() {
     const urlSlug = p.urlSlug || `/pooja/${p.slug}`;
     const h1 = p.h1 || p.name;
     const price = p.price && !isNaN(Number(p.price)) ? Number(p.price) : 0;
-    const featuredImage = p.featuredImage || p.image || '/assets/images/pooja_rudrabhishek_1786196070818.jpg';
+    const featuredImage = p.featuredImage || (p as any).image || '/assets/images/pooja_rudrabhishek_1786196070818.jpg';
 
     const [res] = await conn.execute<any>(
       `UPDATE poojas SET

@@ -21,6 +21,14 @@ interface BlogDetailPageProps {
 
 export const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ slug }) => {
   const { language, t, localize } = useLanguage();
+
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const post = StoreService.getBlogPostBySlug(slug);
 
   if (!post) {

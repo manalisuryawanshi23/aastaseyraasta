@@ -12,8 +12,7 @@ const getDirname = () => {
   if (typeof __dirname !== 'undefined') {
     return __dirname;
   }
-  const filename = fileURLToPath(import.meta.url);
-  return path.dirname(filename);
+  return process.cwd();
 };
 const _dirname = getDirname();
 
@@ -140,8 +139,9 @@ export function generateSitemapXml(customBaseUrl?: string): string {
 export function writeSitemapFile(): void {
   const xmlContent = generateSitemapXml();
 
+  const rootDir = process.cwd();
   // Save to public directory
-  const publicDir = path.resolve(_dirname, '../public');
+  const publicDir = path.resolve(rootDir, 'public');
   if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true });
   }
@@ -151,7 +151,7 @@ export function writeSitemapFile(): void {
   console.log(`[Sitemap Generator] Successfully written sitemap to: ${publicSitemapPath}`);
 
   // Also save to dist directory if dist folder exists (for production build artifact)
-  const distDir = path.resolve(_dirname, '../dist');
+  const distDir = path.resolve(rootDir, 'dist');
   if (fs.existsSync(distDir)) {
     const distSitemapPath = path.join(distDir, 'sitemap.xml');
     fs.writeFileSync(distSitemapPath, xmlContent, 'utf-8');

@@ -149,10 +149,11 @@ export class StoreService {
   // Settings
   static getSettings(): SiteSettings {
     const settings = getItem<SiteSettings>(KEYS.SETTINGS, initialSiteSettings);
-    if (settings && settings.brandPalette) {
-      applyBrandColorPalette(settings.brandPalette);
+    const merged = { ...initialSiteSettings, ...settings };
+    if (merged && merged.brandPalette) {
+      applyBrandColorPalette(merged.brandPalette);
     }
-    return settings;
+    return merged;
   }
 
   static getSiteSettings(): SiteSettings {
@@ -167,6 +168,9 @@ export class StoreService {
       applyBrandColorPalette(updated.brandPalette);
     }
     syncApiPost('/api/settings', updated);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
     return updated;
   }
 
@@ -201,6 +205,7 @@ export class StoreService {
             return {
               ...master,
               ...item,
+              urlSlug: item.urlSlug || `/pooja/${item.slug || master.slug}`,
               updatedAt: item.updatedAt || master.updatedAt || new Date().toISOString(),
             };
           });
@@ -369,11 +374,24 @@ export class StoreService {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          list = parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const masterMap = new Map(initialTours.map((t) => [t.id, t]));
+          const slugMap = new Map(initialTours.map((t) => [t.slug, t]));
+          list = parsed.map((item) => {
+            const master = masterMap.get(item.id) || slugMap.get(item.slug);
+            if (!master) return item;
+            return {
+              ...master,
+              ...item,
+              updatedAt: item.updatedAt || master.updatedAt || new Date().toISOString(),
+            };
+          });
+        } else {
+          list = initialTours;
         }
       } catch (e) {
         console.error('Error parsing stored tours:', e);
+        list = initialTours;
       }
     } else {
       list = initialTours;
@@ -429,6 +447,9 @@ export class StoreService {
         tours[idx] = updated;
         setItem(KEYS.TOURS, tours);
         syncApiPost('/api/tours', updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        }
         return updated;
       }
     }
@@ -468,6 +489,9 @@ export class StoreService {
     tours.unshift(newTour);
     setItem(KEYS.TOURS, tours);
     syncApiPost('/api/tours', newTour);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
     return newTour;
   }
 
@@ -475,6 +499,9 @@ export class StoreService {
     const tours = this.getTours(false).filter((t) => t.id !== id);
     setItem(KEYS.TOURS, tours);
     syncApiDelete(`/api/tours/${id}`);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
   }
 
   // Destinations
@@ -484,11 +511,24 @@ export class StoreService {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          list = parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const masterMap = new Map(initialDestinations.map((d) => [d.id, d]));
+          const slugMap = new Map(initialDestinations.map((d) => [d.slug, d]));
+          list = parsed.map((item) => {
+            const master = masterMap.get(item.id) || slugMap.get(item.slug);
+            if (!master) return item;
+            return {
+              ...master,
+              ...item,
+              updatedAt: item.updatedAt || master.updatedAt || new Date().toISOString(),
+            };
+          });
+        } else {
+          list = initialDestinations;
         }
       } catch (e) {
         console.error('Error parsing stored destinations:', e);
+        list = initialDestinations;
       }
     } else {
       list = initialDestinations;
@@ -502,7 +542,7 @@ export class StoreService {
 
   static getDestinationBySlug(slug: string): Destination | undefined {
     const dests = this.getDestinations(false);
-    return dests.find((d) => d.slug === slug);
+    return dests.find((d) => d.slug === slug || d.id === slug);
   }
 
   static saveDestination(dest: Partial<Destination> & { id?: string }): Destination {
@@ -535,6 +575,9 @@ export class StoreService {
         dests[idx] = updated;
         setItem(KEYS.DESTINATIONS, dests);
         syncApiPost('/api/destinations', updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        }
         return updated;
       }
     }
@@ -570,6 +613,9 @@ export class StoreService {
     dests.unshift(newDest);
     setItem(KEYS.DESTINATIONS, dests);
     syncApiPost('/api/destinations', newDest);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
     return newDest;
   }
 
@@ -577,6 +623,9 @@ export class StoreService {
     const dests = this.getDestinations(false).filter((d) => d.id !== id);
     setItem(KEYS.DESTINATIONS, dests);
     syncApiDelete(`/api/destinations/${id}`);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
   }
 
   // Blogs
@@ -620,7 +669,7 @@ export class StoreService {
 
   static getBlogPostBySlug(slug: string): BlogPost | undefined {
     const blogs = this.getBlogPosts(false);
-    return blogs.find((b) => b.slug === slug);
+    return blogs.find((b) => b.slug === slug || b.id === slug);
   }
 
   static saveBlogPost(blog: Partial<BlogPost> & { id?: string }): BlogPost {
@@ -651,6 +700,9 @@ export class StoreService {
         blogs[idx] = updated;
         setItem(KEYS.BLOGS, blogs);
         syncApiPost('/api/blogs', updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        }
         return updated;
       }
     }
@@ -688,6 +740,9 @@ export class StoreService {
     blogs.unshift(newBlog);
     setItem(KEYS.BLOGS, blogs);
     syncApiPost('/api/blogs', newBlog);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
     return newBlog;
   }
 
@@ -695,6 +750,9 @@ export class StoreService {
     const blogs = this.getBlogPosts(false).filter((b) => b.id !== id);
     setItem(KEYS.BLOGS, blogs);
     syncApiDelete(`/api/blogs/${id}`);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
   }
 
   // FAQs
@@ -737,6 +795,9 @@ export class StoreService {
         faqs[idx] = updated;
         setItem(KEYS.FAQS, faqs);
         syncApiPost('/api/faqs', updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+        }
         return updated;
       }
     }
@@ -748,13 +809,15 @@ export class StoreService {
       category: faq.category || 'General',
       sortOrder: faqs.length + 1,
       isPublished: faq.isPublished ?? true,
-      createdAt: now,
       ...faq,
     } as FAQ;
 
-    faqs.push(newFaq);
+    faqs.unshift(newFaq);
     setItem(KEYS.FAQS, faqs);
     syncApiPost('/api/faqs', newFaq);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
     return newFaq;
   }
 
@@ -762,6 +825,9 @@ export class StoreService {
     const faqs = this.getFAQs().filter((f) => f.id !== id);
     setItem(KEYS.FAQS, faqs);
     syncApiDelete(`/api/faqs/${id}`);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('aastha:data-synced'));
+    }
   }
 
   // Testimonials

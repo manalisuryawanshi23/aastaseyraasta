@@ -7,13 +7,10 @@ import fs from 'fs';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 
-const metaUrl = typeof import.meta !== 'undefined' ? import.meta.url : undefined;
-const resolvedFilename = typeof __filename !== 'undefined' 
-  ? __filename 
-  : (metaUrl ? fileURLToPath(metaUrl) : '');
+const resolvedFilename = typeof __filename !== 'undefined' ? __filename : '';
 const resolvedDirname = typeof __dirname !== 'undefined' 
   ? __dirname 
-  : path.dirname(resolvedFilename);
+  : path.dirname(resolvedFilename || process.cwd());
 
 // Comprehensive multi-path .env loader for Hostinger / Passenger / local environments
 const envPaths = [

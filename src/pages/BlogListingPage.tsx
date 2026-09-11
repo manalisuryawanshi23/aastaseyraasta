@@ -11,6 +11,14 @@ import { useLanguage } from '../context/LanguageContext';
 
 export const BlogListingPage: React.FC = () => {
   const { language, t, localize } = useLanguage();
+
+  const [syncTick, setSyncTick] = React.useState(0);
+  React.useEffect(() => {
+    const handler = () => setSyncTick((n) => n + 1);
+    window.addEventListener('aastha:data-synced', handler);
+    return () => window.removeEventListener('aastha:data-synced', handler);
+  }, []);
+
   const blogs = StoreService.getBlogPosts();
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
