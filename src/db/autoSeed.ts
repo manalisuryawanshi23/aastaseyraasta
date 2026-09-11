@@ -683,7 +683,16 @@ export async function autoInitializeDatabase() {
           );
           console.log('[AUTO-DB] Seeded missing Guru Chandal Dosh pooja with complete SEO/AEO/GEO data.');
         } else {
-          console.log('[AUTO-DB] Guru Chandal Dosh pooja exists in database. Preserving all admin edits.');
+          await execute(
+            'UPDATE poojas SET is_published = 1, slug = ?, url_slug = ? WHERE id = ? OR slug = ?',
+            [
+              'guru-chandal-dosh-shanti-pooja-ujjain',
+              '/guru-chandal-dosh-shanti-pooja-ujjain',
+              'pooja-guru-chandal',
+              'guru-chandal-dosh-shanti-pooja-ujjain',
+            ]
+          );
+          console.log('[AUTO-DB] Guru Chandal Dosh pooja exists in database. Ensured is_published = 1 and correct slug.');
         }
       }
     } catch (e) {

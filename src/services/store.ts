@@ -209,6 +209,15 @@ export class StoreService {
               updatedAt: item.updatedAt || master.updatedAt || new Date().toISOString(),
             };
           });
+
+          // Self-healing: ensure any newly added or missing master poojas from initialPoojas are included
+          const existingIds = new Set(list.map((p) => p.id));
+          const existingSlugs = new Set(list.map((p) => p.slug));
+          for (const master of initialPoojas) {
+            if (!existingIds.has(master.id) && !existingSlugs.has(master.slug)) {
+              list.push(master);
+            }
+          }
         } else {
           list = initialPoojas;
         }
@@ -228,7 +237,7 @@ export class StoreService {
     });
 
     if (publishedOnly) {
-      return list.filter((p) => p.isPublished);
+      return list.filter((p) => p.isPublished !== false);
     }
     return list;
   }
@@ -257,7 +266,25 @@ export class StoreService {
 
     const targetSlug = aliasMap[cleanSlug] || cleanSlug;
 
-    return poojas.find(
+    const found = poojas.find(
+      (p) =>
+        p.slug === targetSlug ||
+        p.slug === cleanSlug ||
+        p.slug === slug ||
+        p.id === slug ||
+        p.id === targetSlug ||
+        p.slug.toLowerCase() === targetSlug ||
+        p.slug.toLowerCase() === cleanSlug ||
+        p.urlSlug === `/pooja/${targetSlug}` ||
+        p.urlSlug === `/pooja/${cleanSlug}` ||
+        p.urlSlug === `/${targetSlug}` ||
+        p.urlSlug === `/${cleanSlug}`
+    );
+
+    if (found) return found;
+
+    // Direct fallback from master initialPoojas
+    return initialPoojas.find(
       (p) =>
         p.slug === targetSlug ||
         p.slug === cleanSlug ||
