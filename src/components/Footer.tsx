@@ -153,8 +153,8 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & Direct Pandit Contact Bio */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-800 via-amber-700 to-amber-900 text-amber-200 flex items-center justify-center shadow-lg shadow-amber-950/50 border border-amber-500/30">
-                <Flame className="w-6 h-6 fill-amber-300 text-amber-300" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-950 via-[#2A0E11] to-stone-950 flex items-center justify-center shadow-lg shadow-amber-950/50 border border-amber-500/40 overflow-hidden p-1">
+                <img src="/logo.png" alt="Aastha Sey Raasta Logo" className="w-full h-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
               </div>
               <div>
                 <div className="font-serif font-bold text-xl text-amber-100 tracking-tight">

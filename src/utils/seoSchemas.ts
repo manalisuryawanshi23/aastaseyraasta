@@ -10,7 +10,7 @@ export interface SchemaFAQItem {
 
 const DEFAULT_BASE_URL = 'https://aasthasaysrasta.com';
 const ORGANIZATION_NAME = 'Aastha Sey Raasta Seva';
-const LOGO_URL = 'https://aasthasaysrasta.com/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+const LOGO_URL = 'https://aasthasaysrasta.com/assets/images/logo.png';
 
 export function getBaseUrl(): string {
   if (typeof window !== 'undefined' && window.location.origin) {

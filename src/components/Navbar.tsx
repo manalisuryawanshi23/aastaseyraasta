@@ -266,8 +266,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch }) =
           
           {/* Brand Logo Lockup */}
           <a href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0 overflow-hidden max-w-[55%] sm:max-w-none" aria-label="Aastha Sey Raasta Home">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-800 via-amber-700 to-amber-900 text-amber-200 flex items-center justify-center shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform shrink-0 border border-amber-500/30">
-              <Flame className="w-5 h-5 sm:w-6 sm:h-6 fill-amber-300 text-amber-300" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-950 via-[#2A0E11] to-stone-950 flex items-center justify-center shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform shrink-0 border border-amber-500/40 overflow-hidden p-1">
+              <img src="/logo.png" alt="Aastha Sey Raasta Logo" className="w-full h-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
             </div>
             <div className="min-w-0 overflow-hidden">
               <div className="font-serif font-bold text-sm sm:text-lg lg:text-xl text-stone-900 dark:text-amber-100 tracking-tight leading-tight group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors truncate">
