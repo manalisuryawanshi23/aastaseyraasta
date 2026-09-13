@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StaffUser, AdminRole, AdminPermission } from '../../types';
 import { StoreService } from '../../services/store';
-import { apiPost, apiDelete } from '../../services/apiService';
+import { apiPost, apiPut, apiDelete, apiGet } from '../../services/apiService';
 import {
   ShieldCheck,
   UserPlus,
@@ -38,6 +38,18 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   const [staffList, setStaffList] = useState<StaffUser[]>(() => StoreService.getStaffUsers());
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<'All' | AdminRole>('All');
+
+  // Load fresh staff users from database on mount
+  React.useEffect(() => {
+    let cancelled = false;
+    apiGet<StaffUser[]>('/api/admin/users').then((res) => {
+      if (!cancelled && res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setStaffList(res.data);
+        res.data.forEach((u) => StoreService.saveStaffUser(u, false));
+      }
+    }).catch((err) => console.log('[ADMIN STAFF] Load error:', err));
+    return () => { cancelled = true; };
+  }, []);
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -197,9 +209,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         permissions,
       };
 
-      const result = await apiPost('/api/admin/users', payload);
+      const result = editingStaff?.id
+        ? await apiPut(`/api/admin/users/${editingStaff.id}`, payload)
+        : await apiPost('/api/admin/users', payload);
+
       if (result.success) {
-        StoreService.saveStaffUser(payload);
+        StoreService.saveStaffUser(payload, false);
         setIsModalOpen(false);
         refreshList();
         showToast(editingStaff ? `Staff permissions for "${cleanName}" updated and saved to database!` : `New staff member "${cleanName}" added and saved to database!`);
@@ -228,7 +243,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     const result = await apiDelete(`/api/admin/users/${staffToDelete.id}`);
     setIsDeleting(false);
     if (result.success) {
-      StoreService.deleteStaffUser(staffToDelete.id);
+      StoreService.deleteStaffUser(staffToDelete.id, false);
       setStaffToDelete(null);
       refreshList();
       showToast(`Staff member "${nameDeleted}" revoked and deleted from database.`);
@@ -241,9 +256,9 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   const toggleStatus = async (staff: StaffUser) => {
     const newStatus = staff.status === 'Active' ? 'Inactive' : 'Active';
     const updated = { ...staff, status: newStatus };
-    const result = await apiPost('/api/admin/users', updated);
+    const result = await apiPut(`/api/admin/users/${staff.id}`, updated);
     if (result.success) {
-      StoreService.saveStaffUser({ id: staff.id, status: newStatus });
+      StoreService.saveStaffUser({ id: staff.id, status: newStatus }, false);
       refreshList();
       showToast(`Staff member "${staff.name}" status changed to ${newStatus}.`);
     } else {
@@ -319,7 +334,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
             Full administrative control over all modules: Devotee CRM, Astrology, Blogs, Pooja & Yatra Services, Gallery, Testimonials, Staff & RBAC Management, Brand Colors, and System Settings.
           </p>
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
-            Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">admin123</span> or <span className="font-bold text-amber-600">mahakal</span>
+            Passcode: <span className="font-bold text-stone-500 dark:text-stone-400">Set when creating user</span>
           </div>
         </div>
 
@@ -338,7 +353,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
             Focused operational role. Permitted access strictly to Overview & KPIs, Devotee CRM leads, Astrology consultations, Data Export, WordPress Blog CMS, Gallery, and Testimonials.
           </p>
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
-            Passcode: <span className="font-bold text-stone-900 dark:text-stone-200">manager123</span>
+            Passcode: <span className="font-bold text-stone-500 dark:text-stone-400">Set when creating user</span>
           </div>
         </div>
       </div>

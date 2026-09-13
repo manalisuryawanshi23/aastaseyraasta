@@ -1,4 +1,4 @@
-﻿/**
+/**
  * apiService.ts — Centralized async API helper for Admin Panel operations.
  *
  * ALL admin mutations (save, delete, toggle publish) MUST go through these
@@ -17,6 +17,28 @@ export interface ApiResult<T = any> {
 
 const DEFAULT_TIMEOUT_MS = 12000; // 12 seconds
 
+function getAuthHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('aastha_admin_token');
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+      headers['x-admin-token'] = token;
+    }
+    const sessionStr = localStorage.getItem('aastha_admin_session');
+    if (sessionStr) {
+      try {
+        const session = JSON.parse(sessionStr);
+        if (session?.passcode) headers['x-admin-passcode'] = session.passcode;
+        if (session?.id) headers['x-admin-user-id'] = session.id;
+      } catch {}
+    }
+  }
+  return headers;
+}
+
 async function fetchWithTimeout(
   url: string,
   options: RequestInit,
@@ -34,12 +56,13 @@ async function fetchWithTimeout(
 
 export async function apiPost<T = any>(
   endpoint: string,
-  data: any
+  data: any,
+  customHeaders?: Record<string, string>
 ): Promise<ApiResult<T>> {
   try {
     const res = await fetchWithTimeout(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...getAuthHeaders(), ...(customHeaders || {}) },
       body: JSON.stringify(data),
     });
     const json = await res.json().catch(() => ({}));
@@ -60,12 +83,13 @@ export async function apiPost<T = any>(
 
 export async function apiPut<T = any>(
   endpoint: string,
-  data: any
+  data: any,
+  customHeaders?: Record<string, string>
 ): Promise<ApiResult<T>> {
   try {
     const res = await fetchWithTimeout(endpoint, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...getAuthHeaders(), ...(customHeaders || {}) },
       body: JSON.stringify(data),
     });
     const json = await res.json().catch(() => ({}));
@@ -86,7 +110,10 @@ export async function apiPut<T = any>(
 
 export async function apiDelete(endpoint: string): Promise<ApiResult> {
   try {
-    const res = await fetchWithTimeout(endpoint, { method: 'DELETE' });
+    const res = await fetchWithTimeout(endpoint, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
     const json = await res.json().catch(() => ({}));
     if (!res.ok) {
       return { success: false, error: json?.error || json?.message || `Server returned ${res.status}` };
@@ -105,7 +132,10 @@ export async function apiDelete(endpoint: string): Promise<ApiResult> {
 
 export async function apiGet<T = any>(endpoint: string): Promise<ApiResult<T>> {
   try {
-    const res = await fetchWithTimeout(endpoint, { method: 'GET' });
+    const res = await fetchWithTimeout(endpoint, {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
     const json = await res.json().catch(() => ({}));
     if (!res.ok) {
       return { success: false, error: json?.error || json?.message || `Server returned ${res.status}` };

@@ -11,6 +11,30 @@ import {
   initialTestimonials,
 } from '../data/initialData';
 
+export const DEFAULT_ADMIN_PERMISSIONS = {
+  canViewOverview: true,
+  canManageLeads: true,
+  canManageBlogs: true,
+  canManageServices: true,
+  canManageSettings: true,
+  canManageSocials: true,
+  canManageStaff: true,
+  canManageSpecialOffers: true,
+  canManageAstrologyConsultations: true,
+};
+
+export const DEFAULT_MANAGER_PERMISSIONS = {
+  canViewOverview: true,
+  canManageLeads: true,
+  canManageBlogs: true,
+  canManageServices: false,
+  canManageSettings: false,
+  canManageSocials: false,
+  canManageStaff: false,
+  canManageSpecialOffers: false,
+  canManageAstrologyConsultations: true,
+};
+
 const TABLE_SCHEMAS = [
   `CREATE TABLE IF NOT EXISTS site_settings (
     id VARCHAR(50) PRIMARY KEY DEFAULT 'default',
@@ -852,52 +876,93 @@ export async function autoInitializeDatabase() {
       }
     }
 
-    // 7. Safe Auto-Seeding: Default Admin Users
-    const adminsCount = await query('SELECT COUNT(*) as count FROM admin_users');
-    if (adminsCount[0].count === 0) {
-      console.log('[AUTO-DB] Seeding default admin users...');
-      const adminHash = await bcrypt.hash('admin123', 10);
-      const managerHash = await bcrypt.hash('manager123', 10);
+    // 7. Canonical Admin Migration & Seeding
+    // One-time migration: Remove all dummy/legacy users and ensure only the canonical admin exists.
+    try {
+      // Ensure system_migrations table exists (may run before step 10 below)
+      await execute(`
+        CREATE TABLE IF NOT EXISTS system_migrations (
+          id VARCHAR(100) PRIMARY KEY,
+          executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+      `);
 
-      // Seed Pt. Sharma (Admin)
-      await execute(
-        `INSERT INTO admin_users (
-          id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          'staff-1',
-          'mahakal',
-          adminHash,
-          'admin123',
-          'Pt. Sharma',
+      // One-time migration: purge all dummy/legacy users (runs only once)
+      const migrationId = 'remove_dummy_admin_users_v1';
+      const migrationDone = await query<any>('SELECT id FROM system_migrations WHERE id = ?', [migrationId]);
+      if (migrationDone.length === 0) {
+        console.log('[AUTO-DB MIGRATION] Running one-time cleanup: removing dummy/legacy admin users...');
+        const DUMMY_EMAILS = [
+          'admin@aasthasaysrasta.com',
           'admin@aasthaseyraasta.com',
-          '+91 98765 43210',
-          'Admin',
-          1,
-          JSON.stringify(['manage_leads', 'manage_site', 'manage_content', 'manage_gallery', 'manage_settings']),
-        ]
-      );
-      result.seeded.adminUsers++;
+          'admin@aasthaseva.com',
+          'admin@aasthaserasta.com',
+          'manager@aasthasaysrasta.com',
+          'manager@aasthaseyraasta.com',
+          'manager@aasthaseva.com',
+          'manager@aasthaserasta.com',
+        ];
+        const DUMMY_NAMES = ['Aastha Super Admin', 'Operations Manager', 'Ramesh Shastri'];
 
-      // Seed Ramesh S. (Manager)
-      await execute(
-        `INSERT INTO admin_users (
-          id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          'staff-2',
-          'ramesh',
-          managerHash,
-          'manager123',
-          'Ramesh S.',
-          'ramesh@aasthaseyraasta.com',
-          '+91 98765 43211',
-          'Manager',
-          1,
-          JSON.stringify(['manage_leads', 'manage_content', 'manage_gallery']),
-        ]
-      );
-      result.seeded.adminUsers++;
+        const allAdminRows = await query<any>('SELECT id, email, name FROM admin_users');
+        for (const u of allAdminRows) {
+          const isDummy =
+            DUMMY_EMAILS.includes((u.email || '').toLowerCase()) ||
+            DUMMY_NAMES.some((n) => (u.name || '').includes(n));
+          if (isDummy) {
+            await execute('DELETE FROM admin_users WHERE id = ?', [u.id]);
+            console.log(`[AUTO-DB MIGRATION] Removed dummy user: ${u.email} (${u.name})`);
+          }
+        }
+
+        await execute('INSERT INTO system_migrations (id) VALUES (?)', [migrationId]);
+        console.log('[AUTO-DB MIGRATION] Dummy user cleanup complete.');
+      }
+
+      // Ensure canonical admin exists
+      const adminRows = await query<any>("SELECT id, email FROM admin_users WHERE role = 'Admin' AND is_active = 1");
+
+      if (adminRows.length === 0) {
+        console.log('[AUTO-DB] No active Admin found. Seeding canonical Admin: manalisuryawanshi23@gmail.com...');
+        const adminHash = await bcrypt.hash('pass@123', 10);
+        await execute(
+          `INSERT INTO admin_users (
+            id, username, password_hash, name, email, phone, role, is_active, permissions_json
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            email = VALUES(email),
+            role = 'Admin',
+            is_active = 1,
+            password_hash = VALUES(password_hash),
+            permissions_json = VALUES(permissions_json)`,
+          [
+            'staff-admin-1',
+            'manalisuryawanshi23',
+            adminHash,
+            'Manali Suryawanshi',
+            'manalisuryawanshi23@gmail.com',
+            '',
+            'Admin',
+            1,
+            JSON.stringify(DEFAULT_ADMIN_PERMISSIONS),
+          ]
+        );
+        result.seeded.adminUsers++;
+        console.log('[AUTO-DB] Canonical admin seeded successfully.');
+      } else {
+        console.log(`[AUTO-DB] ${adminRows.length} active admin(s) found. Existing accounts preserved.`);
+      }
+
+      // Normalize any legacy array permissions_json into standard object format
+      const allUsers = await query<any>('SELECT id, role, permissions_json FROM admin_users');
+      for (const u of allUsers) {
+        if (!u.permissions_json || u.permissions_json.trim().startsWith('[')) {
+          const normalized = u.role === 'Admin' ? DEFAULT_ADMIN_PERMISSIONS : DEFAULT_MANAGER_PERMISSIONS;
+          await execute('UPDATE admin_users SET permissions_json = ? WHERE id = ?', [JSON.stringify(normalized), u.id]);
+        }
+      }
+    } catch (adminErr) {
+      console.warn('[AUTO-DB] Admin user synchronization warning:', adminErr);
     }
 
     // 8. Safe Auto-Seeding: Gallery Items

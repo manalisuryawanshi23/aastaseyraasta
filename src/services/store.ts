@@ -30,14 +30,16 @@ import {
 } from '../data/initialData';
 import { applyBrandColorPalette } from '../utils/brandTheme';
 
+// Single canonical admin — password is managed server-side via bcrypt.
+// This is only used as an emergency UI fallback when the database is unreachable.
 export const initialStaffUsers: StaffUser[] = [
   {
     id: 'staff-admin-1',
-    name: 'Aastha Super Admin',
-    email: 'admin@aasthaseyraasta.com',
+    name: 'Manali Suryawanshi',
+    email: 'manalisuryawanshi23@gmail.com',
     role: 'Admin',
-    passcode: 'admin123',
-    phone: '+91 98260 00001',
+    passcode: '', // No plaintext passcode stored — auth is server-side only
+    phone: '',
     status: 'Active',
     lastLogin: 'Never',
     permissions: {
@@ -49,27 +51,6 @@ export const initialStaffUsers: StaffUser[] = [
       canManageSocials: true,
       canManageStaff: true,
       canManageSpecialOffers: true,
-      canManageAstrologyConsultations: true,
-    },
-  },
-  {
-    id: 'staff-manager-1',
-    name: 'Ramesh Shastri (Operations Manager)',
-    email: 'manager@aasthaseyraasta.com',
-    role: 'Manager',
-    passcode: 'manager123',
-    phone: '+91 98260 00002',
-    status: 'Active',
-    lastLogin: 'Never',
-    permissions: {
-      canViewOverview: true,
-      canManageLeads: true,
-      canManageBlogs: true,
-      canManageServices: false,
-      canManageSettings: false,
-      canManageSocials: false,
-      canManageStaff: false,
-      canManageSpecialOffers: false,
       canManageAstrologyConsultations: true,
     },
   },
@@ -93,6 +74,7 @@ const KEYS = {
   REDIRECTS: 'aastha_redirects',
   STAFF: 'aastha_staff',
   SESSION: 'aastha_admin_session',
+  TOKEN: 'aastha_admin_token',
 };
 
 // Helper for localStorage
@@ -1137,6 +1119,10 @@ export class StoreService {
     return getItem<Lead[]>(KEYS.LEADS, []);
   }
 
+  static setLeads(leads: Lead[]): void {
+    setItem(KEYS.LEADS, leads);
+  }
+
   static createLead(leadData: Partial<Lead>): Lead {
     const leads = this.getLeads();
     const now = new Date().toISOString();
@@ -1241,7 +1227,7 @@ export class StoreService {
     setItem(KEYS.REDIRECTS, list);
   }
 
-  // Session Persistence
+  // Session & Token Persistence
   static getStoredAdminSession(): StaffUser | null {
     return getItem<StaffUser | null>(KEYS.SESSION, null);
   }
@@ -1250,11 +1236,30 @@ export class StoreService {
     setItem(KEYS.SESSION, user);
   }
 
+  static getStoredAdminToken(): string | null {
+    if (typeof window === 'undefined') return null;
+    try {
+      return localStorage.getItem(KEYS.TOKEN) || null;
+    } catch {
+      return null;
+    }
+  }
+
+  static setStoredAdminToken(token: string): void {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(KEYS.TOKEN, token);
+    } catch (e) {
+      console.error('Error saving admin token:', e);
+    }
+  }
+
   static clearStoredAdminSession(): void {
     if (typeof window !== 'undefined') {
       try {
         localStorage.removeItem(KEYS.SESSION);
         sessionStorage.removeItem(KEYS.SESSION);
+        localStorage.removeItem(KEYS.TOKEN);
       } catch (e) {
         console.error('Error clearing admin session:', e);
       }
@@ -1265,22 +1270,13 @@ export class StoreService {
   static getStaffUsers(): StaffUser[] {
     const saved = getItem<StaffUser[]>(KEYS.STAFF, initialStaffUsers);
 
-    // Auto-heal and sanitize: guarantee that admin user IDs and emails always hold role: 'Admin' with full permissions
+    // Sanitize: ensure any stored admin user retains full Admin permissions
     const sanitized = saved.map((u) => {
-      const isExplicitAdmin =
-        u.id === 'staff-admin-1' ||
-        u.id === 'staff-1' ||
-        (u.email && (u.email.toLowerCase() === 'admin' || u.email.toLowerCase().startsWith('admin@') || u.email.toLowerCase().includes('admin'))) ||
-        (u as any).username === 'admin';
-
-      if (isExplicitAdmin) {
+      if (u.role === 'Admin') {
         return {
           ...u,
-          id: u.id || 'staff-admin-1',
-          name: u.name && u.name !== 'Staff Member' ? u.name : 'Aastha Super Admin',
-          email: u.email || 'admin@aasthaseyraasta.com',
           role: 'Admin' as AdminRole,
-          status: 'Active' as const,
+          status: (u.status === 'Inactive' ? 'Inactive' : 'Active') as 'Active' | 'Inactive',
           permissions: {
             canViewOverview: true,
             canManageLeads: true,
@@ -1291,28 +1287,24 @@ export class StoreService {
             canManageStaff: true,
             canManageSpecialOffers: true,
             canManageAstrologyConsultations: true,
+            ...u.permissions,
           },
         };
       }
       return u;
     });
 
-    const hasAdmin = sanitized.some((u) => u.role === 'Admin' && u.status === 'Active');
-    if (!hasAdmin) {
-      sanitized.unshift(initialStaffUsers[0]);
-    }
-
     return sanitized;
   }
 
-  static saveStaffUser(user: Partial<StaffUser> & { id?: string }): StaffUser {
+  static saveStaffUser(user: Partial<StaffUser> & { id?: string }, syncRemote = true): StaffUser {
     const list = this.getStaffUsers();
     let resultUser: StaffUser;
     const cleanId = user.id && user.id.trim() ? user.id.trim() : `staff-${Date.now()}`;
     const cleanName = (user.name || '').trim() || 'Staff Member';
-    const cleanEmail = (user.email || '').trim().toLowerCase() || 'staff@aasthaseyraasta.com';
+    const cleanEmail = (user.email || '').trim().toLowerCase() || 'staff@aasthasaysrasta.com';
     const cleanRole: AdminRole = user.role === 'Admin' ? 'Admin' : 'Manager';
-    const cleanPasscode = (user.passcode || '').trim() || 'pass123';
+    const cleanPasscode = (user.passcode || '').trim();
     const cleanPhone = (user.phone || '').trim();
     const cleanStatus: 'Active' | 'Inactive' = user.status === 'Inactive' ? 'Inactive' : 'Active';
 
@@ -1375,13 +1367,19 @@ export class StoreService {
       this.setStoredAdminSession(resultUser);
     }
 
-    // Sync with MySQL Backend API
-    if (typeof window !== 'undefined') {
+    // Sync with MySQL Backend API if requested
+    if (syncRemote && typeof window !== 'undefined') {
       const url = user.id ? `/api/admin/users/${user.id}` : '/api/admin/users';
       const method = user.id ? 'PUT' : 'POST';
+      const token = this.getStoredAdminToken();
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+        headers['x-admin-token'] = token;
+      }
       fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(resultUser),
       })
         .then(() => {
@@ -1393,12 +1391,18 @@ export class StoreService {
     return resultUser;
   }
 
-  static deleteStaffUser(id: string): void {
+  static deleteStaffUser(id: string, syncRemote = true): void {
     const list = this.getStaffUsers().filter((u) => u.id !== id);
     setItem(KEYS.STAFF, list);
 
-    if (typeof window !== 'undefined') {
-      fetch(`/api/admin/users/${id}`, { method: 'DELETE' })
+    if (syncRemote && typeof window !== 'undefined') {
+      const token = this.getStoredAdminToken();
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+        headers['x-admin-token'] = token;
+      }
+      fetch(`/api/admin/users/${id}`, { method: 'DELETE', headers })
         .then(() => {
           window.dispatchEvent(new CustomEvent('aastha:data-synced'));
         })
@@ -1407,103 +1411,20 @@ export class StoreService {
   }
 
   static authenticateStaff(email: string, passcode: string): StaffUser | null {
+    // Authentication is handled server-side via /api/admin/login.
+    // This client-side method is kept for legacy compatibility but no longer
+    // accepts any hardcoded backdoor credentials.
     const users = this.getStaffUsers();
     const cleanEmail = email.trim().toLowerCase();
     const cleanPass = passcode.trim();
 
     if (!cleanEmail || !cleanPass) return null;
 
-    // 1. Direct Master Admin Authentication Match
-    const isAdminUserIdentifier =
-      cleanEmail === 'admin' ||
-      cleanEmail === 'admin@aasthasaysrasta.com' ||
-      cleanEmail === 'admin@aasthaseyraasta.com' ||
-      cleanEmail === 'admin@aasthaseva.com' ||
-      cleanEmail === 'admin@aasthaserasta.com' ||
-      cleanEmail === 'administrator' ||
-      cleanEmail === 'admin@gmail.com';
-
-    const isAdminPasscode =
-      cleanPass === 'admin123' ||
-      cleanPass === 'mahakal' ||
-      cleanPass === 'pass123' ||
-      cleanPass === 'admin' ||
-      cleanPass === 'AasthaAdmin#2026';
-
-    if (isAdminUserIdentifier && isAdminPasscode) {
-      const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
-      const adminUser: StaffUser = {
-        id: 'staff-admin-1',
-        name: 'Aastha Super Admin',
-        email: 'admin@aasthasaysrasta.com',
-        role: 'Admin',
-        passcode: 'admin123',
-        phone: '+91 98260 00001',
-        status: 'Active',
-        lastLogin: nowFormatted,
-        permissions: {
-          canViewOverview: true,
-          canManageLeads: true,
-          canManageBlogs: true,
-          canManageServices: true,
-          canManageSettings: true,
-          canManageSocials: true,
-          canManageStaff: true,
-          canManageSpecialOffers: true,
-          canManageAstrologyConsultations: true,
-        },
-      };
-
-      this.saveStaffUser(adminUser);
-      this.setStoredAdminSession(adminUser);
-      return adminUser;
-    }
-
-    // 2. Direct Master Manager Authentication Match
-    const isManagerUserIdentifier =
-      cleanEmail === 'manager' ||
-      cleanEmail === 'manager@aasthasaysrasta.com' ||
-      cleanEmail === 'manager@aasthaseyraasta.com' ||
-      cleanEmail === 'manager@aasthaseva.com' ||
-      cleanEmail === 'manager@aasthaserasta.com' ||
-      cleanEmail === 'ramesh';
-
-    const isManagerPasscode = cleanPass === 'manager123' || cleanPass === 'ramesh123' || cleanPass === 'pass123';
-
-    if (isManagerUserIdentifier && isManagerPasscode) {
-      const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
-      const managerUser: StaffUser = {
-        id: 'staff-manager-1',
-        name: 'Ramesh Shastri (Operations Manager)',
-        email: 'manager@aasthaseyraasta.com',
-        role: 'Manager',
-        passcode: 'manager123',
-        phone: '+91 98260 00002',
-        status: 'Active',
-        lastLogin: nowFormatted,
-        permissions: {
-          canViewOverview: true,
-          canManageLeads: true,
-          canManageBlogs: true,
-          canManageServices: false,
-          canManageSettings: false,
-          canManageSocials: false,
-          canManageStaff: false,
-          canManageSpecialOffers: false,
-          canManageAstrologyConsultations: true,
-        },
-      };
-
-      this.saveStaffUser(managerUser);
-      this.setStoredAdminSession(managerUser);
-      return managerUser;
-    }
-
-    // 3. Match from registered staff list
+    // Match only from the stored staff list using exact credentials
     const found = users.find(
       (u) =>
         (u.email.toLowerCase() === cleanEmail || (u as any).username?.toLowerCase() === cleanEmail) &&
-        (u.passcode === cleanPass || cleanPass === 'admin123' || cleanPass === 'mahakal' || cleanPass === 'pass123') &&
+        u.passcode === cleanPass &&
         u.status === 'Active'
     );
 
@@ -1522,24 +1443,18 @@ export class StoreService {
   }
 
   static authenticateStaffPasscode(passcode: string): StaffUser | null {
+    // Passcode-based login is deprecated. All auth is now server-side.
+    // This method matches only against exact passcodes stored for users.
     const users = this.getStaffUsers();
-    const cleanPass = passcode.trim().toLowerCase();
-    
-    // Check exact passcode
-    const found = users.find((u) => u.passcode.toLowerCase() === cleanPass && u.status === 'Active');
+    const cleanPass = passcode.trim();
+
+    const found = users.find((u) => u.passcode && u.passcode === cleanPass && u.status === 'Active');
     if (found) {
       const nowFormatted = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
       this.saveStaffUser({ id: found.id, lastLogin: nowFormatted });
       return { ...found, lastLogin: nowFormatted };
     }
 
-    // Master fallback passcodes
-    if (cleanPass === 'mahakal' || cleanPass === 'admin123' || cleanPass === 'pass123') {
-      return users.find((u) => u.role === 'Admin') || initialStaffUsers[0];
-    }
-    if (cleanPass === 'manager123') {
-      return users.find((u) => u.role === 'Manager') || initialStaffUsers[1];
-    }
     return null;
   }
 

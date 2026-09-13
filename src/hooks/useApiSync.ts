@@ -101,17 +101,8 @@ export function useApiSync() {
       const testimonialsOk = await fetchAndCache('/api/testimonials?all=true', KEYS.TESTIMONIALS);
       if (testimonialsOk) anyUpdated = true;
 
-      // 9. Sync staff users
-      const staffOk = await fetchAndCache('/api/admin/users', KEYS.STAFF);
-      if (staffOk) anyUpdated = true;
-
-      // 10. Sync devotee leads
-      const leadsOk = await fetchAndCache('/api/leads', KEYS.LEADS);
-      if (leadsOk) anyUpdated = true;
-
-      // 11. Sync astrology consultations
-      const astroOk = await fetchAndCache('/api/astrology-consultations', KEYS.ASTROLOGY_CONSULTATIONS);
-      if (astroOk) anyUpdated = true;
+      // Note: Devotee leads, staff users, and astrology consultations are private admin data
+      // and are only synced inside AdminPage when authenticated.
 
       if (!cancelled && anyUpdated) {
         dispatchSyncEvent();

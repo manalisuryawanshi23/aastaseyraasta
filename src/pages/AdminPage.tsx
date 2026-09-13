@@ -16,7 +16,7 @@ import { AdminTestimonialsManager } from '../components/admin/AdminTestimonialsM
 import { AdminSpecialOffersManager } from '../components/admin/AdminSpecialOffersManager';
 import { AdminAstrologyConsultations } from '../components/admin/AdminAstrologyConsultations';
 import { AdminDbStatusBanner } from '../components/admin/AdminDbStatusBanner';
-import { apiPut, apiDelete } from '../services/apiService';
+import { apiGet, apiPost, apiPut, apiDelete } from '../services/apiService';
 import {
   Lock,
   Users,
@@ -273,7 +273,39 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
   const poojaCategories = useMemo(() => StoreService.getCategories(), []);
 
-  const handleLogin = (e?: React.FormEvent, customEmail?: string, customPass?: string) => {
+  // Load fresh leads from MySQL API when authenticated
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    let cancelled = false;
+
+    apiGet<any>('/api/leads').then((res) => {
+      if (!cancelled && res.success && Array.isArray(res.data) && res.data.length > 0) {
+        const formatted: Lead[] = res.data.map((l: any) => ({
+          id: l.id,
+          name: l.name,
+          phone: l.phone,
+          email: l.email || '',
+          whatsapp: l.whatsapp || l.phone,
+          serviceType: l.service_type || l.serviceType || 'Pooja',
+          serviceName: l.service_name || l.serviceName || '',
+          preferredDate: l.preferred_date || l.preferredDate || '',
+          numberOfPeople: Number(l.guest_count || l.numberOfPeople || 1),
+          message: l.message || '',
+          status: l.status || 'New',
+          notes: l.notes || '',
+          source: l.source || 'Website Form',
+          createdAt: l.created_at || l.createdAt || new Date().toISOString(),
+          updatedAt: l.updated_at || l.updatedAt || new Date().toISOString(),
+        }));
+        setLeads(formatted);
+        StoreService.setLeads(formatted);
+      }
+    }).catch((err) => console.log('[ADMIN API] Leads fetch notice:', err));
+
+    return () => { cancelled = true; };
+  }, [isAuthenticated, syncTick]);
+
+  const handleLogin = async (e?: React.FormEvent, customEmail?: string, customPass?: string) => {
     if (e) e.preventDefault();
     const emailToTry = (customEmail || email).trim();
     const passToTry = (customPass || password).trim();
@@ -287,12 +319,31 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
       return;
     }
 
-    const staffUser = StoreService.authenticateStaff(emailToTry, passToTry);
+    let staffUser: StaffUser | null = null;
+
+    // 1. Authenticate via backend API with session token
+    try {
+      const res = await apiPost('/api/admin/login', { email: emailToTry, passcode: passToTry });
+      if (res.success && res.data?.user) {
+        staffUser = res.data.user;
+        if (res.data.token) {
+          StoreService.setStoredAdminToken(res.data.token);
+        }
+      }
+    } catch (err) {
+      console.warn('Backend login attempt notice:', err);
+    }
+
+    // 2. Client fallback verification if backend unreachable
+    if (!staffUser) {
+      staffUser = StoreService.authenticateStaff(emailToTry, passToTry);
+    }
 
     if (staffUser) {
       setCurrentStaffUser(staffUser);
       setIsAuthenticated(true);
       setLoginError('');
+      StoreService.setStoredAdminSession(staffUser);
       const currentLeads = StoreService.getLeads();
       setLeads(currentLeads.length > 0 ? currentLeads : initialSampleLeads);
 
