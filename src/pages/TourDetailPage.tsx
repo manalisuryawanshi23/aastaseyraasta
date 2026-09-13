@@ -484,11 +484,11 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
             <div className="pt-2">
               <div className="bg-stone-900/40 p-4 rounded-xl border border-white/10 text-xs sm:text-sm text-stone-300 max-w-xl leading-relaxed">
                 <span className="font-bold text-amber-300 block mb-1">
-                  {language === 'hi' ? 'उपलब्धता और मूल्य जांचें' : 'CHECK AVAILABILITY & PRICE'}
+                  {language === 'hi' ? 'अपनी यात्रा को अनुकूलित करें' : 'CUSTOMIZE YOUR JOURNEY'}
                 </span>
                 {language === 'hi'
-                  ? 'वर्तमान मूल्य और उपलब्ध व्यवस्थाओं के लिए आस्था से रास्ता सेवा से संपर्क करें।'
-                  : 'Contact Aastha Sey Raasta Seva for the current price and available arrangements.'}
+                  ? 'अपनी प्राथमिकताओं के अनुसार अनुकूलित यात्रा व्यवस्थाओं के साथ वर्तमान मूल्य और उपलब्धता प्राप्त करें।'
+                  : 'Get current pricing and availability, with tour arrangements customized to your preferences'}
               </div>
             </div>
 
@@ -1035,22 +1035,12 @@ export const TourDetailPage: React.FC<TourDetailPageProps> = ({ slug, onOpenBook
       <section className="bg-[#FFFDF8] dark:bg-[#121110] py-16 border-b border-stone-200/40 dark:border-stone-800/40">
         <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900 dark:text-amber-100">
-            {slug === '4-days-braj-dham-yatra'
-              ? (language === 'hi' ? 'ब्रज यात्रा का मूल्य जानना चाहते हैं?' : 'Want to Know the Braj Yatra Price?')
-              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
-              ? (language === 'hi' ? 'उपलब्धता एवं वर्तमान पैकेज मूल्य जांचें' : 'Check Availability & Current Package Price')
-              : (language === 'hi' ? 'उपलब्धता और मूल्य की जांच करें' : 'Check Availability & Price')}
+            {language === 'hi' ? 'अपनी यात्रा को अनुकूलित करें' : 'CUSTOMIZE YOUR JOURNEY'}
           </h2>
           <p className="text-stone-750 dark:text-stone-300 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
-            {slug === '4-days-braj-dham-yatra'
-              ? (language === 'hi'
-                  ? 'यात्रा का मूल्य समूह के आकार, वाहन के चयन और अन्य व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं उपलब्ध कस्टमाइजेशन के लिए आस्था से रास्ता सेवा से संपर्क करें।'
-                  : 'Tour pricing can vary according to group size, travel arrangements and selected options. Contact Aastha Sey Raasta Seva for the current package price and available customization.')
-              : slug === 'varanasi-prayagraj-ayodhya-tour-package'
-              ? (language === 'hi'
-                  ? 'यात्रा की उपलब्धता एवं पैकेज मूल्य यात्रा की तिथियों, समूह के आकार, होटल की श्रेणी और चयनित व्यवस्थाओं के अनुसार भिन्न हो सकता है। वर्तमान पैकेज दर एवं यात्रा सहायता के लिए हमारी टीम से संपर्क करें।'
-                  : 'Package availability and pricing may vary according to travel dates, group size, accommodation preferences and selected services. Contact our team for the current package price and itinerary assistance.')
-              : 'Contact Aastha Sey Raasta Seva for the current price and available arrangements.'}
+            {language === 'hi'
+              ? 'अपनी प्राथमिकताओं के अनुसार अनुकूलित यात्रा व्यवस्थाओं के साथ वर्तमान मूल्य और उपलब्धता प्राप्त करें।'
+              : 'Get current pricing and availability, with tour arrangements customized to your preferences'}
           </p>
           <div className="pt-2 flex justify-center gap-4 flex-wrap">
             <button
