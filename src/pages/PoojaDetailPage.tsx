@@ -394,7 +394,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs text-amber-300 bg-amber-500/15 border border-amber-400/30 px-3 py-1.5 rounded-full font-medium">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>{language === 'hi' ? 'व्यक्तिगत पूजा मार्गदर्शन उपलब्ध' : 'Personalized Pooja Guidance Available'}</span>
+                  <span>{language === 'hi' ? 'यह पूजा आपकी प्राथमिकताओं और आध्यात्मिक आवश्यकताओं के अनुसार अनुकूलित की जा सकती है' : 'This Pooja can be personalized to your preferences and spiritual requirements'}</span>
                 </span>
               </div>
 
