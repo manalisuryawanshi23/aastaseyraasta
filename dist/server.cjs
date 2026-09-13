@@ -10636,6 +10636,9 @@ async function startServer() {
     }
     res.status(401).json({ success: false, message: "Invalid email or password" });
   });
+  app.get("/api/admin/verify", requireAdminAuth, (req, res) => {
+    return res.json({ success: true, message: "Session valid", user: req.adminUser });
+  });
   app.get("/sitemap.xml", (req, res) => {
     const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
     const host = req.get("host") || "aasthasaysrasta.com";

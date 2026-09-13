@@ -190,6 +190,45 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     setLoginError('');
   };
 
+  // Cross-tab auth synchronization: if admin logs out or changes in another tab, update immediately
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'aastha_admin_session' || e.key === 'aastha_admin_token') {
+        const session = StoreService.getStoredAdminSession();
+        if (!session) {
+          setIsAuthenticated(false);
+          setCurrentStaffUser(null);
+        } else {
+          setIsAuthenticated(true);
+          setCurrentStaffUser(session);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
+  // Real-time server-side token validation on mount
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const token = StoreService.getStoredAdminToken();
+    if (token) {
+      fetch('/api/admin/verify', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'x-admin-token': token,
+        },
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            console.warn('[AUTH GUARD] Admin session expired or invalid on server. Logging out.');
+            handleLogout();
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isAuthenticated]);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Re-read fresh MySQL data when API sync fires
@@ -1142,26 +1181,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           </div>
 
           <div className="flex items-center gap-3 ml-auto">
-            {/* Role Indicator Badge */}
-            {currentStaffUser?.role === 'Manager' ? (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs font-mono font-bold">
-                  <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
-                  <span>👔 Manager (Restricted)</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                  className="px-2.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1"
-                  title="Log in as Administrator for full access"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Switch to Admin</span>
-                </button>
-              </div>
-            ) : (
+            {/* Role Indicator Badge (Hidden for Manager role) */}
+            {currentStaffUser?.role !== 'Manager' && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-mono font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                 <span>👑 Super Administrator</span>

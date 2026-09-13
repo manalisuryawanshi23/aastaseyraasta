@@ -2636,6 +2636,11 @@ async function startServer() {
     res.status(401).json({ success: false, message: 'Invalid email or password' });
   });
 
+  // Verify active admin session token
+  app.get('/api/admin/verify', requireAdminAuth, (req: any, res) => {
+    return res.json({ success: true, message: 'Session valid', user: req.adminUser });
+  });
+
   // Dynamic XML Sitemap for SEO
   app.get('/sitemap.xml', (req, res) => {
     const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
