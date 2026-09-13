@@ -368,8 +368,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
             {t('hero.subtitle', 'From Vedic Poojas to Darshan and Spiritual Yatras, we help you plan every step of your journey.')}
           </p>
 
+          {/* Personalization Highlight Note */}
+          <div className="pt-2">
+            <div className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-200 text-xs sm:text-sm font-medium tracking-wide shadow-xs backdrop-blur-xs max-w-2xl mx-auto">
+              <span className="text-amber-300">✨</span>
+              <span className="leading-snug">
+                {language === 'hi'
+                  ? 'प्रत्येक पूजा आपकी प्राथमिकताओं और आध्यात्मिक आवश्यकताओं के अनुसार अनुकूलित की जा सकती है।'
+                  : 'Every Pooja can be personalized to your preferences and spiritual requirements.'}
+              </span>
+              <span className="text-amber-300">✨</span>
+            </div>
+          </div>
+
           {/* Action CTAs */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
             <button
               onClick={() => onOpenBooking('Pooja')}
               className="w-full sm:w-auto py-3.5 px-8 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white font-medium text-sm hover:from-amber-700 hover:to-amber-900 shadow-xl shadow-amber-900/40 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"

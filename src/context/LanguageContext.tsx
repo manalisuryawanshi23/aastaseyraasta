@@ -69,6 +69,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.badge': 'YOUR TRUSTED PARTNER FOR POOJA, DARSHAN & SPIRITUAL JOURNEYS',
     'hero.title_prefix': 'Begin Your Journey of Faith with',
     'hero.subtitle': 'From Vedic Poojas to Darshan and Spiritual Yatras, we help you plan every step of your journey.',
+    'hero.personalized_note': '✨ Every Pooja can be personalized to your preferences and spiritual requirements. ✨',
     'hero.search_placeholder': 'Search Rudrabhishek, Bhat Pooja, Char Dham Yatra...',
     'hero.search_button': 'Search',
 
@@ -279,6 +280,7 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.badge': 'उज्जैन एवं प्रमुख तीर्थों में अधिकृत आध्यात्मिक सेवा',
     'hero.title_prefix': 'अपनी पावन आध्यात्मिक यात्रा आरंभ करें',
     'hero.subtitle': 'पवित्र उज्जैन में अनुभवी वैदिक ब्राह्मणों द्वारा प्रामाणिक रुद्राभिषेक, भात पूजा, महामृत्युंजय जाप एवं सुगम तीर्थ यात्राएं।',
+    'hero.personalized_note': '✨ प्रत्येक पूजा आपकी प्राथमिकताओं और आध्यात्मिक आवश्यकताओं के अनुसार अनुकूलित की जा सकती है। ✨',
     'hero.search_placeholder': 'रुद्राभिषेक, भात पूजा, चार धाम यात्रा खोजें...',
     'hero.search_button': 'खोजें',
 
