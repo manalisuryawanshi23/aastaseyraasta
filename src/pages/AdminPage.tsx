@@ -323,12 +323,21 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
     // 1. Authenticate via backend API with session token
     try {
-      const res = await apiPost('/api/admin/login', { email: emailToTry, passcode: passToTry });
-      if (res.success && res.data?.user) {
-        staffUser = res.data.user;
-        if (res.data.token) {
-          StoreService.setStoredAdminToken(res.data.token);
+      const rawRes = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailToTry, passcode: passToTry }),
+      });
+      const json = await rawRes.json().catch(() => ({}));
+      if (json.success && json.user) {
+        staffUser = json.user;
+        if (json.token) {
+          StoreService.setStoredAdminToken(json.token);
         }
+      } else if (!json.success && json.message) {
+        // Server responded but credentials were wrong — don't fall through to client-side auth
+        setLoginError(json.message || 'Invalid Email ID or Passcode.');
+        return;
       }
     } catch (err) {
       console.warn('Backend login attempt notice:', err);
