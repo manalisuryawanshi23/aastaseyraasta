@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { StoreService } from '../services/store';
 import { SEOHead } from '../components/SEOHead';
 import { AdminBlogManager } from '../components/admin/AdminBlogManager';
@@ -167,7 +167,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     }
   };
 
-  // Enforce access control and URL redirections for Manager ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â dynamically driven by saved permissions
+  // Enforce access control and URL redirections for Manager - dynamically driven by saved permissions
   useEffect(() => {
     if (isAuthenticated && currentStaffUser && currentStaffUser.role === 'Manager') {
       const p = currentStaffUser.permissions;
@@ -390,7 +390,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           StoreService.setStoredAdminToken(json.token);
         }
       } else if (!json.success && json.message) {
-        // Server responded but credentials were wrong ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â don't fall through to client-side auth
+        // Server responded but credentials were wrong - don't fall through to client-side auth
         setLoginError(json.message || 'Invalid Email ID or Passcode.');
         return;
       }
@@ -624,7 +624,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
       <div className="md:hidden bg-stone-900 text-amber-100 p-4 border-b border-stone-800 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-serif font-bold text-sm">
-            ÃƒÂ Ã‚Â¥Ã‚Â
+            {'\u0950'}
           </div>
           <div>
             <div className="font-serif font-bold text-sm text-white leading-none">Aastha Admin</div>
@@ -657,7 +657,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           {/* Brand Header */}
           <div className="pb-5 border-b border-stone-800 flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-red-700 text-white font-serif font-bold text-lg flex items-center justify-center shadow-md border border-amber-400/30">
-              ÃƒÂ Ã‚Â¥Ã‚Â
+              {'\u0950'}
             </div>
             <div>
               <h2 className="font-serif font-bold text-sm text-white leading-tight">Aastha Sey Raasta</h2>
@@ -1052,7 +1052,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             {currentStaffUser?.role !== 'Manager' && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-mono font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>ÃƒÂ°Ã…Â¸Ã¢â‚¬ËœÃ¢â‚¬Ëœ Super Administrator</span>
+                <span>{"👑"} Super Administrator</span>
               </div>
             )}
 
@@ -1294,10 +1294,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       >
                         <option value="ALL">All Categories & Types</option>
                         <optgroup label="Core Service Types">
-                          <option value="Pooja">ÃƒÂ°Ã…Â¸Ã‚ÂªÃ¢â‚¬Â Pooja & Rituals</option>
-                          <option value="Tour">ÃƒÂ°Ã…Â¸Ã…Â¡Ã‚Â© Yatra & Tours</option>
-                          <option value="Destination">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂºÃ¢â‚¬Â¢ Holy Destinations</option>
-                          <option value="General">ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¬ General Enquiries</option>
+                          <option value="Pooja">🪔 Pooja & Rituals</option>
+                          <option value="Tour">🚩 Yatra & Tours</option>
+                          <option value="Destination">🛥️ Holy Destinations</option>
+                          <option value="General">💬 General Enquiries</option>
                         </optgroup>
                         {poojaCategories.length > 0 && (
                           <optgroup label="Pooja Specific Categories">
@@ -1320,11 +1320,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                         className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-bold outline-none focus:ring-2 focus:ring-amber-600 transition-all appearance-none cursor-pointer"
                       >
                         <option value="ALL">All Statuses ({leads.length})</option>
-                        <option value="New">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â´ New Inquiries</option>
-                        <option value="Contacted">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¡ Contacted</option>
-                        <option value="Booked">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Âµ Booked</option>
-                        <option value="Completed">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¢ Completed</option>
-                        <option value="Archived">ÃƒÂ¢Ã…Â¡Ã‚Âª Archived</option>
+                        <option value="New">🔴 New Inquiries</option>
+                        <option value="Contacted">🟡 Contacted</option>
+                        <option value="Booked">🟣 Booked</option>
+                        <option value="Completed">🟢 Completed</option>
+                        <option value="Archived">⚪ Archived</option>
                       </select>
                       <Filter className="w-3.5 h-3.5 text-stone-400 absolute right-3 top-3.5 pointer-events-none" />
                     </div>
@@ -1426,11 +1426,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                               onChange={(e) => handleStatusChange(lead.id, e.target.value as Lead['status'])}
                               className="px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-xs font-bold outline-none focus:ring-1 focus:ring-amber-600"
                             >
-                              <option value="New">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â´ New</option>
-                              <option value="Contacted">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¡ Contacted</option>
-                              <option value="Booked">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Âµ Booked</option>
-                              <option value="Completed">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¢ Completed</option>
-                              <option value="Archived">ÃƒÂ¢Ã…Â¡Ã‚Âª Archived</option>
+                              <option value="New">🔴 New</option>
+                              <option value="Contacted">🟡 Contacted</option>
+                              <option value="Booked">🟣 Booked</option>
+                              <option value="Completed">🟢 Completed</option>
+                              <option value="Archived">⚪ Archived</option>
                             </select>
                           </td>
 
