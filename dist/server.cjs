@@ -9534,13 +9534,6 @@ async function autoInitializeDatabase() {
         if (!u.permissions_json || u.permissions_json.trim().startsWith("[")) {
           const normalized = u.role === "Admin" ? DEFAULT_ADMIN_PERMISSIONS : DEFAULT_MANAGER_PERMISSIONS;
           await execute("UPDATE admin_users SET permissions_json = ? WHERE id = ?", [JSON.stringify(normalized), u.id]);
-        } else if (u.role === "Manager") {
-          try {
-            const currentPerms = JSON.parse(u.permissions_json);
-            const updatedPerms = { ...currentPerms, canManageSpecialOffers: true, canManageBlogs: false };
-            await execute("UPDATE admin_users SET permissions_json = ? WHERE id = ?", [JSON.stringify(updatedPerms), u.id]);
-          } catch {
-          }
         }
       }
     } catch (adminErr) {

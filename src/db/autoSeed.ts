@@ -987,19 +987,12 @@ export async function autoInitializeDatabase() {
         console.log(`[AUTO-DB] ${managerRows.length} active manager(s) found. Existing accounts preserved.`);
       }
 
-      // Normalize any legacy array permissions_json into standard object format
+      // Normalize any legacy array or empty permissions_json into standard object format without overwriting custom permissions
       const allUsers = await query<any>('SELECT id, role, permissions_json FROM admin_users');
       for (const u of allUsers) {
         if (!u.permissions_json || u.permissions_json.trim().startsWith('[')) {
           const normalized = u.role === 'Admin' ? DEFAULT_ADMIN_PERMISSIONS : DEFAULT_MANAGER_PERMISSIONS;
           await execute('UPDATE admin_users SET permissions_json = ? WHERE id = ?', [JSON.stringify(normalized), u.id]);
-        } else if (u.role === 'Manager') {
-          // Keep Manager permissions up-to-date with operational scope (Overview, CRM, Astrology, SpecialOffers)
-          try {
-            const currentPerms = JSON.parse(u.permissions_json);
-            const updatedPerms = { ...currentPerms, canManageSpecialOffers: true, canManageBlogs: false };
-            await execute('UPDATE admin_users SET permissions_json = ? WHERE id = ?', [JSON.stringify(updatedPerms), u.id]);
-          } catch { }
         }
       }
     } catch (adminErr) {

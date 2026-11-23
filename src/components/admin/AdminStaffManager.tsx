@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { StaffUser, AdminRole, AdminPermission } from '../../types';
 import { StoreService } from '../../services/store';
 import { apiPost, apiPut, apiDelete, apiGet } from '../../services/apiService';
@@ -198,6 +198,18 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
 
     setIsSaving(true);
     try {
+      const finalPermissions: AdminPermission = role === 'Admin' ? {
+        canViewOverview: true,
+        canManageLeads: true,
+        canManageBlogs: true,
+        canManageServices: true,
+        canManageSettings: true,
+        canManageSocials: true,
+        canManageStaff: true,
+        canManageSpecialOffers: true,
+        canManageAstrologyConsultations: true,
+      } : permissions;
+
       const payload = {
         id: editingStaff?.id,
         name: cleanName,
@@ -206,7 +218,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
         role,
         passcode: cleanPasscode,
         status,
-        permissions,
+        permissions: finalPermissions,
       };
 
       const result = editingStaff?.id
@@ -440,7 +452,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                           </div>
                           <div className="text-[11px] text-stone-500 flex items-center gap-2">
                             <span>{staff.email}</span>
-                            {staff.phone && <span className="font-mono text-stone-400">• {staff.phone}</span>}
+                            {staff.phone && <span className="font-mono text-stone-400">â€¢ {staff.phone}</span>}
                           </div>
                         </div>
                       </div>
@@ -462,7 +474,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                     {/* Passcode with toggle */}
                     <td className="p-3">
                       <div className="inline-flex items-center gap-1.5 bg-stone-100 dark:bg-stone-800 px-2.5 py-1 rounded-lg font-mono text-[11px]">
-                        <span>{isPassVisible ? staff.passcode : '••••••••'}</span>
+                        <span>{isPassVisible ? staff.passcode : 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢'}</span>
                         <button
                           type="button"
                           onClick={() => togglePasscodeVisibility(staff.id)}
@@ -638,7 +650,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                           : 'border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300'
                       }`}
                     >
-                      {r === 'Admin' ? '👑 Admin (Full Access)' : '🛡️ Manager (CRM & Content)'}
+                      {r === 'Admin' ? 'ðŸ‘‘ Admin (Full Access)' : 'ðŸ›¡ï¸ Manager (CRM & Content)'}
                     </button>
                   ))}
                 </div>
@@ -671,155 +683,166 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
                 </div>
               </div>
 
-              {/* Granular Checkboxes Permission Matrix */}
-              <div className="space-y-2 pt-2 border-t border-stone-100 dark:border-stone-800">
-                <div className="font-bold text-stone-900 dark:text-stone-100 flex items-center justify-between">
-                  <span>Module Access Permissions</span>
-                  <span className="text-[10px] text-amber-600 font-mono">Custom overrides</span>
+              {/* Conditional Permissions: Admin receives auto full-access, Manager has component checkboxes */}
+              {role === 'Admin' ? (
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-stone-800 dark:text-stone-200 space-y-1">
+                  <div className="flex items-center gap-2 font-bold text-sm text-amber-700 dark:text-amber-400">
+                    <ShieldCheck className="w-5 h-5 text-amber-600" />
+                    <span>👑 Administrator Full Access (Auto-Assigned)</span>
+                  </div>
+                  <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                    Administrators automatically receive unrestricted access to all dashboard components and features. No manual checkbox selection is required.
+                  </p>
                 </div>
+              ) : (
+                <div className="space-y-2 pt-2 border-t border-stone-100 dark:border-stone-800">
+                  <div className="font-bold text-stone-900 dark:text-stone-100 flex items-center justify-between">
+                    <span>Module Access Permissions</span>
+                    <span className="text-[10px] text-amber-600 font-mono">Custom sidebar permissions</span>
+                  </div>
 
-                <div className="text-[11px] text-stone-600 dark:text-stone-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
-                  <span className="font-bold text-amber-700 dark:text-amber-400">🛡️ Manager Eligible:</span>
-                  <span>Overview, CRM Leads, Astrology Consultations, and Top Offer Marquee.</span>
+                  <p className="text-xs text-stone-500 dark:text-stone-400">
+                    Select the sidebar components this Manager is authorized to view and manage:
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-stone-50 dark:bg-stone-800/60 p-3 rounded-2xl border border-stone-200/80 dark:border-stone-700/80">
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canViewOverview}
+                          onChange={(e) => setPermissions({ ...permissions, canViewOverview: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Overview & KPIs</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                        Main Dashboard
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageLeads}
+                          onChange={(e) => setPermissions({ ...permissions, canManageLeads: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Devotee CRM Leads</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-800">
+                        CRM
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageAstrologyConsultations ?? true}
+                          onChange={(e) => setPermissions({ ...permissions, canManageAstrologyConsultations: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Astrology Consultations</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-800">
+                        CRM
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageSpecialOffers ?? false}
+                          onChange={(e) => setPermissions({ ...permissions, canManageSpecialOffers: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Top Offer Marquee</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                        Site Management
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageBlogs}
+                          onChange={(e) => setPermissions({ ...permissions, canManageBlogs: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">WordPress Blog CMS</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                        Content Engine
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageServices}
+                          onChange={(e) => setPermissions({ ...permissions, canManageServices: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Pooja & Yatra Offerings</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                        Content Engine
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageSettings}
+                          onChange={(e) => setPermissions({ ...permissions, canManageSettings: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Site Banner & Settings</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-800">
+                        Site Management
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageSocials}
+                          onChange={(e) => setPermissions({ ...permissions, canManageSocials: e.target.checked })}
+                          className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="font-medium text-xs">Social Media Handles</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-800">
+                        Site Management
+                      </span>
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-stone-100 dark:bg-stone-900/80 border border-stone-200 dark:border-stone-700 cursor-pointer select-none sm:col-span-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={permissions.canManageStaff}
+                          onChange={(e) => setPermissions({ ...permissions, canManageStaff: e.target.checked })}
+                          className="w-4 h-4 rounded text-red-600 focus:ring-red-500"
+                        />
+                        <span className="font-bold text-xs text-stone-800 dark:text-stone-200">Staff Roles & Account Permissions</span>
+                      </div>
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-800">
+                        Access Control
+                      </span>
+                    </label>
+                  </div>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-stone-50 dark:bg-stone-800/60 p-3 rounded-2xl border border-stone-200/80 dark:border-stone-700/80">
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canViewOverview}
-                        onChange={(e) => setPermissions({ ...permissions, canViewOverview: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Overview & Stats</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                      Manager Eligible
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageLeads}
-                        onChange={(e) => setPermissions({ ...permissions, canManageLeads: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">CRM Leads</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                      Manager Eligible
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageAstrologyConsultations ?? true}
-                        onChange={(e) => setPermissions({ ...permissions, canManageAstrologyConsultations: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Astrology Consultations</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                      Manager Eligible
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageSpecialOffers ?? false}
-                        onChange={(e) => setPermissions({ ...permissions, canManageSpecialOffers: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Top Offer Marquee</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                      Manager Eligible
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none opacity-75">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageBlogs}
-                        onChange={(e) => setPermissions({ ...permissions, canManageBlogs: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">WordPress Blog CMS</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
-                      Admin Only
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none opacity-75">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageServices}
-                        onChange={(e) => setPermissions({ ...permissions, canManageServices: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Pooja & Yatra Offerings</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
-                      Admin Only
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none opacity-75">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageSettings}
-                        onChange={(e) => setPermissions({ ...permissions, canManageSettings: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Site Banner & Settings</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
-                      Admin Only
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700/60 cursor-pointer select-none opacity-75">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageSocials}
-                        onChange={(e) => setPermissions({ ...permissions, canManageSocials: e.target.checked })}
-                        className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="font-medium text-xs">Social Media Handles</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
-                      Admin Only
-                    </span>
-                  </label>
-
-                  <label className="flex items-center justify-between p-2 rounded-xl bg-red-50/50 dark:bg-red-950/20 border border-red-200/50 dark:border-red-900/50 cursor-pointer select-none sm:col-span-2">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={permissions.canManageStaff}
-                        onChange={(e) => setPermissions({ ...permissions, canManageStaff: e.target.checked })}
-                        className="w-4 h-4 rounded text-red-600 focus:ring-red-500"
-                      />
-                      <span className="font-bold text-xs text-red-700 dark:text-red-400">Staff Roles & Account Permissions</span>
-                    </div>
-                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-300 dark:border-red-800">
-                      Admin Only
-                    </span>
-                  </label>
-                </div>
-              </div>
+              )}
 
               {/* Submit Buttons */}
               <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-100 dark:border-stone-800">
@@ -846,3 +869,4 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     </div>
   );
 };
+
