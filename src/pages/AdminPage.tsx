@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import { StoreService } from '../services/store';
 import { SEOHead } from '../components/SEOHead';
 import { AdminBlogManager } from '../components/admin/AdminBlogManager';
@@ -167,23 +167,23 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     }
   };
 
-  // Enforce access control and URL redirections for Manager Ã¢â‚¬â€ dynamically driven by saved permissions
+  // Enforce access control and URL redirections for Manager ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â dynamically driven by saved permissions
   useEffect(() => {
     if (isAuthenticated && currentStaffUser && currentStaffUser.role === 'Manager') {
       const p = currentStaffUser.permissions;
       const isAllowed =
         (activeTab === 'Overview' && p?.canViewOverview) ||
         (activeTab === 'Leads' && p?.canManageLeads) ||
-        (activeTab === 'AstrologyConsultations' && (p?.canManageAstrologyConsultations || p?.canManageLeads)) ||
-        (activeTab === 'DataExport' && (p?.canManageLeads || p?.canManageSettings)) ||
+        (activeTab === 'AstrologyConsultations' && (p?.canManageAstrologyConsultations ?? p?.canManageLeads)) ||
+        (activeTab === 'DataExport' && (p?.canExportData ?? (p?.canManageLeads || p?.canManageSettings))) ||
         (activeTab === 'Blog' && p?.canManageBlogs) ||
         (activeTab === 'Services' && p?.canManageServices) ||
-        (activeTab === 'Gallery' && (p?.canViewOverview || p?.canManageLeads)) ||
-        (activeTab === 'Darshan' && (p?.canViewOverview || p?.canManageLeads)) ||
-        (activeTab === 'Testimonials' && (p?.canViewOverview || p?.canManageLeads)) ||
-        (activeTab === 'SpecialOffers' && (p?.canManageSpecialOffers || p?.canManageSettings)) ||
-        (activeTab === 'BrandColors' && p?.canManageSettings) ||
-        (activeTab === 'Informative' && p?.canManageSettings) ||
+        (activeTab === 'Gallery' && (p?.canManageGallery ?? (p?.canViewOverview || p?.canManageLeads))) ||
+        (activeTab === 'Darshan' && (p?.canManageDarshan ?? (p?.canViewOverview || p?.canManageLeads))) ||
+        (activeTab === 'Testimonials' && (p?.canManageTestimonials ?? (p?.canViewOverview || p?.canManageLeads))) ||
+        (activeTab === 'SpecialOffers' && (p?.canManageSpecialOffers ?? p?.canManageSettings)) ||
+        (activeTab === 'BrandColors' && (p?.canManageBrandColors ?? p?.canManageSettings)) ||
+        (activeTab === 'Informative' && (p?.canManageContactSettings ?? p?.canManageSettings)) ||
         (activeTab === 'Socials' && p?.canManageSocials) ||
         (activeTab === 'Staff' && p?.canManageStaff);
 
@@ -390,7 +390,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           StoreService.setStoredAdminToken(json.token);
         }
       } else if (!json.success && json.message) {
-        // Server responded but credentials were wrong Ã¢â‚¬â€ don't fall through to client-side auth
+        // Server responded but credentials were wrong ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â don't fall through to client-side auth
         setLoginError(json.message || 'Invalid Email ID or Passcode.');
         return;
       }
@@ -624,7 +624,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
       <div className="md:hidden bg-stone-900 text-amber-100 p-4 border-b border-stone-800 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-serif font-bold text-sm">
-            Ã Â¥Â
+            ÃƒÂ Ã‚Â¥Ã‚Â
           </div>
           <div>
             <div className="font-serif font-bold text-sm text-white leading-none">Aastha Admin</div>
@@ -657,7 +657,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           {/* Brand Header */}
           <div className="pb-5 border-b border-stone-800 flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-red-700 text-white font-serif font-bold text-lg flex items-center justify-center shadow-md border border-amber-400/30">
-              Ã Â¥Â
+              ÃƒÂ Ã‚Â¥Ã‚Â
             </div>
             <div>
               <h2 className="font-serif font-bold text-sm text-white leading-tight">Aastha Sey Raasta</h2>
@@ -670,7 +670,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
           {/* Navigation Links */}
           <nav className="space-y-6">
-            {/* UNIFIED PERMISSION-DRIVEN SIDEBAR — dynamically renders for Admin & Manager via userPerms */}
+            {/* UNIFIED PERMISSION-DRIVEN SIDEBAR — renders each individual feature/component based on assigned checkbox */}
             {/* MAIN DASHBOARD */}
             {userPerms?.canViewOverview && (
               <div>
@@ -695,7 +695,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             )}
 
             {/* CRM */}
-            {(userPerms?.canManageLeads || userPerms?.canManageAstrologyConsultations) && (
+            {(userPerms?.canManageLeads || userPerms?.canManageAstrologyConsultations || (userPerms?.canExportData ?? userPerms?.canManageLeads)) && (
               <div>
                 <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">CRM</div>
                 <div className="space-y-1">
@@ -743,7 +743,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                     </button>
                   )}
 
-                  {userPerms?.canManageLeads && (
+                  {(userPerms?.canExportData ?? userPerms?.canManageLeads) && (
                     <button
                       onClick={() => {
                         changeTab('DataExport');
@@ -766,7 +766,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             )}
 
             {/* CONTENT ENGINE */}
-            {(userPerms?.canManageBlogs || userPerms?.canManageServices || userPerms?.canViewOverview || userPerms?.canManageLeads) && (
+            {(userPerms?.canManageBlogs || userPerms?.canManageServices || (userPerms?.canManageGallery ?? (userPerms?.canViewOverview || userPerms?.canManageLeads)) || (userPerms?.canManageDarshan ?? (userPerms?.canViewOverview || userPerms?.canManageLeads)) || (userPerms?.canManageTestimonials ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) && (
               <div>
                 <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Content Engine</div>
                 <div className="space-y-1">
@@ -810,108 +810,110 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                     </button>
                   )}
 
-                  {(userPerms?.canViewOverview || userPerms?.canManageLeads) && (
-                    <>
-                      <button
-                        onClick={() => {
-                          changeTab('Gallery');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'Gallery'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <BarChart3 className="w-4 h-4 text-amber-400" />
-                          <span>Gallery Management</span>
-                        </div>
-                      </button>
+                  {(userPerms?.canManageGallery ?? (userPerms?.canViewOverview || userPerms?.canManageLeads)) && (
+                    <button
+                      onClick={() => {
+                        changeTab('Gallery');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Gallery'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <BarChart3 className="w-4 h-4 text-amber-400" />
+                        <span>Gallery Management</span>
+                      </div>
+                    </button>
+                  )}
 
-                      <button
-                        onClick={() => {
-                          changeTab('Darshan');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'Darshan'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Sparkles className="w-4 h-4 text-amber-400" />
-                          <span>🛕 Darshan Section</span>
-                        </div>
-                        <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono font-bold">
-                          MySQL
-                        </span>
-                      </button>
+                  {(userPerms?.canManageDarshan ?? (userPerms?.canViewOverview || userPerms?.canManageLeads)) && (
+                    <button
+                      onClick={() => {
+                        changeTab('Darshan');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Darshan'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="w-4 h-4 text-amber-400" />
+                        <span>🛕 Darshan Section</span>
+                      </div>
+                      <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono font-bold">
+                        MySQL
+                      </span>
+                    </button>
+                  )}
 
-                      <button
-                        onClick={() => {
-                          changeTab('Testimonials');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'Testimonials'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <MessageCircle className="w-4 h-4 text-amber-400" />
-                          <span>Testimonials Management</span>
-                        </div>
-                      </button>
-                    </>
+                  {(userPerms?.canManageTestimonials ?? (userPerms?.canViewOverview || userPerms?.canManageLeads)) && (
+                    <button
+                      onClick={() => {
+                        changeTab('Testimonials');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Testimonials'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <MessageCircle className="w-4 h-4 text-amber-400" />
+                        <span>Testimonials Management</span>
+                      </div>
+                    </button>
                   )}
                 </div>
               </div>
             )}
 
             {/* SITE MANAGEMENT */}
-            {(userPerms?.canManageSettings || userPerms?.canManageSocials || userPerms?.canManageSpecialOffers) && (
+            {((userPerms?.canManageBrandColors ?? userPerms?.canManageSettings) || (userPerms?.canManageContactSettings ?? userPerms?.canManageSettings) || userPerms?.canManageSocials || (userPerms?.canManageSpecialOffers ?? userPerms?.canManageSettings)) && (
               <div>
                 <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Site Management</div>
                 <div className="space-y-1">
-                  {userPerms?.canManageSettings && (
-                    <>
-                      <button
-                        onClick={() => {
-                          changeTab('BrandColors');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'BrandColors'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Palette className="w-4 h-4" />
-                          <span>Brand Color Palette</span>
-                        </div>
-                      </button>
+                  {(userPerms?.canManageBrandColors ?? userPerms?.canManageSettings) && (
+                    <button
+                      onClick={() => {
+                        changeTab('BrandColors');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'BrandColors'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Palette className="w-4 h-4" />
+                        <span>Brand Color Palette</span>
+                      </div>
+                    </button>
+                  )}
 
-                      <button
-                        onClick={() => {
-                          changeTab('Informative');
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                          activeTab === 'Informative'
-                            ? 'bg-amber-600 text-white shadow-md'
-                            : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <Phone className="w-4 h-4 text-amber-400" />
-                          <span>Contact & Address Settings</span>
-                        </div>
-                      </button>
-                    </>
+                  {(userPerms?.canManageContactSettings ?? userPerms?.canManageSettings) && (
+                    <button
+                      onClick={() => {
+                        changeTab('Informative');
+                        setSidebarOpen(false);
+                      }}
+                      className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                        activeTab === 'Informative'
+                          ? 'bg-amber-600 text-white shadow-md'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Phone className="w-4 h-4 text-amber-400" />
+                        <span>Contact & Address Settings</span>
+                      </div>
+                    </button>
                   )}
 
                   {userPerms?.canManageSocials && (
@@ -933,7 +935,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                     </button>
                   )}
 
-                  {(userPerms?.canManageSpecialOffers || userPerms?.canManageSettings) && (
+                  {(userPerms?.canManageSpecialOffers ?? userPerms?.canManageSettings) && (
                     <button
                       onClick={() => {
                         changeTab('SpecialOffers');
@@ -1050,7 +1052,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
             {currentStaffUser?.role !== 'Manager' && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-mono font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Ã°Å¸â€˜â€˜ Super Administrator</span>
+                <span>ÃƒÂ°Ã…Â¸Ã¢â‚¬ËœÃ¢â‚¬Ëœ Super Administrator</span>
               </div>
             )}
 
@@ -1292,10 +1294,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       >
                         <option value="ALL">All Categories & Types</option>
                         <optgroup label="Core Service Types">
-                          <option value="Pooja">Ã°Å¸Âªâ€ Pooja & Rituals</option>
-                          <option value="Tour">Ã°Å¸Å¡Â© Yatra & Tours</option>
-                          <option value="Destination">Ã°Å¸â€ºâ€¢ Holy Destinations</option>
-                          <option value="General">Ã°Å¸â€™Â¬ General Enquiries</option>
+                          <option value="Pooja">ÃƒÂ°Ã…Â¸Ã‚ÂªÃ¢â‚¬Â Pooja & Rituals</option>
+                          <option value="Tour">ÃƒÂ°Ã…Â¸Ã…Â¡Ã‚Â© Yatra & Tours</option>
+                          <option value="Destination">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂºÃ¢â‚¬Â¢ Holy Destinations</option>
+                          <option value="General">ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¬ General Enquiries</option>
                         </optgroup>
                         {poojaCategories.length > 0 && (
                           <optgroup label="Pooja Specific Categories">
@@ -1318,11 +1320,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                         className="w-full pl-3 pr-8 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-bold outline-none focus:ring-2 focus:ring-amber-600 transition-all appearance-none cursor-pointer"
                       >
                         <option value="ALL">All Statuses ({leads.length})</option>
-                        <option value="New">Ã°Å¸â€Â´ New Inquiries</option>
-                        <option value="Contacted">Ã°Å¸Å¸Â¡ Contacted</option>
-                        <option value="Booked">Ã°Å¸â€Âµ Booked</option>
-                        <option value="Completed">Ã°Å¸Å¸Â¢ Completed</option>
-                        <option value="Archived">Ã¢Å¡Âª Archived</option>
+                        <option value="New">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â´ New Inquiries</option>
+                        <option value="Contacted">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¡ Contacted</option>
+                        <option value="Booked">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Âµ Booked</option>
+                        <option value="Completed">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¢ Completed</option>
+                        <option value="Archived">ÃƒÂ¢Ã…Â¡Ã‚Âª Archived</option>
                       </select>
                       <Filter className="w-3.5 h-3.5 text-stone-400 absolute right-3 top-3.5 pointer-events-none" />
                     </div>
@@ -1424,11 +1426,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                               onChange={(e) => handleStatusChange(lead.id, e.target.value as Lead['status'])}
                               className="px-2.5 py-1 rounded-lg border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-xs font-bold outline-none focus:ring-1 focus:ring-amber-600"
                             >
-                              <option value="New">Ã°Å¸â€Â´ New</option>
-                              <option value="Contacted">Ã°Å¸Å¸Â¡ Contacted</option>
-                              <option value="Booked">Ã°Å¸â€Âµ Booked</option>
-                              <option value="Completed">Ã°Å¸Å¸Â¢ Completed</option>
-                              <option value="Archived">Ã¢Å¡Âª Archived</option>
+                              <option value="New">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â´ New</option>
+                              <option value="Contacted">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¡ Contacted</option>
+                              <option value="Booked">ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Âµ Booked</option>
+                              <option value="Completed">ÃƒÂ°Ã…Â¸Ã…Â¸Ã‚Â¢ Completed</option>
+                              <option value="Archived">ÃƒÂ¢Ã…Â¡Ã‚Âª Archived</option>
                             </select>
                           </td>
 
@@ -1469,21 +1471,21 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           {activeTab === 'Services' && userPerms?.canManageServices && <AdminServicesManager />}
 
           {/* TAB 5: DATA EXPORT & CSV REPORTS */}
-          {activeTab === 'DataExport' && (userPerms?.canManageLeads || userPerms?.canManageSettings) && (
+          {activeTab === 'DataExport' && (currentStaffUser?.role === 'Admin' || (userPerms?.canExportData ?? (userPerms?.canManageLeads || userPerms?.canManageSettings))) && (
             <AdminDataExportManager />
           )}
 
           {/* TAB 6: BRAND COLOR PALETTE & THEME CONTROL */}
-          {activeTab === 'BrandColors' && userPerms?.canManageSettings && <AdminBrandColorPicker />}
+          {activeTab === 'BrandColors' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageBrandColors ?? userPerms?.canManageSettings)) && <AdminBrandColorPicker />}
 
           {/* TAB 6: INFORMATIVE DETAILS */}
-          {activeTab === 'Informative' && userPerms?.canManageSettings && <AdminInformativeDetails />}
+          {activeTab === 'Informative' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageContactSettings ?? userPerms?.canManageSettings)) && <AdminInformativeDetails />}
 
           {/* TAB 7: SOCIAL MEDIA HANDLES */}
-          {activeTab === 'Socials' && userPerms?.canManageSocials && <AdminSocialHandles />}
+          {activeTab === 'Socials' && (currentStaffUser?.role === 'Admin' || userPerms?.canManageSocials) && <AdminSocialHandles />}
 
           {/* TAB 7: STAFF ROLES & RBAC */}
-          {activeTab === 'Staff' && userPerms?.canManageStaff && (
+          {activeTab === 'Staff' && (currentStaffUser?.role === 'Admin' || userPerms?.canManageStaff) && (
             <AdminStaffManager
               currentStaffUser={currentStaffUser}
               onRefreshStaff={() => {
@@ -1498,44 +1500,46 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
           )}
 
           {/* TAB 8: GALLERY MANAGEMENT */}
-          {activeTab === 'Gallery' && (currentStaffUser?.role === 'Admin' || userPerms?.canViewOverview || userPerms?.canManageLeads) && (
+          {activeTab === 'Gallery' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageGallery ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) && (
             <AdminGalleryManager />
           )}
 
           {/* TAB 8b: DEDICATED DARSHAN MANAGEMENT */}
-          {activeTab === 'Darshan' && (currentStaffUser?.role === 'Admin' || userPerms?.canViewOverview || userPerms?.canManageLeads) && (
+          {activeTab === 'Darshan' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageDarshan ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) && (
             <AdminDarshanManager />
           )}
 
           {/* TAB 9: TESTIMONIALS MANAGEMENT */}
-          {activeTab === 'Testimonials' && (currentStaffUser?.role === 'Admin' || userPerms?.canViewOverview || userPerms?.canManageLeads) && (
+          {activeTab === 'Testimonials' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageTestimonials ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) && (
             <AdminTestimonialsManager />
           )}
 
           {/* TAB 10: SPECIAL OFFERS MARQUEE */}
-          {activeTab === 'SpecialOffers' && (currentStaffUser?.role === 'Admin' || userPerms?.canManageSpecialOffers || userPerms?.canManageSettings) && (
+          {activeTab === 'SpecialOffers' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageSpecialOffers ?? userPerms?.canManageSettings)) && (
             <AdminSpecialOffersManager />
           )}
 
           {/* TAB 11: ASTROLOGY CONSULTATIONS (DEVOTEE CRM) */}
-          {activeTab === 'AstrologyConsultations' && (currentStaffUser?.role === 'Admin' || userPerms?.canManageAstrologyConsultations || userPerms?.canManageLeads) && (
+          {activeTab === 'AstrologyConsultations' && (currentStaffUser?.role === 'Admin' || (userPerms?.canManageAstrologyConsultations ?? userPerms?.canManageLeads)) && (
             <AdminAstrologyConsultations currentStaffUser={currentStaffUser} />
           )}
 
           {/* PERMISSION DENIED FALLBACK */}
           {currentStaffUser?.role !== 'Admin' &&
-            ((activeTab === 'Leads' && !userPerms?.canManageLeads) ||
+            ((activeTab === 'Overview' && !userPerms?.canViewOverview) ||
+            (activeTab === 'Leads' && !userPerms?.canManageLeads) ||
             (activeTab === 'Blog' && !userPerms?.canManageBlogs) ||
             (activeTab === 'Services' && !userPerms?.canManageServices) ||
-            (activeTab === 'DataExport' && !userPerms?.canManageLeads && !userPerms?.canManageSettings) ||
-            (activeTab === 'Informative' && !userPerms?.canManageSettings) ||
+            (activeTab === 'DataExport' && !(userPerms?.canExportData ?? (userPerms?.canManageLeads || userPerms?.canManageSettings))) ||
+            (activeTab === 'BrandColors' && !(userPerms?.canManageBrandColors ?? userPerms?.canManageSettings)) ||
+            (activeTab === 'Informative' && !(userPerms?.canManageContactSettings ?? userPerms?.canManageSettings)) ||
             (activeTab === 'Socials' && !userPerms?.canManageSocials) ||
             (activeTab === 'Staff' && !userPerms?.canManageStaff) ||
-            (activeTab === 'Gallery' && !userPerms?.canViewOverview && !userPerms?.canManageLeads) ||
-            (activeTab === 'Darshan' && !userPerms?.canViewOverview && !userPerms?.canManageLeads) ||
-            (activeTab === 'Testimonials' && !userPerms?.canViewOverview && !userPerms?.canManageLeads) ||
-            (activeTab === 'SpecialOffers' && !userPerms?.canManageSpecialOffers && !userPerms?.canManageSettings) ||
-            (activeTab === 'AstrologyConsultations' && !userPerms?.canManageAstrologyConsultations && !userPerms?.canManageLeads)) && (
+            (activeTab === 'Gallery' && !(userPerms?.canManageGallery ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) ||
+            (activeTab === 'Darshan' && !(userPerms?.canManageDarshan ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) ||
+            (activeTab === 'Testimonials' && !(userPerms?.canManageTestimonials ?? (userPerms?.canViewOverview || userPerms?.canManageLeads))) ||
+            (activeTab === 'SpecialOffers' && !(userPerms?.canManageSpecialOffers ?? userPerms?.canManageSettings)) ||
+            (activeTab === 'AstrologyConsultations' && !(userPerms?.canManageAstrologyConsultations ?? userPerms?.canManageLeads))) && (
             <div className="p-8 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-center space-y-4 max-w-lg mx-auto my-12">
               <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300 flex items-center justify-center mx-auto">
                 <ShieldAlert className="w-8 h-8" />
@@ -1559,5 +1563,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
     </div>
   );
 };
+
 
 

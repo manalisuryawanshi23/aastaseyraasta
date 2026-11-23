@@ -8624,7 +8624,13 @@ var DEFAULT_ADMIN_PERMISSIONS = {
   canManageSocials: true,
   canManageStaff: true,
   canManageSpecialOffers: true,
-  canManageAstrologyConsultations: true
+  canManageAstrologyConsultations: true,
+  canExportData: true,
+  canManageGallery: true,
+  canManageDarshan: true,
+  canManageTestimonials: true,
+  canManageBrandColors: true,
+  canManageContactSettings: true
 };
 var DEFAULT_MANAGER_PERMISSIONS = {
   canViewOverview: true,
@@ -8635,7 +8641,13 @@ var DEFAULT_MANAGER_PERMISSIONS = {
   canManageSocials: false,
   canManageStaff: false,
   canManageSpecialOffers: true,
-  canManageAstrologyConsultations: true
+  canManageAstrologyConsultations: true,
+  canExportData: true,
+  canManageGallery: true,
+  canManageDarshan: true,
+  canManageTestimonials: true,
+  canManageBrandColors: false,
+  canManageContactSettings: false
 };
 var TABLE_SCHEMAS = [
   `CREATE TABLE IF NOT EXISTS site_settings (

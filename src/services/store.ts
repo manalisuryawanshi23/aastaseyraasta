@@ -52,6 +52,12 @@ export const initialStaffUsers: StaffUser[] = [
       canManageStaff: true,
       canManageSpecialOffers: true,
       canManageAstrologyConsultations: true,
+      canExportData: true,
+      canManageGallery: true,
+      canManageDarshan: true,
+      canManageTestimonials: true,
+      canManageBrandColors: true,
+      canManageContactSettings: true,
     },
   },
   {
@@ -66,13 +72,19 @@ export const initialStaffUsers: StaffUser[] = [
     permissions: {
       canViewOverview: true,
       canManageLeads: true,
-      canManageBlogs: true,
+      canManageBlogs: false,
       canManageServices: false,
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
-      canManageSpecialOffers: false,
+      canManageSpecialOffers: true,
       canManageAstrologyConsultations: true,
+      canExportData: true,
+      canManageGallery: true,
+      canManageDarshan: true,
+      canManageTestimonials: true,
+      canManageBrandColors: false,
+      canManageContactSettings: false,
     },
   },
 ];
@@ -1388,8 +1400,8 @@ export class StoreService {
     const cleanStatus: 'Active' | 'Inactive' = user.status === 'Inactive' ? 'Inactive' : 'Active';
 
     const defaultPermissions = cleanRole === 'Admin'
-      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true }
-      : { canViewOverview: true, canManageLeads: true, canManageBlogs: false, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: true, canManageAstrologyConsultations: true };
+      ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true, canExportData: true, canManageGallery: true, canManageDarshan: true, canManageTestimonials: true, canManageBrandColors: true, canManageContactSettings: true }
+      : { canViewOverview: true, canManageLeads: true, canManageBlogs: false, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: true, canManageAstrologyConsultations: true, canExportData: true, canManageGallery: true, canManageDarshan: true, canManageTestimonials: true, canManageBrandColors: false, canManageContactSettings: false };
 
     if (user.id) {
       const idx = list.findIndex((u) => u.id === user.id);

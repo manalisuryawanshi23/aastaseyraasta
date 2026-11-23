@@ -453,6 +453,13 @@ export interface AdminPermission {
   canManageSpecialOffers?: boolean;
   canManageAstrologyConsultations?: boolean;
   canManageDevotionalSound?: boolean;
+  // Granular individual feature permissions for left sidebar components
+  canExportData?: boolean;
+  canManageGallery?: boolean;
+  canManageDarshan?: boolean;
+  canManageTestimonials?: boolean;
+  canManageBrandColors?: boolean;
+  canManageContactSettings?: boolean;
 }
 
 export interface StaffUser {

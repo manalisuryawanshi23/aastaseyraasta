@@ -21,6 +21,12 @@ export const DEFAULT_ADMIN_PERMISSIONS = {
   canManageStaff: true,
   canManageSpecialOffers: true,
   canManageAstrologyConsultations: true,
+  canExportData: true,
+  canManageGallery: true,
+  canManageDarshan: true,
+  canManageTestimonials: true,
+  canManageBrandColors: true,
+  canManageContactSettings: true,
 };
 
 export const DEFAULT_MANAGER_PERMISSIONS = {
@@ -33,6 +39,12 @@ export const DEFAULT_MANAGER_PERMISSIONS = {
   canManageStaff: false,
   canManageSpecialOffers: true,
   canManageAstrologyConsultations: true,
+  canExportData: true,
+  canManageGallery: true,
+  canManageDarshan: true,
+  canManageTestimonials: true,
+  canManageBrandColors: false,
+  canManageContactSettings: false,
 };
 
 const TABLE_SCHEMAS = [
