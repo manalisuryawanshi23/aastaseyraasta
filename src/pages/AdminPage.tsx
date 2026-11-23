@@ -531,7 +531,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       setEmail(e.target.value);
                       if (loginError) setLoginError('');
                     }}
-                    placeholder="e.g. admin or admin@aasthaseyraasta.com"
+                    placeholder="e.g. admin, manager, or your email"
                     className="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 text-sm outline-none focus:ring-2 focus:ring-amber-600 transition-all"
                   />
                 </div>

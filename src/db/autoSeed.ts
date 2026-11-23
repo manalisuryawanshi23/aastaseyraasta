@@ -898,11 +898,9 @@ export async function autoInitializeDatabase() {
           'admin@aasthaseva.com',
           'admin@aasthaserasta.com',
           'manager@aasthasaysrasta.com',
-          'manager@aasthaseyraasta.com',
-          'manager@aasthaseva.com',
           'manager@aasthaserasta.com',
         ];
-        const DUMMY_NAMES = ['Aastha Super Admin', 'Operations Manager', 'Ramesh Shastri'];
+        const DUMMY_NAMES = ['Aastha Super Admin', 'Ramesh Shastri'];
 
         const allAdminRows = await query<any>('SELECT id, email, name FROM admin_users');
         for (const u of allAdminRows) {
@@ -951,6 +949,42 @@ export async function autoInitializeDatabase() {
         console.log('[AUTO-DB] Canonical admin seeded successfully.');
       } else {
         console.log(`[AUTO-DB] ${adminRows.length} active admin(s) found. Existing accounts preserved.`);
+      }
+
+      // Ensure canonical Manager exists
+      const managerRows = await query<any>("SELECT id, email FROM admin_users WHERE role = 'Manager' AND is_active = 1");
+
+      if (managerRows.length === 0) {
+        console.log('[AUTO-DB] No active Manager found. Seeding canonical Manager: manager@aasthaseyraasta.com...');
+        const managerHash = await bcrypt.hash('manager123', 10);
+        await execute(
+          `INSERT INTO admin_users (
+            id, username, password_hash, passcode, name, email, phone, role, is_active, permissions_json
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON DUPLICATE KEY UPDATE
+            email = VALUES(email),
+            role = 'Manager',
+            is_active = 1,
+            passcode = VALUES(passcode),
+            password_hash = VALUES(password_hash),
+            permissions_json = VALUES(permissions_json)`,
+          [
+            'staff-manager-1',
+            'manager',
+            managerHash,
+            'manager123',
+            'Operations Manager',
+            'manager@aasthaseyraasta.com',
+            '+91 98260 11111',
+            'Manager',
+            1,
+            JSON.stringify(DEFAULT_MANAGER_PERMISSIONS),
+          ]
+        );
+        result.seeded.adminUsers++;
+        console.log('[AUTO-DB] Canonical manager seeded successfully.');
+      } else {
+        console.log(`[AUTO-DB] ${managerRows.length} active manager(s) found. Existing accounts preserved.`);
       }
 
       // Normalize any legacy array permissions_json into standard object format
