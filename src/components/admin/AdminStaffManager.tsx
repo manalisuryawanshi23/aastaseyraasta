@@ -76,12 +76,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
   const [permissions, setPermissions] = useState<AdminPermission>({
     canViewOverview: true,
     canManageLeads: true,
-    canManageBlogs: true,
+    canManageBlogs: false,
     canManageServices: false,
     canManageSettings: false,
     canManageSocials: false,
     canManageStaff: false,
-    canManageSpecialOffers: false,
+    canManageSpecialOffers: true,
     canManageAstrologyConsultations: true,
   });
 
@@ -109,12 +109,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
     setPermissions({
       canViewOverview: true,
       canManageLeads: true,
-      canManageBlogs: true,
+      canManageBlogs: false,
       canManageServices: false,
       canManageSettings: false,
       canManageSocials: false,
       canManageStaff: false,
-      canManageSpecialOffers: false,
+      canManageSpecialOffers: true,
       canManageAstrologyConsultations: true,
     });
     setIsModalOpen(true);
@@ -152,12 +152,12 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
       setPermissions({
         canViewOverview: true,
         canManageLeads: true,
-        canManageBlogs: true,
+        canManageBlogs: false,
         canManageServices: false,
         canManageSettings: false,
         canManageSocials: false,
         canManageStaff: false,
-        canManageSpecialOffers: false,
+        canManageSpecialOffers: true,
         canManageAstrologyConsultations: true,
       });
     }
@@ -350,7 +350,7 @@ export const AdminStaffManager: React.FC<AdminStaffManagerProps> = ({
             </span>
           </div>
           <p className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
-            Focused operational role. Permitted access strictly to Overview & KPIs, Devotee CRM leads, Astrology consultations, Data Export, WordPress Blog CMS, Gallery, and Testimonials.
+            Focused operational role. Permitted access strictly to Overview & KPIs, Devotee CRM leads, Astrology consultations, Data Export, Gallery, and Testimonials in site management - top offer marquee.
           </p>
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800 text-[11px] font-mono text-stone-500">
             Passcode: <span className="font-bold text-stone-500 dark:text-stone-400">Set when creating user</span>

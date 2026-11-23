@@ -171,7 +171,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   useEffect(() => {
     if (isAuthenticated && currentStaffUser) {
       if (currentStaffUser.role === 'Manager') {
-        const restrictedTabs: AdminTab[] = ['Services', 'BrandColors', 'Informative', 'Socials', 'Staff', 'SpecialOffers'];
+        const restrictedTabs: AdminTab[] = ['Services', 'Blog', 'BrandColors', 'Informative', 'Socials', 'Staff'];
         if (restrictedTabs.includes(activeTab)) {
           changeTab('Overview');
           setAccessDeniedMessage(`Access Denied (403 Forbidden): Manager role does not have permission to access the ${activeTab} module.`);
@@ -743,28 +743,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                   <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">CONTENT ENGINE</div>
                   <button
                     onClick={() => {
-                      changeTab('Blog');
-                      setSidebarOpen(false);
-                    }}
-                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
-                      activeTab === 'Blog'
-                        ? 'bg-amber-600 text-white shadow-md'
-                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <FileText className="w-4 h-4" />
-                      <span>WordPress Blog CMS</span>
-                    </div>
-                    <span className="text-[10px] font-mono text-stone-400">{blogs.length}</span>
-                  </button>
-
-                  <button
-                    onClick={() => {
                       changeTab('Gallery');
                       setSidebarOpen(false);
                     }}
-                    className={`w-full mt-1 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
                       activeTab === 'Gallery'
                         ? 'bg-amber-600 text-white shadow-md'
                         : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
@@ -811,6 +793,30 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                       <MessageCircle className="w-4 h-4 text-amber-400" />
                       <span>Testimonials Management</span>
                     </div>
+                  </button>
+                </div>
+
+                {/* SITE MANAGEMENT */}
+                <div>
+                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">SITE MANAGEMENT</div>
+                  <button
+                    onClick={() => {
+                      changeTab('SpecialOffers');
+                      setSidebarOpen(false);
+                    }}
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between ${
+                      activeTab === 'SpecialOffers'
+                        ? 'bg-amber-600 text-white shadow-md'
+                        : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Megaphone className="w-4 h-4 text-amber-400" />
+                      <span>Top Offer Marquee (Special Offers)</span>
+                    </div>
+                    <span className="px-1.5 py-0.2 bg-amber-500/20 text-amber-300 text-[9px] rounded font-mono">
+                      Live
+                    </span>
                   </button>
                 </div>
               </>

@@ -1345,6 +1345,24 @@ export class StoreService {
           },
         };
       }
+      if (u.role === 'Manager') {
+        return {
+          ...u,
+          role: 'Manager' as AdminRole,
+          permissions: {
+            ...u.permissions,
+            canViewOverview: true,
+            canManageLeads: true,
+            canManageBlogs: false,
+            canManageServices: false,
+            canManageSettings: false,
+            canManageSocials: false,
+            canManageStaff: false,
+            canManageSpecialOffers: true,
+            canManageAstrologyConsultations: true,
+          },
+        };
+      }
       return u;
     });
 
@@ -1371,7 +1389,7 @@ export class StoreService {
 
     const defaultPermissions = cleanRole === 'Admin'
       ? { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: true, canManageSettings: true, canManageSocials: true, canManageStaff: true, canManageSpecialOffers: true, canManageAstrologyConsultations: true }
-      : { canViewOverview: true, canManageLeads: true, canManageBlogs: true, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: false, canManageAstrologyConsultations: true };
+      : { canViewOverview: true, canManageLeads: true, canManageBlogs: false, canManageServices: false, canManageSettings: false, canManageSocials: false, canManageStaff: false, canManageSpecialOffers: true, canManageAstrologyConsultations: true };
 
     if (user.id) {
       const idx = list.findIndex((u) => u.id === user.id);
