@@ -80,8 +80,10 @@ const KEYS = {
 // Helper for localStorage
 function getItem<T>(key: string, defaultVal: T): T {
   try {
-    const val = localStorage.getItem(key);
-    if (val) return JSON.parse(val);
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const val = localStorage.getItem(key);
+      if (val) return JSON.parse(val);
+    }
   } catch (e) {
     console.error(`Error reading ${key} from storage:`, e);
   }
@@ -90,7 +92,9 @@ function getItem<T>(key: string, defaultVal: T): T {
 
 function setItem<T>(key: string, val: T): void {
   try {
-    localStorage.setItem(key, JSON.stringify(val));
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      localStorage.setItem(key, JSON.stringify(val));
+    }
   } catch (e) {
     console.error(`Error saving ${key} to storage:`, e);
   }
@@ -648,18 +652,39 @@ export class StoreService {
       if (init) {
         const isTitleCorrupted = !b.title || b.title === 'New Blog Guide' || b.title.trim() === '';
         const isSlugCorrupted = !b.slug || b.slug === 'new-blog-guide' || b.slug.trim() === '';
+        const isContentStub = !b.content || b.content.length < 800 || (init.content && init.content.length > b.content.length * 1.5) || b.content.includes('₹') || b.content.includes('INR');
+        const isImageBroken = !b.featuredImage || b.featuredImage.includes('unsplash.com') || b.featuredImage.trim() === '';
+        const isExcerptStub = !b.excerpt || b.excerpt.length < 50;
+
         return {
-          ...init,
           ...b,
-          title: isTitleCorrupted ? init.title : b.title,
+          ...init,
+          title: isTitleCorrupted ? init.title : (b.title || init.title),
           hindiTitle: b.hindiTitle !== undefined ? b.hindiTitle : init.hindiTitle,
-          slug: isSlugCorrupted ? init.slug : b.slug,
-          excerpt: b.excerpt !== undefined ? b.excerpt : init.excerpt,
+          slug: isSlugCorrupted ? init.slug : (b.slug || init.slug),
+          excerpt: isExcerptStub ? init.excerpt : (b.excerpt || init.excerpt),
           hindiExcerpt: b.hindiExcerpt !== undefined ? b.hindiExcerpt : init.hindiExcerpt,
-          content: b.content !== undefined ? b.content : init.content,
+          content: isContentStub ? init.content : (b.content || init.content),
           hindiContent: b.hindiContent !== undefined ? b.hindiContent : init.hindiContent,
+          featuredImage: isImageBroken ? init.featuredImage : (b.featuredImage || init.featuredImage),
+          author: init.author || b.author,
+          hindiAuthor: init.hindiAuthor || b.hindiAuthor,
           category: b.category !== undefined ? b.category : init.category,
           hindiCategory: b.hindiCategory !== undefined ? b.hindiCategory : init.hindiCategory,
+          publishedAt: init.publishedAt || b.publishedAt,
+          createdAt: init.createdAt || b.createdAt,
+          updatedAt: init.updatedAt || b.updatedAt,
+          quickAnswer: init.quickAnswer || b.quickAnswer,
+          keyTakeaways: (init.keyTakeaways && init.keyTakeaways.length > 0) ? init.keyTakeaways : b.keyTakeaways,
+          aeoQuestions: (init.aeoQuestions && init.aeoQuestions.length > 0) ? init.aeoQuestions : b.aeoQuestions,
+          geoCity: init.geoCity || b.geoCity,
+          geoRegion: init.geoRegion || b.geoRegion,
+          geoEntities: init.geoEntities || b.geoEntities,
+          focusKeyword: init.focusKeyword || b.focusKeyword,
+          secondaryKeywords: init.secondaryKeywords || b.secondaryKeywords,
+          readingTime: init.readingTime || b.readingTime,
+          seoTitle: init.seoTitle || b.seoTitle,
+          metaDescription: init.metaDescription || b.metaDescription,
         };
       }
       return b;
@@ -667,8 +692,12 @@ export class StoreService {
 
     if (missing.length > 0) {
       list = [...list, ...missing];
-      setItem(KEYS.BLOGS, list);
     }
+
+    // Always keep blogs sorted recent-first by publishedAt
+    list.sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime());
+
+    setItem(KEYS.BLOGS, list);
 
     if (publishedOnly) {
       return list.filter((b) => b.isPublished);
@@ -678,7 +707,11 @@ export class StoreService {
 
   static getBlogPostBySlug(slug: string): BlogPost | undefined {
     const blogs = this.getBlogPosts(false);
-    return blogs.find((b) => b.slug === slug || b.id === slug);
+    const found = blogs.find((b) => b.slug === slug || b.id === slug);
+    if (found) return found;
+
+    // Direct fallback from master initialBlogPosts
+    return initialBlogPosts.find((b) => b.slug === slug || b.id === slug);
   }
 
   static saveBlogPost(blog: Partial<BlogPost> & { id?: string }): BlogPost {

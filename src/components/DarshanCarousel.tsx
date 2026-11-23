@@ -228,7 +228,7 @@ export const DarshanCarousel: React.FC = () => {
             >
               <div className="h-36 rounded-xl overflow-hidden border border-orange-200/60 dark:border-orange-900/40 shadow-sm hover:shadow-md hover:border-rose-400/50 dark:hover:border-rose-700/50 transition-all cursor-pointer relative group bg-stone-900">
                 <a
-                  href="/tour/ujjain-spiritual-tour"
+                  href="/spiritual-tours/ujjain-spiritual-tour"
                   className="w-full h-full block relative"
                 >
                   <img 

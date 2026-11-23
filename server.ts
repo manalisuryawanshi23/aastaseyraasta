@@ -140,6 +140,95 @@ async function startServer() {
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+  // ==========================================
+  // CANONICAL REDIRECTION & SEO NORMALIZATION MIDDLEWARE
+  // ==========================================
+  app.use((req, res, next) => {
+    // 1. Skip API routes, static assets, and images
+    if (
+      req.path.startsWith('/api/') ||
+      req.path.startsWith('/assets/') ||
+      req.path.startsWith('/src/assets/') ||
+      req.path.startsWith('/favicon') ||
+      req.path.endsWith('.ico') ||
+      req.path.endsWith('.png') ||
+      req.path.endsWith('.jpg') ||
+      req.path.endsWith('.jpeg') ||
+      req.path.endsWith('.webp') ||
+      req.path.endsWith('.svg') ||
+      req.path.endsWith('.js') ||
+      req.path.endsWith('.css') ||
+      req.path.endsWith('.xml') ||
+      req.path.endsWith('.txt')
+    ) {
+      return next();
+    }
+
+    const host = req.get('host') || '';
+    const isLocal = host.includes('localhost') || host.includes('127.0.0.1');
+
+    // 2. HTTPS Redirection on production (behind proxy)
+    const proto = req.headers['x-forwarded-proto'];
+    if (!isLocal && proto === 'http') {
+      return res.redirect(301, `https://${host}${req.originalUrl}`);
+    }
+
+    // 3. WWW to non-WWW Redirection
+    if (!isLocal && host.startsWith('www.')) {
+      const cleanHost = host.replace(/^www\./i, '');
+      return res.redirect(301, `https://${cleanHost}${req.originalUrl}`);
+    }
+
+    // 4. Trailing Slash Normalization (strip trailing slash)
+    if (req.path.length > 1 && req.path.endsWith('/')) {
+      const cleanPath = req.path.slice(0, -1);
+      const queryIdx = req.originalUrl.indexOf('?');
+      const queryString = queryIdx > -1 ? req.originalUrl.slice(queryIdx) : '';
+      return res.redirect(301, cleanPath + queryString);
+    }
+
+    // 5. Canonical 301 Redirects for Legacy / Alternate URLs
+    const path = req.path;
+
+    if (path === '/why-choose-us') {
+      return res.redirect(301, '/about-us');
+    }
+    if (path === '/sitemap') {
+      return res.redirect(301, '/site-map');
+    }
+    if (path === '/poojas' || path === '/pooja') {
+      return res.redirect(301, '/pooja-services');
+    }
+    if (path === '/tours' || path === '/tour') {
+      return res.redirect(301, '/spiritual-tours');
+    }
+    if (path.startsWith('/tour/')) {
+      const slug = path.replace('/tour/', '');
+      return res.redirect(301, `/spiritual-tours/${slug}`);
+    }
+    if (path.startsWith('/tours/')) {
+      const slug = path.replace('/tours/', '');
+      return res.redirect(301, `/spiritual-tours/${slug}`);
+    }
+    if (path.startsWith('/pooja-services/')) {
+      const slug = path.replace('/pooja-services/', '');
+      return res.redirect(301, `/pooja/${slug}`);
+    }
+    if (path.startsWith('/poojas/')) {
+      const slug = path.replace('/poojas/', '');
+      return res.redirect(301, `/pooja/${slug}`);
+    }
+
+    // Direct pooja slugs without /pooja/ prefix
+    const slugCandidate = path.replace(/^\//, '');
+    const matchingPooja = initialPoojas.find((p) => p.slug === slugCandidate);
+    if (matchingPooja) {
+      return res.redirect(301, `/pooja/${matchingPooja.slug}`);
+    }
+
+    next();
+  });
+
   // Static Asset Serving — supports both /assets/images (uploaded), /assets/audio, and /src/assets/images (bundled source)
   const staticCacheOptions = {
     maxAge: '30d',
@@ -726,7 +815,7 @@ async function startServer() {
       isPublished: Boolean(p.is_published),
       metaTitle: p.seo_title || p.meta_title,
       focusKeyword: p.primary_keyword,
-      canonicalUrl: p.canonical_url || p.url_slug,
+      canonicalUrl: p.canonical_url || (p.slug ? `https://aasthasaysrasta.com/pooja/${p.slug}` : p.url_slug),
       ogTitle: p.seo_title || p.meta_title,
       ogDescription: p.meta_description,
       ogImage: p.image,
@@ -2659,7 +2748,9 @@ async function startServer() {
     const content = `User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /dashboard
 Disallow: /api/
+Disallow: /saved-items
 
 Sitemap: ${baseUrl}/sitemap.xml
 `;
@@ -2683,6 +2774,276 @@ Sitemap: ${baseUrl}/sitemap.xml
     res.send(`google-site-verification: ${filename}`);
   });
 
+  // ==========================================
+  // SERVER-SIDE HTML META TAG & SCHEMA INJECTION
+  // ==========================================
+  function getRouteMetadata(reqPath: string): {
+    title: string;
+    description: string;
+    canonicalUrl: string;
+    ogImage?: string;
+    robots?: string;
+    isKnownRoute: boolean;
+  } {
+    const cleanPath = reqPath.length > 1 && reqPath.endsWith('/') ? reqPath.slice(0, -1) : reqPath;
+    const BASE = 'https://aasthasaysrasta.com';
+
+    // 1. Home
+    if (cleanPath === '' || cleanPath === '/') {
+      return {
+        title: 'Official Vedic Pooja Booking & Spiritual Tours in Ujjain | Aastha Sey Raasta',
+        description: 'Book authentic Vedic Poojas, Rudrabhishek, Bhat Pooja, Kaal Sarp Dosh Shanti & Baglamukhi Havan in Ujjain Mahakaleshwar & Omkareshwar. Certified Pandits, Live Video Pooja & Pilgrimage Packages.',
+        canonicalUrl: `${BASE}/`,
+        ogImage: `${BASE}/assets/images/header_bg_spiritual_1786196057015.jpg`,
+        isKnownRoute: true,
+      };
+    }
+
+    // 2. Individual Pooja
+    if (cleanPath.startsWith('/pooja/')) {
+      const slug = cleanPath.replace('/pooja/', '').trim();
+      const pooja = initialPoojas.find((p) => p.slug === slug);
+      if (pooja) {
+        const title = `${pooja.seoTitle || pooja.name} | Aastha Sey Raasta`;
+        const description = pooja.metaDescription || pooja.shortDescription;
+        const poojaImg = pooja.ogImage || pooja.featuredImage;
+        const img = poojaImg?.startsWith('http') ? poojaImg : `${BASE}${poojaImg || '/assets/images/header_bg_spiritual_1786196057015.jpg'}`;
+        return {
+          title,
+          description,
+          canonicalUrl: `${BASE}/pooja/${pooja.slug}`,
+          ogImage: img,
+          isKnownRoute: true,
+        };
+      }
+    }
+
+    // 3. Individual Spiritual Tour
+    if (cleanPath.startsWith('/spiritual-tours/')) {
+      const slug = cleanPath.replace('/spiritual-tours/', '').trim();
+      const tour = initialTours.find((t) => t.slug === slug);
+      if (tour) {
+        const title = `${tour.seoTitle || tour.name} | Aastha Sey Raasta`;
+        const description = tour.metaDescription || tour.shortDescription;
+        const img = tour.featuredImage?.startsWith('http') ? tour.featuredImage : `${BASE}${tour.featuredImage || '/assets/images/tour_ujjain_omkareshwar_1786196108956.jpg'}`;
+        return {
+          title,
+          description,
+          canonicalUrl: `${BASE}/spiritual-tours/${tour.slug}`,
+          ogImage: img,
+          isKnownRoute: true,
+        };
+      }
+    }
+
+    // 4. Individual Destination
+    if (cleanPath.startsWith('/destinations/')) {
+      const slug = cleanPath.replace('/destinations/', '').trim();
+      const dest = initialDestinations.find((d) => d.slug === slug);
+      if (dest) {
+        const title = `${dest.seoTitle || dest.name + ' Temple & Travel Guide'} | Aastha Sey Raasta`;
+        const description = dest.metaDescription || dest.shortDescription;
+        const img = dest.heroImage?.startsWith('http') ? dest.heroImage : `${BASE}${dest.heroImage || '/assets/images/header_bg_spiritual_1786196057015.jpg'}`;
+        return {
+          title,
+          description,
+          canonicalUrl: `${BASE}/destinations/${dest.slug}`,
+          ogImage: img,
+          isKnownRoute: true,
+        };
+      }
+    }
+
+    // 5. Individual Blog Post
+    if (cleanPath.startsWith('/blog/')) {
+      const slug = cleanPath.replace('/blog/', '').trim();
+      const blog = initialBlogPosts.find((b) => b.slug === slug);
+      if (blog) {
+        const title = `${blog.seoTitle || blog.title} | Aastha Sey Raasta`;
+        const description = blog.metaDescription || blog.excerpt;
+        const img = blog.featuredImage?.startsWith('http') ? blog.featuredImage : `${BASE}${blog.featuredImage || '/assets/images/header_bg_spiritual_1786196057015.jpg'}`;
+        return {
+          title,
+          description,
+          canonicalUrl: `${BASE}/blog/${blog.slug}`,
+          ogImage: img,
+          isKnownRoute: true,
+        };
+      }
+    }
+
+    // 6. Static Listing & Informational Pages
+    const staticMap: Record<string, { title: string; description: string; canonicalUrl: string }> = {
+      '/pooja-services': {
+        title: 'Authentic Vedic Pooja Services in Ujjain | Aastha Sey Raasta',
+        description: 'Book authentic Vedic Poojas in Ujjain including Rudrabhishek, Bhat Pooja at Angareshwar & Mangalnath, Mahamrityunjaya Jaap, Baglamukhi Havan, and Pitru Dosh Shanti.',
+        canonicalUrl: `${BASE}/pooja-services`,
+      },
+      '/spiritual-tours': {
+        title: 'Spiritual Tours & Yatra Packages in Ujjain | Aastha Sey Raasta',
+        description: 'Book customized spiritual pilgrimage tours in Ujjain, Omkareshwar, Baglamukhi Nalkheda, Indore, and Char Dham Uttarakhand with private AC transport and hotel stays.',
+        canonicalUrl: `${BASE}/spiritual-tours`,
+      },
+      '/destinations': {
+        title: 'Sacred Destinations & Temple Guides in Ujjain | Aastha Sey Raasta',
+        description: 'Comprehensive temple guides and darshan timings for Ujjain Mahakaleshwar, Omkareshwar Jyotirlinga, Maa Baglamukhi Nalkheda, and Pashupatinath.',
+        canonicalUrl: `${BASE}/destinations`,
+      },
+      '/blog': {
+        title: 'Spiritual Blog & Vedic Ritual Guides | Aastha Sey Raasta',
+        description: 'Read detailed articles on Rudrabhishek vidhi, Bhat Pooja significance at Mangalnath, Baglamukhi Havan Mahatmyam, and Ujjain pilgrimage tips.',
+        canonicalUrl: `${BASE}/blog`,
+      },
+      '/about-us': {
+        title: 'Vedic Brahmins & Pandit Seva Lineage in Ujjain | Aastha Sey Raasta',
+        description: 'Learn about our lineage of Vedic Brahmins in Ujjain, authentic gotra sankalp pooja management, and dedicated pilgrimage arrangements.',
+        canonicalUrl: `${BASE}/about-us`,
+      },
+      '/contact': {
+        title: 'Contact Ujjain Seva Kendra & Pandit Helpline | Aastha Sey Raasta',
+        description: 'Reach out to Aastha Sey Raasta Seva at Mahakal Marg Ujjain for pooja reservations, gotra sankalp, and yatra guidance.',
+        canonicalUrl: `${BASE}/contact`,
+      },
+      '/faq': {
+        title: 'Vedic Pooja & Pilgrimage FAQ | Questions & Answers | Aastha Sey Raasta',
+        description: 'Find verified answers to frequently asked questions about Mahakaleshwar Rudrabhishek, Mangalnath Bhat Pooja, Kaal Sarp Dosh Shanti, Pandit Gotra Sankalp, and Ujjain spiritual tours.',
+        canonicalUrl: `${BASE}/faq`,
+      },
+      '/testimonials': {
+        title: 'Devotee Testimonials & Reviews | Verified Experiences | Aastha Sey Raasta',
+        description: 'Read authentic, verified experiences and reviews from devotees across India who booked Mahakaleshwar Rudrabhishek, Bhat Pooja, Kaal Sarp Dosh Shanti, and Spiritual Yatras with Aastha Sey Raasta Seva.',
+        canonicalUrl: `${BASE}/testimonials`,
+      },
+      '/privacy-policy': {
+        title: 'Privacy Policy & Devotee Data Protection | Aastha Sey Raasta',
+        description: 'Learn how Aastha Sey Raasta Seva protects devotee personal data, gotra sankalp details, and booking confidentiality.',
+        canonicalUrl: `${BASE}/privacy-policy`,
+      },
+      '/terms-and-conditions': {
+        title: 'Terms and Conditions | Service Agreement | Aastha Sey Raasta',
+        description: 'Terms of service, devotee code of conduct, and guidelines governing pooja coordination and yatra packages arranged by Aastha Sey Raasta Seva.',
+        canonicalUrl: `${BASE}/terms-and-conditions`,
+      },
+      '/disclaimer': {
+        title: 'Astrological & Spiritual Service Disclaimer | Aastha Sey Raasta',
+        description: 'Important disclaimer regarding Vedic poojas, planetary dosha remedies, and pilgrimage tour coordination in Ujjain.',
+        canonicalUrl: `${BASE}/disclaimer`,
+      },
+      '/refund-cancellation-policy': {
+        title: 'Refund & Cancellation Policy | Pooja & Yatra Bookings | Aastha Sey Raasta',
+        description: 'Review our transparent cancellation and refund policy for temple pooja dakshina, gotra sankalp samagri, and spiritual yatra vehicle bookings.',
+        canonicalUrl: `${BASE}/refund-cancellation-policy`,
+      },
+      '/how-it-works': {
+        title: 'How It Works | Booking Vedic Pooja & Yatras | Aastha Sey Raasta',
+        description: 'Step-by-step guide to booking authentic Vedic Poojas, personalized Gotra Sankalp, certified Brahmins, and pilgrimage tour arrangements in Ujjain.',
+        canonicalUrl: `${BASE}/how-it-works`,
+      },
+      '/site-map': {
+        title: 'Complete Service & Yatra Directory Index | Aastha Sey Raasta',
+        description: 'Comprehensive Site Map of all Ujjain Pooja services, Spiritual Yatra packages, Temple destination guides, and Vedic blog articles.',
+        canonicalUrl: `${BASE}/site-map`,
+      },
+      '/gallery': {
+        title: 'Spiritual Photo Gallery - Sacred Darshan & Vedic Pooja Photos | Aastha Sey Raasta',
+        description: 'Explore the sacred photo gallery of Mahakaleshwar Jyotirlinga, Omkareshwar, Vedic Poojas, Ramghat Aarti, and Himalayan Yatras.',
+        canonicalUrl: `${BASE}/gallery`,
+      },
+    };
+
+    if (staticMap[cleanPath]) {
+      return {
+        ...staticMap[cleanPath],
+        ogImage: `${BASE}/assets/images/header_bg_spiritual_1786196057015.jpg`,
+        isKnownRoute: true,
+      };
+    }
+
+    // 7. Non-indexable utility / admin routes
+    if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/dashboard')) {
+      return {
+        title: 'Admin Control Portal | Aastha Sey Raasta Seva',
+        description: 'Administrative portal for Aastha Sey Raasta Seva management.',
+        canonicalUrl: `${BASE}${cleanPath}`,
+        robots: 'noindex, nofollow',
+        isKnownRoute: true,
+      };
+    }
+
+    if (cleanPath === '/saved-items') {
+      return {
+        title: 'My Saved Rituals & Pilgrimage Wishlist | Aastha Sey Raasta',
+        description: 'Saved Pooja services and spiritual tour packages.',
+        canonicalUrl: `${BASE}/saved-items`,
+        robots: 'noindex, nofollow',
+        isKnownRoute: true,
+      };
+    }
+
+    // 8. Unknown / 404 Route
+    return {
+      title: '404 — Page Not Found | Aastha Sey Raasta Seva',
+      description: 'The requested page could not be found. Explore our authentic Vedic Pooja services and spiritual pilgrimage tour packages in Ujjain.',
+      canonicalUrl: `${BASE}${cleanPath}`,
+      robots: 'noindex, nofollow',
+      isKnownRoute: false,
+    };
+  }
+
+  function renderHtmlWithMeta(templateHtml: string, reqPath: string): { html: string; status: number } {
+    const meta = getRouteMetadata(reqPath);
+    let html = templateHtml;
+
+    // Replace <title>
+    html = html.replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`);
+
+    // Replace meta description
+    html = html.replace(
+      /<meta\s+name=["']description["']\s+content=["'][^"']*["']\s*\/?>/i,
+      `<meta name="description" content="${meta.description.replace(/"/g, '&quot;')}" />`
+    );
+
+    // Replace or inject meta robots
+    const robotsContent = meta.robots || 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+    if (html.includes('<meta name="robots"')) {
+      html = html.replace(
+        /<meta\s+name=["']robots["']\s+content=["'][^"']*["']\s*\/?>/i,
+        `<meta name="robots" content="${robotsContent}" />`
+      );
+    } else {
+      html = html.replace('</head>', `    <meta name="robots" content="${robotsContent}" />\n  </head>`);
+    }
+
+    // Inject canonical link tag
+    const canonicalTag = `    <link rel="canonical" href="${meta.canonicalUrl}" />\n`;
+    if (html.includes('<link rel="canonical"')) {
+      html = html.replace(/<link\s+rel=["']canonical["']\s+href=["'][^"']*["']\s*\/?>/i, canonicalTag.trim());
+    } else {
+      html = html.replace('</head>', `${canonicalTag}  </head>`);
+    }
+
+    // Replace OG meta tags
+    if (meta.ogImage) {
+      html = html.replace(
+        /<meta\s+property=["']og:image["']\s+content=["'][^"']*["']\s*\/?>/i,
+        `<meta property="og:image" content="${meta.ogImage}" />`
+      );
+    }
+    html = html.replace(
+      /<meta\s+property=["']og:title["']\s+content=["'][^"']*["']\s*\/?>/i,
+      `<meta property="og:title" content="${meta.title.replace(/"/g, '&quot;')}" />`
+    );
+    html = html.replace(
+      /<meta\s+property=["']og:description["']\s+content=["'][^"']*["']\s*\/?>/i,
+      `<meta property="og:description" content="${meta.description.replace(/"/g, '&quot;')}" />`
+    );
+
+    return {
+      html,
+      status: meta.isKnownRoute ? 200 : 404,
+    };
+  }
+
   // Vite Middleware or Static Production Serving
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
@@ -2690,8 +3051,22 @@ Sitemap: ${baseUrl}/sitemap.xml
       appType: 'spa',
     });
     app.use(vite.middlewares);
+    app.use('*', async (req, res, next) => {
+      const url = req.originalUrl;
+      try {
+        const templatePath = path.resolve(process.cwd(), 'index.html');
+        let template = fs.readFileSync(templatePath, 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+        const { html, status } = renderHtmlWithMeta(template, req.path);
+        res.status(status).set({ 'Content-Type': 'text/html; charset=utf-8' }).end(html);
+      } catch (e) {
+        vite.ssrFixStacktrace(e as Error);
+        next(e);
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    const indexHtmlPath = path.join(distPath, 'index.html');
     app.use(express.static(distPath, {
       maxAge: '30d',
       setHeaders: (res, filePath) => {
@@ -2703,7 +3078,16 @@ Sitemap: ${baseUrl}/sitemap.xml
       }
     }));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      try {
+        if (fs.existsSync(indexHtmlPath)) {
+          const rawHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
+          const { html, status } = renderHtmlWithMeta(rawHtml, req.path);
+          return res.status(status).header('Content-Type', 'text/html; charset=utf-8').send(html);
+        }
+      } catch (err) {
+        console.error('[HTML RENDER ERROR]', err);
+      }
+      res.sendFile(indexHtmlPath);
     });
   }
 

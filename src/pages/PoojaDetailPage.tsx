@@ -34,6 +34,7 @@ import {
   buildLocalBusinessSchema,
   buildHowToSchema,
 } from '../utils/seoSchemas';
+import { getPoojaContextualDetails } from '../utils/poojaMeta';
 
 interface PoojaDetailPageProps {
   slug: string;
@@ -94,6 +95,13 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
   const city = localize(enrichedPooja, 'city', 'hindiCity');
   const duration = localize(enrichedPooja, 'duration', 'hindiDuration');
   const ritualDetails = localize(enrichedPooja, 'ritualDetails', 'hindiRitualDetails');
+
+  const {
+    rulingDeities,
+    recommendedTimings,
+    sacredKshetra,
+    estimatedDuration,
+  } = getPoojaContextualDetails(enrichedPooja, language);
 
   const offers =
     language === 'hi' && enrichedPooja.hindiWhatWeOffer?.length
@@ -522,7 +530,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'पूजा का नाम' : 'Ritual Service'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300 font-medium">
-                        {pooja.name}
+                        {poojaName || pooja.name}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -530,7 +538,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'तीर्थ क्षेत्र / स्थान' : 'Sacred Kshetra'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
-                        {templeName || pooja.templeName || 'Ancient Devguru Brihaspati Temple, Ujjain (Avantika Puri)'}
+                        {sacredKshetra}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -538,7 +546,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'प्रमुख ग्रह / अधिष्ठाता' : 'Ruling Deities'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
-                        Devguru Brihaspati (Jupiter) & Rahu / Ketu Graha
+                        {rulingDeities}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -546,7 +554,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'अनुष्ठान अवधि' : 'Estimated Duration'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
-                        {duration || '2.5 to 3.5 Hours'}
+                        {estimatedDuration}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -554,7 +562,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'शुभ मुहूर्त एवं दिन' : 'Recommended Timing'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
-                        Thursdays (Brihaspativar), Guru Pushya Yoga, Shukla Paksha & Purnima
+                        {recommendedTimings}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -562,7 +570,9 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'सहभागिता माध्यम' : 'Participation Mode'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300">
-                        In-Person at Ujjain Kshetra OR Live Video Sankalp with home Prasad dispatch
+                        {language === 'hi'
+                          ? 'उज्जैन तीर्थ में प्रत्यक्ष उपस्थिति अथवा लाइव वीडियो संकल्प व घर पर प्रसाद प्रेषण'
+                          : 'In-Person at Ujjain Kshetra OR Live Video Sankalp with home Prasad dispatch'}
                       </td>
                     </tr>
                     <tr className="hover:bg-amber-500/5">
@@ -570,7 +580,9 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
                         {language === 'hi' ? 'आधिकारिक व्यवस्थापक' : 'Arranged By'}
                       </th>
                       <td className="py-2.5 px-4 text-stone-700 dark:text-stone-300 font-semibold text-amber-800 dark:text-amber-400">
-                        Aastha Sey Raasta Seva (Verified Vedic Scholars)
+                        {language === 'hi'
+                          ? 'आस्था से रास्ता सेवा (प्रमाणित वैदिक विद्वान एवं तीर्थ पुरोहित)'
+                          : 'Aastha Sey Raasta Seva (Verified Vedic Scholars & Teerth Purohits)'}
                       </td>
                     </tr>
                   </tbody>

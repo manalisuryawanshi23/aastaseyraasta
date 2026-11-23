@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, User, ArrowRight, BookOpen } from 'lucide-react';
+import { Calendar, Clock, User, ArrowRight, BookOpen, Users } from 'lucide-react';
 import { BlogPost } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -28,6 +28,9 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = '/assets/images/hero_mahakaleshwar_ujjain_1786193880733.jpg';
+          }}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3 bg-amber-950/80 backdrop-blur-md text-amber-200 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border border-amber-500/30">
@@ -37,12 +40,27 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 
       <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
         <div>
-          <div className="flex items-center gap-3 text-[11px] text-stone-500 dark:text-stone-400 mb-2">
+          <div className="flex items-center gap-2.5 text-[11px] text-stone-500 dark:text-stone-400 mb-2 flex-wrap">
             <span className="flex items-center gap-1">
-              <User className="w-3 h-3 text-amber-700 dark:text-amber-400" />
+              <Users className="w-3 h-3 text-amber-700 dark:text-amber-400" />
               <span>{postAuthor}</span>
             </span>
             <span>•</span>
+            {post.publishedAt && (
+              <>
+                <span className="flex items-center gap-1">
+                  <Calendar className="w-3 h-3 text-stone-400 dark:text-stone-500" />
+                  <span>
+                    {new Date(post.publishedAt).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-GB', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric'
+                    })}
+                  </span>
+                </span>
+                <span>•</span>
+              </>
+            )}
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3 text-stone-400 dark:text-stone-500" />
               <span>{postReadingTime}</span>

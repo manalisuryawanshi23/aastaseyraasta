@@ -194,7 +194,7 @@ export function buildFAQSchema(faqs: SchemaFAQItem[]) {
       name: f.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: f.answer,
+        text: typeof f.answer === 'string' ? f.answer.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') : f.answer,
       },
     })),
   };
@@ -237,7 +237,7 @@ export function buildPoojaServiceSchema(pooja: {
       : `${baseUrl}${pooja.featuredImage}`
     : LOGO_URL;
 
-  const temple = pooja.templeName || 'Ancient Devguru Brihaspati Temple, Ujjain';
+  const temple = pooja.templeName || 'Sacred Temples & Teerth Kshetra, Ujjain';
   const cityName = pooja.city || 'Ujjain';
 
   const schema: any = {
@@ -259,7 +259,7 @@ export function buildPoojaServiceSchema(pooja: {
       priceRange: '₹1100 - ₹21000',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Brihaspati Temple Marg, Near Kshipra River & Mahakaleshwar',
+        streetAddress: 'Near Holy Kshipra River & Mahakaleshwar Jyotirlinga',
         addressLocality: cityName,
         addressRegion: pooja.state || 'Madhya Pradesh',
         postalCode: '456001',
@@ -333,6 +333,8 @@ export function buildHowToSchema(pooja: {
   duration?: string;
   procedureSteps?: string[];
   featuredImage?: string;
+  templeName?: string;
+  city?: string;
 }) {
   const baseUrl = getBaseUrl();
   const pageUrl = `${baseUrl}/pooja/${pooja.slug}`;
@@ -345,7 +347,7 @@ export function buildHowToSchema(pooja: {
     '@type': 'HowTo',
     '@id': `${pageUrl}/#howto`,
     name: `Vedic Vidhi & Steps for ${pooja.name}`,
-    description: `Complete step-by-step Vedic ritual process for ${pooja.name} conducted at Ancient Devguru Brihaspati Temple in Ujjain.`,
+    description: `Complete step-by-step Vedic ritual process for ${pooja.name} conducted at ${pooja.templeName || 'sacred Vedic sanctums'} in ${pooja.city || 'Ujjain'}.`,
     totalTime: pooja.duration ? `PT3H` : 'PT3H',
     image: pooja.featuredImage
       ? pooja.featuredImage.startsWith('http')
@@ -463,8 +465,9 @@ export function buildBlogSchema(post: {
     datePublished: post.publishedAt || new Date().toISOString(),
     dateModified: post.updatedAt || post.publishedAt || new Date().toISOString(),
     author: {
-      '@type': 'Person',
-      name: post.author || 'Acharya Ji',
+      '@type': 'Organization',
+      name: post.author || 'Team Aastha Sey Raasta Seva',
+      url: `${baseUrl}/blog`,
     },
     publisher: {
       '@type': 'Organization',

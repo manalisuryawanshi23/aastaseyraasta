@@ -21,6 +21,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
+  BookOpen,
 } from 'lucide-react';
 import { Tour } from '../types';
 
@@ -130,6 +131,7 @@ import { HeroBackgroundSlider } from '../components/HeroBackgroundSlider';
 import { PoojaCard } from '../components/PoojaCard';
 import { TourCard } from '../components/TourCard';
 import { DestinationCard } from '../components/DestinationCard';
+import { BlogCard } from '../components/BlogCard';
 import { FAQAccordion } from '../components/FAQAccordion';
 import { Testimonials } from '../components/Testimonials';
 import { SEOHead } from '../components/SEOHead';
@@ -164,6 +166,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
   const faqs = StoreService.getFAQs();
   const testimonials = StoreService.getTestimonials().filter((t) => t.isFeatured);
   const galleryItems = StoreService.getGallery().filter((item) => item.isPublished);
+  const latestBlogs = StoreService.getBlogPosts().slice(0, 3);
   
   const [activeTourTab, setActiveTourTab] = useState<'spiritual-tours' | 'ujjain-yatra' | 'himalayan' | 'trekking'>('spiritual-tours');
 
@@ -531,7 +534,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           <FadeIn delay={200} direction="up">
             <div className="flex justify-center pt-2 px-4">
               <a
-                href="/tour/ujjain-spiritual-tour"
+                href="/spiritual-tours/ujjain-spiritual-tour"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-amber-950/20"
               >
                 <span>{t('action.explore_darshan_btn', 'EXPLORE UJJAIN DARSHAN')}</span>
@@ -1103,6 +1106,53 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenBooking, onOpenSearch 
           </div>
         </div>
       )}
+
+      {/* Vedic Knowledge & Spiritual Guides Blog Section */}
+      <section className="py-16 sm:py-20 bg-[#FAF7F2] dark:bg-[#121212] border-t border-stone-200/60 dark:border-stone-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          {/* Section Header */}
+          <FadeIn direction="up">
+            <div className="flex flex-col items-center text-center space-y-3 px-4">
+              <span className="text-amber-800 dark:text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                {language === 'hi' ? 'वैदिक ज्ञान एवं ब्लॉग' : 'VEDIC KNOWLEDGE & BLOGS'}
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900 dark:text-amber-100 mt-1">
+                {language === 'hi' ? 'नवीनतम आध्यात्मिक लेख एवं पूजा विधियां' : 'Latest Spiritual Articles & Guides'}
+              </h2>
+              <p className="text-stone-600 dark:text-stone-350 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+                {language === 'hi'
+                  ? 'उज्जैन एवं पवित्र तीर्थों की प्रामाणिक पूजा विधियां, ग्रह शांति उपाय और तीर्थ यात्रा मार्गदर्शन।'
+                  : 'In-depth Vedic guidance on sacred pooja rituals, dosh shanti remedies, and divine pilgrimage planning.'}
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Top 3 Blog Posts Grid */}
+          <FadeIn delay={100} direction="up">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {latestBlogs.map((post) => (
+                <BlogCard key={post.id} post={post} />
+              ))}
+            </div>
+          </FadeIn>
+
+          {/* CTA Button to Full Blog Page */}
+          <FadeIn delay={150} direction="up">
+            <div className="flex justify-center pt-2">
+              <a
+                href="/blog"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-stone-900 dark:bg-amber-600 hover:bg-stone-800 dark:hover:bg-amber-500 text-white font-medium text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-stone-900/10 dark:shadow-amber-900/30"
+              >
+                <span>{language === 'hi' ? 'सभी आध्यात्मिक लेख देखें →' : 'Explore All Articles →'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </FadeIn>
+
+        </div>
+      </section>
 
       {/* Bottom Final CTA */}
       <section className="relative bg-[#3A1518] dark:bg-[#1A0A0B] py-20 overflow-hidden border-t border-[#4A1B1B] dark:border-stone-850">

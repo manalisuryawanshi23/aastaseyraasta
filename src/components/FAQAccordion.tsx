@@ -4,6 +4,7 @@ import { FAQ } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { ContentService } from '../services/contentService';
 import { StoreService } from '../services/store';
+import { renderFormattedText } from '../utils/formatText';
 
 interface FAQAccordionProps {
   faqs: FAQ[];
@@ -159,7 +160,7 @@ export const FAQAccordion: React.FC<FAQAccordionProps> = ({
                     aria-labelledby={`faq-btn-${faq.id}`}
                     className="px-4 sm:px-5 pb-5 pt-2 text-stone-600 dark:text-stone-300 text-xs sm:text-sm leading-relaxed border-t border-stone-100 dark:border-stone-800/80 bg-amber-50/30 dark:bg-stone-900/60"
                   >
-                    {answerText}
+                    {renderFormattedText(answerText)}
                   </div>
                 )}
               </div>

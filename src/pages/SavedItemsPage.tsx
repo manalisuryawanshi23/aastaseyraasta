@@ -55,6 +55,8 @@ export const SavedItemsPage: React.FC<SavedItemsPageProps> = ({ onOpenBooking })
       <SEOHead
         title="My Saved Rituals & Pilgrimage Wishlist"
         description="View your saved Pooja services and spiritual tour packages for Ujjain and pilgrimage circuits."
+        canonicalUrl="https://aasthasaysrasta.com/saved-items"
+        noindex={true}
       />
 
       <Breadcrumbs items={[{ label: 'My Saved Items' }]} />

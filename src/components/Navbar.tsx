@@ -27,37 +27,37 @@ import {
 } from 'lucide-react';
 
 const yatraItems = [
-  { name: '84 Mahadev Yatra & Pooja', href: '/tour/84-mahadev-yatra-pooja-ujjain' },
-  { name: '9 Narayana Yatra & Pooja', href: '/tour/9-narayana-yatra-pooja-ujjain' },
-  { name: 'Sapt Sagar Yatra & Pooja', href: '/tour/sapt-sagar-yatra-pooja-ujjain' },
-  { name: '6 Vinayak Yatra & Pooja', href: '/tour/6-vinayak-yatra-pooja-ujjain' },
+  { name: '84 Mahadev Yatra & Pooja', href: '/spiritual-tours/84-mahadev-yatra-pooja-ujjain' },
+  { name: '9 Narayana Yatra & Pooja', href: '/spiritual-tours/9-narayana-yatra-pooja-ujjain' },
+  { name: 'Sapt Sagar Yatra & Pooja', href: '/spiritual-tours/sapt-sagar-yatra-pooja-ujjain' },
+  { name: '6 Vinayak Yatra & Pooja', href: '/spiritual-tours/6-vinayak-yatra-pooja-ujjain' },
 ];
 
 const tourItems = [
-  { name: 'Ujjain – Omkareshwar', href: '/tour/ujjain-omkareshwar-tour' },
-  { name: 'Ujjain – Omkareshwar – Indore', href: '/tour/ujjain-omkareshwar-indore-tour' },
-  { name: 'Ujjain – Omkareshwar – Baglamukhi Nalkheda', href: '/tour/ujjain-omkareshwar-baglamukhi-nalkheda-tour' },
-  { name: 'Ujjain – Baglamukhi Nalkheda', href: '/tour/ujjain-baglamukhi-nalkheda-tour' },
-  { name: 'Ujjain – Pashupatinath Mahadev – Sanwariya Seth', href: '/tour/ujjain-pashupatinath-sanwariya-seth-tour' },
+  { name: 'Ujjain – Omkareshwar', href: '/spiritual-tours/ujjain-omkareshwar-tour' },
+  { name: 'Ujjain – Omkareshwar – Indore', href: '/spiritual-tours/ujjain-omkareshwar-indore-tour' },
+  { name: 'Ujjain – Omkareshwar – Baglamukhi Nalkheda', href: '/spiritual-tours/ujjain-omkareshwar-baglamukhi-nalkheda-tour' },
+  { name: 'Ujjain – Baglamukhi Nalkheda', href: '/spiritual-tours/ujjain-baglamukhi-nalkheda-tour' },
+  { name: 'Ujjain – Pashupatinath Mahadev – Sanwariya Seth', href: '/spiritual-tours/ujjain-pashupatinath-sanwariya-seth-tour' },
 ];
 
 const himalayanItems = [
-  { name: 'Char Dham Yatra', href: '/tour/char-dham-yatra-uttarakhand' },
-  { name: 'Panch Kedar Yatra', href: '/tour/panch-kedar-yatra-uttarakhand' },
-  { name: 'Panch Badri Yatra', href: '/tour/panch-badri-yatra-uttarakhand' },
+  { name: 'Char Dham Yatra', href: '/spiritual-tours/char-dham-yatra-uttarakhand' },
+  { name: 'Panch Kedar Yatra', href: '/spiritual-tours/panch-kedar-yatra-uttarakhand' },
+  { name: 'Panch Badri Yatra', href: '/spiritual-tours/panch-badri-yatra-uttarakhand' },
 ];
 
 const trekkingItems = [
-  { name: 'Kedarkantha Trek', href: '/tour/sankri-kedarkantha-trek' },
-  { name: 'Pangarchulla Trek', href: '/tour/joshimath-pangarchulla-trek' },
-  { name: 'Kuari Pass Trek', href: '/tour/joshimath-kuari-pass-trek' },
-  { name: 'Kagbhusundi Trek', href: '/tour/chamoli-kagbhusundi-trek' },
-  { name: 'Roopkund Trek', href: '/tour/chamoli-roopkund-trek' },
-  { name: 'Pindari Glacier Trek', href: '/tour/bageshwar-pindari-glacier-trek' },
-  { name: 'Dayara Bugyal Trek', href: '/tour/uttarkashi-dayara-bugyal-trek' },
-  { name: 'Satopanth Trek', href: '/tour/chamoli-satopanth-trek' },
-  { name: 'Valley of Flowers Trek', href: '/tour/chamoli-valley-of-flowers-trek' },
-  { name: 'Gaumukh Trek', href: '/tour/gangotri-gaumukh-trek' },
+  { name: 'Kedarkantha Trek', href: '/spiritual-tours/sankri-kedarkantha-trek' },
+  { name: 'Pangarchulla Trek', href: '/spiritual-tours/joshimath-pangarchulla-trek' },
+  { name: 'Kuari Pass Trek', href: '/spiritual-tours/joshimath-kuari-pass-trek' },
+  { name: 'Kagbhusundi Trek', href: '/spiritual-tours/chamoli-kagbhusundi-trek' },
+  { name: 'Roopkund Trek', href: '/spiritual-tours/chamoli-roopkund-trek' },
+  { name: 'Pindari Glacier Trek', href: '/spiritual-tours/bageshwar-pindari-glacier-trek' },
+  { name: 'Dayara Bugyal Trek', href: '/spiritual-tours/uttarkashi-dayara-bugyal-trek' },
+  { name: 'Satopanth Trek', href: '/spiritual-tours/chamoli-satopanth-trek' },
+  { name: 'Valley of Flowers Trek', href: '/spiritual-tours/chamoli-valley-of-flowers-trek' },
+  { name: 'Gaumukh Trek', href: '/spiritual-tours/gangotri-gaumukh-trek' },
 ];
 import { StoreService } from '../services/store';
 import { FavoritesService } from '../services/favorites';

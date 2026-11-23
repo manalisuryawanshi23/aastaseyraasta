@@ -54,7 +54,6 @@ export function generateSitemapXml(customBaseUrl?: string): string {
 
     // Static Informational Routes
     { loc: `${BASE_URL}/about-us`, lastmod: TODAY, changefreq: 'monthly', priority: '0.7' },
-    { loc: `${BASE_URL}/why-choose-us`, lastmod: TODAY, changefreq: 'monthly', priority: '0.7' },
     { loc: `${BASE_URL}/how-it-works`, lastmod: TODAY, changefreq: 'monthly', priority: '0.7' },
     { loc: `${BASE_URL}/testimonials`, lastmod: TODAY, changefreq: 'weekly', priority: '0.7' },
     { loc: `${BASE_URL}/gallery`, lastmod: TODAY, changefreq: 'weekly', priority: '0.7' },

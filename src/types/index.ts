@@ -68,6 +68,10 @@ export interface PoojaService {
   quickAnswer?: string;
   whoCanConsider?: string[];
   procedureSteps?: string[];
+  rulingDeities?: string;
+  hindiRulingDeities?: string;
+  recommendedTimings?: string;
+  hindiRecommendedTimings?: string;
   hindiProcedureSteps?: string[];
   internalLinks?: { anchor: string; link: string; reason?: string }[];
   imageSeo?: { featuredImageIdea?: string; alt?: string; title?: string; filename?: string };
@@ -221,6 +225,7 @@ export interface BlogPost {
   canonicalUrl?: string;
   aeoQuestions?: { question: string; answer: string }[];
   keyTakeaways?: string[];
+  quickAnswer?: string;
   geoCity?: string;
   geoRegion?: string;
   geoEntities?: string[];

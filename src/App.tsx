@@ -25,6 +25,10 @@ import { AdminPage } from './pages/AdminPage';
 import { SavedItemsPage } from './pages/SavedItemsPage';
 import { HTMLSitemapPage } from './pages/HTMLSitemapPage';
 import { GalleryPage } from './pages/GalleryPage';
+import { FAQPage } from './pages/FAQPage';
+import { TestimonialsPage } from './pages/TestimonialsPage';
+import { LegalPolicyPage } from './pages/LegalPolicyPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { StoreService } from './services/store';
 import { applyBrandColorPalette } from './utils/brandTheme';
 import { useApiSync } from './hooks/useApiSync';
@@ -92,9 +96,12 @@ export default function App() {
     setBookingModalOpen(true);
   };
 
-  // Simple URL Route matching
+  // Simple URL Route matching with canonical routing & 404 safety
   const renderCurrentView = () => {
-    const path = currentPath;
+    // Strip trailing slash for consistency (e.g. /about-us/ -> /about-us)
+    const path = currentPath.length > 1 && currentPath.endsWith('/')
+      ? currentPath.slice(0, -1)
+      : currentPath;
 
     if (path === '/' || path === '') {
       return (
@@ -146,18 +153,21 @@ export default function App() {
     }
 
     if (path.startsWith('/pooja-services/')) {
-      const slug = path.replace('/pooja-services/', '');
-      return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/pooja-services/', '').trim();
+      if (slug) return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/pooja/')) {
-      const slug = path.replace('/pooja/', '');
-      return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/pooja/', '').trim();
+      if (slug) return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/poojas/')) {
-      const slug = path.replace('/poojas/', '');
-      return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/poojas/', '').trim();
+      if (slug) return <PoojaDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <PoojaListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/spiritual-tours' || path === '/tours' || path === '/tour') {
@@ -165,18 +175,21 @@ export default function App() {
     }
 
     if (path.startsWith('/spiritual-tours/')) {
-      const slug = path.replace('/spiritual-tours/', '');
-      return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/spiritual-tours/', '').trim();
+      if (slug) return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <TourListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/tours/')) {
-      const slug = path.replace('/tours/', '');
-      return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/tours/', '').trim();
+      if (slug) return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <TourListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path.startsWith('/tour/')) {
-      const slug = path.replace('/tour/', '');
-      return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/tour/', '').trim();
+      if (slug) return <TourDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <TourListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/destinations') {
@@ -184,8 +197,9 @@ export default function App() {
     }
 
     if (path.startsWith('/destinations/')) {
-      const slug = path.replace('/destinations/', '');
-      return <DestinationDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      const slug = path.replace('/destinations/', '').trim();
+      if (slug) return <DestinationDetailPage slug={slug} onOpenBooking={handleOpenBooking} />;
+      return <DestinationListingPage onOpenBooking={handleOpenBooking} />;
     }
 
     if (path === '/blog') {
@@ -193,8 +207,9 @@ export default function App() {
     }
 
     if (path.startsWith('/blog/')) {
-      const slug = path.replace('/blog/', '');
-      return <BlogDetailPage slug={slug} />;
+      const slug = path.replace('/blog/', '').trim();
+      if (slug) return <BlogDetailPage slug={slug} />;
+      return <BlogListingPage />;
     }
 
     if (path === '/about-us' || path === '/why-choose-us') {
@@ -203,6 +218,34 @@ export default function App() {
 
     if (path === '/contact') {
       return <ContactPage />;
+    }
+
+    if (path === '/faq') {
+      return <FAQPage onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/testimonials') {
+      return <TestimonialsPage onOpenBooking={handleOpenBooking} />;
+    }
+
+    if (path === '/privacy-policy') {
+      return <LegalPolicyPage defaultTab="privacy" />;
+    }
+
+    if (path === '/terms-and-conditions') {
+      return <LegalPolicyPage defaultTab="terms" />;
+    }
+
+    if (path === '/disclaimer') {
+      return <LegalPolicyPage defaultTab="disclaimer" />;
+    }
+
+    if (path === '/refund-cancellation-policy') {
+      return <LegalPolicyPage defaultTab="refund" />;
+    }
+
+    if (path === '/how-it-works') {
+      return <LegalPolicyPage defaultTab="how-it-works" />;
     }
 
     if (path === '/saved-items') {
@@ -221,13 +264,8 @@ export default function App() {
       return <AdminPage defaultPath={path} />;
     }
 
-    // Default fallback to Home
-    return (
-      <HomePage
-        onOpenBooking={handleOpenBooking}
-        onOpenSearch={() => setSearchModalOpen(true)}
-      />
-    );
+    // High-performance 404 handler to eliminate Soft 404 penalties
+    return <NotFoundPage onOpenBooking={handleOpenBooking} />;
   };
 
   const isAdminRoute = currentPath.startsWith('/admin') || currentPath.startsWith('/dashboard');

@@ -502,7 +502,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-stone-100 dark:bg-stone-950">
-        <SEOHead title="Admin CMS Portal Login | Aastha Sey Raasta Seva" />
+        <SEOHead title="Admin CMS Portal Login | Aastha Sey Raasta Seva" noindex={true} />
         <div className="w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-2xl overflow-hidden">
           {/* Header Banner */}
           <div className="bg-gradient-to-br from-red-950 via-amber-950 to-stone-900 p-8 text-center relative overflow-hidden">
@@ -602,7 +602,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
   // AUTHENTICATED ADMIN PANEL LAYOUT
   return (
     <div className="min-h-screen bg-stone-100 dark:bg-stone-950 text-stone-900 dark:text-stone-100 flex flex-col md:flex-row font-sans">
-      <SEOHead title="Admin Control Dashboard | Aastha Sey Raasta Seva" />
+      <SEOHead title="Admin Control Dashboard | Aastha Sey Raasta Seva" noindex={true} />
 
       {/* MOBILE HEADER BAR */}
       <div className="md:hidden bg-stone-900 text-amber-100 p-4 border-b border-stone-800 flex items-center justify-between sticky top-0 z-50">

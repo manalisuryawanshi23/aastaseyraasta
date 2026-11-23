@@ -114,7 +114,7 @@ export const MoolShantiPoojaPage: React.FC<MoolShantiPoojaPageProps> = ({ onOpen
               {language === 'hi' ? 'मुख्य पृष्ठ' : 'Home'}
             </a>
             <ChevronRight className="w-3 h-3" />
-            <a href="/poojas" className="hover:text-rose-700 dark:hover:text-rose-455 transition-colors">
+            <a href="/pooja-services" className="hover:text-rose-700 dark:hover:text-rose-455 transition-colors">
               {language === 'hi' ? 'पूजा सेवाएं' : 'Pooja Services'}
             </a>
             <ChevronRight className="w-3 h-3" />
