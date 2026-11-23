@@ -416,7 +416,7 @@ export async function autoInitializeDatabase() {
         // 1. Tours table checks
         const toursColumns = await query<any>('SHOW COLUMNS FROM tours');
         const toursColNames = toursColumns.map((col: any) => col.Field);
-        
+
         const toursAlters: string[] = [];
         if (!toursColNames.includes('destinations_json')) {
           toursAlters.push('ADD COLUMN destinations_json LONGTEXT');
@@ -439,7 +439,7 @@ export async function autoInitializeDatabase() {
         if (!toursColNames.includes('sort_order')) {
           toursAlters.push('ADD COLUMN sort_order INT DEFAULT 0');
         }
-        
+
         if (toursAlters.length > 0) {
           console.log('[AUTO-DB] tours table is missing columns. Running ALTER migrations...', toursAlters);
           await execute(`ALTER TABLE tours ${toursAlters.join(', ')}`);
@@ -449,12 +449,12 @@ export async function autoInitializeDatabase() {
         // 2. Poojas table checks
         const poojasColumns = await query<any>('SHOW COLUMNS FROM poojas');
         const poojasColNames = poojasColumns.map((col: any) => col.Field);
-        
+
         const poojasAlters: string[] = [];
         if (!poojasColNames.includes('sort_order')) {
           poojasAlters.push('ADD COLUMN sort_order INT DEFAULT 0');
         }
-        
+
         if (poojasAlters.length > 0) {
           console.log('[AUTO-DB] poojas table is missing columns. Running ALTER migrations...', poojasAlters);
           await execute(`ALTER TABLE poojas ${poojasAlters.join(', ')}`);
@@ -999,7 +999,7 @@ export async function autoInitializeDatabase() {
             const currentPerms = JSON.parse(u.permissions_json);
             const updatedPerms = { ...currentPerms, canManageSpecialOffers: true, canManageBlogs: false };
             await execute('UPDATE admin_users SET permissions_json = ? WHERE id = ?', [JSON.stringify(updatedPerms), u.id]);
-          } catch {}
+          } catch { }
         }
       }
     } catch (adminErr) {

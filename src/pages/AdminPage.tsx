@@ -677,9 +677,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                   </button>
                 </div>
 
-                {/* DEVOTEE CRM */}
+                {/* CRM */}
                 <div>
-                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">DEVOTEE CRM</div>
+                  <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">CRM</div>
                   <button
                     onClick={() => {
                       changeTab('Leads');
@@ -693,7 +693,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                   >
                     <div className="flex items-center gap-2.5">
                       <Users className="w-4 h-4" />
-                      <span>Devotee Enquiries</span>
+                      <span>Booking Enquiries</span>
                     </div>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
                       {leads.length}
@@ -847,7 +847,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
 
                 {userPerms?.canManageLeads && (
                   <div>
-                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">Devotee CRM</div>
+                    <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-stone-500 mb-2">CRM</div>
                     <button
                       onClick={() => {
                         changeTab('Leads');
@@ -861,7 +861,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ defaultPath }) => {
                     >
                       <div className="flex items-center gap-2.5">
                         <Users className="w-4 h-4" />
-                        <span>Devotee Enquiries</span>
+                        <span>Booking Enquiries</span>
                       </div>
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-stone-800 text-amber-400 border border-stone-700">
                         {leads.length}
