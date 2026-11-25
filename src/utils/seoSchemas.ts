@@ -36,7 +36,7 @@ export function buildLocalBusinessSchema(customSettings?: any) {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': `${baseUrl}/#localbusiness-ujjain`,
+    '@id': `${baseUrl}/#organization`,
     name: businessName,
     alternateName: [
       'Aastha Sey Raasta - Ujjain Temple Pooja & Yatra Seva Kendra',
@@ -291,6 +291,11 @@ export function buildPoojaServiceSchema(
       highPrice: maxPrice,
       offerCount: pooja.packages?.length || 1,
       availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Aastha Sey Raasta Seva',
+        url: baseUrl,
+      },
     },
   };
 
@@ -337,6 +342,7 @@ export function buildHowToSchema(pooja: {
         position: idx + 1,
         name: title,
         text: text,
+        url: `${pageUrl}#step-${idx + 1}`,
       };
     }),
   };
@@ -384,22 +390,42 @@ export function buildTourSchema(tour: {
     image,
     description: tour.description || tour.shortDescription,
     touristType: ['Pilgrimage', 'Spiritual Traveler', 'Trekker', 'Cultural Tourist'],
-    itinerary: tour.itinerary?.map((it) => ({
-      '@type': 'City',
-      name: `Day ${it.dayNumber || it.day || 1}: ${it.title}`,
-      description: it.description,
-    })),
+    itinerary: tour.itinerary && tour.itinerary.length > 0 ? {
+      '@type': 'ItemList',
+      numberOfItems: tour.itinerary.length,
+      itemListElement: tour.itinerary.map((it, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: `Day ${it.dayNumber || it.day || idx + 1}: ${it.title}`,
+        description: it.description,
+      })),
+    } : undefined,
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'INR',
       lowPrice: minPrice,
       highPrice: maxPrice,
       offerCount: tour.packages?.length || 1,
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Aastha Sey Raasta Seva',
+        url: baseUrl,
+      },
     },
     provider: {
       '@type': 'TravelAgency',
       name: 'Aastha Sey Raasta Seva',
       url: baseUrl,
+      telephone: '+91 9111099799',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '78 Manipark Way',
+        addressLocality: 'Ujjain',
+        addressRegion: 'Madhya Pradesh',
+        postalCode: '456001',
+        addressCountry: 'IN',
+      },
     },
   };
 }
