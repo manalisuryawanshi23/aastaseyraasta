@@ -86,7 +86,7 @@ export const MoolShantiPoojaPage: React.FC<MoolShantiPoojaPageProps> = ({ onOpen
   };
 
   // Structured schemas for Search & AEO engines
-  const serviceSchema = buildPoojaServiceSchema(poojaDetails);
+  const serviceSchema = buildPoojaServiceSchema(poojaDetails, settings);
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: '/' },
     { name: 'Pooja Services', url: '/poojas' },

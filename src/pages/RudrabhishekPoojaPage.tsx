@@ -129,7 +129,7 @@ export const RudrabhishekPoojaPage: React.FC<RudrabhishekPoojaPageProps> = ({ on
   const displayRelated = relatedPoojas.length > 0 ? relatedPoojas : allPoojas.filter((p) => p.slug !== 'rudrabhishek-pooja-ujjain').slice(0, 3);
 
   // JSON-LD schemas — ALL EXISTING SEO/AEO signals preserved
-  const schemaPooja = pooja ? buildPoojaServiceSchema(pooja) : buildPoojaServiceSchema({
+  const schemaPooja = pooja ? buildPoojaServiceSchema(pooja, settings) : buildPoojaServiceSchema({
     id: 'pooja-rudrabhishek',
     name: 'Rudrabhishek Pooja in Ujjain',
     shortDescription: 'Book authentic Rudrabhishek pooja in ujjain at sacred Shiva temples.',
@@ -137,7 +137,7 @@ export const RudrabhishekPoojaPage: React.FC<RudrabhishekPoojaPageProps> = ({ on
     city: 'Ujjain',
     country: 'India',
     faqs: poojaFaqs,
-  } as any);
+  } as any, settings);
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: '/' },
     { name: 'Pooja Services', url: '/pooja-services' },

@@ -137,7 +137,7 @@ export const PoojaDetailPage: React.FC<PoojaDetailPageProps> = ({ slug, onOpenBo
           .map((f) => ({ question: f.question, answer: f.answer }));
 
   // ── SEO / JSON-LD ─────────────────────────────────────────────────────────
-  const poojaSchema = buildPoojaServiceSchema(pooja);
+  const poojaSchema = buildPoojaServiceSchema(pooja, settings);
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: '/' },
     { name: 'Pooja Services', url: '/pooja-services' },

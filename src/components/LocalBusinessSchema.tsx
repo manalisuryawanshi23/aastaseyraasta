@@ -1,27 +1,21 @@
 import React, { useEffect } from 'react';
-import { StoreService } from '../services/store';
-import { buildLocalBusinessSchema } from '../utils/seoSchemas';
 
+/**
+ * LocalBusinessSchema: Cleanly cleans up any legacy duplicate schema tags.
+ * The primary unified, deduplicated JSON-LD @graph is managed by SEOHead on all pages.
+ */
 export const LocalBusinessSchema: React.FC = () => {
-  const settings = StoreService.getSettings();
-  const schemaObj = buildLocalBusinessSchema(settings);
-
   useEffect(() => {
-    let scriptEl = document.querySelector('script[type="application/ld+json"]#local-business-schema');
-    if (!scriptEl) {
-      scriptEl = document.createElement('script');
-      scriptEl.setAttribute('type', 'application/ld+json');
-      scriptEl.setAttribute('id', 'local-business-schema');
-      document.head.appendChild(scriptEl);
+    // Clean up any legacy or duplicate script tags from older builds
+    const legacyDynamic = document.querySelector('script[type="application/ld+json"]#local-business-schema');
+    if (legacyDynamic && legacyDynamic.parentNode) {
+      legacyDynamic.parentNode.removeChild(legacyDynamic);
     }
-    scriptEl.textContent = JSON.stringify(schemaObj, null, 2);
-  }, [settings]);
+    const legacyStatic = document.querySelector('script[type="application/ld+json"]#local-business-schema-static');
+    if (legacyStatic && legacyStatic.parentNode) {
+      legacyStatic.parentNode.removeChild(legacyStatic);
+    }
+  }, []);
 
-  return (
-    <script
-      type="application/ld+json"
-      id="local-business-schema-static"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaObj) }}
-    />
-  );
+  return null;
 };

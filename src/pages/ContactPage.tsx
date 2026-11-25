@@ -110,12 +110,12 @@ export const ContactPage: React.FC = () => {
                     {language === 'hi' ? 'व्हाट्सएप सहायता:' : 'WhatsApp Support:'}
                   </div>
                   <a
-                    href={`https://wa.me/${settings.whatsappNumber}`}
+                    href={`https://wa.me/${settings.whatsappNumber ? settings.whatsappNumber.replace(/\D/g, '') : '919516355155'}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-emerald-800 dark:text-emerald-400 font-medium hover:underline"
                   >
-                    +91 {settings.whatsappNumber} {language === 'hi' ? '(त्वरित उत्तर)' : '(Instant Response)'}
+                    +91 {settings.whatsappNumber ? settings.whatsappNumber.replace(/^(\+91|91)/, '') : '9516355155'} {language === 'hi' ? '(त्वरित उत्तर)' : '(Instant Response)'}
                   </a>
                 </div>
               </div>

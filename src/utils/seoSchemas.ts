@@ -24,18 +24,18 @@ export function getBaseUrl(): string {
  */
 export function buildLocalBusinessSchema(customSettings?: any) {
   const baseUrl = getBaseUrl();
-  const phone = customSettings?.phone1 || '+91 98765 43210';
-  const altPhone = customSettings?.phone2 || '+91 91111 22233';
-  const email = customSettings?.email || 'contact@aasthasaysrasta.com';
+  const phone = customSettings?.phone1 || '+91 9111099799';
+  const altPhone = customSettings?.phone2 || '+91 9516355155';
+  const email = customSettings?.email || 'aasthaserasta@gmail.com';
   const businessName = customSettings?.businessName || ORGANIZATION_NAME;
-  const addressStr = customSettings?.address || 'Mahakal Marg, Near Ramghat & Mahakaleshwar Temple';
+  const addressStr = customSettings?.address || '78 Manipark Way';
   const city = customSettings?.city || 'Ujjain';
   const state = customSettings?.state || 'Madhya Pradesh';
   const pincode = customSettings?.pincode || '456001';
 
   return {
     '@context': 'https://schema.org',
-    '@type': ['LocalBusiness', 'ReligiousOrganization', 'TravelAgency', 'ProfessionalService'],
+    '@type': 'LocalBusiness',
     '@id': `${baseUrl}/#localbusiness-ujjain`,
     name: businessName,
     alternateName: [
@@ -67,10 +67,10 @@ export function buildLocalBusinessSchema(customSettings?: any) {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 23.1765,
-      longitude: 75.7885,
+      latitude: 23.1827,
+      longitude: 75.7682,
     },
-    hasMap: 'https://maps.google.com/?q=23.1765,75.7885',
+    hasMap: 'https://maps.google.com/?q=23.1827,75.7682',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -93,7 +93,6 @@ export function buildLocalBusinessSchema(customSettings?: any) {
         '@type': 'ContactPoint',
         telephone: phone,
         contactType: 'customer service',
-        contactOption: 'TollFree',
         areaServed: 'IN',
         availableLanguage: ['Hindi', 'English', 'Sanskrit'],
       },
@@ -106,15 +105,12 @@ export function buildLocalBusinessSchema(customSettings?: any) {
       },
     ],
     areaServed: [
-      { '@type': 'City', name: 'Ujjain' },
-      { '@type': 'City', name: 'Omkareshwar' },
-      { '@type': 'City', name: 'Nalkheda' },
-      { '@type': 'City', name: 'Indore' },
-      { '@type': 'City', name: 'Agar Malwa' },
-      { '@type': 'City', name: 'Dewas' },
-      { '@type': 'City', name: 'Ratlam' },
-      { '@type': 'State', name: 'Madhya Pradesh' },
-      { '@type': 'Country', name: 'India' },
+      'Ujjain',
+      'Omkareshwar',
+      'Nalkheda',
+      'Indore',
+      'Madhya Pradesh',
+      'India',
     ],
     knowsAbout: [
       'Ujjain Mahakaleshwar Temple',
@@ -129,15 +125,15 @@ export function buildLocalBusinessSchema(customSettings?: any) {
       'Char Dham Yatra Uttarakhand',
     ],
     sameAs: [
-      'https://www.facebook.com/aasthaserasta',
-      'https://www.instagram.com/aasthaserasta',
-      'https://www.youtube.com/@aasthaserasta',
+      'https://facebook.com/aasthaserasta',
+      'https://instagram.com/aasthaserasta',
+      'https://youtube.com/@aasthaserasta',
     ],
   };
 }
 
-export function buildOrganizationSchema() {
-  return buildLocalBusinessSchema();
+export function buildOrganizationSchema(customSettings?: any) {
+  return buildLocalBusinessSchema(customSettings);
 }
 
 /**
@@ -203,25 +199,30 @@ export function buildFAQSchema(faqs: SchemaFAQItem[]) {
 /**
  * Service / Event Schema for Poojas & Rituals with rich AEO & GEO metadata
  */
-export function buildPoojaServiceSchema(pooja: {
-  name: string;
-  hindiName?: string;
-  slug: string;
-  shortDescription: string;
-  description?: string;
-  featuredImage?: string;
-  templeName?: string;
-  location?: string;
-  city?: string;
-  state?: string;
-  duration?: string;
-  categoryName?: string;
-  price?: number | null;
-  packages?: Array<{ name: string; price: number; description: string }>;
-  faqs?: Array<{ question: string; answer: string }>;
-}) {
+export function buildPoojaServiceSchema(
+  pooja: {
+    name: string;
+    hindiName?: string;
+    slug: string;
+    shortDescription: string;
+    description?: string;
+    featuredImage?: string;
+    templeName?: string;
+    location?: string;
+    city?: string;
+    state?: string;
+    duration?: string;
+    categoryName?: string;
+    price?: number | null;
+    packages?: Array<{ name: string; price: number; description: string }>;
+    faqs?: Array<{ question: string; answer: string }>;
+  },
+  customSettings?: any
+) {
   const baseUrl = getBaseUrl();
   const pageUrl = `${baseUrl}/pooja/${pooja.slug}`;
+  const phone = customSettings?.phone1 || '+91 9111099799';
+  const addressStr = customSettings?.address || '78 Manipark Way';
 
   const defaultPrice = pooja.price || 3500;
   const minPrice = pooja.packages?.length
@@ -255,11 +256,11 @@ export function buildPoojaServiceSchema(pooja: {
       '@type': 'LocalBusiness',
       name: 'Aastha Sey Raasta Seva',
       url: baseUrl,
-      telephone: '+91 78988 88888',
+      telephone: phone,
       priceRange: '₹1100 - ₹21000',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Near Holy Kshipra River & Mahakaleshwar Jyotirlinga',
+        streetAddress: addressStr,
         addressLocality: cityName,
         addressRegion: pooja.state || 'Madhya Pradesh',
         postalCode: '456001',
@@ -271,35 +272,9 @@ export function buildPoojaServiceSchema(pooja: {
         longitude: 75.7682,
       },
     },
-    areaServed: [
-      {
-        '@type': 'City',
-        name: cityName,
-      },
-      {
-        '@type': 'State',
-        name: 'Madhya Pradesh',
-      },
-      {
-        '@type': 'Country',
-        name: 'India',
-      },
-    ],
-    location: {
-      '@type': 'Place',
-      name: temple,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: cityName,
-        addressRegion: 'Madhya Pradesh',
-        postalCode: '456001',
-        addressCountry: 'IN',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 23.1827,
-        longitude: 75.7682,
-      },
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: `${temple}, ${cityName}, Madhya Pradesh, India`,
     },
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -316,7 +291,6 @@ export function buildPoojaServiceSchema(pooja: {
       highPrice: maxPrice,
       offerCount: pooja.packages?.length || 1,
       availability: 'https://schema.org/InStock',
-      validFrom: '2026-01-01',
     },
   };
 

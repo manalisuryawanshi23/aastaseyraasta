@@ -4,6 +4,7 @@ import {
   buildWebSiteSchema,
 } from '../utils/seoSchemas';
 import { formatTitleWithBrand } from '../utils/seoTitles';
+import { StoreService } from '../services/store';
 
 interface SEOHeadProps {
   title?: string;
@@ -125,10 +126,11 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     linkCanonical.setAttribute('href', currentUrl);
 
     // Dynamic JSON-LD Schema Graph
-    const orgSchema = buildOrganizationSchema();
+    const settings = StoreService.getSettings();
+    const orgSchema = buildOrganizationSchema(settings);
     const siteSchema = buildWebSiteSchema();
 
-    let schemasToInject: object[] = [orgSchema, siteSchema];
+    let schemasToInject: any[] = [orgSchema, siteSchema];
 
     if (jsonLd) {
       if (Array.isArray(jsonLd)) {
@@ -138,9 +140,32 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       }
     }
 
+    // Deduplicate and clean schemas for the @graph container:
+    // Schema.org standard: Elements inside an @graph MUST NOT have nested @context definitions.
+    // Having '@context' inside @graph items causes Google Rich Results parser to fail with
+    // "Invalid object type for field '<parent_node>'".
+    const cleanGraphItems: any[] = [];
+    const seenKeys = new Set<string>();
+
+    for (const schema of schemasToInject) {
+      if (!schema || typeof schema !== 'object') continue;
+
+      const schemaId = (schema as any)['@id'] || (schema as any)['@type'];
+      if (schemaId && seenKeys.has(schemaId)) {
+        continue;
+      }
+      if (schemaId) {
+        seenKeys.add(schemaId);
+      }
+
+      // Strip redundant nested @context from graph element
+      const { '@context': _context, ...cleanItem } = schema as any;
+      cleanGraphItems.push(cleanItem);
+    }
+
     const fullGraphSchema = {
       '@context': 'https://schema.org',
-      '@graph': schemasToInject,
+      '@graph': cleanGraphItems,
     };
 
     let scriptJsonLd = document.querySelector('script[type="application/ld+json"]#seo-schema');

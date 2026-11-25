@@ -38,10 +38,10 @@ var initialSiteSettings = {
   tagline: "Faith Leads the Way",
   phone1: "+91 9111099799",
   phone2: "+91 9516355155",
-  whatsappNumber: "919111099799",
+  whatsappNumber: "919516355155",
   emergencyHelpline: "+91 9111099799",
   email: "aasthaserasta@gmail.com",
-  address: "Mahakal Marg, Near Mahakaleshwar Temple, Ujjain",
+  address: "78 Manipark Way",
   city: "Ujjain",
   state: "Madhya Pradesh",
   country: "India",
@@ -1840,7 +1840,7 @@ Arrangement requirements and ritual scales can be tailored to individual devotee
       },
       {
         question: "How can I contact Aastha Sey Raasta Seva?",
-        answer: "You can contact Aastha Sey Raasta Seva by submitting an online enquiry form, calling our official helpline (+91 78988 88888), or reaching out via WhatsApp for immediate support."
+        answer: "You can contact Aastha Sey Raasta Seva by submitting an online enquiry form, calling our official helpline (+91 9111099799), or reaching out via WhatsApp (+91 9516355155) for immediate support."
       }
     ],
     internalLinks: [
